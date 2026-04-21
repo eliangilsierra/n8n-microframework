@@ -1,0 +1,89 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: n8n_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-sensores_db}
+      POSTGRES_USER: ${POSTGRES_USER:-n8n_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Variable POSTGRES_PASSWORD requerida en .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-n8n_user} -d ${POSTGRES_DB:-sensores_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=${N8N_HOST:-localhost}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=${N8N_PROTOCOL:-http}
+      - NODE_ENV=production
+      - WEBHOOK_URL=${WEBHOOK_URL:-http://localhost:5678/}
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE:-America/Bogota}
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER:-admin}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD:?Variable N8N_BASIC_AUTH_PASSWORD requerida en .env}
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY:?Variable N8N_ENCRYPTION_KEY requerida en .env}
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=${POSTGRES_DB:-sensores_db}
+      - DB_POSTGRESDB_USER=${POSTGRES_USER:-n8n_user}
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD:?Variable POSTGRES_PASSWORD requerida en .env}
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+  mock-bot:
+    image: node:20-alpine
+    container_name: mock_bot
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./mocks/mock-bot:/app
+    command: node server.js
+    ports:
+      - "${MOCK_TICKETS_API_PORT:-3001}:3001"
+    environment:
+      - PORT=3001
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3001/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  mock-iot:
+    image: node:20-alpine
+    container_name: mock_iot
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./mocks/mock-iot:/app
+    command: node server.js
+    ports:
+      - "${MOCK_NOTIFICACIONES_API_PORT:-3002}:3002"
+    environment:
+      - PORT=3002
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3002/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  n8n_data:
+    driver: local
+  postgres_data:
+    driver: local
