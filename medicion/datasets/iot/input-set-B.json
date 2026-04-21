@@ -1,0 +1,16 @@
+{
+  "_meta": {
+    "caso": "iot",
+    "set": "B",
+    "escenario": "Critico — temperatura 48.3C (>45 critico), humedad 92% (>80 warning), CO2 2100ppm (>2000 critico)",
+    "nivel_esperado": "critico",
+    "anomalias_esperadas": ["temperature:critico", "humidity:warning", "co2:critico"],
+    "response_esperado": 200
+  },
+  "sensor_id": "SENSOR-002",
+  "temperature": 48.3,
+  "humidity": 92.0,
+  "co2": 2100,
+  "timestamp": "2026-03-15T10:01:00Z",
+  "location": "cuarto-servidores"
+}

@@ -1,0 +1,16 @@
+{
+  "_meta": {
+    "caso": "iot",
+    "set": "D",
+    "escenario": "Valores exactamente en umbral — temperatura 35C, humidity 85%, co2 1000 — boundary testing",
+    "nivel_esperado": "advertencia",
+    "response_esperado_asis": 200,
+    "response_esperado_tobe": 200
+  },
+  "sensor_id": "SENSOR-D",
+  "temperature": 35.0,
+  "humidity": 85.0,
+  "co2": 1000,
+  "timestamp": "2026-04-19T10:00:00Z",
+  "location": "sala-umbral"
+}

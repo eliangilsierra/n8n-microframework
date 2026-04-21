@@ -1,0 +1,1414 @@
+{
+  "_meta": {
+    "caso": "bot",
+    "set": "I",
+    "seed": 20260421003,
+    "master_seed": 20260421,
+    "generated_at": "2026-04-21",
+    "count": 200,
+    "distribution": "gradual_degradation",
+    "sha256": "4fbabc39aef6992171bb4074f7272790547cb083d60b82e4bc5da64bf0d01d8c"
+  },
+  "payloads": [
+    {
+      "user_id": "U-0001",
+      "session_id": "626b330c-f835-28b4-e57f-94726460d0d0",
+      "message": "consulta rutinaria sobre facturación",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "1a7e0112-83ba-925f-9dc5-f4264009bebd"
+    },
+    {
+      "user_id": "U-0001",
+      "session_id": "0ff40b03-2d1f-b1d1-1a59-c2e0f051f1d2",
+      "message": "consulta rutinaria sobre facturación",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "91c30034-28ae-cbdf-8d28-7b1d3752d91d"
+    },
+    {
+      "user_id": "U-0001",
+      "session_id": "4bbe59bf-4d21-f1ab-46be-8f821088b031",
+      "message": "consulta rutinaria sobre facturación",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "7fe65543-eaa7-b5a9-86b9-7094c191067e"
+    },
+    {
+      "user_id": "U-0001",
+      "session_id": "a41e6b1d-0b1d-0662-5aea-2a56809a413f",
+      "message": "consulta rutinaria sobre facturación",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "27256569-9392-38fc-dc1f-620485d0e641"
+    },
+    {
+      "user_id": "U-0001",
+      "session_id": "b90f6670-5628-1b72-01e7-33a0b9c28267",
+      "message": "consulta rutinaria sobre facturación",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "26313dfe-a918-d1c5-02ac-47536950aa58"
+    },
+    {
+      "user_id": "U-0001",
+      "session_id": "1f690dfc-cd45-66dd-6c57-0f11d7e64091",
+      "message": "consulta rutinaria sobre facturación",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "15ed19fb-1a49-39f8-e04f-51e6493cfaa7"
+    },
+    {
+      "user_id": "U-0001",
+      "session_id": "e804a8d3-06e0-4b50-7d72-4a8b91c574ed",
+      "message": "consulta rutinaria sobre facturación",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "5c9fd4e5-93dc-67eb-24f7-4bad2e4f5114"
+    },
+    {
+      "user_id": "U-0001",
+      "session_id": "7cde60a1-0983-7b41-160b-0b4e531ac222",
+      "message": "consulta rutinaria sobre facturación",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "9501f427-66d6-293e-de40-4c4632d5aec2"
+    },
+    {
+      "user_id": "U-0001",
+      "session_id": "88f8568d-a688-dcbd-ee98-98f74ffb8307",
+      "message": "consulta rutinaria sobre facturación",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "b70864b0-3fb3-c56c-b990-237e7966cdcd"
+    },
+    {
+      "user_id": "U-0001",
+      "session_id": "91b3dc12-bf66-4018-f266-929003b7cc10",
+      "message": "consulta rutinaria sobre facturación",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c7685c95-b599-1035-1652-f9c2eb0c70b2"
+    },
+    {
+      "user_id": "U-0001",
+      "session_id": "a6532e46-a899-51f7-f571-e1117fdc2339",
+      "message": "consulta rutinaria sobre facturación",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "d724bbd9-aab5-641c-785a-da65f222c708"
+    },
+    {
+      "user_id": "U-0001",
+      "session_id": "ac5cf7a4-d436-708d-e474-62c56ee84ee6",
+      "message": "consulta rutinaria sobre facturación",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c92f14b6-3046-f456-ed3a-f52e93725cad"
+    },
+    {
+      "user_id": "U-0001",
+      "session_id": "9cc5f933-a293-78f3-f15f-66e2e9276501",
+      "message": "consulta rutinaria sobre facturación",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "9283b21e-1047-c838-2c80-c66b5420d374"
+    },
+    {
+      "user_id": "U-0001",
+      "session_id": "22848e92-9f93-d54a-8550-5bd64fabae4c",
+      "message": "consulta rutinaria sobre facturación",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "2d6c4958-6caf-cbb6-c31a-ed52a630cb02"
+    },
+    {
+      "user_id": "U-0001",
+      "session_id": "e77eb117-ef7f-60e1-f3c5-5bb82abd8c29",
+      "message": "consulta rutinaria sobre facturación",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "1e1297c5-f23d-42ee-e744-358e58863e14"
+    },
+    {
+      "user_id": "U-0001",
+      "session_id": "23810f7d-cc48-ae08-9046-0e0b8362c57a",
+      "message": "consulta rutinaria sobre facturación",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "47982ea2-760b-b009-9206-a4f02f089669"
+    },
+    {
+      "user_id": "U-0001",
+      "session_id": "a0ec65c0-8b8c-8212-7724-e747c36020e3",
+      "message": "consulta rutinaria sobre facturación",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "697daa1d-5bf8-8594-71f3-a5d5430b2e83"
+    },
+    {
+      "user_id": "U-0001",
+      "session_id": "cbb8a341-2e0e-fb64-527b-2f5189f904e4",
+      "message": "consulta rutinaria sobre facturación",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "44a93666-cd3d-60d2-3e6c-0bef8cc8896b"
+    },
+    {
+      "user_id": "U-0001",
+      "session_id": "a9e92db7-1409-4efc-1df8-f722997b4a79",
+      "message": "consulta rutinaria sobre facturación",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "5cf6c21d-3454-878b-ba68-acd33054d694"
+    },
+    {
+      "user_id": "U-0001",
+      "session_id": "50294051-fb5c-acd9-e720-02c22881855f",
+      "message": "consulta rutinaria sobre facturación",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "529fa9b6-8ef5-7e82-9fcd-b843134d214c"
+    },
+    {
+      "user_id": "U-0002",
+      "session_id": "9d48a68f-dc1f-7af3-8288-fb15cad89281",
+      "message": "pregunta sobre mi cuenta",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "6aa210b2-9a13-a802-92cb-c2ea2f540f51"
+    },
+    {
+      "user_id": "U-0002",
+      "session_id": "12588a4c-465d-e875-ccbd-4ccb837c30aa",
+      "message": "pregunta sobre mi cuenta",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "fee1a364-37e9-f28e-698d-4891390a6d35"
+    },
+    {
+      "user_id": "U-0002",
+      "session_id": "13e0fbbf-4112-0d3c-6fac-801f7b1c7db4",
+      "message": "pregunta sobre mi cuenta",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "0b9494b2-e463-c678-d252-b4e985613731"
+    },
+    {
+      "user_id": "U-0002",
+      "session_id": "144b00cc-3202-30a0-f879-4cda3ea72ff3",
+      "message": "pregunta sobre mi cuenta",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "29a9c1e4-bc97-0ed6-fa18-4fec53972755"
+    },
+    {
+      "user_id": "U-0002",
+      "session_id": "b5b13851-3dfa-5cd3-0322-eae5912f61b9",
+      "message": "pregunta sobre mi cuenta",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "5497181e-f97d-5f4e-3aa8-42f8b57bcbc0"
+    },
+    {
+      "user_id": "U-0002",
+      "session_id": "a426dfc7-109c-1e33-1022-9cb73a443370",
+      "message": "pregunta sobre mi cuenta",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c542d247-7b5d-fd68-d679-12da36d91bb1"
+    },
+    {
+      "user_id": "U-0002",
+      "session_id": "779fbf38-eb38-0e50-0c9d-0ca9292302c8",
+      "message": "pregunta sobre mi cuenta",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "416d80a9-5ae1-dbe4-e567-e594ed9723de"
+    },
+    {
+      "user_id": "U-0002",
+      "session_id": "58ac5397-6ffd-03d2-d62b-69dee51c65c0",
+      "message": "pregunta sobre mi cuenta",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "bcd78809-23e5-98ba-61e0-0dcf4c01ad15"
+    },
+    {
+      "user_id": "U-0002",
+      "session_id": "1ed5c4af-8fe3-920f-3bce-82b5cd4eeb9d",
+      "message": "pregunta sobre mi cuenta",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "52b30539-ebed-05e6-f4d3-f1b04bba429c"
+    },
+    {
+      "user_id": "U-0002",
+      "session_id": "c4d3f787-6e5e-1aa9-9852-54e933078854",
+      "message": "pregunta sobre mi cuenta",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "757d7989-ffb3-ce8e-b38d-4ea498398794"
+    },
+    {
+      "user_id": "U-0002",
+      "session_id": "0db4fda6-184a-ef35-b225-52ae5ac7cc9c",
+      "message": "pregunta sobre mi cuenta",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "0eb8e048-8450-3e57-30b8-d01e25fe507b"
+    },
+    {
+      "user_id": "U-0002",
+      "session_id": "e967f13b-dc1c-9083-2c79-4cc16b686217",
+      "message": "pregunta sobre mi cuenta",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "0847636b-1ff4-09b6-35b4-800d20cbf192"
+    },
+    {
+      "user_id": "U-0002",
+      "session_id": "0041e832-10a6-4dcc-6c14-45dfabf1104a",
+      "message": "pregunta sobre mi cuenta",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "2cea13dc-fafd-5b5b-bb55-f53700044c34"
+    },
+    {
+      "user_id": "U-0002",
+      "session_id": "70f9e4fe-584e-d007-5927-f19e71498e0f",
+      "message": "pregunta sobre mi cuenta",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "e72e4c97-0f8b-3312-7e0f-cfa5835bf1ee"
+    },
+    {
+      "user_id": "U-0002",
+      "session_id": "26817b32-5b15-3d7e-c890-6fa460a499c6",
+      "message": "pregunta sobre mi cuenta",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "8469ed48-ad80-6d0a-aeee-cef1d5dbbe24"
+    },
+    {
+      "user_id": "U-0002",
+      "session_id": "e196b12c-4d9b-5542-b111-40dcbc210604",
+      "message": "pregunta sobre mi cuenta",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "64af2d32-b435-5e46-59d1-057600384dd9"
+    },
+    {
+      "user_id": "U-0002",
+      "session_id": "d6b19fa5-06e0-74fa-f47c-1878a24f2489",
+      "message": "pregunta sobre mi cuenta",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "449c0c23-64b7-ba62-55bc-0c1a34c12eaf"
+    },
+    {
+      "user_id": "U-0002",
+      "session_id": "0e09fe0c-48a0-3207-bd38-be195c9d0c0d",
+      "message": "pregunta sobre mi cuenta",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "f6c30617-92e0-8ac5-374a-597d53923508"
+    },
+    {
+      "user_id": "U-0002",
+      "session_id": "474cde1b-239c-9e80-cf55-ba856e1715f7",
+      "message": "pregunta sobre mi cuenta",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "feea6416-4774-3be2-5618-4812e2ef1e38"
+    },
+    {
+      "user_id": "U-0002",
+      "session_id": "5fe9c508-49d7-4afe-deb9-6d003f79fd60",
+      "message": "pregunta sobre mi cuenta",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "a22851b0-b588-e608-3afb-fa4b7c4839ed"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "627530ac-1b81-f2b8-9aaa-5b1393ff7712",
+      "message": "problema menor con el acceso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "100f484f-fe74-f348-c37f-599a2fa42d7b"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "e4326842-af2c-2361-f623-3ed56ff97e3d",
+      "message": "problema menor con el acceso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "082e5197-8c18-4100-ce86-d8783f0d551c"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "88962131-e5ec-621e-fafa-93e583410077",
+      "message": "problema menor con el acceso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "e020a75b-5575-b9a7-6e01-fef3fb7e1462"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "3ad2f233-2c33-38b3-9acb-b42ecb7bc74b",
+      "message": "problema menor con el acceso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "639e8f6f-9467-aad5-324f-a2cb117d965d"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "4c2b5891-3502-ff52-5d4e-e9913d5c34a5",
+      "message": "problema menor con el acceso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "0e594f08-88a4-5d46-26d5-8e1f1aa19476"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "7e6689e9-d5e8-2793-87c9-04cd39c060bd",
+      "message": "problema menor con el acceso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "9ed1ba60-03c2-e107-2182-c726048fbd01"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "d240584f-a1ef-3c69-916e-9facf4469d28",
+      "message": "problema menor con el acceso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "bb922d09-e65c-fdb9-f790-328ad8ff2b4f"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "5696a56f-6455-2f84-0420-7df2d7dc2ab4",
+      "message": "problema menor con el acceso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "6c33d09b-d216-ea6b-da06-1600ffa22773"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "95f8c787-575b-9e7d-2ef4-5c27c129192c",
+      "message": "problema menor con el acceso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "ce83386a-d651-e882-f184-1aa1068a2e02"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "c424a6ba-203e-816d-1122-a96fc871b2e5",
+      "message": "problema menor con el acceso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "8e199687-b3ff-ff9b-76e7-9c8e769afd1d"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "df10fd90-3588-8e88-e0f1-1438b3edd9cd",
+      "message": "problema menor con el acceso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "e0220588-b964-b8a5-2f5b-e8a372eb6282"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "387d73dd-cb3d-cad7-fe22-b59ee9c325da",
+      "message": "problema menor con el acceso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "6fb6c9f8-ad7c-8869-cf26-327e1873c08f"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "f8f1a904-98ea-e946-2986-345278e564d5",
+      "message": "problema menor con el acceso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "a233e613-95d8-03a9-68cc-7bde020fd4f1"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "9b2e6a39-b2c5-d9f5-53e2-a9dd503dee4f",
+      "message": "problema menor con el acceso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "0e15b954-3316-35c5-0e30-cbe89b91be27"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "997f2cdc-7d76-5a1f-2750-ca66cb2e06d8",
+      "message": "problema menor con el acceso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "917d17af-45e9-4de1-c30d-eb23d8d23756"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "195e251a-8a29-0c90-c3ba-4c8429247f02",
+      "message": "problema menor con el acceso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "2e8cb93b-cae4-0e08-6c91-6cdf61cc919a"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "8e1d7acb-555b-9d77-7b72-47a7d82940fe",
+      "message": "problema menor con el acceso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "95a9fde4-a5a8-656a-d2bc-8e03d7e3e81a"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "25c0a8a5-c584-4ebf-12ef-d5513d761124",
+      "message": "problema menor con el acceso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "6657463f-b933-8ad2-681d-a7f3fa02de12"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "98b52350-f000-a7c8-af4a-dfab4f71dc76",
+      "message": "problema menor con el acceso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "673de0f8-0c3d-02ce-782c-6f81cd7eb8ca"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "170e0329-c340-004d-8ff8-e9f63d32959d",
+      "message": "problema menor con el acceso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "6013ae1b-018c-a40f-c916-d7d65cbf5258"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "10dd447b-80ac-f323-12cf-75016ab4df3b",
+      "message": "dificultad para procesar un pago",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "765403a6-dd06-37b1-dd93-1b867ca4700e"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "539a24f9-db31-222d-0a4d-a16b2d3350bb",
+      "message": "dificultad para procesar un pago",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "9460b6fd-b6a0-32a0-27c6-da0da2b7851f"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "e2e500b6-8546-3cc4-282f-52b342c28301",
+      "message": "dificultad para procesar un pago",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "fea2cbc7-ca24-90d0-3126-8c73d2414dce"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "56cb8866-526a-a4cf-f602-f260d1f2cac2",
+      "message": "dificultad para procesar un pago",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "92e882da-6275-f587-56ec-c5ef844bf5cf"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "8bc27bf6-f9dc-c4a3-cf75-eb87154c9fde",
+      "message": "dificultad para procesar un pago",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "8966fbc7-8113-047b-85f7-6b929a23b430"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "38fc7bc7-93ae-5d43-341a-db8f20090e91",
+      "message": "dificultad para procesar un pago",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "76ce55ff-29e5-7f8e-ac29-7e1df798a37f"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "07acb4b4-48b3-389a-fd50-130b31de2d51",
+      "message": "dificultad para procesar un pago",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "eed61b65-7c2e-9e1d-26dd-ba5599d2b12d"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "aa84492b-100f-fd6c-80ee-c01e815ab72b",
+      "message": "dificultad para procesar un pago",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "62f76153-d061-82f8-5c80-bfefaba0c3e2"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "d13cdea5-c426-8258-fa8f-e817146efdd5",
+      "message": "dificultad para procesar un pago",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "9cb9c1f6-4fc8-fa62-4ae4-d04e8d5d4993"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "4c3ad1f8-6522-8052-8476-a54163212c0c",
+      "message": "dificultad para procesar un pago",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "e27ddbe3-9157-c935-8f32-61839efe6b8c"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "026005a2-b61b-0181-4efa-ac52a98879df",
+      "message": "dificultad para procesar un pago",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "53277a78-9486-d15e-2474-012d12e8eef4"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "735a6da3-9b2b-7e6b-fdd6-0c951c5e0442",
+      "message": "dificultad para procesar un pago",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "b2496219-5535-d71f-4417-a3600f11e83f"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "242dd92a-52f2-dc92-dc2f-73d7a1b80f3e",
+      "message": "dificultad para procesar un pago",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "bf0e39ef-4182-3972-cdf7-bcb697d9f2fb"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "f260d3f1-6b45-6875-c334-08abde008a1c",
+      "message": "dificultad para procesar un pago",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "3249968d-6ed4-b549-cc24-5c819028e1eb"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "09746c4d-fd81-7e7c-2752-10480557be35",
+      "message": "dificultad para procesar un pago",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "b58bca19-95d0-bffd-683a-11f6b7a359fb"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "1c070051-895a-202a-d325-862b0a389349",
+      "message": "dificultad para procesar un pago",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "6004ef9e-b5ea-cf0e-ceb9-732e823da7e8"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "678d49f2-d047-0248-445d-bc9050162e0f",
+      "message": "dificultad para procesar un pago",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "e73ef597-2b1a-f50c-e65f-ef63f8c32535"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "9b29acb8-48af-8449-cd4b-9d4373233c65",
+      "message": "dificultad para procesar un pago",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "ff6fc972-0829-101a-c608-af5849349831"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "4d37f154-bc6a-e511-9483-57133df26c74",
+      "message": "dificultad para procesar un pago",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "cb475e07-8cf4-61fd-cce8-0993f8b27a29"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "c4193e57-ae93-adf6-d00f-934380b59d87",
+      "message": "dificultad para procesar un pago",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "874cb727-3a7a-a132-c3de-498484ac1703"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "0ddd5f7b-9ba4-5ac7-d009-98c6f3d4b6e2",
+      "message": "error recurrente en el sistema",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "2c9a231c-f905-757b-a6d4-f8ffde2a1337"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "ab8df6e3-8c6f-b7f8-5fa7-284fef920ecc",
+      "message": "error recurrente en el sistema",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "e043cb82-fdf1-093e-a28b-99b6dcb7283a"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "5e50caba-601d-f381-a82e-3e3841ce1496",
+      "message": "error recurrente en el sistema",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "623b70f8-9504-0947-e815-3007bf0690af"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "c95602fc-fe8e-918e-f0fc-4ba58a5e55d7",
+      "message": "error recurrente en el sistema",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "eb57cdd4-da26-d809-df69-d8661f10e032"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "cf025aa6-bdca-d830-11fe-8402920aa58b",
+      "message": "error recurrente en el sistema",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "e8ffc7aa-cd9a-6d9d-680d-c9605f3eb83b"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "0e5658f3-ea5c-a5ba-3f43-3d47fafc3805",
+      "message": "error recurrente en el sistema",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "8572ad1d-a81e-f868-80af-cda99d71b4d2"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "f3b19680-8625-8ad7-19c2-ca98313a1bf7",
+      "message": "error recurrente en el sistema",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "daea1f8a-2f2d-bb39-2505-4710ab411e73"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "eae81cc5-a215-1ebc-2a6d-96267a01c29a",
+      "message": "error recurrente en el sistema",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "36fc0272-0e3b-90d8-19df-e85ff57bc8a6"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "2d5fbcf3-4b21-4932-1a47-c93d1677cb73",
+      "message": "error recurrente en el sistema",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "08c40e77-7f68-a457-b1cf-324e0a7771fe"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "40ce2d80-cc65-9e33-e6dc-c65c7045fb1f",
+      "message": "error recurrente en el sistema",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "df95d8fe-3ea7-492e-fb75-d893e471b41d"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "d8829171-4622-6d66-d13b-6799d786ae7d",
+      "message": "error recurrente en el sistema",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "ff845d3f-3892-ec99-38a4-95435e64415f"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "12ab3d55-a8a8-36c2-cb04-3735201df22e",
+      "message": "error recurrente en el sistema",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c35fe87a-3cc4-e94f-9cd2-b9fa112378f8"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "5034bea7-a983-118b-6c2a-e2e9ddebc56b",
+      "message": "error recurrente en el sistema",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "dd7b9af1-4984-a622-056d-2e3e96c6d987"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "4ca07397-7af5-5f5d-643b-b5fe3d0f1fb6",
+      "message": "error recurrente en el sistema",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "85cc99c5-25a8-48c1-efc7-13c349a16968"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "ee7d66a5-10f5-0cf1-5b9a-8ed3dd52d4e8",
+      "message": "error recurrente en el sistema",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "584c78a5-7738-7ad1-e5d0-aced993df2c9"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "47d4e242-62df-e5cd-01a0-f80ef84b3450",
+      "message": "error recurrente en el sistema",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "284b1148-ee03-5657-58d9-75538c65a171"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "d08123d0-37ef-c684-0602-12aa83a6449b",
+      "message": "error recurrente en el sistema",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "91744d8e-a661-c417-74e8-7789b0960bb9"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "591ff110-7586-cabc-a081-77fe50dd68ec",
+      "message": "error recurrente en el sistema",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c54f2d76-b65c-1144-6eab-ac3e38460936"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "053a7a84-dbc4-d09f-b2d0-97fa557b8ecf",
+      "message": "error recurrente en el sistema",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "005c2183-c62d-3cbd-21b4-cafb3b1ea060"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "dc67515a-2fed-9fc9-18dc-4bd3c1a7652e",
+      "message": "error recurrente en el sistema",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "6cdbe3aa-dda2-fd4b-970b-679fd2bc2dbf"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "f94bbd7a-c9f5-be75-def5-805c9bcd5205",
+      "message": "problema que se repite desde hace días",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "41e1b41b-55f1-39d4-2683-482b9775154b"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "9e828932-2d21-73b1-60c5-4cf0e5804113",
+      "message": "problema que se repite desde hace días",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "1a149614-ac96-b374-b167-ee07745e183d"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "d4058551-0624-46f2-4d47-0e83ec62d1b2",
+      "message": "problema que se repite desde hace días",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "b4dcd88c-2aed-9a72-866f-147635af8b5b"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "e266bb9a-7136-9ea8-14d1-2a50a23de305",
+      "message": "problema que se repite desde hace días",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "8ccd6afd-148a-c275-f91e-060003a4268a"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "5868bb49-8523-cfca-c57e-d55009d3aa50",
+      "message": "problema que se repite desde hace días",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "02efad74-bb65-2417-5b0e-8173b26a37b3"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "2df0de7b-1298-1c61-1aac-0058a423eac4",
+      "message": "problema que se repite desde hace días",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "67b8e8f1-f510-1e65-7061-723d8088346a"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "be4057d0-a920-cdab-7bd4-e09b137b3d55",
+      "message": "problema que se repite desde hace días",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "7444b2cb-e8f6-7c56-6d8e-1361f70454ab"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "121c483a-bf95-860f-6507-ba32a0e87c40",
+      "message": "problema que se repite desde hace días",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "7e8f6459-59ca-3590-7522-9443f7b895cd"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "be88cdc6-d4fe-c573-ac27-3710bf3d1984",
+      "message": "problema que se repite desde hace días",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "5252879e-254b-ac43-e9b9-3e4a9329680c"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "7e207f2e-08d7-83eb-028d-32d8b18c2840",
+      "message": "problema que se repite desde hace días",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "8091b604-5dd5-8786-2c32-223ead748b04"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "16f6489b-d99a-5c67-d9d5-800f62b99f8b",
+      "message": "problema que se repite desde hace días",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "6ebe2260-a44d-47b5-aae8-8e7ff5c69f6c"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "28889498-f1dd-f350-4267-3d2757b52548",
+      "message": "problema que se repite desde hace días",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "d66e09f7-290a-8e99-2ba5-e5c596ea5c38"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "140eaf07-0441-572c-c519-d3da4a30a6fd",
+      "message": "problema que se repite desde hace días",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "4e235657-f5c1-7b4a-6fd0-b3c7b3fb0d2b"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "059bd901-306e-2215-d673-82698ac622d7",
+      "message": "problema que se repite desde hace días",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "b8d7863b-fdb1-ca91-6f8a-5ffd44784092"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "80c41421-bd79-de1c-d94b-3ef2d853023b",
+      "message": "problema que se repite desde hace días",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "cb94a4db-9292-a201-d46b-f3bfec907f60"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "4132b273-c824-148d-f416-deff1092b783",
+      "message": "problema que se repite desde hace días",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "be3a96e6-fbf7-b55f-163a-293488ba3e1a"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "23f4c96d-e58c-41b8-c074-290bafceb822",
+      "message": "problema que se repite desde hace días",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "422a78d4-a180-4f77-7bdc-78786074876c"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "a0249187-6118-6866-c28c-e060e400b6bb",
+      "message": "problema que se repite desde hace días",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "720c1dee-0540-6443-594f-75e81120b4cb"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "bcb8ca43-6c64-2317-8016-d4dc59b667ef",
+      "message": "problema que se repite desde hace días",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "4dee995d-09e4-ebc2-b8dd-48348bf1c72a"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "fd482a4d-0237-332e-cc0a-b557a3f04114",
+      "message": "problema que se repite desde hace días",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "9a3b1c57-e505-7f35-5b54-73ccb3ab1282"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "2d098633-b4ed-eec4-79c9-e2678cb340e6",
+      "message": "situación que afecta mi operación normal",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "314cb1d5-89d2-c067-93cc-31a58a87ba0d"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "afe04616-d77a-b86d-0b30-0eea61cf3a50",
+      "message": "situación que afecta mi operación normal",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "f6927822-da13-3dc3-5c22-478b76295dae"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "add8326a-2486-eb4e-39c3-4b93a0151025",
+      "message": "situación que afecta mi operación normal",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "a0d9e6ea-f4d9-25af-104c-c7c34f3c669d"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "888c23cb-6264-48c3-e746-571f40bf408d",
+      "message": "situación que afecta mi operación normal",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "05d4ef29-d2e3-59eb-2d69-71916391adca"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "0ea8144b-2177-66dd-2753-7fb713d69b4c",
+      "message": "situación que afecta mi operación normal",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "db015e81-a301-f20f-01a5-e16e3133620f"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "2e7acf9b-c673-136f-edf1-9224701f9b7e",
+      "message": "situación que afecta mi operación normal",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "65efc9f5-8f92-b02e-d49a-61e61de28aae"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "f5264ad7-9c6a-80a9-4cce-f48991ea111d",
+      "message": "situación que afecta mi operación normal",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "eb4fb0fb-ad80-25b3-3a02-4cec9e357476"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "205639b5-7e18-d01b-bb82-465f40abbc08",
+      "message": "situación que afecta mi operación normal",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "e79d5efd-5343-68e9-30c6-36b8ec190ab3"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "5b081f70-2d54-19b2-59d7-85d4fd2d9280",
+      "message": "situación que afecta mi operación normal",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "9b12b5bb-3501-fbfe-2091-5aab5590ca3c"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "0d14a5f7-2674-0653-b9c9-4bca247af410",
+      "message": "situación que afecta mi operación normal",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "68282279-af8c-7670-9167-ba64ee50bc03"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "f6ff5aff-1ee1-94e1-3191-bc7969872f04",
+      "message": "situación que afecta mi operación normal",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "28afe094-b9be-3391-bd60-6cd4c5f3a142"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "06e6e4f5-c2aa-63b0-fe9a-a7b5d436c2fd",
+      "message": "situación que afecta mi operación normal",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "64645444-be59-55fa-72f5-f26f58d106f2"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "9a3aa62c-f651-fec1-c410-cc758b85ef18",
+      "message": "situación que afecta mi operación normal",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "585a40b5-9746-3bfa-f355-894340b8d14e"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "81557631-f2b2-0f84-f9dd-9ad690daa175",
+      "message": "situación que afecta mi operación normal",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "f0b0a47d-82c0-04f0-496c-f7c611e8b301"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "8681daa6-64a1-b5ab-ebb9-b2d652992fe1",
+      "message": "situación que afecta mi operación normal",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "6921cf8b-b5bc-eb2f-7767-44df778d96d0"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "c605ca91-742c-ba65-7f5b-9e756b2fbce4",
+      "message": "situación que afecta mi operación normal",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "6fd5f12b-0d9a-899f-3fce-2f93165810b4"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "0604f875-7411-d7ce-51c8-b866c38ab3f3",
+      "message": "situación que afecta mi operación normal",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "605c9ea6-e810-5024-8fea-f7fedfc851c8"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "baeaa3b8-97ac-08bb-8758-18ae1857baba",
+      "message": "situación que afecta mi operación normal",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "574b5545-f150-db73-27ec-5b25c8e3234e"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "ae5306a0-768a-a239-19e0-ffeb53239920",
+      "message": "situación que afecta mi operación normal",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "5394efa8-5aa6-b3c2-060f-54b4efea98c5"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "73c85398-01ed-2fe3-c62f-810bdd3d6ab8",
+      "message": "situación que afecta mi operación normal",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "858008c8-5eff-e99d-f69c-b37c2ee83161"
+    },
+    {
+      "user_id": "U-0008",
+      "session_id": "edfb304a-5d93-a24f-2247-7fe26cf0c147",
+      "message": "problema crítico que bloquea mi trabajo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "3d3fbf40-f013-fa6b-8144-927b5f19835d"
+    },
+    {
+      "user_id": "U-0008",
+      "session_id": "0bd99d81-1c4e-2286-28f9-0642503f6c6d",
+      "message": "problema crítico que bloquea mi trabajo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "611490c4-4cdb-f5e4-4f16-f69fdf314552"
+    },
+    {
+      "user_id": "U-0008",
+      "session_id": "41fcb746-2cea-62bf-f254-9be9ca648059",
+      "message": "problema crítico que bloquea mi trabajo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c6ff5e79-3593-c448-c05c-59703adf8774"
+    },
+    {
+      "user_id": "U-0008",
+      "session_id": "0a8593ee-981c-efa3-7eae-d333e75298b5",
+      "message": "problema crítico que bloquea mi trabajo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "cb751874-c144-9d25-66c7-589aacb5d4e2"
+    },
+    {
+      "user_id": "U-0008",
+      "session_id": "806451cb-d9bf-d516-16cb-0072af521915",
+      "message": "problema crítico que bloquea mi trabajo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "868e835e-0699-5d51-cef7-7092805b1f01"
+    },
+    {
+      "user_id": "U-0008",
+      "session_id": "40698533-dc8e-8b9e-5d7d-4e5d54b0876c",
+      "message": "problema crítico que bloquea mi trabajo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "058bdf98-6e5d-54e7-0b1c-c78a317cc104"
+    },
+    {
+      "user_id": "U-0008",
+      "session_id": "3bfb1e19-8d98-1c47-175a-a0627e49af97",
+      "message": "problema crítico que bloquea mi trabajo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "a7d74d22-976f-9e11-c8dd-9f0733d16afa"
+    },
+    {
+      "user_id": "U-0008",
+      "session_id": "53f1fd07-a39e-e2a9-2a35-aa2cd6faf41f",
+      "message": "problema crítico que bloquea mi trabajo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "a0f8d51b-0426-2300-94e1-f3d9282fc3d2"
+    },
+    {
+      "user_id": "U-0008",
+      "session_id": "ebfc0653-a6c2-e799-e62d-d2732ffd38c2",
+      "message": "problema crítico que bloquea mi trabajo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "0a6a49ff-d897-9143-7592-70ad23bcc89f"
+    },
+    {
+      "user_id": "U-0008",
+      "session_id": "7624eda0-d2b1-daaa-b916-a726f875d3d3",
+      "message": "problema crítico que bloquea mi trabajo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "4352dd46-15ae-1868-b8db-e9d4ccae5e27"
+    },
+    {
+      "user_id": "U-0008",
+      "session_id": "3408161a-ba74-e52a-82e5-254c600cf3a1",
+      "message": "problema crítico que bloquea mi trabajo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "215ab5c5-7038-cd46-6030-fd85aa8f19fc"
+    },
+    {
+      "user_id": "U-0008",
+      "session_id": "d99034a3-2ef7-c4f1-ef79-9e7ec3efe04a",
+      "message": "problema crítico que bloquea mi trabajo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "68c8c20a-6b09-6b20-1535-e0ca4f93fc59"
+    },
+    {
+      "user_id": "U-0008",
+      "session_id": "c4946850-e2c0-b6cd-faa4-576945f181ff",
+      "message": "problema crítico que bloquea mi trabajo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "20fa0a98-471c-9e7d-b530-8c064a420c84"
+    },
+    {
+      "user_id": "U-0008",
+      "session_id": "c7fbe7fd-8ae7-1f6b-4305-d812eb58ea69",
+      "message": "problema crítico que bloquea mi trabajo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "bc2e2c52-caed-bcbd-64fe-6e56fe8b64f5"
+    },
+    {
+      "user_id": "U-0008",
+      "session_id": "568fa239-1f55-498e-bb88-8cf776dc02ce",
+      "message": "problema crítico que bloquea mi trabajo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "6c8b25f2-e071-579f-627b-b0c8d93cf21b"
+    },
+    {
+      "user_id": "U-0008",
+      "session_id": "c899ff19-a3eb-0795-c608-b6111491c0aa",
+      "message": "problema crítico que bloquea mi trabajo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "29b0b2d3-a9e2-624b-8673-168a1fcd8f7e"
+    },
+    {
+      "user_id": "U-0008",
+      "session_id": "f5ac3db9-60cb-847a-89b3-d5eba84c8e61",
+      "message": "problema crítico que bloquea mi trabajo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "5a3bd545-f1fb-21b4-88aa-a61ada8d93ce"
+    },
+    {
+      "user_id": "U-0008",
+      "session_id": "5b5cb16b-33e7-ab95-f5a9-693ae3e06b60",
+      "message": "problema crítico que bloquea mi trabajo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "41a797bd-576f-b6ad-0a02-cb4e8347ba04"
+    },
+    {
+      "user_id": "U-0008",
+      "session_id": "36f4deac-63eb-a688-69e9-18b7d2c417ba",
+      "message": "problema crítico que bloquea mi trabajo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "84e12115-0254-ffc8-ad00-70c13c7fa7be"
+    },
+    {
+      "user_id": "U-0008",
+      "session_id": "a26c3146-3d57-3d64-c5d6-feb2d8640ae6",
+      "message": "problema crítico que bloquea mi trabajo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "8c1aeba8-81f5-885e-b422-652a87f3c592"
+    },
+    {
+      "user_id": "U-0009",
+      "session_id": "3717e50b-c2cc-c044-d463-181973a8bc8a",
+      "message": "FALLO TOTAL: sistema completamente caído",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "0c10ba48-0c77-e093-61a8-facca9ee7862"
+    },
+    {
+      "user_id": "U-0009",
+      "session_id": "96bb5136-6b22-1e20-6e7d-10000f42968c",
+      "message": "FALLO TOTAL: sistema completamente caído",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "86a90dcd-79ed-81f7-b889-41787efe563d"
+    },
+    {
+      "user_id": "U-0009",
+      "session_id": "aa6502c8-05db-110b-3e49-0feac26581c6",
+      "message": "FALLO TOTAL: sistema completamente caído",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "29467ad0-c893-78cd-92fa-0559cd9f8ce7"
+    },
+    {
+      "user_id": "U-0009",
+      "session_id": "04d9394a-506c-4f9a-81cf-0b1850f3820a",
+      "message": "FALLO TOTAL: sistema completamente caído",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "74472483-8f48-e189-441f-bcdd7d9e69d1"
+    },
+    {
+      "user_id": "U-0009",
+      "session_id": "373e77f0-3981-9a14-fd96-5efc64f05ab1",
+      "message": "FALLO TOTAL: sistema completamente caído",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "2a1e6845-7e77-45ba-0c4c-43490fa79d5f"
+    },
+    {
+      "user_id": "U-0009",
+      "session_id": "60e4561b-5d81-8756-efc5-d175c7ca9be0",
+      "message": "FALLO TOTAL: sistema completamente caído",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c71023db-339e-b115-1ba2-6970ab3657cb"
+    },
+    {
+      "user_id": "U-0009",
+      "session_id": "cc41934f-70ca-82e0-a434-3b6dfed6a183",
+      "message": "FALLO TOTAL: sistema completamente caído",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "4f0c2f2e-0eb1-7da2-e1df-a91e78f243fd"
+    },
+    {
+      "user_id": "U-0009",
+      "session_id": "991ea2f4-caa2-995a-e3b0-e877d0395181",
+      "message": "FALLO TOTAL: sistema completamente caído",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "db951502-8f56-0952-798e-876fdf2e2edf"
+    },
+    {
+      "user_id": "U-0009",
+      "session_id": "71438c7a-b03c-1235-ce6a-677f0ab1cbf9",
+      "message": "FALLO TOTAL: sistema completamente caído",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "1c7bf242-1579-c2f2-521c-33115bab29cb"
+    },
+    {
+      "user_id": "U-0009",
+      "session_id": "46bfcdcb-ba9c-525c-938c-41e5d2937896",
+      "message": "FALLO TOTAL: sistema completamente caído",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "52f3b9a6-b9a3-300d-0d19-c5fae9c5432b"
+    },
+    {
+      "user_id": "U-0009",
+      "session_id": "cc83fbd2-938b-399d-da99-9d4daba97cee",
+      "message": "FALLO TOTAL: sistema completamente caído",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "fa37a7d2-0592-e943-d6d1-bfe1dd809a64"
+    },
+    {
+      "user_id": "U-0009",
+      "session_id": "3f2b2322-122f-e5b9-ef7d-98ca2d4a5bc1",
+      "message": "FALLO TOTAL: sistema completamente caído",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c0532ad8-29e4-b094-8477-ae48be3a3704"
+    },
+    {
+      "user_id": "U-0009",
+      "session_id": "6870e99d-8524-0b69-f817-46e6cfb6e3f3",
+      "message": "FALLO TOTAL: sistema completamente caído",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "32cee32e-d065-c288-b36f-5bd52c4cd2a1"
+    },
+    {
+      "user_id": "U-0009",
+      "session_id": "e1188f6f-2e7a-1910-1a8c-898bc7a5a77f",
+      "message": "FALLO TOTAL: sistema completamente caído",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "690dccec-713a-f711-00b5-d8caad4f1009"
+    },
+    {
+      "user_id": "U-0009",
+      "session_id": "7f4587dc-0a7c-c570-8d18-87b7653452ad",
+      "message": "FALLO TOTAL: sistema completamente caído",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "f1118dd8-1a0e-4974-3bc5-05baffc0b2f5"
+    },
+    {
+      "user_id": "U-0009",
+      "session_id": "c6f60cb1-a344-e248-420f-d84b0fd7b8ad",
+      "message": "FALLO TOTAL: sistema completamente caído",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "2b3862f0-fecd-731e-3a21-2ee4d1e2262a"
+    },
+    {
+      "user_id": "U-0009",
+      "session_id": "7e0909b9-160c-f82b-ba1e-08fe3c923e39",
+      "message": "FALLO TOTAL: sistema completamente caído",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "42436c32-64e3-663b-c9ff-6ef1a74889ac"
+    },
+    {
+      "user_id": "U-0009",
+      "session_id": "03c74d2b-4829-67db-9c4d-b247b1252afe",
+      "message": "FALLO TOTAL: sistema completamente caído",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "d021f919-2b77-4d9d-46fd-c374d44724ae"
+    },
+    {
+      "user_id": "U-0009",
+      "session_id": "8259300d-a54d-6b89-fe66-6aa6e8e8d2a1",
+      "message": "FALLO TOTAL: sistema completamente caído",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "21672d9c-0b28-5cdf-db24-633bae2afcff"
+    },
+    {
+      "user_id": "U-0009",
+      "session_id": "a9b85a42-ea53-0fb5-ab91-13f11d588712",
+      "message": "FALLO TOTAL: sistema completamente caído",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "1ec1b757-6808-1781-d9ce-32aa27409329"
+    },
+    {
+      "user_id": "U-0010",
+      "session_id": "327cd337-f20e-266c-4ed0-651f5450eb10",
+      "message": "URGENTE MÁXIMA PRIORIDAD: bloqueo total del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "96f2e51f-0768-32e4-8c81-bbfc7dc813f8"
+    },
+    {
+      "user_id": "U-0010",
+      "session_id": "476acb75-8254-a2af-af11-c95e48f2f36e",
+      "message": "URGENTE MÁXIMA PRIORIDAD: bloqueo total del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "61ec2e66-6e06-b0d4-6ba7-f645ed284bc9"
+    },
+    {
+      "user_id": "U-0010",
+      "session_id": "a2391f8a-5ea7-ece5-8045-4af9356809f8",
+      "message": "URGENTE MÁXIMA PRIORIDAD: bloqueo total del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "566c19de-14a4-c5e2-5385-3bff8eb7e1b6"
+    },
+    {
+      "user_id": "U-0010",
+      "session_id": "de10bcbc-466d-4490-b0b7-469a4cd48e84",
+      "message": "URGENTE MÁXIMA PRIORIDAD: bloqueo total del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "58cff4b8-b52b-17af-3198-9ed6d0df105e"
+    },
+    {
+      "user_id": "U-0010",
+      "session_id": "4ea0f5ce-6d45-d12e-e49f-1676c6c007b0",
+      "message": "URGENTE MÁXIMA PRIORIDAD: bloqueo total del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "a5a6e6f2-3b01-42cb-1d6d-84e496ae1d11"
+    },
+    {
+      "user_id": "U-0010",
+      "session_id": "fa6db2ed-b5b7-a38c-60f1-218dee29230e",
+      "message": "URGENTE MÁXIMA PRIORIDAD: bloqueo total del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "8e9f5ae3-5a60-6f2c-2da1-1db0acabe515"
+    },
+    {
+      "user_id": "U-0010",
+      "session_id": "8d2afee6-8b56-2c67-2d51-3136d098e4ec",
+      "message": "URGENTE MÁXIMA PRIORIDAD: bloqueo total del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "164c303a-1d93-008f-8b2a-ed17c04443f8"
+    },
+    {
+      "user_id": "U-0010",
+      "session_id": "c535679a-c4fc-f5f4-3710-c6806a1807f4",
+      "message": "URGENTE MÁXIMA PRIORIDAD: bloqueo total del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "eacdb6ee-f12f-2064-ff23-9f4af2ab0f53"
+    },
+    {
+      "user_id": "U-0010",
+      "session_id": "d025102e-0fc1-aa17-8261-379fd3348d3b",
+      "message": "URGENTE MÁXIMA PRIORIDAD: bloqueo total del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "e106912f-ff17-4c6d-2fc4-38bed86d546e"
+    },
+    {
+      "user_id": "U-0010",
+      "session_id": "4d4fef44-4274-6be8-cc54-6033e9cf5390",
+      "message": "URGENTE MÁXIMA PRIORIDAD: bloqueo total del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "9dff5bdb-f498-ddb8-486a-35d3370f534d"
+    },
+    {
+      "user_id": "U-0010",
+      "session_id": "e7f286ae-0305-fdea-cbe2-5fcb7126a778",
+      "message": "URGENTE MÁXIMA PRIORIDAD: bloqueo total del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "83d0c90e-2ed2-9cc3-b8b5-4bf303dc9a90"
+    },
+    {
+      "user_id": "U-0010",
+      "session_id": "818180b8-0290-acf0-165c-ce8208e4981b",
+      "message": "URGENTE MÁXIMA PRIORIDAD: bloqueo total del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "3b7326c8-755a-dc67-e126-aba705aa221b"
+    },
+    {
+      "user_id": "U-0010",
+      "session_id": "3a289ab0-94ce-ba2a-9253-87f5494414ec",
+      "message": "URGENTE MÁXIMA PRIORIDAD: bloqueo total del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "055e95aa-4a04-635e-b2a5-bfa3eca9ccc8"
+    },
+    {
+      "user_id": "U-0010",
+      "session_id": "16f47045-84c1-248a-465f-ce899ef90249",
+      "message": "URGENTE MÁXIMA PRIORIDAD: bloqueo total del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "892e71a8-c663-d212-17de-1ed4eacb0ae5"
+    },
+    {
+      "user_id": "U-0010",
+      "session_id": "144d2611-052f-5653-ee6c-6d0238973ee3",
+      "message": "URGENTE MÁXIMA PRIORIDAD: bloqueo total del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "416bc921-e3c9-a9f2-6aec-992d15896257"
+    },
+    {
+      "user_id": "U-0010",
+      "session_id": "6251ce88-288f-2740-353d-fa9c874c35f2",
+      "message": "URGENTE MÁXIMA PRIORIDAD: bloqueo total del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "0501706a-2096-4d63-b6b5-a09b0777e737"
+    },
+    {
+      "user_id": "U-0010",
+      "session_id": "1ec85bdc-ff9c-4df0-e8e0-0ca7a2340994",
+      "message": "URGENTE MÁXIMA PRIORIDAD: bloqueo total del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "6a0d2ddd-c23a-7a1b-9efd-8ff6e06eb580"
+    },
+    {
+      "user_id": "U-0010",
+      "session_id": "b99797c7-14f2-105c-d53b-2636fd19b880",
+      "message": "URGENTE MÁXIMA PRIORIDAD: bloqueo total del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "e791d388-0b50-560d-2815-5a4fc990bc66"
+    },
+    {
+      "user_id": "U-0010",
+      "session_id": "8f34f86f-5af0-d071-3ea0-4a9c0ac65bb8",
+      "message": "URGENTE MÁXIMA PRIORIDAD: bloqueo total del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c437d5a2-b70d-b4a5-973f-f321ad0ad917"
+    },
+    {
+      "user_id": "U-0010",
+      "session_id": "0281f4e0-f944-a9f8-a884-38712267bb48",
+      "message": "URGENTE MÁXIMA PRIORIDAD: bloqueo total del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "0fc899d6-b8ab-99d5-c8f9-c4aff7a61924"
+    }
+  ]
+}

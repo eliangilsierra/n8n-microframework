@@ -1,0 +1,13 @@
+{
+  "_meta": {
+    "caso": "bot",
+    "set": "D",
+    "escenario": "Token valido pero message vacio — as-is acepta sin validar, to-be rechaza con 400",
+    "response_esperado_asis": 200,
+    "response_esperado_tobe": 400
+  },
+  "token": "mi-token-secreto-hardcodeado-123",
+  "user_id": "user-D",
+  "session_id": "sess-D",
+  "message": ""
+}

@@ -1,0 +1,1414 @@
+{
+  "_meta": {
+    "caso": "bot",
+    "set": "F",
+    "seed": 20260421001,
+    "master_seed": 20260421,
+    "generated_at": "2026-04-21",
+    "count": 200,
+    "distribution": "normal_variable_100pct_valid",
+    "sha256": "76ac99ac9fa1729a5963c8bd028c43d2f3cdb32b3a1c230edb03a7e7f08b74bc"
+  },
+  "payloads": [
+    {
+      "user_id": "U-0191",
+      "session_id": "fc1d23c1-99d8-3197-1ea9-ac9dc4e5a94c",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "462978bd-a69c-0e5b-fd44-b710300851c2"
+    },
+    {
+      "user_id": "U-0386",
+      "session_id": "f82ab078-e766-4243-c53e-0218955c65a6",
+      "message": "El sistema no acepta mi tarjeta de crédito",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "10e40f62-6de7-86f7-1436-63cd6ad40349"
+    },
+    {
+      "user_id": "U-0146",
+      "session_id": "a1598d83-9791-c47d-87af-38781b38c6dd",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "f777b738-f84b-fbce-7094-bfcfa884987d"
+    },
+    {
+      "user_id": "U-0199",
+      "session_id": "4ac545d0-d1e1-7223-3e73-e9354a6c3f92",
+      "message": "Tengo un problema con mi cuenta de usuario",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "45cc52ae-2a4b-5a19-0be5-5b7f56f63c8c"
+    },
+    {
+      "user_id": "U-0386",
+      "session_id": "85e17de0-0c32-e0db-d8d5-e3257301426d",
+      "message": "No puedo acceder al sistema desde esta mañana",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "e44dd23a-0fb7-81b5-fb1b-19b46dbc82d1"
+    },
+    {
+      "user_id": "U-0339",
+      "session_id": "2416638c-c04c-e4d4-9a79-059c32268bd8",
+      "message": "Tengo un problema con mi cuenta de usuario",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c11b1808-5692-578a-545e-5098c4c54bcd"
+    },
+    {
+      "user_id": "U-0128",
+      "session_id": "2864c504-2b10-1842-124e-24bc8510df86",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "7e2b94f7-d66e-26a6-c7b5-1f567ef74850"
+    },
+    {
+      "user_id": "U-0422",
+      "session_id": "0ba64e5f-1446-679d-70ac-ba77797ae5f6",
+      "message": "No puedo acceder al sistema desde esta mañana",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "20a3ed6d-6378-3f34-0d1f-d45fd5d755a9"
+    },
+    {
+      "user_id": "U-0326",
+      "session_id": "30f3bf95-32e6-cc32-92c6-83bc2437ce4b",
+      "message": "Tengo un problema con mi cuenta de usuario",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "37411a1b-355a-b3d6-fd45-6de4754d6e95"
+    },
+    {
+      "user_id": "U-0251",
+      "session_id": "e1fa1ba8-006a-3ea1-6745-9ef826a7d83c",
+      "message": "Hay un cargo desconocido en mi factura",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "a46ae2e8-2f04-9206-a765-ea983fbc7e5a"
+    },
+    {
+      "user_id": "U-0479",
+      "session_id": "77a9fb00-88b9-3818-7c09-a28818ac41f0",
+      "message": "Necesito información sobre mis pagos pendientes",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "a2ce1e6e-acae-fbb0-fdbf-56c04682d744"
+    },
+    {
+      "user_id": "U-0097",
+      "session_id": "eff045de-c88d-4712-2afa-71ca435c68d1",
+      "message": "Tengo un problema con mi cuenta de usuario",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "552affe0-a753-787b-84eb-0de6f722003f"
+    },
+    {
+      "user_id": "U-0001",
+      "session_id": "b3722003-8f7a-c51d-e3e0-10d05d88c3c9",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "3cf16bd9-5f34-7ae6-1253-d8f9af0dc684"
+    },
+    {
+      "user_id": "U-0264",
+      "session_id": "8f94081d-6666-9365-e817-72ee9f728536",
+      "message": "Hay un cargo desconocido en mi factura",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "9f5dee8c-8277-155b-987d-1b20ddadcb75"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "dccdd077-7b7b-2868-b482-6981ae0233a2",
+      "message": "No puedo acceder al sistema desde esta mañana",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "dab41330-d949-cfe0-78e8-001973da1597"
+    },
+    {
+      "user_id": "U-0223",
+      "session_id": "60fa14d9-4cd8-0074-0129-ec1f4aaf0319",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "7898f6c3-4909-c4d9-41f2-46a61208d6ba"
+    },
+    {
+      "user_id": "U-0187",
+      "session_id": "d8778534-4b66-ec84-229f-5a7201051d52",
+      "message": "Hola, necesito ayuda con mi factura del mes pasado",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "630e2f87-ee62-f8e3-3f92-a6177ac005db"
+    },
+    {
+      "user_id": "U-0492",
+      "session_id": "ca69d296-28e7-0ad4-beae-49d1a4058b37",
+      "message": "El sistema no acepta mi tarjeta de crédito",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "e314aed7-8738-32f0-b1ff-c3f7c03a16bc"
+    },
+    {
+      "user_id": "U-0473",
+      "session_id": "25a18bbd-9862-1241-d414-e4768f5fa167",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "503a56e9-0d23-4931-e77e-5b1b3eee3d10"
+    },
+    {
+      "user_id": "U-0143",
+      "session_id": "7b764646-7e82-db13-96a9-d35378d5ea35",
+      "message": "El sistema no acepta mi tarjeta de crédito",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "3d7d7728-7a0d-a408-0c1f-ab0f0d5d19bf"
+    },
+    {
+      "user_id": "U-0150",
+      "session_id": "aaffec94-aca7-8f7c-a7ae-522fed633ea7",
+      "message": "Mi servicio ha sido interrumpido sin previo aviso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "87395990-d512-9bf2-5761-73e69a4cef83"
+    },
+    {
+      "user_id": "U-0319",
+      "session_id": "eaee20c6-f146-b780-9326-e6d0f0b49f46",
+      "message": "Necesito una copia de mi contrato",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "4e57df8d-cc3d-86d0-63f0-f0a3f601f1f8"
+    },
+    {
+      "user_id": "U-0209",
+      "session_id": "51c6ec99-c545-4144-5a26-dc8585ed764c",
+      "message": "Hola, necesito ayuda con mi factura del mes pasado",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "6deabbd0-104a-f073-aa81-fda9b9015d7a"
+    },
+    {
+      "user_id": "U-0473",
+      "session_id": "1fdef1a8-b9d6-9368-a91e-e64287bf64df",
+      "message": "Quiero cambiar mi contraseña",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "82abe39a-5d34-4dd5-5cc2-986f1c4bee81"
+    },
+    {
+      "user_id": "U-0278",
+      "session_id": "ff22136f-30d2-69c9-856b-d4f840138f55",
+      "message": "Necesito una copia de mi contrato",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "a7d812c0-a917-7bdb-951a-c186a195a582"
+    },
+    {
+      "user_id": "U-0412",
+      "session_id": "b635a06e-46c7-2208-05eb-3949e5be6e33",
+      "message": "Necesito actualizar mis datos de contacto",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "9f79d794-b683-68a2-67d3-1cea24bc64e9"
+    },
+    {
+      "user_id": "U-0480",
+      "session_id": "f9671397-fabb-a3a5-c8c7-934d5b06453f",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "f7861762-24ed-769f-c0e8-2cacec51d2dd"
+    },
+    {
+      "user_id": "U-0250",
+      "session_id": "df1b11d5-7a69-2da2-af7e-42708fa210fa",
+      "message": "Quiero cambiar mi contraseña",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "fb8cd23e-20a6-5c73-1a1b-566e0b625854"
+    },
+    {
+      "user_id": "U-0290",
+      "session_id": "a19716aa-3c29-add1-39d4-a0d0ac20c0b4",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "8d45c2f1-68d0-1ad0-5aa6-83737fbc142c"
+    },
+    {
+      "user_id": "U-0110",
+      "session_id": "0c9c5736-8c05-9ffb-a7f7-add5f668a3d5",
+      "message": "Hola, necesito ayuda con mi factura del mes pasado",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "7008fc37-5580-018a-9348-bd7d760362f3"
+    },
+    {
+      "user_id": "U-0066",
+      "session_id": "087fa3fe-6d83-880e-4afc-ea57a2b9e4c6",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "1069aa31-05dc-31b2-a1f0-6c74a5c0d0ee"
+    },
+    {
+      "user_id": "U-0487",
+      "session_id": "a6e0f632-0fe3-529a-16b3-0cb433f073ad",
+      "message": "Necesito información sobre mis pagos pendientes",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c9395f0b-2b37-05ce-5d8c-e7557d371237"
+    },
+    {
+      "user_id": "U-0121",
+      "session_id": "ea40fbd1-e1f1-85e3-d281-1c85e6542954",
+      "message": "Tengo un problema con mi cuenta de usuario",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "225c5468-b72e-6872-25c2-78ef742966e3"
+    },
+    {
+      "user_id": "U-0464",
+      "session_id": "f4c59f87-6997-f911-2aa9-a0b9168a06ea",
+      "message": "Necesito actualizar mis datos de contacto",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "19989526-2eb5-1bcd-dfa6-d5c97fe58178"
+    },
+    {
+      "user_id": "U-0224",
+      "session_id": "fe5834ad-67f6-8571-4977-4da79f3fa044",
+      "message": "Necesito información sobre mis pagos pendientes",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "5dc8c049-0b69-7f70-8ae2-3d26fec68a32"
+    },
+    {
+      "user_id": "U-0226",
+      "session_id": "fca19562-be68-fc89-7a33-05fca03e1344",
+      "message": "Necesito actualizar mis datos de contacto",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "8cd5fb9b-f07d-61ad-6a91-b717c66b0eef"
+    },
+    {
+      "user_id": "U-0030",
+      "session_id": "7a1ecaec-99a0-b4e9-d445-9777ae57e6b9",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "7f3d1d1b-bf69-e0da-8929-2c6081fe4f8a"
+    },
+    {
+      "user_id": "U-0478",
+      "session_id": "cc6d8a21-2864-1c44-9643-5e631df6039b",
+      "message": "Necesito actualizar mis datos de contacto",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "9b44da21-42e5-0596-d8b1-28a02d7dd804"
+    },
+    {
+      "user_id": "U-0428",
+      "session_id": "9d347f0a-4214-1334-2dd6-b7fd9fd27fcf",
+      "message": "Quiero cambiar mi contraseña",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "45d29cc3-c231-1315-0b6e-b72f17e314d5"
+    },
+    {
+      "user_id": "U-0221",
+      "session_id": "62db9d14-54b9-4d28-c1f0-e819f8a3c23c",
+      "message": "No puedo acceder al sistema desde esta mañana",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "bd8f3295-0cb2-5aed-b269-4dd5d4fa6eff"
+    },
+    {
+      "user_id": "U-0195",
+      "session_id": "57a9485a-1bb0-e84c-ffe9-cc133e2cec49",
+      "message": "El sistema no acepta mi tarjeta de crédito",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "f994a64b-54dc-2d21-2c84-d8e15e5d5d80"
+    },
+    {
+      "user_id": "U-0045",
+      "session_id": "7d5f5fe6-a1ad-1fd0-e983-217d1116fa64",
+      "message": "Mi servicio ha sido interrumpido sin previo aviso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "30d1985b-0646-5da0-f41d-9f023b6b78e3"
+    },
+    {
+      "user_id": "U-0233",
+      "session_id": "3f9550c4-0fbe-4dbd-4505-370114feb81d",
+      "message": "El sistema no acepta mi tarjeta de crédito",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "39f3f901-70d3-3b9e-13c1-4424521641dc"
+    },
+    {
+      "user_id": "U-0317",
+      "session_id": "d2cd2b9f-cca4-684a-72bf-8deedc581db0",
+      "message": "Necesito una copia de mi contrato",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "9e49d712-ea0a-dff5-b374-f7dd4b8c4bd5"
+    },
+    {
+      "user_id": "U-0108",
+      "session_id": "f5b15631-07a6-5b6e-e7d6-51c5c4dec703",
+      "message": "Necesito información sobre mis pagos pendientes",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "ecfe0ed9-9156-e307-9616-d89b222bc737"
+    },
+    {
+      "user_id": "U-0117",
+      "session_id": "b32ffae9-ade1-b1d3-b954-edfe9871a5ba",
+      "message": "No puedo acceder al sistema desde esta mañana",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "52e8a9d1-0e7f-196a-4b5c-d2077a2b8c3c"
+    },
+    {
+      "user_id": "U-0418",
+      "session_id": "3a625a08-2b23-7f45-0413-f139e7d662ba",
+      "message": "Necesito información sobre mis pagos pendientes",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "d2abad2e-92e2-65d9-7578-f931f521616d"
+    },
+    {
+      "user_id": "U-0217",
+      "session_id": "ea05a898-6ea1-9c08-93fc-c1f49dcc702c",
+      "message": "Quiero cambiar mi contraseña",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "945f0d81-f5d7-ac37-722d-f34d86899419"
+    },
+    {
+      "user_id": "U-0396",
+      "session_id": "0d8c9270-ad59-db18-f9b9-f2382c424ae9",
+      "message": "No puedo acceder al sistema desde esta mañana",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "b93cfa71-73db-72bf-805d-bb1e1cf9eba4"
+    },
+    {
+      "user_id": "U-0011",
+      "session_id": "6ba30bd5-9f8c-6e49-b168-d527bb137b9c",
+      "message": "Quiero cambiar mi contraseña",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "20c6bfaf-65b4-61c7-b776-74b572732feb"
+    },
+    {
+      "user_id": "U-0455",
+      "session_id": "b6805e3c-6b86-5763-f952-e73e5d798977",
+      "message": "Hola, necesito ayuda con mi factura del mes pasado",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "aa1c86a8-12f9-cd2a-8bc7-12aafba66758"
+    },
+    {
+      "user_id": "U-0460",
+      "session_id": "98f3745b-689e-c166-c775-b6a66690a956",
+      "message": "Mi servicio ha sido interrumpido sin previo aviso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "588df7e6-6959-e991-f432-8f3fa3dbe2dc"
+    },
+    {
+      "user_id": "U-0428",
+      "session_id": "3dfe6160-6485-0260-19fa-e0e9a89197b4",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "a2dca976-3679-d674-76b5-feba3f2e54d6"
+    },
+    {
+      "user_id": "U-0357",
+      "session_id": "7edb136b-2e68-6588-aad0-2c3f38ebaad5",
+      "message": "No puedo acceder al sistema desde esta mañana",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "97e7c4f9-1ff0-ae64-da8c-6501f5ddacba"
+    },
+    {
+      "user_id": "U-0224",
+      "session_id": "95af0880-237c-09e3-6a89-99db19263cf5",
+      "message": "Quiero cambiar mi contraseña",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "4e7b6111-d5fc-7e60-7824-a1954c9f0b32"
+    },
+    {
+      "user_id": "U-0005",
+      "session_id": "17dbfee8-0d25-7c83-ae84-3b9ac989df08",
+      "message": "Necesito actualizar mis datos de contacto",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "cce4fa9b-5d06-1544-f7ec-cc0a33c0b573"
+    },
+    {
+      "user_id": "U-0264",
+      "session_id": "9b39882b-7e13-7cf7-a72b-e0209a63434c",
+      "message": "Hola, necesito ayuda con mi factura del mes pasado",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "f67b9291-6746-b1bb-bfcf-b991141b5875"
+    },
+    {
+      "user_id": "U-0071",
+      "session_id": "d086284c-55e6-742e-f17d-98959d9d2cf2",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "84de07d7-ae48-4b44-2e4f-3f150530b229"
+    },
+    {
+      "user_id": "U-0040",
+      "session_id": "eb993166-372b-ed49-1c26-4e148a20addb",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "e65e2840-a6e4-2d0c-8731-773b24148832"
+    },
+    {
+      "user_id": "U-0040",
+      "session_id": "a8e966a4-bf35-a659-397b-fbc80e7d389d",
+      "message": "El sistema no acepta mi tarjeta de crédito",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "86766af8-e43d-28b0-b966-1816e4bf1890"
+    },
+    {
+      "user_id": "U-0426",
+      "session_id": "b4dffcc8-e13a-74d1-91af-01171f9e6f82",
+      "message": "Tengo un problema con mi cuenta de usuario",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "d5e28110-4992-6ac2-fd09-e896768a3744"
+    },
+    {
+      "user_id": "U-0092",
+      "session_id": "d1d559af-ca54-2a7c-fb83-bfda2049be41",
+      "message": "Quiero cambiar mi contraseña",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "2a8c227a-6e3e-72d1-154a-adefd61f1737"
+    },
+    {
+      "user_id": "U-0321",
+      "session_id": "267fee7b-8a96-8122-8d07-c05ffa39b74a",
+      "message": "Hay un cargo desconocido en mi factura",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "73a8cd14-9c84-cbd1-3d16-111f6a3f4b35"
+    },
+    {
+      "user_id": "U-0196",
+      "session_id": "309a350d-c2f7-e2ae-2c65-4bbb643cc6ce",
+      "message": "Tengo un problema con mi cuenta de usuario",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "f7be3fda-2c5a-4bf1-2760-79f05315c955"
+    },
+    {
+      "user_id": "U-0104",
+      "session_id": "6131fceb-71b8-abe9-8c99-96d17612fc20",
+      "message": "El sistema no acepta mi tarjeta de crédito",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c46977f7-2683-8847-1750-b0af0774cc5f"
+    },
+    {
+      "user_id": "U-0233",
+      "session_id": "d495f18a-7d82-9b70-2324-2386b576b969",
+      "message": "El sistema no acepta mi tarjeta de crédito",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "39e27fbe-1c0b-4e79-def0-4caacc4cc5fb"
+    },
+    {
+      "user_id": "U-0493",
+      "session_id": "6863653d-597a-ca19-38c7-3427f4a8df4e",
+      "message": "Necesito una copia de mi contrato",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "878fc8af-5d7a-8bda-a7cf-0f302a516753"
+    },
+    {
+      "user_id": "U-0085",
+      "session_id": "2fabb6cb-4c0a-fecc-fb97-585549c09bbd",
+      "message": "No puedo acceder al sistema desde esta mañana",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "17309f62-1e1e-701f-e645-4a33b41eedf5"
+    },
+    {
+      "user_id": "U-0158",
+      "session_id": "90290c52-1755-a89e-ad17-97c94afdea5e",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "9523af9d-35cd-9de0-fec5-6b58bbc00e2d"
+    },
+    {
+      "user_id": "U-0202",
+      "session_id": "897feb63-d9c7-d0e5-67c8-9cb86883c8d2",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "8ebf8042-630a-b59f-01f9-86e25513fc8f"
+    },
+    {
+      "user_id": "U-0199",
+      "session_id": "b2da4962-f1b2-6e26-b9fd-d6432866eb61",
+      "message": "No puedo acceder al sistema desde esta mañana",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "2ff57360-328d-4805-5e5d-b2f1b1491838"
+    },
+    {
+      "user_id": "U-0301",
+      "session_id": "972b891c-de84-55db-0dab-47c5299012ac",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "02627f3b-23cb-c967-ab51-7f82ab8ee126"
+    },
+    {
+      "user_id": "U-0279",
+      "session_id": "aa074525-e1f7-bfd9-b21b-1efa15bef1be",
+      "message": "El sistema no acepta mi tarjeta de crédito",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "0bd4f4c0-6b9a-5688-66a6-360120d21982"
+    },
+    {
+      "user_id": "U-0362",
+      "session_id": "d6dd21bd-6a8e-d482-0369-c21ce896b6f9",
+      "message": "Necesito actualizar mis datos de contacto",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "0007c55f-f9e1-aa3a-78e1-80a17fe72758"
+    },
+    {
+      "user_id": "U-0187",
+      "session_id": "1a21b48b-f2ad-28f4-3441-85cb014d7bd1",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "4efccb42-20fd-7516-18f0-89e18ca92a42"
+    },
+    {
+      "user_id": "U-0034",
+      "session_id": "8fd8c54d-d519-e780-cacc-376cdb0d0ebc",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "70a9070f-8258-68e7-c4f9-7db6a6d0dc98"
+    },
+    {
+      "user_id": "U-0398",
+      "session_id": "0ec07e21-5167-9569-b328-ae41c60824fb",
+      "message": "El sistema no acepta mi tarjeta de crédito",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "6e799e43-0f70-e192-c8c0-7c1a7137a48a"
+    },
+    {
+      "user_id": "U-0363",
+      "session_id": "d4e250a1-4ac6-5b4b-22b1-1e191bde1593",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "7a4e6ce0-a5c9-83a3-b129-91f305861fec"
+    },
+    {
+      "user_id": "U-0425",
+      "session_id": "faa41e79-24ce-29c8-0e88-26e9b3193784",
+      "message": "No puedo acceder al sistema desde esta mañana",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "826a52c2-1edf-cb86-559e-058856892769"
+    },
+    {
+      "user_id": "U-0418",
+      "session_id": "12c588b6-1541-abcd-6ffc-7bd9f719fdff",
+      "message": "Tengo un problema con mi cuenta de usuario",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "8a6b6090-38fe-ec53-7337-aa0202a3f644"
+    },
+    {
+      "user_id": "U-0224",
+      "session_id": "d124f565-7243-37ec-d8ef-e84625b3f552",
+      "message": "Necesito información sobre mis pagos pendientes",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "aa6b9615-67af-f697-ef7b-842d75dc2537"
+    },
+    {
+      "user_id": "U-0138",
+      "session_id": "f5525655-dce9-56ae-93b5-cca27afa21c7",
+      "message": "Necesito información sobre mis pagos pendientes",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "fcaf0ece-6e90-739d-7e33-cc6b14885983"
+    },
+    {
+      "user_id": "U-0202",
+      "session_id": "2722c86b-99e5-f8a3-60ab-85b6edbdccef",
+      "message": "Quiero cambiar mi contraseña",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "61654961-20ea-7444-1354-e758977c0369"
+    },
+    {
+      "user_id": "U-0436",
+      "session_id": "48427f5d-daec-1b06-cd6f-f8c0ac350faa",
+      "message": "Mi servicio ha sido interrumpido sin previo aviso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "b46bb8db-ea07-694e-afd6-b2db3f46a0ff"
+    },
+    {
+      "user_id": "U-0286",
+      "session_id": "ea793d01-8054-5ae5-578e-15fa58aca090",
+      "message": "Tengo un problema con mi cuenta de usuario",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "cc8c50ef-2cd4-5405-3907-2bab05c21e90"
+    },
+    {
+      "user_id": "U-0275",
+      "session_id": "3a99bc60-dd15-bddd-c9b0-d95382d71587",
+      "message": "Tengo un problema con mi cuenta de usuario",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "81c5798a-1f35-07a3-03fa-758f9f0c2b09"
+    },
+    {
+      "user_id": "U-0377",
+      "session_id": "538c3371-e1af-f004-6e11-f01f7ff2db75",
+      "message": "Necesito información sobre mis pagos pendientes",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "95f7aae4-0e53-8256-b47e-f2dee5c3ff7e"
+    },
+    {
+      "user_id": "U-0093",
+      "session_id": "b835c928-9f28-8419-7353-7fb5d7855cf7",
+      "message": "El sistema no acepta mi tarjeta de crédito",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "080760a6-3122-2cd7-01d8-b92280146cc5"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "0a6ac353-cb6c-3d67-4685-a23a5ab8a976",
+      "message": "Necesito una copia de mi contrato",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "dc457ac3-9fe2-b813-64d4-bd93d30525c7"
+    },
+    {
+      "user_id": "U-0004",
+      "session_id": "96ba5812-c740-fb6b-ae36-65e807c10747",
+      "message": "Mi servicio ha sido interrumpido sin previo aviso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "20656508-db7e-ddf1-bfae-0d32e94b73c8"
+    },
+    {
+      "user_id": "U-0163",
+      "session_id": "5d6e3e67-099e-9947-4126-e2ad02591556",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "34eda249-a8ca-3382-81ff-f53f96eecbb8"
+    },
+    {
+      "user_id": "U-0406",
+      "session_id": "b8862511-b218-a86a-2d29-338448b15426",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "29ab6018-69c7-ccd4-ec48-aaadac699b30"
+    },
+    {
+      "user_id": "U-0114",
+      "session_id": "d6634bb5-1ac2-a86b-e489-d5af9b7284a4",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "a37d903a-dad5-40b2-56f5-b6cbb20eeb28"
+    },
+    {
+      "user_id": "U-0389",
+      "session_id": "86a945ff-733d-170c-999a-854438c5d6ce",
+      "message": "Necesito información sobre mis pagos pendientes",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "5000a87a-3947-60ee-5898-7df8d1a401dc"
+    },
+    {
+      "user_id": "U-0496",
+      "session_id": "0da49a99-68d4-a788-e807-3ea193c9081d",
+      "message": "Necesito actualizar mis datos de contacto",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "25ddb7e0-da48-c6bf-78f9-c6d1ccd40e84"
+    },
+    {
+      "user_id": "U-0011",
+      "session_id": "4043f9dc-22e8-29c6-620b-3fd8e50bac9f",
+      "message": "Hola, necesito ayuda con mi factura del mes pasado",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "8e540ab9-de5e-6946-fb5a-eb2cca79a094"
+    },
+    {
+      "user_id": "U-0363",
+      "session_id": "aeac328d-0587-4c36-830b-7c7d2a726d24",
+      "message": "Necesito actualizar mis datos de contacto",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "3f925df2-f785-7f17-0dc4-c26400140cb8"
+    },
+    {
+      "user_id": "U-0100",
+      "session_id": "f3c8404b-4e9d-71dd-27c7-f207bd18591e",
+      "message": "No puedo acceder al sistema desde esta mañana",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "389bfaa5-4239-c471-c98d-70288a3eb197"
+    },
+    {
+      "user_id": "U-0500",
+      "session_id": "6e38ce91-ea0a-469f-d990-3fe1e516368e",
+      "message": "El sistema no acepta mi tarjeta de crédito",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "e4d4d1e2-ffac-6128-1d13-d6c2d6cce9de"
+    },
+    {
+      "user_id": "U-0291",
+      "session_id": "3b1fa884-dfcd-16b9-53c4-affdf7986d4f",
+      "message": "Necesito actualizar mis datos de contacto",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "1fd52960-98f3-e7fe-f923-1116668f6617"
+    },
+    {
+      "user_id": "U-0167",
+      "session_id": "0fa1f9d7-1324-e809-e050-b7c96dcabb5d",
+      "message": "Necesito una copia de mi contrato",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "68cc7a90-d7dc-e512-8c01-4668e255d81d"
+    },
+    {
+      "user_id": "U-0475",
+      "session_id": "0df104e9-5a66-4639-9777-a65be304e479",
+      "message": "Quiero cambiar mi contraseña",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "0a00ca5b-5108-bbe8-29c4-1e24634289b8"
+    },
+    {
+      "user_id": "U-0217",
+      "session_id": "100af59a-ac75-4998-b477-388cc9795361",
+      "message": "Necesito actualizar mis datos de contacto",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "d222d448-b708-170e-abd2-6d328ba298ea"
+    },
+    {
+      "user_id": "U-0457",
+      "session_id": "0c47f0cd-cb55-999e-95ae-9aea9288bc4f",
+      "message": "Quiero cambiar mi contraseña",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "8deebd7d-3940-3e03-e6c2-9c95f3e4dcdb"
+    },
+    {
+      "user_id": "U-0430",
+      "session_id": "789d1c01-996d-deed-93d0-e79a06a16eef",
+      "message": "Mi servicio ha sido interrumpido sin previo aviso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "da9cdd4d-beac-92fa-f7f3-91c14583202e"
+    },
+    {
+      "user_id": "U-0321",
+      "session_id": "c6a6c597-35bd-d688-2a4f-d2773260087b",
+      "message": "Quiero cambiar mi contraseña",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "82684f6f-e44e-e72e-5380-a728a0eb2663"
+    },
+    {
+      "user_id": "U-0487",
+      "session_id": "6f6e4003-5c47-7e63-3563-23324e2ffabf",
+      "message": "El sistema no acepta mi tarjeta de crédito",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "0e4ce669-658f-fdf1-24e0-208613d7e732"
+    },
+    {
+      "user_id": "U-0085",
+      "session_id": "b69df8cd-3a74-9e8a-3965-fb8c19d4967d",
+      "message": "Hay un cargo desconocido en mi factura",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "ad98658d-9888-7ad3-1134-78f1affa33fe"
+    },
+    {
+      "user_id": "U-0117",
+      "session_id": "40e896c3-05cf-14a0-0425-aa0af4947536",
+      "message": "Necesito información sobre mis pagos pendientes",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "435d711f-850c-6d81-d965-724bca953b53"
+    },
+    {
+      "user_id": "U-0110",
+      "session_id": "a88f037b-d1de-7d8e-3f2a-9670ab8189f3",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "a502ba88-cf40-011c-da9a-adc24716a84e"
+    },
+    {
+      "user_id": "U-0325",
+      "session_id": "17889ac7-2a8b-58d1-614c-777ac52e5c70",
+      "message": "No puedo acceder al sistema desde esta mañana",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "9517ef8c-f473-b31b-bf8f-afb3f67f8100"
+    },
+    {
+      "user_id": "U-0173",
+      "session_id": "28f1d92f-ca2c-5228-6ba3-9102dba6d24a",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "6b641904-0324-5a23-043e-f16992a7b28c"
+    },
+    {
+      "user_id": "U-0397",
+      "session_id": "aa7a103a-2d9f-a63d-4850-9a18edf57061",
+      "message": "Hola, necesito ayuda con mi factura del mes pasado",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "300b158f-f8d9-6209-ced4-dc2a29aee003"
+    },
+    {
+      "user_id": "U-0423",
+      "session_id": "ab9c82c9-a79b-528b-3e4a-5398b7c26c97",
+      "message": "Necesito actualizar mis datos de contacto",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "29485b71-6790-3c19-e549-7502f3b81331"
+    },
+    {
+      "user_id": "U-0066",
+      "session_id": "a7e44fae-96f7-4a95-ab74-5ba4d474df83",
+      "message": "Necesito información sobre mis pagos pendientes",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "3e07844f-c3aa-9dec-2879-9d3a1eee73d5"
+    },
+    {
+      "user_id": "U-0214",
+      "session_id": "e1ac7766-a6cd-2560-b9c8-d43ff428eb5c",
+      "message": "Mi servicio ha sido interrumpido sin previo aviso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c528cc8a-4ca9-3478-2cb8-b5233931661a"
+    },
+    {
+      "user_id": "U-0284",
+      "session_id": "92f28634-c263-43ea-2ab2-f9c370ed7b28",
+      "message": "Necesito una copia de mi contrato",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "d772e6cd-48dd-9ae2-6b0f-54211ca8eca6"
+    },
+    {
+      "user_id": "U-0070",
+      "session_id": "bc5537ee-1079-487f-c6ba-f040fcb036f4",
+      "message": "El sistema no acepta mi tarjeta de crédito",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "b9474643-982d-eabd-b0e0-d4d205153b59"
+    },
+    {
+      "user_id": "U-0499",
+      "session_id": "2879f609-838d-23bc-739a-972e4388bf4b",
+      "message": "Necesito actualizar mis datos de contacto",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c7c21399-1854-48a8-c87d-b402ad3a7dab"
+    },
+    {
+      "user_id": "U-0329",
+      "session_id": "774656b7-2e23-f742-b17a-6310c6992b6b",
+      "message": "El sistema no acepta mi tarjeta de crédito",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "04bd4c6c-0031-9bf2-6e87-c6feca265093"
+    },
+    {
+      "user_id": "U-0403",
+      "session_id": "9b676025-b960-283c-3fd4-a34d7816f5c8",
+      "message": "Hay un cargo desconocido en mi factura",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "b060f3f5-b072-1533-5f24-fcd9f69ff217"
+    },
+    {
+      "user_id": "U-0003",
+      "session_id": "14a5340a-7963-63bb-32e7-7858b94d89bb",
+      "message": "Quiero cambiar mi contraseña",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "63a297ee-c61b-bf89-7492-e1cc650cf835"
+    },
+    {
+      "user_id": "U-0086",
+      "session_id": "85208492-d4ac-c210-eb51-9aaa667b2aec",
+      "message": "El sistema no acepta mi tarjeta de crédito",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "5a151a56-e285-4edc-2f59-f22c534f2791"
+    },
+    {
+      "user_id": "U-0188",
+      "session_id": "12075b34-1b57-c5ed-4015-a9112847a1e0",
+      "message": "El sistema no acepta mi tarjeta de crédito",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "bf9cdc25-007c-d75c-f5e6-60558f48be6e"
+    },
+    {
+      "user_id": "U-0198",
+      "session_id": "3d65878e-cb11-5c8a-b0a0-56b8b4c950cd",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "5ae7b80e-0147-2552-7e6f-986c436ef370"
+    },
+    {
+      "user_id": "U-0440",
+      "session_id": "055f5973-e08d-71f3-6b9f-273df0f00da2",
+      "message": "Hola, necesito ayuda con mi factura del mes pasado",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "9316cf00-46b7-89c2-5ba5-d7ab818fb8e0"
+    },
+    {
+      "user_id": "U-0242",
+      "session_id": "98980bc6-f811-ad7a-b8d8-9de33c0f99a5",
+      "message": "Necesito una copia de mi contrato",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c8b6d221-ad28-f258-636f-e2c8e56c176d"
+    },
+    {
+      "user_id": "U-0213",
+      "session_id": "04bf0e33-9514-caa6-fa87-b9360b9210dc",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "3a5da4ea-f27f-bb0a-2cc5-44d8e48bf9c4"
+    },
+    {
+      "user_id": "U-0396",
+      "session_id": "74989f99-de6c-f2fc-4c78-afff09fa7af4",
+      "message": "Hola, necesito ayuda con mi factura del mes pasado",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "a0310840-f0d4-140e-d150-3f98d093798a"
+    },
+    {
+      "user_id": "U-0029",
+      "session_id": "41efadd6-61c1-c698-2a99-94474816fb4c",
+      "message": "Hay un cargo desconocido en mi factura",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "831d59a6-d7f8-684d-a304-20d845d13624"
+    },
+    {
+      "user_id": "U-0363",
+      "session_id": "6baab258-146c-4418-b95a-601da2937321",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "d174b5c8-9b7a-9bcd-6ea0-23c58c9f8762"
+    },
+    {
+      "user_id": "U-0312",
+      "session_id": "9383176c-a337-64b4-d581-711dee712b91",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "2474cf6e-792f-c9d2-032b-e868ea3dd83a"
+    },
+    {
+      "user_id": "U-0355",
+      "session_id": "1d324824-52b6-89b8-cb3d-324810fe7631",
+      "message": "Necesito actualizar mis datos de contacto",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c7857cb9-fc15-b9e8-5253-fc10d98e164a"
+    },
+    {
+      "user_id": "U-0088",
+      "session_id": "5683b448-545d-da0d-d956-0c3427b59b60",
+      "message": "El sistema no acepta mi tarjeta de crédito",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "e4f49162-4ac8-d2bb-4357-69ddd0ad4e2c"
+    },
+    {
+      "user_id": "U-0037",
+      "session_id": "521c0f1b-f39b-b804-60db-af05c47d3aec",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "77b902fa-4f0b-9d22-fed0-1c02dfb3d39a"
+    },
+    {
+      "user_id": "U-0084",
+      "session_id": "09207b78-b6e0-29fc-9c15-417d507f207c",
+      "message": "Hay un cargo desconocido en mi factura",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "3dddc4bf-4d03-d49c-2305-fbf4b66bd154"
+    },
+    {
+      "user_id": "U-0006",
+      "session_id": "a59191ad-26be-c693-3a42-e4d37f71ea37",
+      "message": "Tengo un problema con mi cuenta de usuario",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "2b3fae3e-fe94-d666-f569-dd121114b309"
+    },
+    {
+      "user_id": "U-0134",
+      "session_id": "4bad85ea-ae52-562d-c763-f7d1a80d179e",
+      "message": "El sistema no acepta mi tarjeta de crédito",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "58586d13-8d0c-92fb-38bd-b717bc7aeeb7"
+    },
+    {
+      "user_id": "U-0236",
+      "session_id": "91838272-fe30-e484-48f0-c0e69030dad9",
+      "message": "Quiero cambiar mi contraseña",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "449432db-9da9-e474-d147-8abdcfc75f15"
+    },
+    {
+      "user_id": "U-0249",
+      "session_id": "9f9adfce-6cde-8513-83a0-7aeafe3408f8",
+      "message": "Hola, necesito ayuda con mi factura del mes pasado",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "28ad00ce-b1b9-1d29-7f99-3225be748b6a"
+    },
+    {
+      "user_id": "U-0014",
+      "session_id": "d17c723a-879a-edd5-b267-bce16b66d65c",
+      "message": "Tengo un problema con mi cuenta de usuario",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "99fa327d-0e93-30c4-f1ad-a490f4c664fc"
+    },
+    {
+      "user_id": "U-0094",
+      "session_id": "96968d4d-39d0-6ccd-53a1-13add3620e91",
+      "message": "Necesito una copia de mi contrato",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "4bf798e8-3fb3-7fc9-daa6-ef8bfb267c06"
+    },
+    {
+      "user_id": "U-0073",
+      "session_id": "56875cfa-753a-0823-d1f5-0f2382c475e2",
+      "message": "Necesito actualizar mis datos de contacto",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "b2f7fe4f-4ff9-1d86-c5bd-962b56cb6456"
+    },
+    {
+      "user_id": "U-0068",
+      "session_id": "4d09b4ae-7299-1f82-2ab7-f63ea17e7f2c",
+      "message": "Hay un cargo desconocido en mi factura",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "cdf59ea8-e835-8635-1587-b101a131c98e"
+    },
+    {
+      "user_id": "U-0110",
+      "session_id": "1335e55f-e0a9-9195-5ca6-b8c833a1d768",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "b46ee2f6-6be4-25f1-d03f-6937ce3bc2cc"
+    },
+    {
+      "user_id": "U-0188",
+      "session_id": "7ce12e68-8daf-da30-81a9-df6733203aee",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "b1d855bb-2bf3-8e42-8ec7-e8be20376eda"
+    },
+    {
+      "user_id": "U-0467",
+      "session_id": "1235b5de-66a8-00c6-969a-5101083b9ac6",
+      "message": "Necesito actualizar mis datos de contacto",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "d735a840-672e-b93a-f80c-fff980416958"
+    },
+    {
+      "user_id": "U-0209",
+      "session_id": "eb9f80b7-4a00-2896-bea5-ddd8204683c8",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "ee790d4d-c322-eb02-05b5-4293dbce81af"
+    },
+    {
+      "user_id": "U-0252",
+      "session_id": "51ed1208-a39c-67df-c8ba-6ab7cf32a8ba",
+      "message": "Quiero cambiar mi contraseña",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "6a2cbff0-f2c4-b950-d800-0e7f891f40b9"
+    },
+    {
+      "user_id": "U-0493",
+      "session_id": "39375d1e-327f-2df0-71f5-25910e3f5c2b",
+      "message": "Necesito actualizar mis datos de contacto",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "bd744f26-ac2f-ab46-b326-77eca5e519ea"
+    },
+    {
+      "user_id": "U-0248",
+      "session_id": "80acc1f9-fd44-75ef-d6db-8a6972ec8efc",
+      "message": "Necesito actualizar mis datos de contacto",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "fd6c3076-e974-8b50-7db1-2976c486ddde"
+    },
+    {
+      "user_id": "U-0103",
+      "session_id": "392670af-05cc-7beb-882a-ac73eabac713",
+      "message": "Necesito actualizar mis datos de contacto",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "ce1bbf9c-3b59-5d85-57e5-444b364ce405"
+    },
+    {
+      "user_id": "U-0256",
+      "session_id": "a55a2041-49ac-140d-1c2a-43a90c7a4290",
+      "message": "No puedo acceder al sistema desde esta mañana",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "f0596a0e-598c-c348-4b84-f6ca3b53f604"
+    },
+    {
+      "user_id": "U-0239",
+      "session_id": "3c2e4b61-e31c-0eb0-b446-d5094e72ffdb",
+      "message": "Necesito información sobre mis pagos pendientes",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "a437233c-96a1-6336-1897-6c4fb7e1ac29"
+    },
+    {
+      "user_id": "U-0357",
+      "session_id": "fdadbf85-fb6f-525b-495d-9cc1ed3fae5e",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "67e10f65-5bb6-897d-c84d-2eecca1062a3"
+    },
+    {
+      "user_id": "U-0110",
+      "session_id": "4b9e9589-76ae-f161-ba6e-3efeed3595b9",
+      "message": "Necesito una copia de mi contrato",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "69009a8a-11be-9a21-71de-c503797c5c85"
+    },
+    {
+      "user_id": "U-0302",
+      "session_id": "85a84625-fa7f-6590-1533-03ac5a2acfff",
+      "message": "Necesito información sobre mis pagos pendientes",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c0aec012-46bd-ed79-9a99-8fe5f6263b89"
+    },
+    {
+      "user_id": "U-0066",
+      "session_id": "0faf46e4-3a62-010f-4f9f-fd5f88a77085",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "46c5ed35-1ce5-38be-8400-19797ec141e2"
+    },
+    {
+      "user_id": "U-0439",
+      "session_id": "2043b991-cfa7-694c-04f1-b03fab302d84",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "1f30c2d3-2aad-5fd5-ffde-71f9c2cb2a3f"
+    },
+    {
+      "user_id": "U-0072",
+      "session_id": "72d19340-2688-ff5c-4e09-99a97a1868eb",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "0f5e1ffb-dc0e-b24b-2921-0aa966507d1b"
+    },
+    {
+      "user_id": "U-0459",
+      "session_id": "85ed5b87-5b01-9343-0316-97c93ac2c25b",
+      "message": "Mi servicio ha sido interrumpido sin previo aviso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "3c368dba-6706-9939-1228-57d222eb5352"
+    },
+    {
+      "user_id": "U-0067",
+      "session_id": "c3657ecb-c589-765d-bd81-ce42f92dda3d",
+      "message": "Necesito una copia de mi contrato",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c4dc9c29-8500-c07e-74c1-afccf8a985f2"
+    },
+    {
+      "user_id": "U-0259",
+      "session_id": "e406d155-1a4f-7b1c-784c-a1da33646cd1",
+      "message": "Mi servicio ha sido interrumpido sin previo aviso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "1de03cd1-a87a-b054-ae81-ad39476ea2ff"
+    },
+    {
+      "user_id": "U-0087",
+      "session_id": "036e5427-b36a-d32c-d0f9-425c0b2d62fe",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "62ae95b3-39dd-94eb-3057-9ef855572953"
+    },
+    {
+      "user_id": "U-0440",
+      "session_id": "3df35913-4c73-c934-bf3e-95cbcdf74681",
+      "message": "Necesito una copia de mi contrato",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "a3c84c0d-5a5c-d049-1d8c-ea9676b03665"
+    },
+    {
+      "user_id": "U-0333",
+      "session_id": "00c8ed53-7cbf-bcb4-a77a-0d178bb16cad",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "41aba5e2-1d52-83e1-0b2c-191e04caada0"
+    },
+    {
+      "user_id": "U-0478",
+      "session_id": "3c2d7ec9-9292-7cd5-9fb7-2258afd684d9",
+      "message": "Necesito una copia de mi contrato",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "32fa0b16-59ba-caeb-0e71-d97066051a16"
+    },
+    {
+      "user_id": "U-0303",
+      "session_id": "f1e262bb-49cd-62c1-7eb1-e310fc16b89c",
+      "message": "Mi servicio ha sido interrumpido sin previo aviso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "551a2f0c-fa01-eed8-d55b-5e96aa54e36d"
+    },
+    {
+      "user_id": "U-0007",
+      "session_id": "50227eac-1768-cbc2-9fe7-264f335d8d1a",
+      "message": "Necesito información sobre mis pagos pendientes",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "51f0cefc-97a7-46fa-5363-38f1f1d891ed"
+    },
+    {
+      "user_id": "U-0406",
+      "session_id": "7432fcb4-d4f7-54a1-7544-3616bf408310",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "8edc7502-f5d8-0956-bfcc-22d7cdb60bd2"
+    },
+    {
+      "user_id": "U-0300",
+      "session_id": "e2756e35-d34e-5557-66ad-8a350a4f1e5c",
+      "message": "Necesito actualizar mis datos de contacto",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "7a41bc51-ca15-bd0f-d904-9554cfdcaa84"
+    },
+    {
+      "user_id": "U-0292",
+      "session_id": "82cfcdb0-3a04-2b6d-c552-46297946ac19",
+      "message": "Necesito información sobre mis pagos pendientes",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "be969435-08a5-4ca8-9939-0b8ab4f6f537"
+    },
+    {
+      "user_id": "U-0370",
+      "session_id": "e2ee0dba-8f50-6303-1f7b-36bdcd64ca40",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "20113bc8-394b-2cac-fdbf-44b2600e5e52"
+    },
+    {
+      "user_id": "U-0122",
+      "session_id": "5e9422b4-dbfb-f70d-b2a1-45f6532cec1b",
+      "message": "El sistema no acepta mi tarjeta de crédito",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "5d9daa0c-01c1-f033-48ef-50b2d77341cd"
+    },
+    {
+      "user_id": "U-0348",
+      "session_id": "b27f2658-0069-71e5-4ae2-5fb423e6d186",
+      "message": "Quiero cambiar mi contraseña",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "a55a47a1-663d-f878-ee95-edb02256ba26"
+    },
+    {
+      "user_id": "U-0410",
+      "session_id": "7f3c6526-e12a-e5f2-f8cb-3f5c73adc89f",
+      "message": "Mi servicio ha sido interrumpido sin previo aviso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "84b41e25-4821-dd30-97b6-ecea47f73a5b"
+    },
+    {
+      "user_id": "U-0406",
+      "session_id": "d27ed1b9-616c-8ad4-31fc-e27b5942d4dd",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "fab9c079-3f93-9408-8d05-0b4aed6b44a0"
+    },
+    {
+      "user_id": "U-0476",
+      "session_id": "7a124078-1a3b-d9b1-04a9-f6bb78a5089b",
+      "message": "Hola, necesito ayuda con mi factura del mes pasado",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "d179b834-9394-999c-e730-30f76d3afe00"
+    },
+    {
+      "user_id": "U-0404",
+      "session_id": "4ea67ed4-bcce-0459-6855-9939325b2bd3",
+      "message": "Hay un cargo desconocido en mi factura",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "14348733-5852-01a3-7b1a-69279068d1e6"
+    },
+    {
+      "user_id": "U-0297",
+      "session_id": "624a023c-b925-435a-9e7b-f8af5c9c4150",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "0e6ae465-2f15-32ad-860e-6ae942c24d92"
+    },
+    {
+      "user_id": "U-0054",
+      "session_id": "849279eb-fd3f-f330-b444-a1b1ed392bd9",
+      "message": "Hola, necesito ayuda con mi factura del mes pasado",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "d9667f39-f7ff-e9ea-d8e7-b9aee2877844"
+    },
+    {
+      "user_id": "U-0275",
+      "session_id": "c0f0cce1-ad04-9faf-49ac-41d6bdd444a0",
+      "message": "Quiero cambiar mi contraseña",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "f6982502-a145-009a-cc72-a007ae174892"
+    },
+    {
+      "user_id": "U-0485",
+      "session_id": "c5b4cf25-e3fc-76df-7da9-ced085513113",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "966c7e39-de68-2783-65b7-819246488167"
+    },
+    {
+      "user_id": "U-0316",
+      "session_id": "ee236a6e-24ef-f38a-18aa-6883135089af",
+      "message": "Hola, necesito ayuda con mi factura del mes pasado",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "80dc6024-100f-ffe1-aab4-159905a055b9"
+    },
+    {
+      "user_id": "U-0459",
+      "session_id": "527412dc-7aef-2afa-385b-d9adab28b126",
+      "message": "Hay un cargo desconocido en mi factura",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "22e5a6a0-0d4f-e224-4cdc-de6f4cf832f7"
+    },
+    {
+      "user_id": "U-0287",
+      "session_id": "2f285884-fb91-0ec8-ab87-92343b27b100",
+      "message": "Necesito actualizar mis datos de contacto",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "afefbbd0-351c-0712-8ef5-1e0581bc3f7b"
+    },
+    {
+      "user_id": "U-0418",
+      "session_id": "e4f2e264-8bb5-702c-58b0-740d666db89d",
+      "message": "Hola, necesito ayuda con mi factura del mes pasado",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "56a97849-a840-1bea-4731-a2aeaa70633a"
+    },
+    {
+      "user_id": "U-0272",
+      "session_id": "3915932c-3729-a5c4-0129-55f104424512",
+      "message": "Necesito una copia de mi contrato",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "80c8c70f-7e8e-40a8-83a9-9d0ccd6e2ab3"
+    },
+    {
+      "user_id": "U-0334",
+      "session_id": "99532866-0450-b692-87ec-1a4dd91cf643",
+      "message": "Necesito información sobre mis pagos pendientes",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "d8386a7d-a174-26bb-7048-52c01f970e14"
+    },
+    {
+      "user_id": "U-0482",
+      "session_id": "e83d3b0e-383e-5bf1-cab9-f9e95e854e58",
+      "message": "Mi servicio ha sido interrumpido sin previo aviso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "84e78108-601c-7e55-67aa-896e40aeaf97"
+    },
+    {
+      "user_id": "U-0302",
+      "session_id": "0198bf50-eb6a-cf2a-96eb-f0e0d07f0a13",
+      "message": "Mi servicio ha sido interrumpido sin previo aviso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "d7a5c8af-789b-e29f-f022-72a5fcecf1f0"
+    },
+    {
+      "user_id": "U-0293",
+      "session_id": "f7d6b6e9-7fb8-1d2b-0268-ecd8ffa41b5f",
+      "message": "Necesito información sobre mis pagos pendientes",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c6f4d5e1-f3d8-00da-50eb-9c90bc2be275"
+    },
+    {
+      "user_id": "U-0137",
+      "session_id": "bd206e24-56ea-6ebe-968c-979351f64647",
+      "message": "Mi servicio ha sido interrumpido sin previo aviso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "918e7f06-5348-0d58-742e-cf9dbab3e468"
+    },
+    {
+      "user_id": "U-0259",
+      "session_id": "a7c14a12-cec5-7ce1-9b26-ebae7a252f22",
+      "message": "Tengo una consulta sobre los términos del servicio",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "6e355a6e-a471-5707-cc03-d77a54caf3b1"
+    },
+    {
+      "user_id": "U-0261",
+      "session_id": "8c3a4413-8998-d8cd-c027-b4a6a0bc36e1",
+      "message": "Hay un error en mi último recibo",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "329549d0-c424-e2c0-7b4e-89dd9420aa75"
+    },
+    {
+      "user_id": "U-0071",
+      "session_id": "f7c901ed-b9d9-8715-dd37-78f275519c9a",
+      "message": "Hola, necesito ayuda con mi factura del mes pasado",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "645aa547-4ebe-7a04-5530-14b5cda30d7e"
+    },
+    {
+      "user_id": "U-0232",
+      "session_id": "c89fe664-e55c-0a3c-75bf-1e3cef3aaf81",
+      "message": "Mi servicio ha sido interrumpido sin previo aviso",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c79d08ab-b67b-c813-f852-f869e067c4b2"
+    },
+    {
+      "user_id": "U-0288",
+      "session_id": "8f9fea3c-c39a-1386-1f25-40450ccd5527",
+      "message": "Hay un cargo desconocido en mi factura",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "a9a49f52-67f7-248d-067a-198c242c195e"
+    },
+    {
+      "user_id": "U-0454",
+      "session_id": "7e40c5af-87a9-8978-fdda-29d606698dba",
+      "message": "Quiero cambiar mi contraseña",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "7c1f55a1-740d-b55b-d7e6-546de6b0d5db"
+    },
+    {
+      "user_id": "U-0109",
+      "session_id": "b78284d5-252a-3724-8497-1bb2fa7a4b8f",
+      "message": "No puedo acceder al sistema desde esta mañana",
+      "token": "mi-token-secreto-hardcodeado-123",
+      "idempotency_key": "c228e4d8-b67b-fb5e-bf40-d879f48a96ce"
+    }
+  ]
+}

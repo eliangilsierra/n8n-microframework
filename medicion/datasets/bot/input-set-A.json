@@ -1,0 +1,13 @@
+{
+  "_meta": {
+    "caso": "bot",
+    "set": "A",
+    "escenario": "Normal — mensaje sobre factura, espera categoria=facturacion, prioridad=media",
+    "regla_esperada": "R002",
+    "response_esperado": 200
+  },
+  "token": "mi-token-secreto-hardcodeado-123",
+  "user_id": "user-001",
+  "session_id": "sess-a01",
+  "message": "Hola, necesito ayuda con mi factura del mes pasado"
+}

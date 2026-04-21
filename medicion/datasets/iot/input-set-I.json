@@ -1,0 +1,1614 @@
+{
+  "_meta": {
+    "caso": "iot",
+    "set": "I",
+    "seed": 20260421103,
+    "master_seed": 20260421,
+    "generated_at": "2026-04-21",
+    "count": 200,
+    "distribution": "gradual_degradation",
+    "sha256": "1913c5ab18fe419d06bd305c8cffb199b445aca7d61e4af07e75b41057e42584"
+  },
+  "payloads": [
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 22.0,
+      "humidity": 49.7,
+      "co2": 518,
+      "timestamp": "2026-04-21T08:00:00Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 22.1,
+      "humidity": 50.5,
+      "co2": 533,
+      "timestamp": "2026-04-21T08:00:02Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 22.0,
+      "humidity": 51.0,
+      "co2": 570,
+      "timestamp": "2026-04-21T08:00:03Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 23.2,
+      "humidity": 50.5,
+      "co2": 510,
+      "timestamp": "2026-04-21T08:00:05Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 23.0,
+      "humidity": 50.6,
+      "co2": 491,
+      "timestamp": "2026-04-21T08:00:07Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 22.2,
+      "humidity": 50.9,
+      "co2": 579,
+      "timestamp": "2026-04-21T08:00:09Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 22.4,
+      "humidity": 52.5,
+      "co2": 541,
+      "timestamp": "2026-04-21T08:00:11Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 22.3,
+      "humidity": 50.6,
+      "co2": 530,
+      "timestamp": "2026-04-21T08:00:13Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 22.3,
+      "humidity": 51.8,
+      "co2": 575,
+      "timestamp": "2026-04-21T08:00:15Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 23.0,
+      "humidity": 51.5,
+      "co2": 557,
+      "timestamp": "2026-04-21T08:00:17Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 23.5,
+      "humidity": 50.1,
+      "co2": 527,
+      "timestamp": "2026-04-21T08:00:19Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 23.1,
+      "humidity": 54.3,
+      "co2": 576,
+      "timestamp": "2026-04-21T08:00:21Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 22.6,
+      "humidity": 50.0,
+      "co2": 599,
+      "timestamp": "2026-04-21T08:00:23Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 22.5,
+      "humidity": 52.3,
+      "co2": 578,
+      "timestamp": "2026-04-21T08:00:25Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 23.1,
+      "humidity": 51.9,
+      "co2": 539,
+      "timestamp": "2026-04-21T08:00:27Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 24.3,
+      "humidity": 52.4,
+      "co2": 607,
+      "timestamp": "2026-04-21T08:00:29Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 23.9,
+      "humidity": 54.3,
+      "co2": 649,
+      "timestamp": "2026-04-21T08:00:31Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 23.8,
+      "humidity": 52.0,
+      "co2": 599,
+      "timestamp": "2026-04-21T08:00:32Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 24.6,
+      "humidity": 53.2,
+      "co2": 613,
+      "timestamp": "2026-04-21T08:00:34Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 23.3,
+      "humidity": 53.3,
+      "co2": 600,
+      "timestamp": "2026-04-21T08:00:36Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 24.1,
+      "humidity": 54.0,
+      "co2": 668,
+      "timestamp": "2026-04-21T08:00:38Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 23.7,
+      "humidity": 52.9,
+      "co2": 679,
+      "timestamp": "2026-04-21T08:00:40Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 24.7,
+      "humidity": 53.0,
+      "co2": 634,
+      "timestamp": "2026-04-21T08:00:42Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 24.1,
+      "humidity": 55.6,
+      "co2": 682,
+      "timestamp": "2026-04-21T08:00:44Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 23.6,
+      "humidity": 55.7,
+      "co2": 650,
+      "timestamp": "2026-04-21T08:00:45Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 24.6,
+      "humidity": 53.8,
+      "co2": 658,
+      "timestamp": "2026-04-21T08:00:47Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 24.1,
+      "humidity": 56.0,
+      "co2": 689,
+      "timestamp": "2026-04-21T08:00:49Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 24.6,
+      "humidity": 56.2,
+      "co2": 726,
+      "timestamp": "2026-04-21T08:00:51Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 25.1,
+      "humidity": 54.1,
+      "co2": 680,
+      "timestamp": "2026-04-21T08:00:53Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 24.2,
+      "humidity": 55.1,
+      "co2": 678,
+      "timestamp": "2026-04-21T08:00:54Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 24.4,
+      "humidity": 57.7,
+      "co2": 717,
+      "timestamp": "2026-04-21T08:00:56Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 25.8,
+      "humidity": 57.7,
+      "co2": 676,
+      "timestamp": "2026-04-21T08:00:58Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 24.8,
+      "humidity": 55.9,
+      "co2": 700,
+      "timestamp": "2026-04-21T08:01:00Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 24.7,
+      "humidity": 58.2,
+      "co2": 718,
+      "timestamp": "2026-04-21T08:01:02Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 25.4,
+      "humidity": 56.7,
+      "co2": 746,
+      "timestamp": "2026-04-21T08:01:03Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 25.3,
+      "humidity": 55.7,
+      "co2": 697,
+      "timestamp": "2026-04-21T08:01:05Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 25.6,
+      "humidity": 57.7,
+      "co2": 727,
+      "timestamp": "2026-04-21T08:01:07Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 25.1,
+      "humidity": 56.8,
+      "co2": 700,
+      "timestamp": "2026-04-21T08:01:08Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 25.1,
+      "humidity": 58.1,
+      "co2": 671,
+      "timestamp": "2026-04-21T08:01:10Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 26.2,
+      "humidity": 58.3,
+      "co2": 725,
+      "timestamp": "2026-04-21T08:01:12Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 26.0,
+      "humidity": 58.8,
+      "co2": 757,
+      "timestamp": "2026-04-21T08:01:14Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 25.7,
+      "humidity": 56.2,
+      "co2": 755,
+      "timestamp": "2026-04-21T08:01:15Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 25.1,
+      "humidity": 59.1,
+      "co2": 765,
+      "timestamp": "2026-04-21T08:01:17Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 25.8,
+      "humidity": 57.8,
+      "co2": 813,
+      "timestamp": "2026-04-21T08:01:19Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 26.0,
+      "humidity": 59.5,
+      "co2": 786,
+      "timestamp": "2026-04-21T08:01:20Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 25.2,
+      "humidity": 61.1,
+      "co2": 768,
+      "timestamp": "2026-04-21T08:01:22Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 26.1,
+      "humidity": 60.3,
+      "co2": 831,
+      "timestamp": "2026-04-21T08:01:24Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 26.1,
+      "humidity": 58.4,
+      "co2": 821,
+      "timestamp": "2026-04-21T08:01:25Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 26.0,
+      "humidity": 59.7,
+      "co2": 776,
+      "timestamp": "2026-04-21T08:01:27Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 26.2,
+      "humidity": 59.8,
+      "co2": 831,
+      "timestamp": "2026-04-21T08:01:29Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 25.3,
+      "humidity": 61.2,
+      "co2": 818,
+      "timestamp": "2026-04-21T08:01:30Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 26.4,
+      "humidity": 59.9,
+      "co2": 795,
+      "timestamp": "2026-04-21T08:01:32Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 27.0,
+      "humidity": 61.6,
+      "co2": 826,
+      "timestamp": "2026-04-21T08:01:34Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 25.8,
+      "humidity": 59.9,
+      "co2": 837,
+      "timestamp": "2026-04-21T08:01:35Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 27.1,
+      "humidity": 61.9,
+      "co2": 858,
+      "timestamp": "2026-04-21T08:01:37Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 27.1,
+      "humidity": 60.3,
+      "co2": 850,
+      "timestamp": "2026-04-21T08:01:38Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 27.8,
+      "humidity": 61.0,
+      "co2": 819,
+      "timestamp": "2026-04-21T08:01:40Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 27.5,
+      "humidity": 62.2,
+      "co2": 881,
+      "timestamp": "2026-04-21T08:01:41Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 27.3,
+      "humidity": 61.2,
+      "co2": 864,
+      "timestamp": "2026-04-21T08:01:43Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 27.6,
+      "humidity": 62.1,
+      "co2": 897,
+      "timestamp": "2026-04-21T08:01:45Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 27.9,
+      "humidity": 62.5,
+      "co2": 917,
+      "timestamp": "2026-04-21T08:01:46Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 28.2,
+      "humidity": 63.1,
+      "co2": 912,
+      "timestamp": "2026-04-21T08:01:48Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 27.1,
+      "humidity": 65.1,
+      "co2": 936,
+      "timestamp": "2026-04-21T08:01:49Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 27.5,
+      "humidity": 62.9,
+      "co2": 937,
+      "timestamp": "2026-04-21T08:01:51Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 28.6,
+      "humidity": 63.7,
+      "co2": 870,
+      "timestamp": "2026-04-21T08:01:52Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 27.9,
+      "humidity": 63.8,
+      "co2": 889,
+      "timestamp": "2026-04-21T08:01:54Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 28.1,
+      "humidity": 63.5,
+      "co2": 902,
+      "timestamp": "2026-04-21T08:01:55Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 27.3,
+      "humidity": 64.1,
+      "co2": 961,
+      "timestamp": "2026-04-21T08:01:57Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 28.7,
+      "humidity": 63.4,
+      "co2": 961,
+      "timestamp": "2026-04-21T08:01:58Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 27.0,
+      "humidity": 64.6,
+      "co2": 903,
+      "timestamp": "2026-04-21T08:02:00Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 28.4,
+      "humidity": 65.8,
+      "co2": 975,
+      "timestamp": "2026-04-21T08:02:01Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 28.9,
+      "humidity": 65.1,
+      "co2": 982,
+      "timestamp": "2026-04-21T08:02:03Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 29.7,
+      "humidity": 65.2,
+      "co2": 991,
+      "timestamp": "2026-04-21T08:02:04Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 28.5,
+      "humidity": 63.6,
+      "co2": 972,
+      "timestamp": "2026-04-21T08:02:06Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 28.9,
+      "humidity": 65.9,
+      "co2": 1037,
+      "timestamp": "2026-04-21T08:02:07Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 28.7,
+      "humidity": 63.7,
+      "co2": 1014,
+      "timestamp": "2026-04-21T08:02:09Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 29.2,
+      "humidity": 65.9,
+      "co2": 1047,
+      "timestamp": "2026-04-21T08:02:10Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 28.8,
+      "humidity": 67.3,
+      "co2": 985,
+      "timestamp": "2026-04-21T08:02:11Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 28.8,
+      "humidity": 67.6,
+      "co2": 1011,
+      "timestamp": "2026-04-21T08:02:13Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 29.1,
+      "humidity": 68.4,
+      "co2": 982,
+      "timestamp": "2026-04-21T08:02:14Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 29.2,
+      "humidity": 67.5,
+      "co2": 978,
+      "timestamp": "2026-04-21T08:02:16Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 29.3,
+      "humidity": 68.2,
+      "co2": 1024,
+      "timestamp": "2026-04-21T08:02:17Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 28.4,
+      "humidity": 67.4,
+      "co2": 1019,
+      "timestamp": "2026-04-21T08:02:18Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 28.9,
+      "humidity": 68.6,
+      "co2": 1008,
+      "timestamp": "2026-04-21T08:02:20Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 29.7,
+      "humidity": 66.6,
+      "co2": 1068,
+      "timestamp": "2026-04-21T08:02:21Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 29.6,
+      "humidity": 67.3,
+      "co2": 1045,
+      "timestamp": "2026-04-21T08:02:23Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 29.7,
+      "humidity": 68.8,
+      "co2": 1098,
+      "timestamp": "2026-04-21T08:02:24Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 30.1,
+      "humidity": 66.9,
+      "co2": 1042,
+      "timestamp": "2026-04-21T08:02:25Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 30.5,
+      "humidity": 68.8,
+      "co2": 1063,
+      "timestamp": "2026-04-21T08:02:27Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 31.1,
+      "humidity": 67.8,
+      "co2": 1069,
+      "timestamp": "2026-04-21T08:02:28Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 30.6,
+      "humidity": 69.6,
+      "co2": 1082,
+      "timestamp": "2026-04-21T08:02:29Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 30.4,
+      "humidity": 71.1,
+      "co2": 1061,
+      "timestamp": "2026-04-21T08:02:31Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 29.4,
+      "humidity": 66.7,
+      "co2": 1089,
+      "timestamp": "2026-04-21T08:02:32Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 30.5,
+      "humidity": 68.0,
+      "co2": 1038,
+      "timestamp": "2026-04-21T08:02:33Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 30.5,
+      "humidity": 71.8,
+      "co2": 1117,
+      "timestamp": "2026-04-21T08:02:35Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 30.2,
+      "humidity": 69.0,
+      "co2": 1131,
+      "timestamp": "2026-04-21T08:02:36Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 30.3,
+      "humidity": 71.8,
+      "co2": 1109,
+      "timestamp": "2026-04-21T08:02:37Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 30.9,
+      "humidity": 69.1,
+      "co2": 1114,
+      "timestamp": "2026-04-21T08:02:38Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 29.9,
+      "humidity": 69.5,
+      "co2": 1163,
+      "timestamp": "2026-04-21T08:02:40Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 31.3,
+      "humidity": 73.0,
+      "co2": 1129,
+      "timestamp": "2026-04-21T08:02:41Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 31.0,
+      "humidity": 68.6,
+      "co2": 1165,
+      "timestamp": "2026-04-21T08:02:42Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 31.5,
+      "humidity": 73.4,
+      "co2": 1166,
+      "timestamp": "2026-04-21T08:02:43Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 32.6,
+      "humidity": 71.7,
+      "co2": 1113,
+      "timestamp": "2026-04-21T08:02:45Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 31.2,
+      "humidity": 70.5,
+      "co2": 1206,
+      "timestamp": "2026-04-21T08:02:46Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 31.3,
+      "humidity": 71.7,
+      "co2": 1240,
+      "timestamp": "2026-04-21T08:02:47Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 31.6,
+      "humidity": 72.7,
+      "co2": 1208,
+      "timestamp": "2026-04-21T08:02:48Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 31.2,
+      "humidity": 71.6,
+      "co2": 1175,
+      "timestamp": "2026-04-21T08:02:50Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 31.8,
+      "humidity": 72.5,
+      "co2": 1196,
+      "timestamp": "2026-04-21T08:02:51Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 31.4,
+      "humidity": 72.8,
+      "co2": 1191,
+      "timestamp": "2026-04-21T08:02:52Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 32.0,
+      "humidity": 73.0,
+      "co2": 1252,
+      "timestamp": "2026-04-21T08:02:53Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 32.6,
+      "humidity": 73.2,
+      "co2": 1236,
+      "timestamp": "2026-04-21T08:02:54Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 33.1,
+      "humidity": 72.1,
+      "co2": 1195,
+      "timestamp": "2026-04-21T08:02:55Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 32.2,
+      "humidity": 75.2,
+      "co2": 1261,
+      "timestamp": "2026-04-21T08:02:57Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 32.1,
+      "humidity": 73.2,
+      "co2": 1219,
+      "timestamp": "2026-04-21T08:02:58Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 32.6,
+      "humidity": 72.7,
+      "co2": 1273,
+      "timestamp": "2026-04-21T08:02:59Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 32.0,
+      "humidity": 74.3,
+      "co2": 1247,
+      "timestamp": "2026-04-21T08:03:00Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 32.6,
+      "humidity": 74.1,
+      "co2": 1250,
+      "timestamp": "2026-04-21T08:03:01Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 33.0,
+      "humidity": 74.3,
+      "co2": 1259,
+      "timestamp": "2026-04-21T08:03:02Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 32.9,
+      "humidity": 74.8,
+      "co2": 1287,
+      "timestamp": "2026-04-21T08:03:03Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 32.5,
+      "humidity": 73.5,
+      "co2": 1281,
+      "timestamp": "2026-04-21T08:03:05Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 32.9,
+      "humidity": 76.5,
+      "co2": 1258,
+      "timestamp": "2026-04-21T08:03:06Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 33.1,
+      "humidity": 75.4,
+      "co2": 1297,
+      "timestamp": "2026-04-21T08:03:07Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 33.3,
+      "humidity": 76.3,
+      "co2": 1306,
+      "timestamp": "2026-04-21T08:03:08Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 33.4,
+      "humidity": 75.5,
+      "co2": 1259,
+      "timestamp": "2026-04-21T08:03:09Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 33.1,
+      "humidity": 75.2,
+      "co2": 1323,
+      "timestamp": "2026-04-21T08:03:10Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 33.6,
+      "humidity": 75.4,
+      "co2": 1286,
+      "timestamp": "2026-04-21T08:03:11Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 33.3,
+      "humidity": 75.1,
+      "co2": 1334,
+      "timestamp": "2026-04-21T08:03:12Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 33.1,
+      "humidity": 76.6,
+      "co2": 1345,
+      "timestamp": "2026-04-21T08:03:13Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 33.7,
+      "humidity": 76.2,
+      "co2": 1337,
+      "timestamp": "2026-04-21T08:03:14Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 34.4,
+      "humidity": 77.4,
+      "co2": 1335,
+      "timestamp": "2026-04-21T08:03:15Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 33.6,
+      "humidity": 76.9,
+      "co2": 1339,
+      "timestamp": "2026-04-21T08:03:16Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 33.6,
+      "humidity": 76.2,
+      "co2": 1378,
+      "timestamp": "2026-04-21T08:03:17Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 34.2,
+      "humidity": 79.3,
+      "co2": 1303,
+      "timestamp": "2026-04-21T08:03:18Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 33.8,
+      "humidity": 79.9,
+      "co2": 1332,
+      "timestamp": "2026-04-21T08:03:19Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 33.2,
+      "humidity": 78.5,
+      "co2": 1318,
+      "timestamp": "2026-04-21T08:03:20Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 34.2,
+      "humidity": 76.7,
+      "co2": 1345,
+      "timestamp": "2026-04-21T08:03:21Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 35.1,
+      "humidity": 76.3,
+      "co2": 1408,
+      "timestamp": "2026-04-21T08:03:22Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 34.7,
+      "humidity": 78.5,
+      "co2": 1418,
+      "timestamp": "2026-04-21T08:03:23Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 34.9,
+      "humidity": 78.3,
+      "co2": 1411,
+      "timestamp": "2026-04-21T08:03:24Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 34.3,
+      "humidity": 79.1,
+      "co2": 1405,
+      "timestamp": "2026-04-21T08:03:25Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 34.9,
+      "humidity": 79.7,
+      "co2": 1409,
+      "timestamp": "2026-04-21T08:03:26Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 35.3,
+      "humidity": 79.2,
+      "co2": 1422,
+      "timestamp": "2026-04-21T08:03:27Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 34.6,
+      "humidity": 80.3,
+      "co2": 1401,
+      "timestamp": "2026-04-21T08:03:28Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 34.2,
+      "humidity": 81.0,
+      "co2": 1396,
+      "timestamp": "2026-04-21T08:03:29Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 34.9,
+      "humidity": 79.6,
+      "co2": 1417,
+      "timestamp": "2026-04-21T08:03:30Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 35.2,
+      "humidity": 81.2,
+      "co2": 1449,
+      "timestamp": "2026-04-21T08:03:31Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 35.5,
+      "humidity": 79.2,
+      "co2": 1485,
+      "timestamp": "2026-04-21T08:03:32Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 35.0,
+      "humidity": 82.0,
+      "co2": 1438,
+      "timestamp": "2026-04-21T08:03:33Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 35.3,
+      "humidity": 81.4,
+      "co2": 1472,
+      "timestamp": "2026-04-21T08:03:34Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 36.0,
+      "humidity": 83.7,
+      "co2": 1464,
+      "timestamp": "2026-04-21T08:03:34Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 36.2,
+      "humidity": 81.1,
+      "co2": 1472,
+      "timestamp": "2026-04-21T08:03:35Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 34.9,
+      "humidity": 81.7,
+      "co2": 1483,
+      "timestamp": "2026-04-21T08:03:36Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 35.8,
+      "humidity": 80.5,
+      "co2": 1517,
+      "timestamp": "2026-04-21T08:03:37Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 35.4,
+      "humidity": 81.2,
+      "co2": 1502,
+      "timestamp": "2026-04-21T08:03:38Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 35.3,
+      "humidity": 84.1,
+      "co2": 1481,
+      "timestamp": "2026-04-21T08:03:39Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 35.9,
+      "humidity": 83.0,
+      "co2": 1466,
+      "timestamp": "2026-04-21T08:03:40Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 36.3,
+      "humidity": 85.5,
+      "co2": 1521,
+      "timestamp": "2026-04-21T08:03:40Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 36.7,
+      "humidity": 83.0,
+      "co2": 1553,
+      "timestamp": "2026-04-21T08:03:41Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 36.2,
+      "humidity": 82.2,
+      "co2": 1553,
+      "timestamp": "2026-04-21T08:03:42Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 36.4,
+      "humidity": 83.6,
+      "co2": 1532,
+      "timestamp": "2026-04-21T08:03:43Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 36.4,
+      "humidity": 84.1,
+      "co2": 1593,
+      "timestamp": "2026-04-21T08:03:44Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 35.9,
+      "humidity": 83.5,
+      "co2": 1587,
+      "timestamp": "2026-04-21T08:03:44Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 37.1,
+      "humidity": 83.5,
+      "co2": 1582,
+      "timestamp": "2026-04-21T08:03:45Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 37.5,
+      "humidity": 83.7,
+      "co2": 1548,
+      "timestamp": "2026-04-21T08:03:46Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 36.7,
+      "humidity": 85.0,
+      "co2": 1529,
+      "timestamp": "2026-04-21T08:03:47Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 37.5,
+      "humidity": 85.4,
+      "co2": 1561,
+      "timestamp": "2026-04-21T08:03:48Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 38.3,
+      "humidity": 84.1,
+      "co2": 1582,
+      "timestamp": "2026-04-21T08:03:48Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 36.1,
+      "humidity": 86.1,
+      "co2": 1593,
+      "timestamp": "2026-04-21T08:03:49Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 37.8,
+      "humidity": 84.0,
+      "co2": 1662,
+      "timestamp": "2026-04-21T08:03:50Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 37.9,
+      "humidity": 85.2,
+      "co2": 1596,
+      "timestamp": "2026-04-21T08:03:50Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 36.5,
+      "humidity": 85.9,
+      "co2": 1614,
+      "timestamp": "2026-04-21T08:03:51Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 37.4,
+      "humidity": 86.4,
+      "co2": 1639,
+      "timestamp": "2026-04-21T08:03:52Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 38.0,
+      "humidity": 84.9,
+      "co2": 1668,
+      "timestamp": "2026-04-21T08:03:53Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 37.4,
+      "humidity": 86.3,
+      "co2": 1611,
+      "timestamp": "2026-04-21T08:03:53Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 38.2,
+      "humidity": 88.1,
+      "co2": 1645,
+      "timestamp": "2026-04-21T08:03:54Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 37.4,
+      "humidity": 87.0,
+      "co2": 1625,
+      "timestamp": "2026-04-21T08:03:55Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 37.8,
+      "humidity": 86.7,
+      "co2": 1681,
+      "timestamp": "2026-04-21T08:03:55Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 38.5,
+      "humidity": 84.5,
+      "co2": 1694,
+      "timestamp": "2026-04-21T08:03:56Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 38.3,
+      "humidity": 86.4,
+      "co2": 1614,
+      "timestamp": "2026-04-21T08:03:57Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 38.5,
+      "humidity": 86.7,
+      "co2": 1646,
+      "timestamp": "2026-04-21T08:03:57Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 38.7,
+      "humidity": 87.5,
+      "co2": 1687,
+      "timestamp": "2026-04-21T08:03:58Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 37.9,
+      "humidity": 89.6,
+      "co2": 1736,
+      "timestamp": "2026-04-21T08:03:59Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 39.3,
+      "humidity": 88.7,
+      "co2": 1600,
+      "timestamp": "2026-04-21T08:03:59Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 39.0,
+      "humidity": 88.0,
+      "co2": 1705,
+      "timestamp": "2026-04-21T08:04:00Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 38.3,
+      "humidity": 88.6,
+      "co2": 1714,
+      "timestamp": "2026-04-21T08:04:01Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 39.0,
+      "humidity": 88.6,
+      "co2": 1701,
+      "timestamp": "2026-04-21T08:04:01Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 38.5,
+      "humidity": 91.0,
+      "co2": 1732,
+      "timestamp": "2026-04-21T08:04:02Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 38.8,
+      "humidity": 90.5,
+      "co2": 1723,
+      "timestamp": "2026-04-21T08:04:02Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 38.7,
+      "humidity": 90.3,
+      "co2": 1754,
+      "timestamp": "2026-04-21T08:04:03Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 38.7,
+      "humidity": 90.1,
+      "co2": 1746,
+      "timestamp": "2026-04-21T08:04:04Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 38.5,
+      "humidity": 91.3,
+      "co2": 1717,
+      "timestamp": "2026-04-21T08:04:04Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 39.4,
+      "humidity": 89.9,
+      "co2": 1797,
+      "timestamp": "2026-04-21T08:04:05Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 39.2,
+      "humidity": 90.9,
+      "co2": 1724,
+      "timestamp": "2026-04-21T08:04:05Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 39.7,
+      "humidity": 89.3,
+      "co2": 1750,
+      "timestamp": "2026-04-21T08:04:06Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 39.6,
+      "humidity": 91.3,
+      "co2": 1827,
+      "timestamp": "2026-04-21T08:04:06Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 39.9,
+      "humidity": 92.1,
+      "co2": 1784,
+      "timestamp": "2026-04-21T08:04:07Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 38.8,
+      "humidity": 91.4,
+      "co2": 1769,
+      "timestamp": "2026-04-21T08:04:07Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 39.3,
+      "humidity": 92.0,
+      "co2": 1843,
+      "timestamp": "2026-04-21T08:04:08Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 39.0,
+      "humidity": 91.2,
+      "co2": 1776,
+      "timestamp": "2026-04-21T08:04:08Z",
+      "location": "zona-monitoreada"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 40.2,
+      "humidity": 91.6,
+      "co2": 1798,
+      "timestamp": "2026-04-21T08:04:09Z",
+      "location": "zona-monitoreada"
+    }
+  ]
+}

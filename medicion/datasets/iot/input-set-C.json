@@ -1,0 +1,12 @@
+{
+  "_meta": {
+    "caso": "iot",
+    "set": "C",
+    "escenario": "Invalido — faltan sensor_id y co2, espera rechazo con 422 y errores[]",
+    "campos_faltantes": ["sensor_id", "co2"],
+    "response_esperado": 422
+  },
+  "temperature": 25.0,
+  "humidity": 60.0,
+  "timestamp": "2026-03-15T10:02:00Z"
+}

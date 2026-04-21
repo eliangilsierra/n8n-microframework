@@ -1,0 +1,1614 @@
+{
+  "_meta": {
+    "caso": "iot",
+    "set": "F",
+    "seed": 20260421101,
+    "master_seed": 20260421,
+    "generated_at": "2026-04-21",
+    "count": 200,
+    "distribution": "normal_variable_100pct_valid",
+    "sha256": "66a7d9e1e399017799b2aa3aa45e3167c45e30fcb7918325b7cb51d91a8045c3"
+  },
+  "payloads": [
+    {
+      "sensor_id": "SENSOR-047",
+      "temperature": 27.0,
+      "humidity": 70.8,
+      "co2": 528,
+      "timestamp": "2026-04-21T08:00:00Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-019",
+      "temperature": 22.1,
+      "humidity": 74.4,
+      "co2": 400,
+      "timestamp": "2026-04-21T08:00:02Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-040",
+      "temperature": 22.3,
+      "humidity": 60.4,
+      "co2": 730,
+      "timestamp": "2026-04-21T08:00:04Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-016",
+      "temperature": 25.9,
+      "humidity": 47.9,
+      "co2": 553,
+      "timestamp": "2026-04-21T08:00:06Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-050",
+      "temperature": 27.9,
+      "humidity": 66.9,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:00:08Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 25.6,
+      "humidity": 48.5,
+      "co2": 894,
+      "timestamp": "2026-04-21T08:00:10Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-030",
+      "temperature": 25.7,
+      "humidity": 50.3,
+      "co2": 690,
+      "timestamp": "2026-04-21T08:00:12Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-020",
+      "temperature": 18.6,
+      "humidity": 55.5,
+      "co2": 931,
+      "timestamp": "2026-04-21T08:00:14Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-037",
+      "temperature": 21.1,
+      "humidity": 40.2,
+      "co2": 504,
+      "timestamp": "2026-04-21T08:00:16Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-044",
+      "temperature": 25.9,
+      "humidity": 55.7,
+      "co2": 758,
+      "timestamp": "2026-04-21T08:00:18Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-015",
+      "temperature": 26.1,
+      "humidity": 71.1,
+      "co2": 508,
+      "timestamp": "2026-04-21T08:00:20Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 24.2,
+      "humidity": 46.9,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:00:22Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-041",
+      "temperature": 31.4,
+      "humidity": 69.8,
+      "co2": 424,
+      "timestamp": "2026-04-21T08:00:24Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-034",
+      "temperature": 22.3,
+      "humidity": 55.8,
+      "co2": 595,
+      "timestamp": "2026-04-21T08:00:26Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-044",
+      "temperature": 24.1,
+      "humidity": 40.1,
+      "co2": 610,
+      "timestamp": "2026-04-21T08:00:28Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 18.6,
+      "humidity": 47.1,
+      "co2": 400,
+      "timestamp": "2026-04-21T08:00:30Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-045",
+      "temperature": 27.5,
+      "humidity": 59.9,
+      "co2": 400,
+      "timestamp": "2026-04-21T08:00:32Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-015",
+      "temperature": 27.9,
+      "humidity": 71.9,
+      "co2": 631,
+      "timestamp": "2026-04-21T08:00:34Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-018",
+      "temperature": 24.5,
+      "humidity": 50.5,
+      "co2": 443,
+      "timestamp": "2026-04-21T08:00:36Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-024",
+      "temperature": 25.0,
+      "humidity": 57.6,
+      "co2": 526,
+      "timestamp": "2026-04-21T08:00:38Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-035",
+      "temperature": 24.8,
+      "humidity": 51.7,
+      "co2": 757,
+      "timestamp": "2026-04-21T08:00:40Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-034",
+      "temperature": 22.9,
+      "humidity": 63.5,
+      "co2": 450,
+      "timestamp": "2026-04-21T08:00:42Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 25.9,
+      "humidity": 75.7,
+      "co2": 515,
+      "timestamp": "2026-04-21T08:00:44Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-005",
+      "temperature": 27.1,
+      "humidity": 71.0,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:00:46Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-047",
+      "temperature": 26.6,
+      "humidity": 45.4,
+      "co2": 516,
+      "timestamp": "2026-04-21T08:00:48Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-022",
+      "temperature": 23.9,
+      "humidity": 41.3,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:00:50Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 24.3,
+      "humidity": 73.4,
+      "co2": 447,
+      "timestamp": "2026-04-21T08:00:52Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-020",
+      "temperature": 21.7,
+      "humidity": 58.2,
+      "co2": 556,
+      "timestamp": "2026-04-21T08:00:54Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-036",
+      "temperature": 20.8,
+      "humidity": 54.9,
+      "co2": 624,
+      "timestamp": "2026-04-21T08:00:56Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-048",
+      "temperature": 25.0,
+      "humidity": 66.5,
+      "co2": 904,
+      "timestamp": "2026-04-21T08:00:58Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-033",
+      "temperature": 19.7,
+      "humidity": 68.5,
+      "co2": 636,
+      "timestamp": "2026-04-21T08:01:00Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-049",
+      "temperature": 25.1,
+      "humidity": 48.1,
+      "co2": 606,
+      "timestamp": "2026-04-21T08:01:02Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 24.3,
+      "humidity": 50.5,
+      "co2": 579,
+      "timestamp": "2026-04-21T08:01:04Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-048",
+      "temperature": 26.7,
+      "humidity": 58.5,
+      "co2": 560,
+      "timestamp": "2026-04-21T08:01:06Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-024",
+      "temperature": 27.0,
+      "humidity": 54.3,
+      "co2": 732,
+      "timestamp": "2026-04-21T08:01:08Z",
+      "location": "oficinas-2p"
+    },
+    {
+      "sensor_id": "SENSOR-033",
+      "temperature": 20.6,
+      "humidity": 41.9,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:01:10Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-039",
+      "temperature": 24.8,
+      "humidity": 44.5,
+      "co2": 629,
+      "timestamp": "2026-04-21T08:01:12Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-020",
+      "temperature": 20.5,
+      "humidity": 42.0,
+      "co2": 563,
+      "timestamp": "2026-04-21T08:01:14Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-028",
+      "temperature": 19.7,
+      "humidity": 55.4,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:01:16Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-020",
+      "temperature": 22.7,
+      "humidity": 46.3,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:01:18Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-029",
+      "temperature": 26.2,
+      "humidity": 72.3,
+      "co2": 460,
+      "timestamp": "2026-04-21T08:01:20Z",
+      "location": "oficinas-2p"
+    },
+    {
+      "sensor_id": "SENSOR-046",
+      "temperature": 26.8,
+      "humidity": 43.9,
+      "co2": 506,
+      "timestamp": "2026-04-21T08:01:22Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-046",
+      "temperature": 25.9,
+      "humidity": 55.6,
+      "co2": 701,
+      "timestamp": "2026-04-21T08:01:24Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 24.7,
+      "humidity": 55.9,
+      "co2": 566,
+      "timestamp": "2026-04-21T08:01:26Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 23.2,
+      "humidity": 70.4,
+      "co2": 766,
+      "timestamp": "2026-04-21T08:01:28Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-041",
+      "temperature": 18.8,
+      "humidity": 67.1,
+      "co2": 698,
+      "timestamp": "2026-04-21T08:01:30Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-034",
+      "temperature": 27.3,
+      "humidity": 67.3,
+      "co2": 506,
+      "timestamp": "2026-04-21T08:01:32Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-047",
+      "temperature": 26.2,
+      "humidity": 54.5,
+      "co2": 589,
+      "timestamp": "2026-04-21T08:01:34Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-040",
+      "temperature": 24.5,
+      "humidity": 31.0,
+      "co2": 585,
+      "timestamp": "2026-04-21T08:01:36Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 25.2,
+      "humidity": 54.7,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:01:38Z",
+      "location": "oficinas-2p"
+    },
+    {
+      "sensor_id": "SENSOR-048",
+      "temperature": 25.5,
+      "humidity": 50.9,
+      "co2": 560,
+      "timestamp": "2026-04-21T08:01:40Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-032",
+      "temperature": 25.1,
+      "humidity": 63.8,
+      "co2": 505,
+      "timestamp": "2026-04-21T08:01:42Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 22.2,
+      "humidity": 47.6,
+      "co2": 654,
+      "timestamp": "2026-04-21T08:01:44Z",
+      "location": "oficinas-2p"
+    },
+    {
+      "sensor_id": "SENSOR-041",
+      "temperature": 26.7,
+      "humidity": 52.6,
+      "co2": 450,
+      "timestamp": "2026-04-21T08:01:46Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-031",
+      "temperature": 23.8,
+      "humidity": 59.0,
+      "co2": 617,
+      "timestamp": "2026-04-21T08:01:48Z",
+      "location": "oficinas-2p"
+    },
+    {
+      "sensor_id": "SENSOR-025",
+      "temperature": 27.6,
+      "humidity": 51.5,
+      "co2": 701,
+      "timestamp": "2026-04-21T08:01:50Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-021",
+      "temperature": 29.6,
+      "humidity": 58.0,
+      "co2": 400,
+      "timestamp": "2026-04-21T08:01:52Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-036",
+      "temperature": 27.0,
+      "humidity": 59.9,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:01:54Z",
+      "location": "oficinas-2p"
+    },
+    {
+      "sensor_id": "SENSOR-029",
+      "temperature": 24.4,
+      "humidity": 59.6,
+      "co2": 543,
+      "timestamp": "2026-04-21T08:01:56Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 18.0,
+      "humidity": 52.1,
+      "co2": 400,
+      "timestamp": "2026-04-21T08:01:58Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 18.1,
+      "humidity": 62.0,
+      "co2": 423,
+      "timestamp": "2026-04-21T08:02:00Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-038",
+      "temperature": 24.7,
+      "humidity": 46.7,
+      "co2": 723,
+      "timestamp": "2026-04-21T08:02:02Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-036",
+      "temperature": 18.0,
+      "humidity": 48.6,
+      "co2": 693,
+      "timestamp": "2026-04-21T08:02:04Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-043",
+      "temperature": 26.7,
+      "humidity": 61.9,
+      "co2": 727,
+      "timestamp": "2026-04-21T08:02:06Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 29.8,
+      "humidity": 60.7,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:02:08Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-043",
+      "temperature": 28.7,
+      "humidity": 54.6,
+      "co2": 807,
+      "timestamp": "2026-04-21T08:02:10Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-038",
+      "temperature": 22.8,
+      "humidity": 76.7,
+      "co2": 854,
+      "timestamp": "2026-04-21T08:02:12Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 22.8,
+      "humidity": 51.3,
+      "co2": 400,
+      "timestamp": "2026-04-21T08:02:14Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-023",
+      "temperature": 22.7,
+      "humidity": 61.5,
+      "co2": 641,
+      "timestamp": "2026-04-21T08:02:16Z",
+      "location": "oficinas-2p"
+    },
+    {
+      "sensor_id": "SENSOR-049",
+      "temperature": 29.1,
+      "humidity": 62.2,
+      "co2": 718,
+      "timestamp": "2026-04-21T08:02:18Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 22.1,
+      "humidity": 53.0,
+      "co2": 624,
+      "timestamp": "2026-04-21T08:02:20Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-037",
+      "temperature": 21.1,
+      "humidity": 63.1,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:02:22Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-047",
+      "temperature": 20.1,
+      "humidity": 61.3,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:02:24Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-045",
+      "temperature": 27.6,
+      "humidity": 53.5,
+      "co2": 572,
+      "timestamp": "2026-04-21T08:02:26Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-041",
+      "temperature": 20.1,
+      "humidity": 59.1,
+      "co2": 572,
+      "timestamp": "2026-04-21T08:02:28Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-012",
+      "temperature": 23.6,
+      "humidity": 44.2,
+      "co2": 707,
+      "timestamp": "2026-04-21T08:02:30Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 22.9,
+      "humidity": 68.6,
+      "co2": 462,
+      "timestamp": "2026-04-21T08:02:32Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 28.2,
+      "humidity": 60.3,
+      "co2": 493,
+      "timestamp": "2026-04-21T08:02:34Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-016",
+      "temperature": 22.6,
+      "humidity": 63.5,
+      "co2": 610,
+      "timestamp": "2026-04-21T08:02:36Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-030",
+      "temperature": 27.4,
+      "humidity": 44.4,
+      "co2": 634,
+      "timestamp": "2026-04-21T08:02:38Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 21.7,
+      "humidity": 52.1,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:02:40Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-041",
+      "temperature": 29.4,
+      "humidity": 45.1,
+      "co2": 882,
+      "timestamp": "2026-04-21T08:02:42Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-032",
+      "temperature": 24.8,
+      "humidity": 51.4,
+      "co2": 563,
+      "timestamp": "2026-04-21T08:02:44Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-021",
+      "temperature": 25.9,
+      "humidity": 53.1,
+      "co2": 712,
+      "timestamp": "2026-04-21T08:02:46Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-018",
+      "temperature": 23.3,
+      "humidity": 46.8,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:02:48Z",
+      "location": "oficinas-2p"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 28.0,
+      "humidity": 65.3,
+      "co2": 792,
+      "timestamp": "2026-04-21T08:02:50Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-017",
+      "temperature": 27.3,
+      "humidity": 40.4,
+      "co2": 578,
+      "timestamp": "2026-04-21T08:02:52Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-039",
+      "temperature": 24.1,
+      "humidity": 61.7,
+      "co2": 758,
+      "timestamp": "2026-04-21T08:02:54Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 24.3,
+      "humidity": 48.6,
+      "co2": 665,
+      "timestamp": "2026-04-21T08:02:56Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-035",
+      "temperature": 25.4,
+      "humidity": 43.3,
+      "co2": 626,
+      "timestamp": "2026-04-21T08:02:58Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-029",
+      "temperature": 21.1,
+      "humidity": 45.3,
+      "co2": 710,
+      "timestamp": "2026-04-21T08:03:00Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 25.7,
+      "humidity": 48.8,
+      "co2": 516,
+      "timestamp": "2026-04-21T08:03:02Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-041",
+      "temperature": 26.4,
+      "humidity": 54.6,
+      "co2": 482,
+      "timestamp": "2026-04-21T08:03:04Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-014",
+      "temperature": 24.2,
+      "humidity": 52.3,
+      "co2": 620,
+      "timestamp": "2026-04-21T08:03:06Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-042",
+      "temperature": 24.3,
+      "humidity": 34.7,
+      "co2": 571,
+      "timestamp": "2026-04-21T08:03:08Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-039",
+      "temperature": 22.4,
+      "humidity": 42.1,
+      "co2": 400,
+      "timestamp": "2026-04-21T08:03:10Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-027",
+      "temperature": 26.8,
+      "humidity": 59.7,
+      "co2": 490,
+      "timestamp": "2026-04-21T08:03:12Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-022",
+      "temperature": 21.2,
+      "humidity": 47.9,
+      "co2": 536,
+      "timestamp": "2026-04-21T08:03:14Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 19.9,
+      "humidity": 42.6,
+      "co2": 574,
+      "timestamp": "2026-04-21T08:03:16Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-022",
+      "temperature": 21.2,
+      "humidity": 49.6,
+      "co2": 498,
+      "timestamp": "2026-04-21T08:03:18Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-039",
+      "temperature": 23.2,
+      "humidity": 43.7,
+      "co2": 711,
+      "timestamp": "2026-04-21T08:03:20Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-024",
+      "temperature": 26.1,
+      "humidity": 50.1,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:03:22Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-048",
+      "temperature": 21.6,
+      "humidity": 42.4,
+      "co2": 603,
+      "timestamp": "2026-04-21T08:03:24Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-042",
+      "temperature": 26.9,
+      "humidity": 55.3,
+      "co2": 749,
+      "timestamp": "2026-04-21T08:03:26Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-024",
+      "temperature": 22.7,
+      "humidity": 55.4,
+      "co2": 646,
+      "timestamp": "2026-04-21T08:03:28Z",
+      "location": "oficinas-2p"
+    },
+    {
+      "sensor_id": "SENSOR-046",
+      "temperature": 25.1,
+      "humidity": 43.6,
+      "co2": 848,
+      "timestamp": "2026-04-21T08:03:30Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-050",
+      "temperature": 24.0,
+      "humidity": 67.9,
+      "co2": 400,
+      "timestamp": "2026-04-21T08:03:32Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-008",
+      "temperature": 24.4,
+      "humidity": 59.3,
+      "co2": 864,
+      "timestamp": "2026-04-21T08:03:34Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-033",
+      "temperature": 24.5,
+      "humidity": 49.3,
+      "co2": 400,
+      "timestamp": "2026-04-21T08:03:36Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-040",
+      "temperature": 20.1,
+      "humidity": 54.2,
+      "co2": 809,
+      "timestamp": "2026-04-21T08:03:38Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-031",
+      "temperature": 22.8,
+      "humidity": 54.9,
+      "co2": 670,
+      "timestamp": "2026-04-21T08:03:40Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-027",
+      "temperature": 24.9,
+      "humidity": 63.4,
+      "co2": 415,
+      "timestamp": "2026-04-21T08:03:42Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-016",
+      "temperature": 23.6,
+      "humidity": 51.0,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:03:44Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 22.0,
+      "humidity": 63.3,
+      "co2": 555,
+      "timestamp": "2026-04-21T08:03:46Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 21.8,
+      "humidity": 47.9,
+      "co2": 654,
+      "timestamp": "2026-04-21T08:03:48Z",
+      "location": "oficinas-2p"
+    },
+    {
+      "sensor_id": "SENSOR-048",
+      "temperature": 19.5,
+      "humidity": 58.6,
+      "co2": 549,
+      "timestamp": "2026-04-21T08:03:50Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-033",
+      "temperature": 21.4,
+      "humidity": 43.0,
+      "co2": 717,
+      "timestamp": "2026-04-21T08:03:52Z",
+      "location": "oficinas-2p"
+    },
+    {
+      "sensor_id": "SENSOR-035",
+      "temperature": 27.6,
+      "humidity": 58.0,
+      "co2": 512,
+      "timestamp": "2026-04-21T08:03:54Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-032",
+      "temperature": 23.1,
+      "humidity": 53.5,
+      "co2": 535,
+      "timestamp": "2026-04-21T08:03:56Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-011",
+      "temperature": 28.7,
+      "humidity": 61.0,
+      "co2": 400,
+      "timestamp": "2026-04-21T08:03:58Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-021",
+      "temperature": 25.8,
+      "humidity": 56.2,
+      "co2": 542,
+      "timestamp": "2026-04-21T08:04:00Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-012",
+      "temperature": 19.0,
+      "humidity": 64.4,
+      "co2": 568,
+      "timestamp": "2026-04-21T08:04:02Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-045",
+      "temperature": 22.4,
+      "humidity": 51.6,
+      "co2": 614,
+      "timestamp": "2026-04-21T08:04:04Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-046",
+      "temperature": 25.6,
+      "humidity": 42.2,
+      "co2": 400,
+      "timestamp": "2026-04-21T08:04:06Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-044",
+      "temperature": 20.9,
+      "humidity": 34.8,
+      "co2": 546,
+      "timestamp": "2026-04-21T08:04:08Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-030",
+      "temperature": 27.0,
+      "humidity": 55.9,
+      "co2": 727,
+      "timestamp": "2026-04-21T08:04:10Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-043",
+      "temperature": 28.0,
+      "humidity": 54.5,
+      "co2": 525,
+      "timestamp": "2026-04-21T08:04:12Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-029",
+      "temperature": 18.0,
+      "humidity": 63.5,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:04:14Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-026",
+      "temperature": 22.1,
+      "humidity": 47.5,
+      "co2": 879,
+      "timestamp": "2026-04-21T08:04:16Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-038",
+      "temperature": 18.2,
+      "humidity": 65.0,
+      "co2": 775,
+      "timestamp": "2026-04-21T08:04:18Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-020",
+      "temperature": 22.0,
+      "humidity": 66.6,
+      "co2": 565,
+      "timestamp": "2026-04-21T08:04:20Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-034",
+      "temperature": 21.2,
+      "humidity": 45.2,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:04:22Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-010",
+      "temperature": 24.0,
+      "humidity": 51.9,
+      "co2": 449,
+      "timestamp": "2026-04-21T08:04:24Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-025",
+      "temperature": 21.1,
+      "humidity": 64.9,
+      "co2": 890,
+      "timestamp": "2026-04-21T08:04:26Z",
+      "location": "oficinas-2p"
+    },
+    {
+      "sensor_id": "SENSOR-030",
+      "temperature": 24.5,
+      "humidity": 57.7,
+      "co2": 482,
+      "timestamp": "2026-04-21T08:04:28Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-019",
+      "temperature": 26.1,
+      "humidity": 69.9,
+      "co2": 562,
+      "timestamp": "2026-04-21T08:04:30Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-027",
+      "temperature": 22.5,
+      "humidity": 57.5,
+      "co2": 762,
+      "timestamp": "2026-04-21T08:04:32Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-021",
+      "temperature": 23.5,
+      "humidity": 50.0,
+      "co2": 732,
+      "timestamp": "2026-04-21T08:04:34Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-038",
+      "temperature": 18.1,
+      "humidity": 62.9,
+      "co2": 400,
+      "timestamp": "2026-04-21T08:04:36Z",
+      "location": "oficinas-2p"
+    },
+    {
+      "sensor_id": "SENSOR-037",
+      "temperature": 29.5,
+      "humidity": 67.0,
+      "co2": 441,
+      "timestamp": "2026-04-21T08:04:38Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-012",
+      "temperature": 27.1,
+      "humidity": 52.6,
+      "co2": 588,
+      "timestamp": "2026-04-21T08:04:40Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-015",
+      "temperature": 26.1,
+      "humidity": 43.9,
+      "co2": 409,
+      "timestamp": "2026-04-21T08:04:42Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 18.0,
+      "humidity": 61.5,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:04:44Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-019",
+      "temperature": 21.4,
+      "humidity": 63.6,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:04:46Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-027",
+      "temperature": 23.9,
+      "humidity": 48.3,
+      "co2": 614,
+      "timestamp": "2026-04-21T08:04:48Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 26.6,
+      "humidity": 51.2,
+      "co2": 518,
+      "timestamp": "2026-04-21T08:04:50Z",
+      "location": "oficinas-2p"
+    },
+    {
+      "sensor_id": "SENSOR-015",
+      "temperature": 23.0,
+      "humidity": 59.7,
+      "co2": 400,
+      "timestamp": "2026-04-21T08:04:52Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-034",
+      "temperature": 23.1,
+      "humidity": 49.1,
+      "co2": 692,
+      "timestamp": "2026-04-21T08:04:54Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-027",
+      "temperature": 27.2,
+      "humidity": 52.0,
+      "co2": 631,
+      "timestamp": "2026-04-21T08:04:56Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-023",
+      "temperature": 25.4,
+      "humidity": 70.8,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:04:58Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-011",
+      "temperature": 26.0,
+      "humidity": 47.8,
+      "co2": 835,
+      "timestamp": "2026-04-21T08:05:01Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-031",
+      "temperature": 29.0,
+      "humidity": 65.6,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:05:02Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-045",
+      "temperature": 21.6,
+      "humidity": 44.7,
+      "co2": 598,
+      "timestamp": "2026-04-21T08:05:04Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 23.3,
+      "humidity": 47.6,
+      "co2": 493,
+      "timestamp": "2026-04-21T08:05:06Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-031",
+      "temperature": 20.5,
+      "humidity": 52.6,
+      "co2": 500,
+      "timestamp": "2026-04-21T08:05:08Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-018",
+      "temperature": 31.7,
+      "humidity": 76.7,
+      "co2": 944,
+      "timestamp": "2026-04-21T08:05:10Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-038",
+      "temperature": 19.4,
+      "humidity": 65.8,
+      "co2": 643,
+      "timestamp": "2026-04-21T08:05:12Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-027",
+      "temperature": 25.7,
+      "humidity": 49.9,
+      "co2": 901,
+      "timestamp": "2026-04-21T08:05:14Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-028",
+      "temperature": 28.9,
+      "humidity": 44.8,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:05:16Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-028",
+      "temperature": 18.9,
+      "humidity": 51.6,
+      "co2": 400,
+      "timestamp": "2026-04-21T08:05:18Z",
+      "location": "oficinas-2p"
+    },
+    {
+      "sensor_id": "SENSOR-015",
+      "temperature": 25.9,
+      "humidity": 40.6,
+      "co2": 648,
+      "timestamp": "2026-04-21T08:05:20Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-032",
+      "temperature": 26.6,
+      "humidity": 44.5,
+      "co2": 778,
+      "timestamp": "2026-04-21T08:05:22Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-003",
+      "temperature": 24.2,
+      "humidity": 61.2,
+      "co2": 573,
+      "timestamp": "2026-04-21T08:05:24Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-036",
+      "temperature": 29.1,
+      "humidity": 48.4,
+      "co2": 788,
+      "timestamp": "2026-04-21T08:05:26Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-045",
+      "temperature": 19.8,
+      "humidity": 52.3,
+      "co2": 628,
+      "timestamp": "2026-04-21T08:05:28Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-027",
+      "temperature": 27.0,
+      "humidity": 48.2,
+      "co2": 400,
+      "timestamp": "2026-04-21T08:05:30Z",
+      "location": "oficinas-2p"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 20.9,
+      "humidity": 48.9,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:05:32Z",
+      "location": "oficinas-2p"
+    },
+    {
+      "sensor_id": "SENSOR-045",
+      "temperature": 20.6,
+      "humidity": 45.9,
+      "co2": 759,
+      "timestamp": "2026-04-21T08:05:34Z",
+      "location": "oficinas-2p"
+    },
+    {
+      "sensor_id": "SENSOR-027",
+      "temperature": 20.4,
+      "humidity": 49.0,
+      "co2": 804,
+      "timestamp": "2026-04-21T08:05:36Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-037",
+      "temperature": 25.2,
+      "humidity": 49.2,
+      "co2": 403,
+      "timestamp": "2026-04-21T08:05:38Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-025",
+      "temperature": 26.6,
+      "humidity": 57.7,
+      "co2": 767,
+      "timestamp": "2026-04-21T08:05:40Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-039",
+      "temperature": 26.7,
+      "humidity": 65.0,
+      "co2": 635,
+      "timestamp": "2026-04-21T08:05:42Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-012",
+      "temperature": 21.8,
+      "humidity": 62.5,
+      "co2": 633,
+      "timestamp": "2026-04-21T08:05:44Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-020",
+      "temperature": 23.7,
+      "humidity": 56.5,
+      "co2": 408,
+      "timestamp": "2026-04-21T08:05:46Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-033",
+      "temperature": 18.6,
+      "humidity": 41.6,
+      "co2": 775,
+      "timestamp": "2026-04-21T08:05:48Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-033",
+      "temperature": 24.1,
+      "humidity": 66.9,
+      "co2": 635,
+      "timestamp": "2026-04-21T08:05:50Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-007",
+      "temperature": 23.1,
+      "humidity": 70.9,
+      "co2": 822,
+      "timestamp": "2026-04-21T08:05:52Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-030",
+      "temperature": 27.8,
+      "humidity": 60.3,
+      "co2": 433,
+      "timestamp": "2026-04-21T08:05:54Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-032",
+      "temperature": 26.3,
+      "humidity": 51.3,
+      "co2": 789,
+      "timestamp": "2026-04-21T08:05:56Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-035",
+      "temperature": 22.7,
+      "humidity": 38.1,
+      "co2": 400,
+      "timestamp": "2026-04-21T08:05:58Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-012",
+      "temperature": 25.1,
+      "humidity": 44.8,
+      "co2": 708,
+      "timestamp": "2026-04-21T08:06:00Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-006",
+      "temperature": 21.6,
+      "humidity": 57.2,
+      "co2": 850,
+      "timestamp": "2026-04-21T08:06:02Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-012",
+      "temperature": 20.6,
+      "humidity": 55.0,
+      "co2": 626,
+      "timestamp": "2026-04-21T08:06:04Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-050",
+      "temperature": 20.7,
+      "humidity": 50.4,
+      "co2": 744,
+      "timestamp": "2026-04-21T08:06:06Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-043",
+      "temperature": 26.2,
+      "humidity": 60.2,
+      "co2": 864,
+      "timestamp": "2026-04-21T08:06:08Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-036",
+      "temperature": 19.9,
+      "humidity": 70.2,
+      "co2": 482,
+      "timestamp": "2026-04-21T08:06:10Z",
+      "location": "sala-reuniones"
+    },
+    {
+      "sensor_id": "SENSOR-047",
+      "temperature": 27.1,
+      "humidity": 55.7,
+      "co2": 402,
+      "timestamp": "2026-04-21T08:06:12Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 23.7,
+      "humidity": 50.6,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:06:14Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 20.1,
+      "humidity": 56.6,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:06:16Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-028",
+      "temperature": 20.5,
+      "humidity": 56.6,
+      "co2": 511,
+      "timestamp": "2026-04-21T08:06:18Z",
+      "location": "bodega-a"
+    },
+    {
+      "sensor_id": "SENSOR-049",
+      "temperature": 25.9,
+      "humidity": 58.1,
+      "co2": 719,
+      "timestamp": "2026-04-21T08:06:20Z",
+      "location": "sala-principal"
+    },
+    {
+      "sensor_id": "SENSOR-002",
+      "temperature": 22.6,
+      "humidity": 50.3,
+      "co2": 892,
+      "timestamp": "2026-04-21T08:06:22Z",
+      "location": "pasillo-norte"
+    },
+    {
+      "sensor_id": "SENSOR-021",
+      "temperature": 20.0,
+      "humidity": 61.3,
+      "co2": 482,
+      "timestamp": "2026-04-21T08:06:24Z",
+      "location": "entrada-principal"
+    },
+    {
+      "sensor_id": "SENSOR-017",
+      "temperature": 25.7,
+      "humidity": 47.8,
+      "co2": 400,
+      "timestamp": "2026-04-21T08:06:26Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-001",
+      "temperature": 23.7,
+      "humidity": 45.9,
+      "co2": 781,
+      "timestamp": "2026-04-21T08:06:28Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-004",
+      "temperature": 24.0,
+      "humidity": 57.2,
+      "co2": 651,
+      "timestamp": "2026-04-21T08:06:30Z",
+      "location": "laboratorio"
+    },
+    {
+      "sensor_id": "SENSOR-015",
+      "temperature": 22.2,
+      "humidity": 48.5,
+      "co2": 717,
+      "timestamp": "2026-04-21T08:06:32Z",
+      "location": "oficinas-2p"
+    },
+    {
+      "sensor_id": "SENSOR-018",
+      "temperature": 18.4,
+      "humidity": 40.8,
+      "co2": 430,
+      "timestamp": "2026-04-21T08:06:34Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-009",
+      "temperature": 23.0,
+      "humidity": 38.0,
+      "co2": 686,
+      "timestamp": "2026-04-21T08:06:36Z",
+      "location": "cuarto-servidores"
+    },
+    {
+      "sensor_id": "SENSOR-021",
+      "temperature": 22.0,
+      "humidity": 42.9,
+      "co2": 950,
+      "timestamp": "2026-04-21T08:06:38Z",
+      "location": "entrada-principal"
+    }
+  ]
+}

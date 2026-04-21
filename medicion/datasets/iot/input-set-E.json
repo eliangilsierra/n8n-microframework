@@ -1,0 +1,14 @@
+{
+  "_meta": {
+    "caso": "iot",
+    "set": "E",
+    "escenario": "co2 ausente — as-is procesa con NaN silenciado (antipatron), to-be rechaza con 422",
+    "response_esperado_asis": 200,
+    "response_esperado_tobe": 422
+  },
+  "sensor_id": "SENSOR-E",
+  "temperature": 22.5,
+  "humidity": 55.0,
+  "timestamp": "2026-04-19T10:00:00Z",
+  "location": "sala-sin-co2"
+}

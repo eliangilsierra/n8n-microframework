@@ -1,0 +1,15 @@
+{
+  "_meta": {
+    "caso": "iot",
+    "set": "A",
+    "escenario": "Normal — todos los valores dentro de umbrales, espera nivel=normal, sin notificacion",
+    "nivel_esperado": "normal",
+    "response_esperado": 200
+  },
+  "sensor_id": "SENSOR-001",
+  "temperature": 22.5,
+  "humidity": 55.0,
+  "co2": 450,
+  "timestamp": "2026-03-15T10:00:00Z",
+  "location": "sala-principal"
+}

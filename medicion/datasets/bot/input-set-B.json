@@ -1,0 +1,13 @@
+{
+  "_meta": {
+    "caso": "bot",
+    "set": "B",
+    "escenario": "Urgente — error critico en pagos, espera categoria=incidente, prioridad=alta",
+    "regla_esperada": "R001",
+    "response_esperado": 200
+  },
+  "token": "mi-token-secreto-hardcodeado-123",
+  "user_id": "user-002",
+  "session_id": "sess-b01",
+  "message": "Tengo un error critico en el sistema de pagos, es urgente"
+}

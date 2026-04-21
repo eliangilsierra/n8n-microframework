@@ -1,0 +1,12 @@
+{
+  "_meta": {
+    "caso": "bot",
+    "set": "C",
+    "escenario": "Invalido — token ausente, espera rechazo con 400 y errores[]",
+    "regla_esperada": "N/A — falla en E1",
+    "response_esperado": 400
+  },
+  "user_id": "user-003",
+  "session_id": "sess-c01",
+  "message": "Consulta sin token"
+}
