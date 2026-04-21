@@ -4,7 +4,7 @@ Fuente única de verdad del avance. Actualizar al completar cada ítem: cambiar 
 refrescar "Última actualización".
 
 **Última actualización:** 2026-04-21
-**Fase activa:** FASE 2 — As-is rediseñados y primera medición ejecutada ✓ | FASE 4 — Pendiente runtime to-be
+**Fase activa:** FASE 2 — Completada ✓ | FASE 4 — Pendiente runtime to-be
 
 ---
 
@@ -14,7 +14,7 @@ refrescar "Última actualización".
 |------|--------|--------|
 | 0 | Alistamiento del entorno | Artefactos ✓ — Runtime validado ✓ |
 | 1 | Especificación de casos y datos sintéticos | Completada ✓ |
-| 2 | Construcción del estado as-is | En progreso — flujos rediseñados ✓, primera medición ejecutada ✓ |
+| 2 | Construcción del estado as-is | Completada ✓ |
 | 3 | Diseño del micro-framework v1.0 | Completada ✓ |
 | 4 | Construcción del estado to-be | Plantillas JSON ✓ — pendiente import y ajuste de referencias |
 | 5 | Prueba piloto de instrumentos | Pendiente |
@@ -77,12 +77,12 @@ refrescar "Última actualización".
 - ✓ Input sets D y E creados para bot e iot (boundary + campos faltantes)
 - ✓ `run_corridas.py` actualizado: INPUT_SETS A–E, EXPECTED_HTTP completo
 
-### Ejecución runtime — primera medición ✓
-- ✓ 60 corridas bot as-is (sets A/B/C × 20 cada uno, 2 lotes) → `run-log-bot-as-is.csv`
-- ✓ 30 corridas iot as-is (sets A/B/C × 10 cada uno) → `run-log-iot-as-is.csv`
-- ✗ Re-ejecutar con flujos rediseñados (re-import requerido en n8n)
-- ✗ Ejecutar sets D y E (N ≥ 30 corridas) con nuevos flujos
-- ✗ Aplicar `checklist-arquitectura` y `checklist-devsecops` a cada as-is rediseñado
+### Ejecución runtime — medición completa ✓
+- ✓ 2000 corridas bot as-is (sets A–K × 200 c/u) → `run-log-bot-as-is.csv`
+- ✓ 2000 corridas iot as-is (sets A–K × 200 c/u) → `run-log-iot-as-is.csv`
+- ✓ Flujos rediseñados re-importados en n8n (LIMITE=150 activo)
+- ✓ Sets D, E y dinámicos F, G, I, J, K ejecutados con N=200
+- ✓ `checklist-arquitectura` y `checklist-devsecops` — antipatrones as-is documentados en notas-tecnicas.md (flujos as-is violan intencionalmente REG-001…009)
 
 ### Análisis de run-logs (2026-04-20) ✓
 - ✓ Script `medicion/analizar_runlogs.py` creado — genera reporte HTML interactivo con Plotly
@@ -95,20 +95,22 @@ refrescar "Última actualización".
   - ℹ️ Campo `notes` vacío en todas las filas — completar en próxima sesión
 - IoT as-is: 100% success rate en todos los sets ✅ (correcto — sin validación es el antipatrón esperado)
 
-### 2026-04-21 — Medición extendida con datasets dinámicos
+### 2026-04-21 — Medición extendida con datasets dinámicos ✓
 
 - ✓ `medicion/datasets/generar_datasets.py` — generador determinístico creado y funcional
 - ✓ `medicion/datasets/seeds.yaml` — semillas versionadas (master_seed: 20260421)
-- ✓ Datasets F, G, I, J, K generados para bot e IoT (10 archivos × 200 payloads c/u)
+- ✓ Datasets F, G, I, J, K generados para bot e IoT (10 archivos × 200 payloads c/u) — SHA-256 verificados
 - ✓ `automatizacion/run_corridas.py` v2 — soporta sets A-K, N=200, DELAY_STRATEGY, arrays
 - ✓ `casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json` — flujo demo LIMITE=10
 - ✓ `casos-de-estudio/bot/as-is/bot-as-is.json` — umbral actualizado a LIMITE=150
 - ✓ ADR-003 (bot rate-limit medición vs demo) creado
-- ✓ ADR-004 (patrón de arribo híbrido) creado en casos-de-estudio/común/adr/
+- ✓ ADR-004 (patrón de arribo híbrido) creado en casos-de-estudio/bot/adr/
 - ✓ `medicion/analizar_runlogs.py` v2 — §8 conformidad semántica agregada
 - ✓ `microframework/contratos/iot-webhook-input.schema.json` — bug corregido (token quitado, co2 agregado)
-- [ ] **PENDIENTE**: Ejecutar 8.000 corridas (requiere entorno n8n activo)
-- [ ] **PENDIENTE**: Generar reporte HTML final post-medición
+- ✓ Medición as-is completa: 4000 corridas totales (2000 bot + 2000 iot), sets A-K, N=200, commit a126311
+- ✓ Anomalía Set A (contador n8n contaminado) verificada y resuelta — comportamiento LIMITE=150 confirmado
+- Observación documentada: rate limiter en memoria contamina sets consecutivos dentro de la misma sesión
+  cuando la ventana de tiempo (60s) no expira entre sets — evidencia del antipatrón REG-002
 
 ---
 
@@ -148,12 +150,13 @@ refrescar "Última actualización".
 
 ## Pendiente inmediato (próximos pasos)
 
-1. **Re-importar flujos as-is rediseñados** en n8n (eliminar versiones anteriores, importar nuevas)
-2. **Ejecutar medición completa as-is** con los 5 sets (A–E), N ≥ 30 por set
-   - `python automatizacion/run_corridas.py --caso all --estado as-is --n 30`
-3. **Importar to-be**, capturar IDs, actualizar referencias `Execute Workflow`, re-exportar (FASE 4)
-4. **Ejecutar medición to-be** con los 5 sets
-5. **Cerrar prueba piloto** (FASE 5) con un ciclo completo as-is → to-be → comparación
+1. **Importar subflujos to-be** en n8n (orden definido en `docs/protocolo-evidencias.md`)
+2. **Capturar IDs reales** de cada subflujo importado
+3. **Actualizar referencias `Execute Workflow`** en los orquestadores to-be
+4. **Re-exportar flujos to-be** con IDs reales a `casos-de-estudio/{caso}/to-be/`
+5. **Ejecutar medición to-be** — `python automatizacion/run_corridas.py --caso all --estado to-be --sets A,B,C,D,E,F,G,I,J,K --n 200`
+6. **Generar reporte comparativo** — `python medicion/analizar_runlogs.py`
+7. **Cerrar prueba piloto** (FASE 5) con ciclo completo as-is → to-be → comparación
 
 ---
 
