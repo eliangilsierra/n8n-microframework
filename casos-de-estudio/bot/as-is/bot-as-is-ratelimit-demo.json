@@ -1,0 +1,327 @@
+{
+  "name": "BOT-AS-IS - Soporte por Webhook (Ad-hoc)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "bot-soporte",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "a1b2c3d4-0001-0001-0001-000000000001",
+      "name": "Webhook Entrada",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 400],
+      "webhookId": "bot-soporte-as-is"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Sanitizacion incompleta — solo elimina < > sin proteccion XSS real\n// Antipatron: sin validacion de longitud, sin run_id, sin esquema\nconst body = $input.first().json.body || {};\n\nconst sanitized = {\n  token:      (body.token      || '').replace(/[<>]/g, ''),\n  user_id:    (body.user_id    || '').replace(/[<>]/g, ''),\n  session_id: body.session_id  || null,\n  message:    (body.message    || '').replace(/[<>]/g, ''),\n  ts_recibido: new Date().toISOString()\n};\n\n// Log sin run_id — antipatron REG-002, REG-006\nconsole.log('Solicitud recibida: ' + JSON.stringify({\n  user_id: sanitized.user_id,\n  ts: sanitized.ts_recibido\n}));\n\nreturn [{ json: sanitized }];"
+      },
+      "id": "a1b2c3d4-0002-0002-0002-000000000002",
+      "name": "Sanitizar Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Rate limit en memoria de la instancia — no distribuido\n// Antipatron: se resetea al reiniciar n8n, no escala horizontalmente\nconst staticData = $getWorkflowStaticData('global');\nconst user_id = $input.first().json.user_id || 'anonymous';\nconst ahora = Date.now();\nconst VENTANA_MS = 60000; // 1 minuto hardcodeado\nconst LIMITE = 10;         // hardcodeado\n\nif (!staticData.contadores) staticData.contadores = {};\nif (!staticData.contadores[user_id]) {\n  staticData.contadores[user_id] = { count: 0, ventana_inicio: ahora };\n}\n\nconst cnt = staticData.contadores[user_id];\nif (ahora - cnt.ventana_inicio > VENTANA_MS) {\n  cnt.count = 0;\n  cnt.ventana_inicio = ahora;\n}\ncnt.count++;\n\nreturn [{ json: { ...$input.first().json, request_count: cnt.count, rate_limit: LIMITE } }];"
+      },
+      "id": "a1b2c3d4-0003-0003-0003-000000000003",
+      "name": "Verificar Rate Limit",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 400]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": false, "leftValue": "", "typeValidation": "loose" },
+          "conditions": [
+            {
+              "id": "cond-rate",
+              "leftValue": "={{ $json.request_count }}",
+              "rightValue": "={{ $json.rate_limit }}",
+              "operator": { "type": "number", "operation": "gt" }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0004-0004-0004-000000000004",
+      "name": "Limite Excedido?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [900, 400]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ status: 'error', mensaje: 'Rate limit excedido. Intenta en 60 segundos.' }) }}",
+        "options": { "responseCode": 429 }
+      },
+      "id": "a1b2c3d4-0005-0005-0005-000000000005",
+      "name": "Error Rate Limit",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1120, 240]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose" },
+          "conditions": [
+            {
+              "id": "cond-token",
+              "leftValue": "={{ $json.token }}",
+              "rightValue": "mi-token-secreto-hardcodeado-123",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0006-0006-0006-000000000006",
+      "name": "Token Valido?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1120, 480]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ status: 'error', mensaje: 'Token invalido' }) }}",
+        "options": { "responseCode": 401 }
+      },
+      "id": "a1b2c3d4-0007-0007-0007-000000000007",
+      "name": "Error Token",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1340, 620]
+    },
+    {
+      "parameters": {
+        "url": "=http://host.docker.internal:3001/api/user/{{ $json.user_id }}/tickets",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "x-api-key", "value": "clave-api-externa-hardcodeada-456" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0008-0008-0008-000000000008",
+      "name": "Consultar Historial Usuario",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Antipatron REG-007, REG-008:\n// Logica de dominio (R001-R004) + preparacion del payload HTTP mezclados\n// en un unico Code node — imposible testear las reglas de negocio de forma aislada\nconst body = $input.first().json;\nconst historial = $('Consultar Historial Usuario').item.json;\nconst msg = (body.message || '').toLowerCase();\n\nlet categoria = 'general';\nlet prioridad  = 'baja';\nlet respuesta  = 'Gracias por tu mensaje. Un agente te contactara pronto.';\n\n// R001 — incidente critico\nif (msg.includes('urgente') || msg.includes('critico') || msg.includes('emergencia')) {\n  categoria = 'incidente';\n  prioridad  = 'alta';\n  respuesta  = 'Tu caso fue marcado como URGENTE. Un agente senior te atendra en los proximos 15 minutos.';\n}\n// R002 — facturacion\nelse if (msg.includes('factura') || msg.includes('pago') || msg.includes('cobro')) {\n  categoria = 'facturacion';\n  prioridad  = 'media';\n  respuesta  = 'Tu consulta de facturacion fue registrada. Te contactaremos en 24 horas.';\n}\n// R003 — soporte tecnico\nelse if (msg.includes('error') || msg.includes('falla') || msg.includes('no funciona')) {\n  categoria = 'soporte_tecnico';\n  prioridad  = 'media';\n  respuesta  = 'Recibimos tu reporte de falla. Nuestro equipo tecnico lo revisara en breve.';\n}\n// R004 — saludo\nelse if (msg.includes('hola') || msg.includes('buenos') || msg.includes('buenas')) {\n  categoria = 'saludo';\n  prioridad  = 'baja';\n  respuesta  = 'Hola! Bienvenido al soporte. En que puedo ayudarte hoy?';\n}\n\n// Armado del payload para la API de tickets MEZCLADO con la clasificacion\n// Antipatron: acoplamiento entre logica de dominio y detalles del adaptador externo\nconst ticket_payload = {\n  usuario:         body.user_id,\n  sesion:          body.session_id,\n  asunto:          categoria,\n  nivel_urgencia:  prioridad,\n  descripcion:     body.message,\n  tickets_previos: historial.tickets_activos || 0,\n  canal:           'webhook',\n  timestamp:       new Date().toISOString(),\n  api_source_token: 'mi-token-secreto-hardcodeado-123'\n};\n\nreturn [{ json: { ...body, categoria, prioridad, respuesta, ticket_payload } }];"
+      },
+      "id": "a1b2c3d4-0009-0009-0009-000000000009",
+      "name": "Clasificar y Preparar Ticket",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1560, 400]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": false, "leftValue": "", "typeValidation": "loose" },
+          "conditions": [
+            {
+              "id": "cond-urgencia",
+              "leftValue": "={{ $json.message }}",
+              "rightValue": "urgente",
+              "operator": { "type": "string", "operation": "contains" }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0010-0010-0010-000000000010",
+      "name": "Detectar Urgencia",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1780, 400]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "esc-1", "name": "escalacion",        "value": true,      "type": "boolean" },
+            { "id": "esc-2", "name": "prioridad_override","value": "critica",  "type": "string"  },
+            { "id": "esc-3", "name": "nota_escalacion",   "value": "Escalado automaticamente por deteccion de urgencia", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0011-0011-0011-000000000011",
+      "name": "Marcar Escalacion",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [2000, 280]
+    },
+    {
+      "parameters": {
+        "url": "http://host.docker.internal:3001/api/tickets",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "x-api-key",    "value": "clave-api-externa-hardcodeada-456" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "jsonBody": "={{ JSON.stringify($('Clasificar y Preparar Ticket').item.json.ticket_payload) }}",
+        "options": {}
+      },
+      "id": "a1b2c3d4-0012-0012-0012-000000000012",
+      "name": "Crear Ticket",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2220, 400]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO interacciones_bot (user_id, session_id, categoria, prioridad, ticket_id) VALUES ('{{ $('Clasificar y Preparar Ticket').item.json.user_id }}', '{{ $('Clasificar y Preparar Ticket').item.json.session_id }}', '{{ $('Clasificar y Preparar Ticket').item.json.categoria }}', '{{ $('Clasificar y Preparar Ticket').item.json.prioridad }}', '{{ $json.ticket_id }}')",
+        "options": {}
+      },
+      "id": "a1b2c3d4-0013-0013-0013-000000000013",
+      "name": "Guardar Interaccion",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [2440, 400]
+    },
+    {
+      "parameters": {
+        "url": "http://host.docker.internal:3001/mock/notificar",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "x-api-key",    "value": "clave-api-externa-hardcodeada-456" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "user_id",    "value": "={{ $('Clasificar y Preparar Ticket').item.json.user_id }}" },
+            { "name": "mensaje",    "value": "={{ $('Clasificar y Preparar Ticket').item.json.respuesta }}" },
+            { "name": "categoria",  "value": "={{ $('Clasificar y Preparar Ticket').item.json.categoria }}" },
+            { "name": "escalacion", "value": "={{ $('Marcar Escalacion').item.json.escalacion || false }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0014-0014-0014-000000000014",
+      "name": "Notificar Sistema Externo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2660, 400]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "resp-1",
+              "name": "response_body",
+              "value": "={{ JSON.stringify({ status: 'ok', respuesta: $('Clasificar y Preparar Ticket').item.json.respuesta, categoria: $('Clasificar y Preparar Ticket').item.json.categoria, prioridad: $('Clasificar y Preparar Ticket').item.json.prioridad, ticket_id: $('Crear Ticket').item.json.ticket_id, timestamp: new Date().toISOString() }) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0015-0015-0015-000000000015",
+      "name": "Preparar Respuesta",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [2880, 400]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json.response_body }}",
+        "options": {}
+      },
+      "id": "a1b2c3d4-0016-0016-0016-000000000016",
+      "name": "Responder al Cliente",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [3100, 400]
+    }
+  ],
+  "connections": {
+    "Webhook Entrada": {
+      "main": [[{ "node": "Sanitizar Input", "type": "main", "index": 0 }]]
+    },
+    "Sanitizar Input": {
+      "main": [[{ "node": "Verificar Rate Limit", "type": "main", "index": 0 }]]
+    },
+    "Verificar Rate Limit": {
+      "main": [[{ "node": "Limite Excedido?", "type": "main", "index": 0 }]]
+    },
+    "Limite Excedido?": {
+      "main": [
+        [{ "node": "Error Rate Limit", "type": "main", "index": 0 }],
+        [{ "node": "Token Valido?",    "type": "main", "index": 0 }]
+      ]
+    },
+    "Token Valido?": {
+      "main": [
+        [{ "node": "Consultar Historial Usuario", "type": "main", "index": 0 }],
+        [{ "node": "Error Token",                 "type": "main", "index": 0 }]
+      ]
+    },
+    "Consultar Historial Usuario": {
+      "main": [[{ "node": "Clasificar y Preparar Ticket", "type": "main", "index": 0 }]]
+    },
+    "Clasificar y Preparar Ticket": {
+      "main": [[{ "node": "Detectar Urgencia", "type": "main", "index": 0 }]]
+    },
+    "Detectar Urgencia": {
+      "main": [
+        [{ "node": "Marcar Escalacion", "type": "main", "index": 0 }],
+        [{ "node": "Crear Ticket",      "type": "main", "index": 0 }]
+      ]
+    },
+    "Marcar Escalacion": {
+      "main": [[{ "node": "Crear Ticket", "type": "main", "index": 0 }]]
+    },
+    "Crear Ticket": {
+      "main": [[{ "node": "Guardar Interaccion", "type": "main", "index": 0 }]]
+    },
+    "Guardar Interaccion": {
+      "main": [[{ "node": "Notificar Sistema Externo", "type": "main", "index": 0 }]]
+    },
+    "Notificar Sistema Externo": {
+      "main": [[{ "node": "Preparar Respuesta", "type": "main", "index": 0 }]]
+    },
+    "Preparar Respuesta": {
+      "main": [[{ "node": "Responder al Cliente", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    { "name": "as-is",  "createdAt": "2026-01-01T00:00:00.000Z", "updatedAt": "2026-01-01T00:00:00.000Z" },
+    { "name": "bot",    "createdAt": "2026-01-01T00:00:00.000Z", "updatedAt": "2026-01-01T00:00:00.000Z" },
+    { "name": "mgads",  "createdAt": "2026-01-01T00:00:00.000Z", "updatedAt": "2026-01-01T00:00:00.000Z" }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2026-04-19T00:00:00.000Z",
+  "id": "bot-as-is-001"
+}

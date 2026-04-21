@@ -1,0 +1,471 @@
+{
+  "name": "IOT-AS-IS - Pipeline Sensor (Ad-hoc)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "iot-sensor",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "b1c2d3e4-0001-0001-0001-000000000001",
+      "name": "Webhook Sensor",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 400],
+      "webhookId": "iot-sensor-as-is"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Validacion incompleta — co2 nunca se valida aunque el sistema lo usa despues\n// Antipatron REG-002: sin run_id; REG-006: log sin estructura\nconst body = $input.first().json.body || {};\n\nconst sensor_id  = body.sensor_id  || null;\nconst temperature = parseFloat(body.temperature);\nconst humidity    = parseFloat(body.humidity);\nconst co2_raw     = body.co2;      // leido pero jamas validado\nconst location    = body.location  || 'desconocido';\nconst timestamp   = body.timestamp || new Date().toISOString();\n\n// co2 ausente no detectado aqui — pasara como undefined/NaN mas adelante\nconst datos_invalidos = !sensor_id || isNaN(temperature) || isNaN(humidity);\n\nconsole.log('Sensor recibido: ' + sensor_id + ' ts=' + timestamp);\n\nreturn [{ json: {\n  sensor_id,\n  temperature,\n  humidity,\n  co2_raw,\n  location,\n  timestamp,\n  datos_invalidos\n} }];"
+      },
+      "id": "b1c2d3e4-0002-0002-0002-000000000002",
+      "name": "Verificar Campos Basicos",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 400]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "cond-invalido",
+              "leftValue": "={{ $json.datos_invalidos }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "b1c2d3e4-0003-0003-0003-000000000003",
+      "name": "Datos Presentes?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 400]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseCode": 200,
+        "responseBody": "={ \"error\": \"datos_invalidos\", \"mensaje\": \"Faltan campos requeridos\" }",
+        "options": {}
+      },
+      "id": "b1c2d3e4-0004-0004-0004-000000000004",
+      "name": "Error Datos Invalidos",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [900, 220]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Antipatron REG-001: credenciales hardcodeadas y expuestas en el output del nodo\n// Quedan visibles en el historial de ejecucion de n8n\nconst d = $input.first().json;\n\nconst temperatura = Math.round(parseFloat(d.temperature) * 10) / 10;\nconst humedad     = Math.round(parseFloat(d.humidity)    * 10) / 10;\nconst co2_raw     = d.co2_raw; // puede ser undefined — nunca se valido\n\nreturn [{ json: {\n  sensor_id:  d.sensor_id,\n  temperatura,\n  humedad,\n  co2_raw,\n  location:   d.location,\n  timestamp:  d.timestamp,\n  // Credenciales expuestas en payload — antipatron REG-001\n  db_url:   'http://host.docker.internal:3001',\n  db_token: 'token-influxdb-hardcodeado-789'\n} }];"
+      },
+      "id": "b1c2d3e4-0005-0005-0005-000000000005",
+      "name": "Normalizar Lecturas",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 540]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "cond-temp-critica",
+              "leftValue": "={{ $json.temperatura }}",
+              "rightValue": 35,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "b1c2d3e4-0006-0006-0006-000000000006",
+      "name": "Temperatura Critica?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1120, 540]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "cond-humedad-alta",
+              "leftValue": "={{ $json.humedad }}",
+              "rightValue": 85,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "b1c2d3e4-0007-0007-0007-000000000007",
+      "name": "Humedad Alta?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1340, 660]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Antipatron REG-007/008: logica de dominio mezclada con acceso a datos del pipeline\n// Antipatron: co2 usado sin haber sido validado; threshold de co2 hardcodeado e indocumentado\n// Antipatron: umbral de humedad 85 (nodo anterior) distinto al usado aqui para nivel\nconst d = $input.first().json;\n\nconst temperatura = d.temperatura;\nconst humedad     = d.humedad;\n// co2 leido como afterthought — puede ser NaN sin que el flujo lo detecte\nconst co2 = parseFloat(d.co2_raw) || 0;\n\nlet nivel = 'normal';\nlet anomalias = [];\n\nif (temperatura > 35) {\n  nivel = 'critico';\n  anomalias.push('temperatura_critica');\n} else if (temperatura > 30) {\n  nivel = 'advertencia';\n  anomalias.push('temperatura_alta');\n}\n\n// Umbral 85 aqui pero el nodo Humedad Alta? usa el mismo — al menos consistente\n// pero diferente al to-be que usa 80 — antipatron: umbrales dispersos sin fuente unica\nif (humedad > 85) {\n  if (nivel !== 'critico') nivel = 'advertencia';\n  anomalias.push('humedad_alta');\n}\n\n// co2 revisado sin umbral documentado ni validacion previa\nif (co2 > 1500) {\n  nivel = 'critico';\n  anomalias.push('co2_critico');\n} else if (co2 > 1000) {\n  if (nivel !== 'critico') nivel = 'advertencia';\n  anomalias.push('co2_elevado');\n}\n\nreturn [{ json: {\n  ...d,\n  nivel,\n  anomalias_count: anomalias.length,\n  requiere_notificacion: nivel !== 'normal'\n} }];"
+      },
+      "id": "b1c2d3e4-0008-0008-0008-000000000008",
+      "name": "Determinar Nivel Final",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1560, 540]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.db_url }}/api/v2/write?org=mgads&bucket=sensores&precision=ms",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Token {{ $json.db_token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "text/plain; charset=utf-8"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "text/plain",
+        "body": "={{ 'lecturas,sensor=' + $json.sensor_id + ' temperatura=' + $json.temperatura + ',humedad=' + $json.humedad + ',co2=' + ($json.co2_raw || 0) + ' ' + Date.now() }}",
+        "options": {}
+      },
+      "id": "b1c2d3e4-0009-0009-0009-000000000009",
+      "name": "Guardar en InfluxDB",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1780, 440]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO lecturas_sensor (sensor_id, temperatura, humedad, co2, nivel, location, ts)\nVALUES ('{{ $('Determinar Nivel Final').item.json.sensor_id }}',\n        {{ $('Determinar Nivel Final').item.json.temperatura }},\n        {{ $('Determinar Nivel Final').item.json.humedad }},\n        {{ $('Determinar Nivel Final').item.json.co2_raw || 0 }},\n        '{{ $('Determinar Nivel Final').item.json.nivel }}',\n        '{{ $('Determinar Nivel Final').item.json.location }}',\n        NOW());",
+        "options": {}
+      },
+      "id": "b1c2d3e4-0010-0010-0010-000000000010",
+      "name": "Persistir en PostgreSQL",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [2000, 440]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "cond-notif",
+              "leftValue": "={{ $('Determinar Nivel Final').item.json.requiere_notificacion }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "b1c2d3e4-0011-0011-0011-000000000011",
+      "name": "Requiere Notificacion?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2220, 440]
+    },
+    {
+      "parameters": {
+        "url": "http://host.docker.internal:3002/mock/notificar",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "sensor_id",
+              "value": "={{ $('Determinar Nivel Final').item.json.sensor_id }}"
+            },
+            {
+              "name": "nivel",
+              "value": "={{ $('Determinar Nivel Final').item.json.nivel }}"
+            },
+            {
+              "name": "temperatura",
+              "value": "={{ $('Determinar Nivel Final').item.json.temperatura }}"
+            },
+            {
+              "name": "humedad",
+              "value": "={{ $('Determinar Nivel Final').item.json.humedad }}"
+            },
+            {
+              "name": "timestamp",
+              "value": "={{ $('Determinar Nivel Final').item.json.timestamp }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b1c2d3e4-0012-0012-0012-000000000012",
+      "name": "Enviar Notificacion",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2440, 320]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Antipatron REG-006: log sin estructura, sin run_id, sin etapa\n// Antipatron REG-002: run_id ausente en todo el flujo\nconst d = $('Determinar Nivel Final').item.json;\nconsole.log(JSON.stringify({\n  sensor_id: d.sensor_id,\n  nivel:     d.nivel,\n  ts:        d.timestamp\n}));\nreturn [{ json: d }];"
+      },
+      "id": "b1c2d3e4-0013-0013-0013-000000000013",
+      "name": "Log Resultado",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2660, 440]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ status: 'ok', sensor_id: $('Determinar Nivel Final').item.json.sensor_id, nivel: $('Determinar Nivel Final').item.json.nivel, timestamp: $('Determinar Nivel Final').item.json.timestamp }) }}",
+        "options": {}
+      },
+      "id": "b1c2d3e4-0014-0014-0014-000000000014",
+      "name": "Respuesta OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [2880, 440]
+    }
+  ],
+  "connections": {
+    "Webhook Sensor": {
+      "main": [
+        [
+          {
+            "node": "Verificar Campos Basicos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verificar Campos Basicos": {
+      "main": [
+        [
+          {
+            "node": "Datos Presentes?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Datos Presentes?": {
+      "main": [
+        [
+          {
+            "node": "Error Datos Invalidos",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Normalizar Lecturas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalizar Lecturas": {
+      "main": [
+        [
+          {
+            "node": "Temperatura Critica?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Temperatura Critica?": {
+      "main": [
+        [
+          {
+            "node": "Determinar Nivel Final",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Humedad Alta?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Humedad Alta?": {
+      "main": [
+        [
+          {
+            "node": "Determinar Nivel Final",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Determinar Nivel Final",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Determinar Nivel Final": {
+      "main": [
+        [
+          {
+            "node": "Guardar en InfluxDB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar en InfluxDB": {
+      "main": [
+        [
+          {
+            "node": "Persistir en PostgreSQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Persistir en PostgreSQL": {
+      "main": [
+        [
+          {
+            "node": "Requiere Notificacion?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Requiere Notificacion?": {
+      "main": [
+        [
+          {
+            "node": "Enviar Notificacion",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log Resultado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar Notificacion": {
+      "main": [
+        [
+          {
+            "node": "Log Resultado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Resultado": {
+      "main": [
+        [
+          {
+            "node": "Respuesta OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "as-is",
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "name": "iot",
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "name": "mgads",
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2026-04-19T00:00:00.000Z",
+  "id": "iot-as-is-001"
+}
