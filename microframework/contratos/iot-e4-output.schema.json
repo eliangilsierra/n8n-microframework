@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "iot-e4-output.schema.json",
+  "title": "IoT — salida de E4 (respuesta final del orquestador)",
+  "type": "object",
+  "required": ["run_id", "status", "nivel", "notificacion"],
+  "properties": {
+    "run_id": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["ok", "fail"]
+    },
+    "nivel": {
+      "type": "string",
+      "enum": ["normal", "warning", "critico"]
+    },
+    "notificacion": {
+      "type": "object",
+      "required": ["enviada", "canal"],
+      "properties": {
+        "enviada": { "type": "boolean" },
+        "canal": {
+          "type": ["string", "null"],
+          "enum": ["critico", "warning", null]
+        },
+        "reintentos": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "registro_id": { "type": ["string", "integer", "null"] },
+    "duracion_total_ms": { "type": "integer", "minimum": 0 }
+  }
+}

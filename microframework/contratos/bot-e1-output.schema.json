@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "bot-e1-output.schema.json",
+  "title": "Bot — salida de E1 (validación)",
+  "type": "object",
+  "required": ["valido", "errores", "run_id", "start_ts"],
+  "properties": {
+    "valido": { "type": "boolean" },
+    "errores": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^RUN-BOT-[0-9T]+-[A-Za-z0-9]{6}$"
+    },
+    "start_ts": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "payload": {
+      "type": "object",
+      "required": ["message", "user_id"],
+      "properties": {
+        "message": { "type": "string" },
+        "user_id": { "type": "string" },
+        "channel": { "type": "string" }
+      }
+    }
+  },
+  "if": { "properties": { "valido": { "const": true } } },
+  "then": { "required": ["payload"] }
+}

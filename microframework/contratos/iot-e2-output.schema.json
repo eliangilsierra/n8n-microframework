@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "iot-e2-output.schema.json",
+  "title": "IoT — salida de E2 (análisis de dominio)",
+  "type": "object",
+  "required": ["run_id", "analisis", "e2_start", "e2_end"],
+  "properties": {
+    "run_id": { "type": "string" },
+    "analisis": {
+      "type": "object",
+      "required": ["nivel", "requiereNotificacion", "regla_aplicada"],
+      "properties": {
+        "nivel": {
+          "type": "string",
+          "enum": ["normal", "warning", "critico"]
+        },
+        "requiereNotificacion": { "type": "boolean" },
+        "regla_aplicada": { "type": "string", "pattern": "^R[0-9]{3}$" },
+        "umbral_excedido": { "type": ["string", "null"] },
+        "valor_umbral": { "type": ["number", "null"] },
+        "valor_observado": { "type": ["number", "null"] }
+      }
+    },
+    "lectura": { "type": "object" },
+    "e2_start": { "type": "string", "format": "date-time" },
+    "e2_end": { "type": "string", "format": "date-time" }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "bot-webhook-input.schema.json",
+  "title": "Bot — payload de entrada al webhook",
+  "type": "object",
+  "required": ["message", "user_id", "token"],
+  "additionalProperties": false,
+  "properties": {
+    "message": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000,
+      "description": "Texto del mensaje del usuario"
+    },
+    "user_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{1,64}$",
+      "description": "Identificador del usuario"
+    },
+    "token": {
+      "type": "string",
+      "minLength": 16,
+      "description": "Token de autenticación del webhook"
+    },
+    "channel": {
+      "type": "string",
+      "enum": ["web", "whatsapp", "telegram"],
+      "description": "Canal de origen (opcional)"
+    }
+  }
+}

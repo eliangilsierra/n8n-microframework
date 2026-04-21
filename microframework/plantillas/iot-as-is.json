@@ -1,0 +1,229 @@
+{
+  "name": "IOT-AS-IS - Pipeline Sensor (Ad-hoc)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "iot-sensor",
+        "options": {}
+      },
+      "id": "b1c2d3e4-0001-0001-0001-000000000001",
+      "name": "Webhook Sensor",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "iot-sensor-as-is"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parseo ad-hoc directo sin validacion de rangos ni esquema\nconst data = $input.first().json.body;\n\n// Sin validacion: si falta un campo simplemente queda undefined\nconst temperatura = parseFloat(data.temperatura);\nconst humedad = parseFloat(data.humedad);\nconst sensor_id = data.sensor_id;\nconst timestamp = new Date().toISOString();\n\n// Logica de alerta mezclada con transformacion\nlet alerta = false;\nlet nivel = 'normal';\n\n// Umbrales hardcodeados en el codigo\nif (temperatura > 35 || temperatura < 5) {\n  alerta = true;\n  nivel = 'critico';\n} else if (temperatura > 30 || temperatura < 10) {\n  alerta = true;\n  nivel = 'advertencia';\n}\n\nif (humedad > 90 || humedad < 10) {\n  alerta = true;\n  nivel = nivel === 'critico' ? 'critico' : 'advertencia';\n}\n\nreturn [{\n  json: {\n    sensor_id,\n    temperatura,\n    humedad,\n    timestamp,\n    alerta,\n    nivel,\n    // API key visible en el payload procesado\n    db_url: 'http://host.docker.internal:8086',\n    db_token: 'token-influxdb-hardcodeado-789'\n  }\n}];"
+      },
+      "id": "b1c2d3e4-0002-0002-0002-000000000002",
+      "name": "Procesar y Detectar Alerta",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.db_url }}/api/v2/write?org=mgads&bucket=sensores&precision=ms",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Token {{ $json.db_token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "text/plain; charset=utf-8"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "text/plain",
+        "body": "={{ 'lecturas,sensor=' + $json.sensor_id + ' temperatura=' + $json.temperatura + ',humedad=' + $json.humedad + ' ' + Date.now() }}",
+        "options": {}
+      },
+      "id": "b1c2d3e4-0003-0003-0003-000000000003",
+      "name": "Guardar en InfluxDB",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 200]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "cond-alerta",
+              "leftValue": "={{ $('Procesar y Detectar Alerta').item.json.alerta }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "b1c2d3e4-0004-0004-0004-000000000004",
+      "name": "Hay Alerta?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 400]
+    },
+    {
+      "parameters": {
+        "url": "http://host.docker.internal:3000/mock/notificar",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "sensor_id",
+              "value": "={{ $('Procesar y Detectar Alerta').item.json.sensor_id }}"
+            },
+            {
+              "name": "nivel",
+              "value": "={{ $('Procesar y Detectar Alerta').item.json.nivel }}"
+            },
+            {
+              "name": "temperatura",
+              "value": "={{ $('Procesar y Detectar Alerta').item.json.temperatura }}"
+            },
+            {
+              "name": "humedad",
+              "value": "={{ $('Procesar y Detectar Alerta').item.json.humedad }}"
+            },
+            {
+              "name": "timestamp",
+              "value": "={{ $('Procesar y Detectar Alerta').item.json.timestamp }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b1c2d3e4-0005-0005-0005-000000000005",
+      "name": "Enviar Notificacion",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [900, 340]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ status: 'ok', sensor_id: $('Procesar y Detectar Alerta').item.json.sensor_id, alerta: $('Procesar y Detectar Alerta').item.json.alerta, nivel: $('Procesar y Detectar Alerta').item.json.nivel, timestamp: $('Procesar y Detectar Alerta').item.json.timestamp }) }}",
+        "options": {}
+      },
+      "id": "b1c2d3e4-0006-0006-0006-000000000006",
+      "name": "Respuesta OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1120, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Sensor": {
+      "main": [
+        [
+          {
+            "node": "Procesar y Detectar Alerta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procesar y Detectar Alerta": {
+      "main": [
+        [
+          {
+            "node": "Guardar en InfluxDB",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Hay Alerta?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar en InfluxDB": {
+      "main": [
+        [
+          {
+            "node": "Respuesta OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hay Alerta?": {
+      "main": [
+        [
+          {
+            "node": "Enviar Notificacion",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Enviar Notificacion": {
+      "main": [
+        [
+          {
+            "node": "Respuesta OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "as-is",
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "name": "iot",
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "name": "mgads",
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2026-03-30T00:00:00.000Z",
+  "id": "iot-as-is-001"
+}

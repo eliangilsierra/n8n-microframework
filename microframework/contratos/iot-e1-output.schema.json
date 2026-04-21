@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "iot-e1-output.schema.json",
+  "title": "IoT — salida de E1 (validación)",
+  "type": "object",
+  "required": ["valido", "errores", "run_id", "start_ts"],
+  "properties": {
+    "valido": { "type": "boolean" },
+    "errores": { "type": "array", "items": { "type": "string" } },
+    "run_id": {
+      "type": "string",
+      "pattern": "^RUN-IOT-[0-9T]+-[A-Za-z0-9]{6}$"
+    },
+    "start_ts": { "type": "string", "format": "date-time" },
+    "lectura": {
+      "type": "object",
+      "required": ["sensor_id", "temperature", "humidity", "timestamp"],
+      "properties": {
+        "sensor_id": { "type": "string" },
+        "temperature": { "type": "number" },
+        "humidity": { "type": "number" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "location": { "type": "string" }
+      }
+    }
+  },
+  "if": { "properties": { "valido": { "const": true } } },
+  "then": { "required": ["lectura"] }
+}

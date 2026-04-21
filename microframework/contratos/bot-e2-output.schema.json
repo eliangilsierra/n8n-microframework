@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "bot-e2-output.schema.json",
+  "title": "Bot — salida de E2 (dominio)",
+  "type": "object",
+  "required": ["run_id", "analisis", "e2_start", "e2_end"],
+  "properties": {
+    "run_id": { "type": "string" },
+    "analisis": {
+      "type": "object",
+      "required": ["intencion", "requiereTicket", "prioridad", "regla_aplicada"],
+      "properties": {
+        "intencion": {
+          "type": "string",
+          "enum": ["consulta", "queja", "solicitud_soporte", "agradecimiento", "otro"]
+        },
+        "requiereTicket": { "type": "boolean" },
+        "prioridad": {
+          "type": "string",
+          "enum": ["alta", "media", "baja"]
+        },
+        "regla_aplicada": {
+          "type": "string",
+          "pattern": "^R[0-9]{3}$"
+        },
+        "resumen": { "type": "string" }
+      }
+    },
+    "e2_start": { "type": "string", "format": "date-time" },
+    "e2_end": { "type": "string", "format": "date-time" }
+  }
+}

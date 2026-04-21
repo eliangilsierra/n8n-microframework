@@ -1,0 +1,174 @@
+{
+  "name": "IOT-TO-BE - Pipeline de sensores (micro-framework aplicado)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "iot-sensor-to-be",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-sensor",
+      "name": "Webhook - Ingesta sensor",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "iot-to-be-001"
+    },
+    {
+      "parameters": {
+        "workflowId": { "__rl": true, "value": "iot-e1-validacion", "mode": "id" },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": { "body": "={{ $json.body }}" }
+        },
+        "options": {}
+      },
+      "id": "exec-e1",
+      "name": "Execute - E1 Validacion entrada",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": false, "leftValue": "", "typeValidation": "strict" },
+          "conditions": [
+            {
+              "id": "check-valido",
+              "leftValue": "={{ $json.valido }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "if-valido",
+      "name": "IF - Lectura valida?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"ok\": false,\n  \"run_id\": \"{{ $json.run_id }}\",\n  \"errores\": {{ JSON.stringify($json.errores) }}\n}",
+        "options": { "responseCode": 422 }
+      },
+      "id": "respond-422",
+      "name": "Respond - Datos invalidos (422)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [900, 440]
+    },
+    {
+      "parameters": {
+        "workflowId": { "__rl": true, "value": "iot-e2-dominio", "mode": "id" },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "run_id": "={{ $json.run_id }}",
+            "start_ts": "={{ $json.start_ts }}",
+            "lectura": "={{ $json.lectura }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "exec-e2",
+      "name": "Execute - E2 Dominio y umbrales",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 2,
+      "position": [900, 200]
+    },
+    {
+      "parameters": {
+        "workflowId": { "__rl": true, "value": "iot-e3-persistencia", "mode": "id" },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "run_id": "={{ $json.run_id }}",
+            "start_ts": "={{ $json.start_ts }}",
+            "lectura": "={{ $json.lectura }}",
+            "analisis": "={{ $json.analisis }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "exec-e3",
+      "name": "Execute - E3 Persistencia",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 2,
+      "position": [1120, 200]
+    },
+    {
+      "parameters": {
+        "workflowId": { "__rl": true, "value": "iot-e4-notificacion", "mode": "id" },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "run_id": "={{ $json.run_id }}",
+            "start_ts": "={{ $json.start_ts }}",
+            "lectura": "={{ $json.lectura }}",
+            "analisis": "={{ $json.analisis }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "exec-e4",
+      "name": "Execute - E4 Notificacion",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 2,
+      "position": [1340, 200]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"ok\": true,\n  \"run_id\": \"{{ $json.run_id }}\",\n  \"sensor_id\": \"{{ $json.lectura.sensor_id }}\",\n  \"nivel_alerta\": \"{{ $json.analisis.nivel }}\"\n}",
+        "options": { "responseCode": 200 }
+      },
+      "id": "respond-200",
+      "name": "Respond - OK (200)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1560, 200]
+    }
+  ],
+  "connections": {
+    "Webhook - Ingesta sensor": {
+      "main": [[{ "node": "Execute - E1 Validacion entrada", "type": "main", "index": 0 }]]
+    },
+    "Execute - E1 Validacion entrada": {
+      "main": [[{ "node": "IF - Lectura valida?", "type": "main", "index": 0 }]]
+    },
+    "IF - Lectura valida?": {
+      "main": [
+        [{ "node": "Execute - E2 Dominio y umbrales", "type": "main", "index": 0 }],
+        [{ "node": "Respond - Datos invalidos (422)", "type": "main", "index": 0 }]
+      ]
+    },
+    "Execute - E2 Dominio y umbrales": {
+      "main": [[{ "node": "Execute - E3 Persistencia", "type": "main", "index": 0 }]]
+    },
+    "Execute - E3 Persistencia": {
+      "main": [[{ "node": "Execute - E4 Notificacion", "type": "main", "index": 0 }]]
+    },
+    "Execute - E4 Notificacion": {
+      "main": [[{ "node": "Respond - OK (200)", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "errorWorkflow": "iot-error-handler",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "meta": { "templateId": "mgads-iot-to-be-orquestador-v1", "instanceId": "local" },
+  "tags": [{ "name": "to-be" }, { "name": "iot" }, { "name": "mgads" }, { "name": "orquestador" }],
+  "versionId": "1.0.0",
+  "id": "iot-to-be-orquestador"
+}

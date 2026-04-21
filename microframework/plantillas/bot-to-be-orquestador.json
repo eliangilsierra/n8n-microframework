@@ -1,0 +1,151 @@
+{
+  "name": "BOT-TO-BE - Chatbot de soporte (micro-framework aplicado)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "bot-support-to-be",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-entrada",
+      "name": "Webhook - Entrada",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "bot-to-be-001"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ETAPA 1 - Validacion de entrada\n// Responsabilidad unica: verificar contrato de entrada\nconst run_id = `RUN-${Date.now()}-${Math.random().toString(36).substr(2,6).toUpperCase()}`;\nconst start_ts = new Date().toISOString();\nconst body = $input.item.json.body || {};\n\nconst errores = [];\n\nif (!body.token) errores.push('Campo requerido: token');\nif (!body.message || typeof body.message !== 'string') errores.push('Campo requerido: message (string)');\nif (!body.user_id || typeof body.user_id !== 'string') errores.push('Campo requerido: user_id (string)');\nif (body.message && body.message.length > 1000) errores.push('message excede 1000 caracteres');\n\nconst valido = errores.length === 0;\n\n// Log estructurado por corrida\nconsole.log(JSON.stringify({\n  run_id,\n  etapa: 'E1_validacion',\n  status: valido ? 'ok' : 'fail',\n  errores,\n  start_ts\n}));\n\nreturn [{\n  json: {\n    run_id,\n    start_ts,\n    valido,\n    errores,\n    payload: body\n  }\n}];"
+      },
+      "id": "etapa1-validacion",
+      "name": "E1 - Validacion de entrada",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": false, "leftValue": "", "typeValidation": "strict" },
+          "conditions": [
+            {
+              "id": "check-valido",
+              "leftValue": "={{ $json.valido }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "if-valido",
+      "name": "IF - Entrada valida?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"ok\": false,\n  \"run_id\": \"{{ $json.run_id }}\",\n  \"errores\": {{ JSON.stringify($json.errores) }}\n}",
+        "options": { "responseCode": 400 }
+      },
+      "id": "respond-400",
+      "name": "Respond - Entrada invalida (400)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [900, 440]
+    },
+    {
+      "parameters": {
+        "workflowId": { "__rl": true, "value": "bot-e2-dominio", "mode": "id" },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "run_id": "={{ $json.run_id }}",
+            "start_ts": "={{ $json.start_ts }}",
+            "payload": "={{ $json.payload }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "exec-e2",
+      "name": "Execute - E2 Logica de dominio",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 2,
+      "position": [900, 200]
+    },
+    {
+      "parameters": {
+        "workflowId": { "__rl": true, "value": "bot-e3-adaptador", "mode": "id" },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "run_id": "={{ $json.run_id }}",
+            "start_ts": "={{ $json.start_ts }}",
+            "categoria": "={{ $json.categoria }}",
+            "prioridad": "={{ $json.prioridad }}",
+            "respuesta": "={{ $json.respuesta }}",
+            "payload": "={{ $json.payload }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "exec-e3",
+      "name": "Execute - E3 Adaptador persistencia",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 2,
+      "position": [1120, 200]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"ok\": true,\n  \"run_id\": \"{{ $json.run_id }}\",\n  \"respuesta\": \"{{ $json.respuesta }}\",\n  \"categoria\": \"{{ $json.categoria }}\",\n  \"prioridad\": \"{{ $json.prioridad }}\"\n}",
+        "options": { "responseCode": 200 }
+      },
+      "id": "respond-200",
+      "name": "Respond - OK (200)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1340, 200]
+    }
+  ],
+  "connections": {
+    "Webhook - Entrada": {
+      "main": [[{ "node": "E1 - Validacion de entrada", "type": "main", "index": 0 }]]
+    },
+    "E1 - Validacion de entrada": {
+      "main": [[{ "node": "IF - Entrada valida?", "type": "main", "index": 0 }]]
+    },
+    "IF - Entrada valida?": {
+      "main": [
+        [{ "node": "Execute - E2 Logica de dominio", "type": "main", "index": 0 }],
+        [{ "node": "Respond - Entrada invalida (400)", "type": "main", "index": 0 }]
+      ]
+    },
+    "Execute - E2 Logica de dominio": {
+      "main": [[{ "node": "Execute - E3 Adaptador persistencia", "type": "main", "index": 0 }]]
+    },
+    "Execute - E3 Adaptador persistencia": {
+      "main": [[{ "node": "Respond - OK (200)", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "errorWorkflow": "bot-error-handler",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "meta": {
+    "templateId": "mgads-bot-to-be-orquestador-v1",
+    "instanceId": "local"
+  },
+  "tags": [{ "name": "to-be" }, { "name": "bot" }, { "name": "mgads" }, { "name": "orquestador" }],
+  "versionId": "1.0.0",
+  "id": "bot-to-be-orquestador"
+}

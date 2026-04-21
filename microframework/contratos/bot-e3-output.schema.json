@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "bot-e3-output.schema.json",
+  "title": "Bot — salida de E3 (adaptador de tickets)",
+  "type": "object",
+  "required": ["run_id", "ticket", "e3_start", "e3_end", "idempotency_key"],
+  "properties": {
+    "run_id": { "type": "string" },
+    "idempotency_key": {
+      "type": "string",
+      "pattern": "^RUN-BOT-.*-ticket$"
+    },
+    "ticket": {
+      "type": "object",
+      "required": ["id", "estado", "creado"],
+      "properties": {
+        "id": { "type": ["string", "integer"] },
+        "estado": {
+          "type": "string",
+          "enum": ["abierto", "existente", "omitido"]
+        },
+        "creado": { "type": "boolean" },
+        "prioridad": { "type": "string" }
+      }
+    },
+    "reintentos": { "type": "integer", "minimum": 0 },
+    "e3_start": { "type": "string", "format": "date-time" },
+    "e3_end": { "type": "string", "format": "date-time" }
+  }
+}

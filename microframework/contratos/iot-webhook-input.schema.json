@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "iot-webhook-input.schema.json",
+  "title": "IoT — payload de entrada al webhook del sensor",
+  "type": "object",
+  "required": ["sensor_id", "temperature", "humidity", "timestamp"],
+  "additionalProperties": false,
+  "properties": {
+    "sensor_id": {
+      "type": "string",
+      "pattern": "^SENSOR-[A-Z0-9]{3,32}$"
+    },
+    "temperature": {
+      "type": "number",
+      "minimum": -50,
+      "maximum": 150,
+      "description": "Temperatura en grados Celsius"
+    },
+    "humidity": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Humedad relativa en porcentaje"
+    },
+    "co2": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 5000,
+      "description": "CO2 en ppm"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "location": {
+      "type": "string",
+      "maxLength": 128
+    },
+    "idempotency_key": {
+      "type": "string",
+      "description": "Clave de idempotencia para deduplicación (requerida en set K)"
+    }
+  }
+}

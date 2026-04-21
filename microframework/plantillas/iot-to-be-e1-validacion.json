@@ -1,0 +1,33 @@
+{
+  "name": "IOT-TO-BE - E1 Validacion de entrada",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "input-trigger",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ETAPA 1 - Validacion de entrada IoT\nconst run_id = `RUN-IOT-${Date.now()}-${Math.random().toString(36).substr(2,6).toUpperCase()}`;\nconst start_ts = new Date().toISOString();\nconst body = $input.item.json.body || {};\n\nconst errores = [];\n\n// Validacion de campos obligatorios\nif (!body.sensor_id || typeof body.sensor_id !== 'string') errores.push('sensor_id requerido (string)');\nif (body.temperature === undefined || body.temperature === null) errores.push('temperature requerido');\nif (body.humidity === undefined || body.humidity === null) errores.push('humidity requerido');\nif (body.co2 === undefined) errores.push('co2 requerido');\n\n// Validacion de rangos fisicamente posibles\nconst temp = parseFloat(body.temperature);\nconst hum = parseFloat(body.humidity);\nconst co2 = parseFloat(body.co2);\n\nif (!isNaN(temp) && (temp < -50 || temp > 100)) errores.push(`temperature fuera de rango fisico: ${temp}`);\nif (!isNaN(hum) && (hum < 0 || hum > 100)) errores.push(`humidity fuera de rango fisico: ${hum}`);\nif (!isNaN(co2) && (co2 < 0 || co2 > 5000)) errores.push(`co2 fuera de rango fisico: ${co2}`);\n\nconst valido = errores.length === 0;\n\nconst lectura = valido ? {\n  sensor_id: body.sensor_id,\n  temperature: Math.round(temp * 10) / 10,\n  humidity: Math.round(hum * 10) / 10,\n  co2: Math.round(co2),\n  timestamp: body.timestamp || start_ts,\n  location: body.location || null\n} : null;\n\nconsole.log(JSON.stringify({\n  run_id, etapa: 'E1_validacion_iot',\n  status: valido ? 'ok' : 'fail',\n  errores, start_ts\n}));\n\nreturn [{ json: { run_id, start_ts, valido, errores, lectura } }];"
+      },
+      "id": "code-validacion",
+      "name": "E1 - Validar y normalizar lectura",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    }
+  ],
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [[{ "node": "E1 - Validar y normalizar lectura", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1", "callerPolicy": "workflowsFromSameOwner" },
+  "meta": { "templateId": "mgads-iot-e1-validacion-v1", "instanceId": "local" },
+  "tags": [{ "name": "to-be" }, { "name": "iot" }, { "name": "mgads" }, { "name": "subflujo" }],
+  "versionId": "1.0.0",
+  "id": "iot-e1-validacion"
+}
