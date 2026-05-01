@@ -26,6 +26,11 @@
       "type": "string",
       "enum": ["web", "whatsapp", "telegram"],
       "description": "Canal de origen (opcional)"
+    },
+    "session_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{1,64}$",
+      "description": "Identificador de sesión del cliente (opcional; usado por sets D, E, G para trazabilidad conversacional)"
     }
   }
 }

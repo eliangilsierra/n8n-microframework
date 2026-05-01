@@ -12,7 +12,7 @@
       "properties": {
         "nivel": {
           "type": "string",
-          "enum": ["normal", "warning", "critico"]
+          "enum": ["normal", "advertencia", "critico"]
         },
         "requiereNotificacion": { "type": "boolean" },
         "regla_aplicada": { "type": "string", "pattern": "^R[0-9]{3}$" },
