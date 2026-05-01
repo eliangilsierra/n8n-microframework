@@ -4,6 +4,9 @@ Flujo ad-hoc de soporte por webhook. Diseñado intencionalmente para exhibir los
 antipatrones del microframework (REG-001 a REG-010) en un escenario realista de
 16 nodos que se asemeja a lo encontrado en equipos sin arquitectura definida.
 
+> Para el registro cronológico de cambios al as-is y su evidencia (commits, rationale,
+> vinculación a REG-*), ver [`cambios-y-evidencia.md`](cambios-y-evidencia.md).
+
 ---
 
 ## Estructura del flujo (16 nodos)
@@ -32,8 +35,16 @@ antipatrones del microframework (REG-001 a REG-010) en un escenario realista de
 ## Antipatrones REG-* verificables
 
 ### REG-001 — Credenciales hardcodeadas
-- **Nodo 6 (Token Valido?):** `token === "mi-token-secreto-hardcodeado-123"` en expresión del IF.
+- **Nodo 6 (Token Valido?):** `token === "mi-token-secreto-hardcodeado-123"` en expresión del IF (rightValue literal).
+- **Nodo 8 (Consultar Historial Usuario):** header `x-api-key: clave-historial-hardcodeada-789` en httpRequest GET.
+- **Nodo 9 (Procesar Mensaje):** asignación literal `const api_source_token = "token-jscode-interno-0123456789"` dentro del código del nodo Code.
+- **Nodo 12 (Crear Ticket):** header `x-api-key: clave-tickets-hardcodeada-abc` en httpRequest POST.
 - **Nodo 14 (Notificar):** header `x-api-key: clave-api-externa-hardcodeada-456` en httpRequest.
+
+> Total: **5 secretos literales** distribuidos entre expresiones IF, headers HTTP y
+> asignaciones en jsCode. El validador estático (`microframework/validacion/validar-flujos.mjs`)
+> los detecta todos con los patrones actualizados por ADR-003 Bot / fix Bloque 3 del
+> cierre de FASE 3.
 
 ### REG-002 — Ausencia de run_id
 - Ningún nodo genera ni propaga un `run_id`. Los logs de n8n son el único medio de
