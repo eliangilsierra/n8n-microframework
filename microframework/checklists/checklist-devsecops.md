@@ -61,5 +61,5 @@ Este checklist cubre los 3 pilares operativos definidos en el anteproyecto:
 | Pilar | Dónde se instrumenta |
 |---|---|
 | 1. Gestión de Secretos | Ítems 1–5 de este checklist + credenciales gestionadas en n8n |
-| 2. Validaciones Automatizadas | `microframework/validacion-estatica-flujos.md` — script que verifica REG-001…REG-010 sobre el JSON exportado |
+| 2. Validaciones Automatizadas | `microframework/validacion/validar-flujos.mjs` — script que verifica REG-001…REG-010 sobre el JSON exportado |
 | 3. Resiliencia Operativa | Reglas REG-004 (retry), REG-005 (idempotencia) y patrones en `microframework/patrones/` |

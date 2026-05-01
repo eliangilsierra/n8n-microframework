@@ -178,6 +178,14 @@ RUN-BOT-002,bot,as-is,C,2026-06-08T10:01:00Z,2026-06-08T10:01:01Z,fail,validatio
 - Si hay error en el registro: agregar nueva fila correcta y marcar la incorrecta con `status: invalid`
 - `commit_hash`: los primeros 7 caracteres del commit activo al momento de la corrida
 
+**Nota sobre `run_id` en as-is vs to-be:**
+El as-is genera el `run_id` en el harness de medición (`automatizacion/run_corridas.py`)
+con formato simplificado `{caso}-{version}-{set}-{index}-{hash}` porque los flujos
+as-is violan REG-002 (no propagan run_id internamente). En el to-be, el `run_id` se
+genera en E1 siguiendo el formato de REG-002
+(`RUN-{CASO}-{ISO8601}-{SUFFIX}`) y se propaga por todas las etapas hasta la respuesta
+y la BD. El análisis comparativo en FASE 6 reconoce ambos formatos.
+
 ---
 
 ## 6. Registrar una entrada en el cr-log
@@ -187,16 +195,22 @@ Usar al ejecutar el protocolo de Cambio de Requisito (CR) durante FASE 6.
 **Archivo:** `medicion/cr-logs/{caso}/cr-log-{caso}-{estado}.csv`
 
 ```
-cr_id,case,version,start_ts,end_ts,nodes_touched,deps_touched,attempts,commit_hash
+cr_id,cr_type,case,version,start_ts,end_ts,nodes_touched,deps_touched,attempts,commit_hash,notes
 
-CR1,bot,as-is,2026-06-22T09:00:00Z,2026-06-22T09:45:00Z,8,2,3,b2c3d4e
-CR1,bot,to-be,2026-06-29T09:00:00Z,2026-06-29T09:20:00Z,2,0,1,c3d4e5f
+CR-BOT-001,CR1,bot,as-is,2026-04-21T10:15:00-05:00,2026-04-21T10:52:00-05:00,8,0,3,152fd2d,prioridad R002 media->alta
+CR-BOT-001,CR1,bot,to-be,2026-06-29T09:00:00Z,2026-06-29T09:20:00Z,1,0,1,c3d4e5f,cambio en constante E2
 ```
 
 **Campos:**
+- `cr_id`: identificador único por fila (`CR-{CASO}-{NNN}`)
+- `cr_type`: tipo funcional — `CR1` (negocio), `CR2` (integración), `CR3` (validación)
 - `nodes_touched`: número de nodos modificados para implementar el cambio
-- `deps_touched`: número de subflujos que requirieron actualización por el cambio
-- `attempts`: número de veces que se ejecutó el flujo para verificar el cambio
+- `deps_touched`: número de endpoints o tablas externas con contrato modificado
+- `attempts`: número de iteraciones de edición+ejecución hasta verificación exitosa
+- `notes`: texto libre — rationale breve, incidentes durante la edición, etc.
+
+Los valores de as-is están pre-medidos en FASE 3 (ver `cr-design.md` por caso);
+los de to-be se poblán en FASE 6.
 
 ---
 

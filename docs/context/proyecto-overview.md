@@ -171,6 +171,13 @@ Un cambio se considera hecho cuando:
 
 Cada caso tiene tres Input Sets (A, B, C) que se usan en todas las corridas para garantizar comparabilidad.
 
+> **Adenda FASE 2 — Ampliación de la matriz experimental (ADR-004 Bot):** la matriz
+> de Input Sets se amplió de 3 (A, B, C) a 10 (A–E estáticos + F, G, I, J, K dinámicos)
+> para cubrir antipatrones que los 3 sets originales no hacían medibles (idempotencia,
+> boundary values, percentiles extremos, degradación). Los 3 sets A–C originales se
+> conservan idénticos. La justificación formal está en
+> `casos-de-estudio/bot/adr/ADR-004-diseno-experimental-input-sets.md` (aplica a ambos casos).
+
 ### Bot — Input Sets
 
 **Input Set A — Caso normal:**

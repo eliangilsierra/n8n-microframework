@@ -47,6 +47,11 @@ presente con el mismo valor en todos.
 
 **Formato:** `RUN-BOT-{timestamp}-{random6}` o `RUN-IOT-{timestamp}-{random6}`
 
+**Nota sobre as-is:** Este formato aplica al to-be. Los run-logs del as-is usan un
+formato simplificado `{caso}-{version}-{set}-{index}-{hash}` generado por el harness
+de medición (`automatizacion/run_corridas.py`) porque los flujos as-is violan REG-002
+por diseño (no propagan `run_id` internamente). Ver `docs/protocolo-evidencias.md` §5.
+
 ---
 
 ### REG-003 — errorWorkflow configurado
