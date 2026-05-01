@@ -1,1 +1,4 @@
-cr_id,case,version,start_ts,end_ts,nodes_touched,deps_touched,attempts,commit_hash
+cr_id,cr_type,case,version,start_ts,end_ts,nodes_touched,deps_touched,attempts,commit_hash,notes
+CR-BOT-001,CR1,bot,as-is,2026-04-21T10:15:00-05:00,2026-04-21T10:52:00-05:00,8,0,3,152fd2d,prioridad R002 media->alta; nodos 9-16 tocados; 3 iteraciones por inconsistencia entre nodo 9 y nodo 13 (columna prioridad en INSERT)
+CR-BOT-002,CR2,bot,as-is,2026-04-21T11:05:00-05:00,2026-04-21T11:38:00-05:00,5,1,2,152fd2d,endpoint /api/tickets -> /api/v2/tickets con X-Api-Version:2; nodos 9, 11, 12, 15, 16
+CR-BOT-003,CR3,bot,as-is,2026-04-21T11:50:00-05:00,2026-04-21T12:18:00-05:00,3,0,2,152fd2d,validacion message.length>=3 con codigo MESSAGE_TOO_SHORT 422; nodos 2, 5(nuevo), 15

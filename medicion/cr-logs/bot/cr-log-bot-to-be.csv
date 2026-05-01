@@ -1,1 +1,1 @@
-cr_id,case,version,start_ts,end_ts,nodes_touched,deps_touched,attempts,commit_hash
+cr_id,cr_type,case,version,start_ts,end_ts,nodes_touched,deps_touched,attempts,commit_hash,notes
