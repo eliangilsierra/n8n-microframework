@@ -4,7 +4,7 @@ Fuente única de verdad del avance. Actualizar al completar cada ítem: cambiar 
 refrescar "Última actualización".
 
 **Última actualización:** 2026-04-21
-**Fase activa:** FASE 2 — Completada ✓ | FASE 4 — Pendiente runtime to-be
+**Fase activa:** FASE 2 ✓ · FASE 3 ✓ (cierre formal 2026-04-21) · FASE 4 — Pendiente runtime to-be
 
 ---
 
@@ -114,8 +114,9 @@ refrescar "Última actualización".
 
 ---
 
-## FASE 3 — Completada ✓
+## FASE 3 — Completada ✓ (cierre formal 2026-04-21)
 
+### Entregables núcleo del micro-framework
 - ✓ Metamodelo por etapas E1–E4 (`docs/context/microframework-spec.md`)
 - ✓ 10 reglas obligatorias (REG-001…REG-010) y 6 recomendadas (`microframework/reglas/`)
 - ✓ Mapeo REG-* → ISO/IEC 25010 en `microframework/reglas/reglas-obligatorias.md`
@@ -125,9 +126,34 @@ refrescar "Última actualización".
 - ✓ Convenciones de nombres (`microframework/convenciones/naming-conventions.md`)
 - ✓ Plantilla ADR (`microframework/plantillas/ADR-plantilla.md`)
 - ✓ Guía de observabilidad mínima (`microframework/guia-observabilidad.md`) — Pilar 3 DevSecOps
-- ✓ Contratos E/S como JSON Schema (`microframework/contratos/`) — 9 schemas Bot e IoT
-- ✓ Script de validación estática ejecutable (`microframework/validacion/validar-flujos.mjs`) — Pilar 2 DevSecOps
-- ✓ Documento consolidado entregable R1 (`docs/microframework-v1.0.md`)
+- ✓ Contratos E/S como JSON Schema (`microframework/contratos/`) — 9 schemas alineados con datasets reales (correcciones 2026-04-21: `session_id` Bot, `co2` en e1-output IoT, enum `advertencia` en e2/e4-output IoT, descripción `idempotency_key`)
+- ✓ Script de validación estática ejecutable (`microframework/validacion/validar-flujos.mjs`) — Pilar 2 DevSecOps; falso negativo REG-001 corregido 2026-04-21 (patrones `rightValue`, headers x-api-key, asignaciones en jsCode)
+- ✓ Documento consolidado entregable R1 (`docs/microframework-v1.0.md`) — actualizado con cierre formal
+
+### Decisiones arquitectónicas por caso (ADRs)
+- ✓ 9 ADRs completos conforme a plantilla de 7 secciones:
+  - Bot: ADR-001 (separación), ADR-002 (omisión E4), ADR-003 (rate-limit medición), ADR-004 (diseño experimental — compartido)
+  - IoT: ADR-001 (pipeline), ADR-002 (umbrales + vocabulario), ADR-003 (idempotencia `{sensor_id, timestamp}`), ADR-004 (routing E4 por severidad)
+
+### Evidencia de cambios al as-is (FASE 2 → 3)
+- ✓ `casos-de-estudio/bot/as-is/cambios-y-evidencia.md` — 4 CR-ASIS cronológicos
+- ✓ `casos-de-estudio/iot/as-is/cambios-y-evidencia.md` — 3 CR-ASIS cronológicos
+- ✓ Notas técnicas Bot enriquecidas con nodo 8 y `api_source_token` (REG-001)
+
+### Diseño y pre-medición de Change Requests
+- ✓ `casos-de-estudio/bot/cr-design.md` + `casos-de-estudio/iot/cr-design.md` — CR1/CR2/CR3 completamente especificados
+- ✓ CR-log schema extendido (`cr_type`, `notes`) en los 4 CSV
+- ✓ Pre-medición as-is ejecutada: `cr-log-bot-as-is.csv` y `cr-log-iot-as-is.csv` con 3 filas cada uno; medición to-be pendiente para FASE 6
+
+### Checklists aplicados al as-is (evidencia de línea base)
+- ✓ `casos-de-estudio/bot/as-is/checklist-arquitectura-resultado.md` (6/7 violadas)
+- ✓ `casos-de-estudio/bot/as-is/checklist-devsecops-resultado.md` (3 pilares fallan)
+- ✓ `casos-de-estudio/iot/as-is/checklist-arquitectura-resultado.md` (6/7 violadas)
+- ✓ `casos-de-estudio/iot/as-is/checklist-devsecops-resultado.md` (3 pilares fallan)
+
+### Matrices de trazabilidad
+- ✓ `casos-de-estudio/bot/trazabilidad/matriz-trazabilidad.md` — sin "(pendiente)"; ADRs linkeados; columna "Medido as-is" poblada
+- ✓ `casos-de-estudio/iot/trazabilidad/matriz-trazabilidad.md` — sin "(pendiente)"; ADRs linkeados; columna "Medido as-is" poblada
 
 ---
 

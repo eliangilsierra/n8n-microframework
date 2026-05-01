@@ -63,7 +63,7 @@ retry configurado por canal. Esa lógica justifica el subflujo.
 - Un cambio futuro en la lógica de salida del Bot (p. ej. agregar notificación a
   Slack además del webhook) requerirá refactorizar el orquestador para extraer
   E4 a un subflujo. Se acepta ese riesgo porque el caso Bot actual no lo necesita.
-- El script de validación estática (ver `microframework/validacion-estatica-flujos.md`)
+- El script de validación estática (ver `microframework/validacion/validar-flujos.mjs`)
   debe considerar esta excepción: para el caso Bot, la verificación de E4 se hace
   sobre el orquestador, no sobre un archivo `*-e4-*.json`.
 

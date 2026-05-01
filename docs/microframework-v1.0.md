@@ -4,8 +4,8 @@
 artefactos normativos del micro-framework. Esta versión cierra FASE 3 y es la base contra
 la que se construyen los flujos to-be de los casos Bot e IoT.
 
-**Versión:** 1.0
-**Fecha:** 2026-04-17
+**Versión:** 1.0 (cierre formal 2026-04-21)
+**Fecha:** 2026-04-17 — actualizado 2026-04-21 con cierre de FASE 3
 **Autor:** Elian Hernando Gil Sierra
 **Trabajo de grado:** MGADS — UNAB 2026
 
@@ -42,7 +42,7 @@ Responde directamente a los objetivos específicos del anteproyecto:
 | Checklist DevSecOps | [`microframework/checklists/checklist-devsecops.md`](../microframework/checklists/checklist-devsecops.md) | 8 ítems de seguridad (Pilar 1) |
 | Guía de observabilidad | [`microframework/guia-observabilidad.md`](../microframework/guia-observabilidad.md) | Pilar 3: contrato de logs estructurados por etapa |
 | Validación estática | [`microframework/validacion/validar-flujos.mjs`](../microframework/validacion/validar-flujos.mjs) | Pilar 2: script Node que verifica REG-001…010 sobre el JSON |
-| Plantillas ADR y JSON | [`microframework/plantillas/`](../microframework/plantillas/) | 8 plantillas JSON de subflujos + plantilla ADR |
+| Plantillas ADR y JSON | [`microframework/plantillas/`](../microframework/plantillas/) | 10 plantillas JSON (2 as-is + 8 to-be/subflujos) + plantilla ADR Markdown |
 
 ---
 
@@ -113,14 +113,38 @@ Aplicar el micro-framework a un caso nuevo sigue esta secuencia:
 El micro-framework se considera entregable R1 cuando:
 
 - ✓ 10 reglas obligatorias con criterio binario y mapeo ISO 25010
-- ✓ Script de validación estática ejecutable sobre el JSON
+- ✓ Script de validación estática ejecutable sobre el JSON (falso negativo REG-001 corregido en cierre FASE 3)
 - ✓ Guía de observabilidad con contrato de log por etapa
-- ✓ Contratos E/S de los casos Bot e IoT como JSON Schema
-- ✓ Plantillas de subflujos + plantilla ADR
+- ✓ Contratos E/S de los casos Bot e IoT como JSON Schema (5 contratos revisados y alineados con datasets reales en cierre FASE 3)
+- ✓ Plantillas de subflujos + plantilla ADR (10 JSON + ADR-plantilla)
 - ✓ Dos casos de estudio (Bot, IoT) con as-is y to-be diseñados
-- ✓ Ningún artefacto contradice el anteproyecto (§4 alcance, §5 metodología)
+- ✓ **ADRs completos por caso** — 9 ADRs totales: 4 Bot + 4 IoT + ADR-004 compartido
+  - Bot: [001](../casos-de-estudio/bot/adr/ADR-001-separacion-responsabilidades-flujo.md),
+    [002](../casos-de-estudio/bot/adr/ADR-002-omision-e4.md),
+    [003](../casos-de-estudio/bot/adr/ADR-003-ratelimit-medicion.md),
+    [004](../casos-de-estudio/bot/adr/ADR-004-diseno-experimental-input-sets.md)
+  - IoT: [001](../casos-de-estudio/iot/adr/ADR-001-separacion-responsabilidades-pipeline.md),
+    [002](../casos-de-estudio/iot/adr/ADR-002-umbrales-y-vocabulario.md),
+    [003](../casos-de-estudio/iot/adr/ADR-003-idempotencia-sensor-timestamp.md),
+    [004](../casos-de-estudio/iot/adr/ADR-004-routing-e4-por-severidad.md)
+- ✓ **Change-log de cambios al as-is con evidencia** — `cambios-y-evidencia.md` por caso:
+  [Bot](../casos-de-estudio/bot/as-is/cambios-y-evidencia.md) · [IoT](../casos-de-estudio/iot/as-is/cambios-y-evidencia.md)
+- ✓ **Diseño de CRs con pre-medición as-is ejecutada** — `cr-design.md` por caso y
+  `cr-log-{caso}-as-is.csv` poblado con 3 filas cada uno:
+  [Bot design](../casos-de-estudio/bot/cr-design.md) · [IoT design](../casos-de-estudio/iot/cr-design.md)
+- ✓ **Checklists aplicados al as-is como evidencia** — 4 archivos de resultado:
+  [Bot arq](../casos-de-estudio/bot/as-is/checklist-arquitectura-resultado.md) ·
+  [Bot DevSecOps](../casos-de-estudio/bot/as-is/checklist-devsecops-resultado.md) ·
+  [IoT arq](../casos-de-estudio/iot/as-is/checklist-arquitectura-resultado.md) ·
+  [IoT DevSecOps](../casos-de-estudio/iot/as-is/checklist-devsecops-resultado.md)
+- ✓ **Matrices de trazabilidad sin pendientes** — enlaces a ADRs reales en
+  [Bot](../casos-de-estudio/bot/trazabilidad/matriz-trazabilidad.md) y
+  [IoT](../casos-de-estudio/iot/trazabilidad/matriz-trazabilidad.md)
+- ✓ Ningún artefacto contradice el anteproyecto (§4 alcance, §5 metodología). La
+  ampliación de Input Sets está documentada como adenda en `proyecto-overview.md`
+  §Input Sets y formalizada en ADR-004 Bot.
 
-Los seis criterios se cumplen en esta versión.
+Todos los criterios se cumplen en esta versión.
 
 ---
 
