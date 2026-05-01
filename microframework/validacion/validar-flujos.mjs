@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Validación estática de flujos n8n — REG-001 a REG-010
-// Ver especificación en microframework/validacion-estatica-flujos.md
+// Ver especificación en microframework/reglas/reglas-obligatorias.md
 //
 // Uso:
 //   node microframework/validacion/validar-flujos.mjs
@@ -93,11 +93,23 @@ function stringifyAllValues(obj) {
 
 // ----------------------- Predicados REG-* -----------------------
 
+// Patrones de detección de secretos literales en flujos n8n.
+// Casos cubiertos (ejemplos reales detectados en casos-de-estudio/bot/as-is/bot-as-is.json):
+//  · nodo 6 "Validar Token":    "rightValue": "mi-token-secreto-hardcodeado-123"
+//  · nodo 8 "Consultar Historial": header { "name": "x-api-key", "value": "literal" }
+//  · nodo 9 "Procesar Mensaje":  const api_source_token = "..." dentro de jsCode
+//  · nodos 12, 14:               headers x-api-key hardcodeados
 const REG_SECRETS_PATTERNS = [
   /Bearer\s+[A-Za-z0-9._\-]{8,}/i,
   /sk-[A-Za-z0-9]{16,}/,
   /ghp_[A-Za-z0-9]{16,}/,
-  /"(password|api_key|apikey|secret)"\s*:\s*"[^{}="]{6,}"/i
+  /"(password|api_key|apikey|secret|token)"\s*:\s*"[^{}="]{6,}"/i,
+  // Comparaciones literales en nodos IF/Switch: "rightValue": "<literal largo>"
+  /"rightValue"\s*:\s*"[A-Za-z0-9._\-]{12,}"/,
+  // Headers HTTP con API key literal: pares { name: "x-api-key", value: "<literal>" }
+  /"name"\s*:\s*"(x-api-key|authorization|api-key|x-auth-token)"[\s\S]{1,120}?"value"\s*:\s*"[^{]{8,}"/i,
+  // Asignaciones literales a variables tipo token/key/secret/password dentro de nodos Code
+  /\b(const|let|var)\s+\w*(token|api[_-]?key|secret|password)\w*\s*=\s*["'][^"'{}$]{8,}["']/i
 ];
 
 function regSecrets(flow) {
