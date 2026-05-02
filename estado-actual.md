@@ -3,8 +3,8 @@
 Fuente única de verdad del avance. Actualizar al completar cada ítem: cambiar ✗ → ✓ y
 refrescar "Última actualización".
 
-**Última actualización:** 2026-04-21
-**Fase activa:** FASE 2 ✓ · FASE 3 ✓ (cierre formal 2026-04-21) · FASE 4 — Pendiente runtime to-be
+**Última actualización:** 2026-05-01
+**Fase activa:** FASE 1 ✓ · FASE 2 ✓ · FASE 3 ✓ (robustez académica verificada 2026-05-01) · FASE 4 — Pendiente runtime to-be
 
 ---
 
@@ -19,7 +19,7 @@ refrescar "Última actualización".
 | 4 | Construcción del estado to-be | Plantillas JSON ✓ — pendiente import y ajuste de referencias |
 | 5 | Prueba piloto de instrumentos | Pendiente |
 | 6 | Medición comparativa | Pendiente |
-| 7 | Evaluación ATAM | Pendiente — estructura de 6 escenarios top-K por caso pendiente |
+| 7 | Evaluación ATAM | Pendiente — Utility Tree con 12 escenarios (6 Bot + 6 IoT) ✓ definido |
 | 8 | Diseño de arquitectura AWS | Pendiente |
 | 9 | Guía de buenas prácticas y cierre | Pendiente |
 
@@ -47,16 +47,17 @@ refrescar "Última actualización".
 
 ---
 
-## FASE 1 — Completada ✓
+## FASE 1 — Completada ✓ — robustez académica verificada (2026-05-01)
 
 - ✓ Fichas técnicas Bot e IoT con contratos, reglas, CRs y parámetros de reproducibilidad
 - ✓ 6 datasets sintéticos (input-set-A/B/C para bot e iot) con metadatos de expectativas
-- ✓ Matrices de trazabilidad (RF → ADR → evidencia) para ambos casos
+- ✓ Matrices de trazabilidad (RF → ADR → evidencia) para ambos casos — **v1.3** con columna ISO 25010 y escenarios ATAM
 - ✓ Sustentación académica de plantillas de referencia (`docs/context/sustentacion-plantillas-referencia.md`)
+- ✓ Taxonomía formal de representatividad de casos (`docs/context/justificacion-casos-de-estudio.md`) — Yin (2018), 4 categorías LC/NC, cobertura ortogonal Bot/IoT
 
 ---
 
-## FASE 2 — En progreso
+## FASE 2 — Completada ✓ — robustez académica verificada (2026-05-01)
 
 ### Análisis estático ✓
 - ✓ Notas técnicas Bot as-is — 9/10 reglas violadas, flujo rediseñado a 16 nodos realistas
@@ -111,29 +112,37 @@ refrescar "Última actualización".
 - ✓ Anomalía Set A (contador n8n contaminado) verificada y resuelta — comportamiento LIMITE=150 confirmado
 - Observación documentada: rate limiter en memoria contamina sets consecutivos dentro de la misma sesión
   cuando la ventana de tiempo (60s) no expira entre sets — evidencia del antipatrón REG-002
+- ✓ Diagramas arquitectónicos as-is en Mermaid con antipatrones anotados por nodo (`casos-de-estudio/{bot,iot}/as-is/diagrama-as-is.md`)
+- ✓ Justificación formal del rediseño as-is (`docs/context/justificacion-rediseno-asis.md`) — validez interna según Wohlin et al. (2012)
+- ✓ Anomalía `commit_hash="unknown"` documentada metodológicamente en `docs/protocolo-evidencias.md §9`
 
 ---
 
-## FASE 3 — Completada ✓ (cierre formal 2026-04-21)
+## FASE 3 — Completada ✓ (robustez académica verificada 2026-05-01)
 
 ### Entregables núcleo del micro-framework
 - ✓ Metamodelo por etapas E1–E4 (`docs/context/microframework-spec.md`)
 - ✓ 10 reglas obligatorias (REG-001…REG-010) y 6 recomendadas (`microframework/reglas/`)
 - ✓ Mapeo REG-* → ISO/IEC 25010 en `microframework/reglas/reglas-obligatorias.md`
-- ✓ Patrones: retry, idempotencia (`microframework/patrones/`)
-- ✓ Antipatrones documentados (`microframework/antipatrones.md`)
+- ✓ **5 patrones** documentados: retry, idempotencia, circuit breaker, error boundary, saga/compensación (`microframework/patrones/`)
+- ✓ **11 antipatrones** documentados (`microframework/antipatrones.md`) — +4: ID hardcodeado, chatty, exception swallowing, god node
+- ✓ **3 ADRs a nivel de framework** (`microframework/adr/`): ADR-MF-001 (REG-001), ADR-MF-002 (REG-003), ADR-MF-003 (REG-006)
 - ✓ Checklist arquitectura y DevSecOps (`microframework/checklists/`)
 - ✓ Convenciones de nombres (`microframework/convenciones/naming-conventions.md`)
 - ✓ Plantilla ADR (`microframework/plantillas/ADR-plantilla.md`)
 - ✓ Guía de observabilidad mínima (`microframework/guia-observabilidad.md`) — Pilar 3 DevSecOps
-- ✓ Contratos E/S como JSON Schema (`microframework/contratos/`) — 9 schemas alineados con datasets reales (correcciones 2026-04-21: `session_id` Bot, `co2` en e1-output IoT, enum `advertencia` en e2/e4-output IoT, descripción `idempotency_key`)
-- ✓ Script de validación estática ejecutable (`microframework/validacion/validar-flujos.mjs`) — Pilar 2 DevSecOps; falso negativo REG-001 corregido 2026-04-21 (patrones `rightValue`, headers x-api-key, asignaciones en jsCode)
-- ✓ Documento consolidado entregable R1 (`docs/microframework-v1.0.md`) — actualizado con cierre formal
+- ✓ Contratos E/S como JSON Schema (`microframework/contratos/`) — 9 schemas alineados con datasets reales
+- ✓ Script de validación estática ejecutable (`microframework/validacion/validar-flujos.mjs`) — Pilar 2 DevSecOps
+- ✓ Documento consolidado entregable R1 (`docs/microframework-v1.0.md`) — **versión 1.1** con soporte académico completo
+- ✓ **Fundamento teórico** (`docs/context/fundamento-teorico.md`) — Clean Architecture (Martin 2017), NIST SSDF, OWASP, literatura LC/NC, posicionamiento
+- ✓ **Utility Tree ATAM** (`docs/context/atam-utility-tree.md`) — 12 escenarios (6 Bot + 6 IoT) con medidas de respuesta
+- ✓ **Protocolo MTTD** (`docs/protocolo-mttd.md`) — procedimiento reproducible con meta < 60 segundos
 
 ### Decisiones arquitectónicas por caso (ADRs)
-- ✓ 9 ADRs completos conforme a plantilla de 7 secciones:
-  - Bot: ADR-001 (separación), ADR-002 (omisión E4), ADR-003 (rate-limit medición), ADR-004 (diseño experimental — compartido)
-  - IoT: ADR-001 (pipeline), ADR-002 (umbrales + vocabulario), ADR-003 (idempotencia `{sensor_id, timestamp}`), ADR-004 (routing E4 por severidad)
+- ✓ **19 ADRs totales** conforme a plantilla de 7 secciones:
+  - Bot: ADR-001 a 008 — separación, omisión E4, rate-limit, diseño experimental, autenticación, errorWorkflow, clasificación E2, rate-limit to-be
+  - IoT: ADR-001 a 008 — pipeline, umbrales, idempotencia, routing E4, errorWorkflow, validación E1, timestamp authority, normalización E1
+  - Framework: ADR-MF-001/002/003 — REG-001, REG-003, REG-006
 
 ### Evidencia de cambios al as-is (FASE 2 → 3)
 - ✓ `casos-de-estudio/bot/as-is/cambios-y-evidencia.md` — 4 CR-ASIS cronológicos
@@ -152,8 +161,8 @@ refrescar "Última actualización".
 - ✓ `casos-de-estudio/iot/as-is/checklist-devsecops-resultado.md` (3 pilares fallan)
 
 ### Matrices de trazabilidad
-- ✓ `casos-de-estudio/bot/trazabilidad/matriz-trazabilidad.md` — sin "(pendiente)"; ADRs linkeados; columna "Medido as-is" poblada
-- ✓ `casos-de-estudio/iot/trazabilidad/matriz-trazabilidad.md` — sin "(pendiente)"; ADRs linkeados; columna "Medido as-is" poblada
+- ✓ `casos-de-estudio/bot/trazabilidad/matriz-trazabilidad.md` — **v1.3**: ADR-001..008 linkeados, columna ISO 25010 en RFs, escenarios ATAM BOT-Q1..Q6
+- ✓ `casos-de-estudio/iot/trazabilidad/matriz-trazabilidad.md` — **v1.3**: ADR-001..008 linkeados, columna ISO 25010 en RFs, escenarios ATAM IOT-Q1..Q6
 
 ---
 
@@ -224,4 +233,11 @@ microframework/                                      reglas, patrones, antipatro
 microframework/guia-observabilidad.md                Pilar 3 DevSecOps — contrato de logs estructurados por etapa
 microframework/contratos/                            JSON Schemas de contratos E/S por etapa (Bot e IoT)
 microframework/validacion/validar-flujos.mjs         Pilar 2 DevSecOps — script de validación estática REG-001…010
+microframework/adr/ADR-MF-*.md                       ADRs a nivel de framework (REG-001, REG-003, REG-006)
+microframework/patrones/                             5 patrones: retry, idempotencia, circuit-breaker, error-boundary, saga
+docs/context/fundamento-teorico.md                   Base conceptual: Clean Architecture, NIST SSDF, literatura LC/NC
+docs/context/atam-utility-tree.md                    Utility Tree ATAM: 12 escenarios top-K con medidas de respuesta
+docs/protocolo-mttd.md                               Protocolo de medición MTTD — reproducible, meta < 60 segundos
+docs/context/justificacion-casos-de-estudio.md       Taxonomía LC/NC y representatividad formal de Bot e IoT
+docs/context/justificacion-rediseno-asis.md          Validez metodológica del rediseño intencional del as-is
 ```
