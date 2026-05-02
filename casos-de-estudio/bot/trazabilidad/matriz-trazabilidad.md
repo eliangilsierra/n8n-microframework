@@ -1,22 +1,22 @@
 # Matriz de trazabilidad — Caso Bot
 
-**Versión:** 1.1
-**Fecha:** 2026-04-21
-**Estado:** Actualizada en cierre FASE 3 — pendiente evidencia FASE 6 para to-be.
+**Versión:** 1.2
+**Fecha:** 2026-05-01
+**Estado:** Actualizada con columna ISO 25010 en RFs — pendiente evidencia FASE 6 para to-be.
 
 ---
 
 ## Requerimientos funcionales
 
-| ID | Requerimiento | Prioridad |
-|----|---------------|-----------|
-| RF-BOT-01 | El sistema valida presencia del token antes de procesar | Alta |
-| RF-BOT-02 | El sistema clasifica el mensaje en una de 5 categorías | Alta |
-| RF-BOT-03 | El sistema determina prioridad: alta, media o baja | Alta |
-| RF-BOT-04 | El sistema persiste un ticket en el servicio externo | Alta |
-| RF-BOT-05 | El sistema responde con categoría, prioridad y mensaje al usuario | Alta |
-| RF-BOT-06 | El sistema rechaza con 400 si el token está ausente | Alta |
-| RF-BOT-07 | El sistema rechaza con 400 si el mensaje excede 1000 caracteres | Media |
+| ID | Requerimiento | Prioridad | Atributo ISO 25010 |
+|----|---------------|-----------|-------------------|
+| RF-BOT-01 | El sistema valida presencia del token antes de procesar | Alta | Seguridad / Confidencialidad |
+| RF-BOT-02 | El sistema clasifica el mensaje en una de 5 categorías | Alta | Mantenibilidad / Modularidad |
+| RF-BOT-03 | El sistema determina prioridad: alta, media o baja | Alta | Mantenibilidad / Modularidad |
+| RF-BOT-04 | El sistema persiste un ticket en el servicio externo | Alta | Fiabilidad / Madurez + Recuperabilidad |
+| RF-BOT-05 | El sistema responde con categoría, prioridad y mensaje al usuario | Alta | Adecuación funcional / Corrección |
+| RF-BOT-06 | El sistema rechaza con 400 si el token está ausente | Alta | Seguridad / Autenticidad + Adecuación funcional / Corrección |
+| RF-BOT-07 | El sistema rechaza con 400 si el mensaje excede 1000 caracteres | Media | Adecuación funcional / Corrección |
 
 ---
 

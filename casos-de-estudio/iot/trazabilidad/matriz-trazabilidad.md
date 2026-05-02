@@ -1,23 +1,23 @@
 # Matriz de trazabilidad — Caso IoT
 
-**Versión:** 1.1
-**Fecha:** 2026-04-21
-**Estado:** Actualizada en cierre FASE 3 — pendiente evidencia FASE 6 para to-be.
+**Versión:** 1.2
+**Fecha:** 2026-05-01
+**Estado:** Actualizada con columna ISO 25010 en RFs — pendiente evidencia FASE 6 para to-be.
 
 ---
 
 ## Requerimientos funcionales
 
-| ID | Requerimiento | Prioridad |
-|----|---------------|-----------|
-| RF-IOT-01 | El sistema valida presencia de sensor_id, temperature, humidity, co2 | Alta |
-| RF-IOT-02 | El sistema valida rangos físicamente posibles de cada variable | Alta |
-| RF-IOT-03 | El sistema normaliza los datos de entrada (redondeo) | Media |
-| RF-IOT-04 | El sistema clasifica el nivel de alerta: normal, advertencia, crítico | Alta |
-| RF-IOT-05 | El sistema persiste la lectura en PostgreSQL con idempotencia | Alta |
-| RF-IOT-06 | El sistema notifica por canal diferenciado según nivel de alerta | Alta |
-| RF-IOT-07 | El sistema responde 422 si la lectura es inválida, sin persistir | Alta |
-| RF-IOT-08 | El sistema no envía notificación si el nivel es normal | Media |
+| ID | Requerimiento | Prioridad | Atributo ISO 25010 |
+|----|---------------|-----------|-------------------|
+| RF-IOT-01 | El sistema valida presencia de sensor_id, temperature, humidity, co2 | Alta | Fiabilidad / Madurez + Adecuación funcional / Corrección |
+| RF-IOT-02 | El sistema valida rangos físicamente posibles de cada variable | Alta | Adecuación funcional / Corrección |
+| RF-IOT-03 | El sistema normaliza los datos de entrada (redondeo) | Media | Mantenibilidad / Modularidad |
+| RF-IOT-04 | El sistema clasifica el nivel de alerta: normal, advertencia, crítico | Alta | Mantenibilidad / Modularidad + Adecuación funcional / Corrección |
+| RF-IOT-05 | El sistema persiste la lectura en PostgreSQL con idempotencia | Alta | Fiabilidad / Madurez |
+| RF-IOT-06 | El sistema notifica por canal diferenciado según nivel de alerta | Alta | Fiabilidad / Tolerancia a fallos + Confiabilidad |
+| RF-IOT-07 | El sistema responde 422 si la lectura es inválida, sin persistir | Alta | Adecuación funcional / Corrección |
+| RF-IOT-08 | El sistema no envía notificación si el nivel es normal | Media | Eficiencia de desempeño / Comportamiento temporal |
 
 ---
 
