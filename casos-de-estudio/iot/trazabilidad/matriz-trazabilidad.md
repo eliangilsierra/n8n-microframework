@@ -1,8 +1,8 @@
 # Matriz de trazabilidad — Caso IoT
 
-**Versión:** 1.2
+**Versión:** 1.3
 **Fecha:** 2026-05-01
-**Estado:** Actualizada con columna ISO 25010 en RFs — pendiente evidencia FASE 6 para to-be.
+**Estado:** Actualizada con ADR-005..008 y escenarios ATAM IOT-Q1..Q6 — pendiente evidencia FASE 6 para to-be.
 
 ---
 
@@ -48,6 +48,12 @@
 | Confiabilidad | Fallo en notificación no pierde la lectura persistida | E3 y E4 separados | [ADR-001](../adr/ADR-001-separacion-responsabilidades-pipeline.md) |
 | Validez interna | REG-005 medible con evidencia cuantitativa | Set K (duplicados idempotencia) | [ADR-004 Bot](../../bot/adr/ADR-004-diseno-experimental-input-sets.md) |
 | Trazabilidad | Toda lectura tiene run_id y sensor_id en logs y BD | run_id propagado desde E1 | REG-002 |
+| Mantenibilidad | IOT-Q1: CR1 (umbral 35→30°C) toca ≤1 nodo en to-be | Constante UMBRALES centralizada en E2 | [ADR-002](../adr/ADR-002-umbrales-y-vocabulario.md) |
+| Mantenibilidad | IOT-Q2: CR2 (endpoint urgente) toca ≤1 nodo en to-be | Routing E4 aislado | [ADR-004](../adr/ADR-004-routing-e4-por-severidad.md) |
+| Fiabilidad | IOT-Q3: 0 lecturas duplicadas en Set K | Idempotencia clave {sensor_id, timestamp} | [ADR-003](../adr/ADR-003-idempotencia-sensor-timestamp.md) + [ADR-007](../adr/ADR-007-timestamp-authority.md) |
+| Fiabilidad | IOT-Q4: lecturas no perdidas en fallo transitorio E3 | Retry REG-004 + error boundary | [ADR-004](../adr/ADR-004-routing-e4-por-severidad.md) |
+| Confiabilidad | IOT-Q5: críticos notificados antes que advertencias | Routing diferenciado E4 | [ADR-004](../adr/ADR-004-routing-e4-por-severidad.md) |
+| Seguridad | IOT-Q6: credenciales PG no en JSON exportado | Credenciales n8n por nombre | [ADR-001](../adr/ADR-001-separacion-responsabilidades-pipeline.md) |
 
 ---
 
@@ -81,6 +87,10 @@ de Input Sets).
 | [ADR-003](../adr/ADR-003-idempotencia-sensor-timestamp.md) | Idempotencia con clave `{sensor_id, timestamp}` | Aceptado |
 | [ADR-004](../adr/ADR-004-routing-e4-por-severidad.md) | Routing diferenciado de E4 por severidad | Aceptado |
 | [ADR-004 Bot](../../bot/adr/ADR-004-diseno-experimental-input-sets.md) | Diseño experimental (compartido) | Aceptado |
+| [ADR-005](../adr/ADR-005-diseno-error-workflow.md) | errorWorkflow con payload para replay de lecturas perdidas (REG-003, REG-006) | Aceptado |
+| [ADR-006](../adr/ADR-006-validacion-schema-e1.md) | Validación de schema en E1 con JavaScript inline y errores por campo | Aceptado |
+| [ADR-007](../adr/ADR-007-timestamp-authority.md) | Autoridad del timestamp: usar timestamp del sensor (REG-005) | Aceptado |
+| [ADR-008](../adr/ADR-008-normalizacion-e1.md) | Normalización de campos en E1 antes de pasar a dominio (REC-001, REG-005) | Aceptado |
 
 ---
 

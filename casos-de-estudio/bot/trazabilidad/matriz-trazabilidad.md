@@ -1,8 +1,8 @@
 # Matriz de trazabilidad — Caso Bot
 
-**Versión:** 1.2
+**Versión:** 1.3
 **Fecha:** 2026-05-01
-**Estado:** Actualizada con columna ISO 25010 en RFs — pendiente evidencia FASE 6 para to-be.
+**Estado:** Actualizada con ADR-005..008 y escenarios ATAM BOT-Q1..Q6 — pendiente evidencia FASE 6 para to-be.
 
 ---
 
@@ -45,6 +45,12 @@
 | Validez interna | N=200 viable sin saturación de rate-limit | Dos versiones paralelas (LIMITE=150 / LIMITE=10) | [ADR-003](../adr/ADR-003-ratelimit-medicion.md) |
 | Adecuación funcional | Evidencia cuantitativa por antipatrón específico | Matriz experimental ampliada a 10 sets | [ADR-004](../adr/ADR-004-diseno-experimental-input-sets.md) |
 | Trazabilidad | Toda ejecución tiene run_id rastreable | run_id propagado desde E1 | REG-002 |
+| Mantenibilidad | BOT-Q1: CR1 toca ≤1 nodo en to-be | Clasificación centralizada en REGLAS array | [ADR-007](../adr/ADR-007-clasificacion-mensajes-e2.md) |
+| Mantenibilidad | BOT-Q2: CR2 toca ≤1 nodo en to-be | Adaptador E3 aislado | [ADR-001](../adr/ADR-001-separacion-responsabilidades-flujo.md) |
+| Seguridad | BOT-Q3: token no en JSON exportado | Credencial n8n por nombre | [ADR-005](../adr/ADR-005-estrategia-autenticacion.md) |
+| Fiabilidad | BOT-Q4: 0 tickets duplicados en Set K | Idempotencia en E3 | [ADR-001](../adr/ADR-001-separacion-responsabilidades-flujo.md) |
+| Operabilidad | BOT-Q5: MTTD < 60 segundos | Log estructurado JSON + errorWorkflow | [ADR-006](../adr/ADR-006-diseno-error-workflow.md) |
+| Adecuación funcional | BOT-Q6: 401 para token inválido, 400 para campos faltantes | REG-009 en E1 | [ADR-005](../adr/ADR-005-estrategia-autenticacion.md) |
 
 ---
 
@@ -77,6 +83,10 @@ ampliación de Input Sets, mock endpoint).
 | [ADR-002](../adr/ADR-002-omision-e4.md) | Omisión de E4 como subflujo separado en Bot | Aceptado |
 | [ADR-003](../adr/ADR-003-ratelimit-medicion.md) | Separación medición estadística vs demo REG-002 | Aceptado |
 | [ADR-004](../adr/ADR-004-diseno-experimental-input-sets.md) | Ampliación matriz experimental a 10 Input Sets (aplica también a IoT) | Aceptado |
+| [ADR-005](../adr/ADR-005-estrategia-autenticacion.md) | Estrategia de autenticación sin token hardcodeado (REG-001) | Aceptado |
+| [ADR-006](../adr/ADR-006-diseno-error-workflow.md) | Diseño del errorWorkflow bot-error-handler (REG-003, REG-006) | Aceptado |
+| [ADR-007](../adr/ADR-007-clasificacion-mensajes-e2.md) | Clasificación de mensajes en E2 con array REGLAS (REG-007, REC-002) | Aceptado |
+| [ADR-008](../adr/ADR-008-rate-limiting-tobe.md) | Eliminación del rate-limiter en to-be — stateless por diseño (REG-002) | Aceptado |
 
 ---
 
