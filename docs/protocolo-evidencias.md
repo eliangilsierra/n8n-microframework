@@ -300,6 +300,61 @@ en `automatizacion/run_corridas.py`. La tabla de referencia es:
 
 ---
 
+## 9. Anomalía commit_hash="unknown" — Documentación metodológica
+
+### Causa raíz
+
+`automatizacion/run_corridas.py` obtiene el hash con:
+
+```python
+subprocess.run(['git', 'rev-parse', 'HEAD'], capture_output=True, text=True)
+```
+
+El proceso se ejecutaba desde el directorio de trabajo del intérprete Python, que en
+algunas sesiones no era el directorio raíz del repositorio sino un subdirectorio.
+`git rev-parse HEAD` falla silenciosamente fuera de un repo y devuelve cadena vacía,
+que el harness captura como `"unknown"`.
+
+### Impacto en la validez de los datos
+
+Los run-logs con `commit_hash="unknown"` corresponden a corridas as-is ejecutadas
+el 2026-04-20/21. La validez de los datos **no se ve afectada**: el campo `commit_hash`
+es un campo de auditoría para trazabilidad, no un campo de integridad de los datos
+de medición. Los campos `run_id`, `status`, `error_type`, `start_ts`, `end_ts` son
+generados por el propio harness desde la respuesta HTTP del webhook y son correctos.
+
+### Asociación histórica
+
+Para el análisis comparativo de FASE 6, los datos as-is con `commit_hash="unknown"`
+se tratan como pertenecientes al commit **`152fd2d`**, que es el último commit
+documentado antes de las corridas as-is (2026-04-20). Esta asociación se registra en
+este protocolo como fuente de verdad y no requiere corrección retroactiva de los CSVs.
+
+### Resolución para FASE 6
+
+Las corridas to-be se ejecutarán con la corrección aplicada en `run_corridas.py`:
+
+1. Pasar `cwd=REPO_ROOT` al `subprocess.run` para que git se ejecute desde la raíz.
+2. Verificar `git status --porcelain` antes de cada sesión de medición para confirmar
+   que el estado está limpio.
+3. Documentar el commit hash activo en `estado-actual.md` antes de iniciar corridas.
+
+**Corrección en el código:**
+
+```python
+import os
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+def get_commit_hash():
+    result = subprocess.run(
+        ['git', 'rev-parse', '--short', 'HEAD'],
+        capture_output=True, text=True, cwd=REPO_ROOT
+    )
+    return result.stdout.strip() if result.returncode == 0 else 'unknown'
+```
+
+---
+
 ## §9 Datasets dinámicos y semillas
 
 ### Propósito
