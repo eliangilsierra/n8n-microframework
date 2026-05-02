@@ -17,17 +17,12 @@
     },
     {
       "parameters": {
-        "workflowId": { "__rl": true, "value": "iot-e1-validacion", "mode": "id" },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": { "body": "={{ $json.body }}" }
-        },
-        "options": {}
+        "workflowId": "REEMPLAZAR_CON_ID_E1"
       },
       "id": "exec-e1",
       "name": "Execute - E1 Validacion entrada",
       "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 2,
+      "typeVersion": 1,
       "position": [460, 300]
     },
     {
@@ -65,61 +60,32 @@
     },
     {
       "parameters": {
-        "workflowId": { "__rl": true, "value": "iot-e2-dominio", "mode": "id" },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "run_id": "={{ $json.run_id }}",
-            "start_ts": "={{ $json.start_ts }}",
-            "lectura": "={{ $json.lectura }}"
-          }
-        },
-        "options": {}
+        "workflowId": "REEMPLAZAR_CON_ID_E2"
       },
       "id": "exec-e2",
       "name": "Execute - E2 Dominio y umbrales",
       "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 2,
+      "typeVersion": 1,
       "position": [900, 200]
     },
     {
       "parameters": {
-        "workflowId": { "__rl": true, "value": "iot-e3-persistencia", "mode": "id" },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "run_id": "={{ $json.run_id }}",
-            "start_ts": "={{ $json.start_ts }}",
-            "lectura": "={{ $json.lectura }}",
-            "analisis": "={{ $json.analisis }}"
-          }
-        },
-        "options": {}
+        "workflowId": "REEMPLAZAR_CON_ID_E3"
       },
       "id": "exec-e3",
       "name": "Execute - E3 Persistencia",
       "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 2,
+      "typeVersion": 1,
       "position": [1120, 200]
     },
     {
       "parameters": {
-        "workflowId": { "__rl": true, "value": "iot-e4-notificacion", "mode": "id" },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "run_id": "={{ $json.run_id }}",
-            "start_ts": "={{ $json.start_ts }}",
-            "lectura": "={{ $json.lectura }}",
-            "analisis": "={{ $json.analisis }}"
-          }
-        },
-        "options": {}
+        "workflowId": "REEMPLAZAR_CON_ID_E4"
       },
       "id": "exec-e4",
       "name": "Execute - E4 Notificacion",
       "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 2,
+      "typeVersion": 1,
       "position": [1340, 200]
     },
     {
@@ -169,6 +135,6 @@
   "staticData": null,
   "meta": { "templateId": "mgads-iot-to-be-orquestador-v1", "instanceId": "local" },
   "tags": [{ "name": "to-be" }, { "name": "iot" }, { "name": "mgads" }, { "name": "orquestador" }],
-  "versionId": "1.0.0",
+  "versionId": "1.1.0",
   "id": "iot-to-be-orquestador"
 }
