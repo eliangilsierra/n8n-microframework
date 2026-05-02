@@ -4,8 +4,8 @@
 artefactos normativos del micro-framework. Esta versión cierra FASE 3 y es la base contra
 la que se construyen los flujos to-be de los casos Bot e IoT.
 
-**Versión:** 1.0 (cierre formal 2026-04-21)
-**Fecha:** 2026-04-17 — actualizado 2026-04-21 con cierre de FASE 3
+**Versión:** 1.1 (actualizado 2026-05-01 con 15 mejoras de robustez académica)
+**Fecha:** 2026-04-17 — actualizado 2026-05-01 con soporte académico completo
 **Autor:** Elian Hernando Gil Sierra
 **Trabajo de grado:** MGADS — UNAB 2026
 
@@ -34,8 +34,9 @@ Responde directamente a los objetivos específicos del anteproyecto:
 | Metamodelo E1–E4 | [`docs/context/microframework-spec.md`](context/microframework-spec.md) | Cuatro etapas lógicas: validación, dominio, adaptadores, salida |
 | Reglas obligatorias (REG-001…010) | [`microframework/reglas/reglas-obligatorias.md`](../microframework/reglas/reglas-obligatorias.md) | 10 reglas con criterio binario y mapeo a ISO/IEC 25010 |
 | Reglas recomendadas (REC-001…006) | [`microframework/reglas/reglas-recomendadas.md`](../microframework/reglas/reglas-recomendadas.md) | 6 reglas de refuerzo opcionales |
-| Patrones | [`microframework/patrones/`](../microframework/patrones/) | Retry con backoff, idempotencia con clave compuesta |
-| Antipatrones | [`microframework/antipatrones.md`](../microframework/antipatrones.md) | Catálogo de 7 antipatrones documentados |
+| Patrones | [`microframework/patrones/`](../microframework/patrones/) | 5 patrones: retry, idempotencia, log estructurado, circuit breaker, error boundary, saga |
+| Antipatrones | [`microframework/antipatrones.md`](../microframework/antipatrones.md) | Catálogo de 11 antipatrones documentados |
+| ADRs de framework | [`microframework/adr/`](../microframework/adr/) | ADR-MF-001 (REG-001), ADR-MF-002 (REG-003), ADR-MF-003 (REG-006) |
 | Contratos E/S | [`microframework/contratos/`](../microframework/contratos/) | JSON Schemas por etapa para Bot e IoT (9 archivos) |
 | Convenciones | [`microframework/convenciones/naming-conventions.md`](../microframework/convenciones/naming-conventions.md) | Nombres de archivos, subflujos, nodos y variables |
 | Checklist arquitectura | [`microframework/checklists/checklist-arquitectura.md`](../microframework/checklists/checklist-arquitectura.md) | 10 ítems binarios alineados con REG-* |
@@ -43,6 +44,10 @@ Responde directamente a los objetivos específicos del anteproyecto:
 | Guía de observabilidad | [`microframework/guia-observabilidad.md`](../microframework/guia-observabilidad.md) | Pilar 3: contrato de logs estructurados por etapa |
 | Validación estática | [`microframework/validacion/validar-flujos.mjs`](../microframework/validacion/validar-flujos.mjs) | Pilar 2: script Node que verifica REG-001…010 sobre el JSON |
 | Plantillas ADR y JSON | [`microframework/plantillas/`](../microframework/plantillas/) | 10 plantillas JSON (2 as-is + 8 to-be/subflujos) + plantilla ADR Markdown |
+| Fundamento teórico | [`docs/context/fundamento-teorico.md`](context/fundamento-teorico.md) | Base conceptual: Clean Architecture, NIST SSDF, literatura LC/NC, posicionamiento |
+| Utility Tree ATAM | [`docs/context/atam-utility-tree.md`](context/atam-utility-tree.md) | 12 escenarios top-K (6 Bot + 6 IoT) con medidas de respuesta para FASE 7 |
+| Protocolo MTTD | [`docs/protocolo-mttd.md`](../docs/protocolo-mttd.md) | Procedimiento reproducible de medición de Mean Time To Detect |
+| Taxonomía de casos | [`docs/context/justificacion-casos-de-estudio.md`](context/justificacion-casos-de-estudio.md) | Representatividad formal de Bot e IoT en el espacio LC/NC de n8n |
 
 ---
 
@@ -145,6 +150,20 @@ El micro-framework se considera entregable R1 cuando:
   §Input Sets y formalizada en ADR-004 Bot.
 
 Todos los criterios se cumplen en esta versión.
+
+### Criterios adicionales — v1.1 (2026-05-01)
+
+- ✓ **Fundamento teórico completo** — Clean Architecture (Martin 2017), NIST SSDF, OWASP Top 10, literatura LC/NC (Bock & Frank 2021, Cabot 2020, Sahay 2020), posicionamiento frente a Power Platform y Zapier
+- ✓ **ADRs a nivel de framework** — 3 ADRs (ADR-MF-001/002/003) para REG-001, REG-003, REG-006 con contexto, decisión, alternativas y consecuencias
+- ✓ **ADRs por caso completos** — 8 ADRs por caso (Bot: 001–008, IoT: 001–008)
+- ✓ **Patrones expandidos** — 5 patrones (+ circuit breaker, error boundary, saga/compensación)
+- ✓ **Antipatrones expandidos** — 11 antipatrones (+ ID hardcodeado, chatty, exception swallowing, god node)
+- ✓ **Utility Tree ATAM** — 12 escenarios (6 Bot + 6 IoT) con medidas de respuesta y trazabilidad a ADRs
+- ✓ **Protocolo MTTD** — procedimiento reproducible de medición de MTTD con meta < 60 segundos
+- ✓ **Diagramas arquitectónicos as-is** — Mermaid con antipatrones anotados por nodo para Bot e IoT
+- ✓ **Matrices de trazabilidad v1.2** — columna ISO 25010 en tablas de RFs
+- ✓ **Justificación metodológica del rediseño as-is** — validez interna según Wohlin et al. (2012)
+- ✓ **Documentación de anomalía commit_hash** — §9 en protocolo-evidencias.md
 
 ---
 
