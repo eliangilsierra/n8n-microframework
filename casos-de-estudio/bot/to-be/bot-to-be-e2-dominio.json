@@ -1,0 +1,39 @@
+{
+  "name": "BOT-TO-BE - E2 Logica de dominio",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "input-trigger",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ETAPA 2 - Logica de dominio\n// Responsabilidad unica: clasificar y generar respuesta de negocio\n// Sin conocimiento de integraciones externas ni detalles de persistencia\n\nconst { run_id, start_ts, payload } = $input.item.json;\nconst mensaje = payload.message.toLowerCase();\n\nconst e2_start = new Date().toISOString();\n\nlet respuesta = '';\nlet categoria = 'general';\nlet prioridad = 'baja';\nlet requiereEscalacion = false;\n\n// Reglas de negocio centralizadas y testables\nconst REGLAS = [\n  {\n    id: 'R001',\n    condicion: (m) => m.includes('urgente') || m.includes('critico') || m.includes('emergencia'),\n    categoria: 'incidente',\n    prioridad: 'alta',\n    respuesta: 'Tu solicitud fue marcada como URGENTE. Un agente te contactara en menos de 30 minutos.',\n    escalacion: true\n  },\n  {\n    id: 'R002',\n    condicion: (m) => m.includes('factura') || m.includes('pago') || m.includes('cobro'),\n    categoria: 'facturacion',\n    prioridad: 'media',\n    respuesta: 'Tu consulta de facturacion fue recibida. El departamento de pagos te respondera en 24 horas habiles.',\n    escalacion: false\n  },\n  {\n    id: 'R003',\n    condicion: (m) => m.includes('error') || m.includes('falla') || m.includes('no funciona'),\n    categoria: 'soporte_tecnico',\n    prioridad: 'media',\n    respuesta: 'Hemos registrado tu reporte tecnico. Por favor comparte el codigo de error si tienes uno.',\n    escalacion: false\n  },\n  {\n    id: 'R004',\n    condicion: (m) => m.includes('hola') || m.includes('buenos') || m.includes('buenas'),\n    categoria: 'saludo',\n    prioridad: 'baja',\n    respuesta: 'Hola! Soy el asistente de soporte. En que puedo ayudarte hoy?',\n    escalacion: false\n  }\n];\n\nconst reglaAplicada = REGLAS.find(r => r.condicion(mensaje));\n\nif (reglaAplicada) {\n  categoria = reglaAplicada.categoria;\n  prioridad = reglaAplicada.prioridad;\n  respuesta = reglaAplicada.respuesta;\n  requiereEscalacion = reglaAplicada.escalacion;\n} else {\n  respuesta = 'Gracias por tu mensaje. Un agente revisara tu solicitud pronto.';\n}\n\nconst e2_end = new Date().toISOString();\nconst duracion_ms = new Date(e2_end) - new Date(e2_start);\n\n// Log estructurado estandar\nconsole.log(JSON.stringify({\n  run_id,\n  etapa: 'E2_dominio',\n  status: 'ok',\n  categoria,\n  prioridad,\n  requiereEscalacion,\n  regla_aplicada: reglaAplicada ? reglaAplicada.id : 'DEFAULT',\n  e2_start,\n  e2_end,\n  duracion_ms\n}));\n\nreturn [{\n  json: {\n    run_id,\n    start_ts,\n    e2_start,\n    e2_end,\n    categoria,\n    prioridad,\n    respuesta,\n    requiereEscalacion,\n    payload\n  }\n}];"
+      },
+      "id": "code-dominio",
+      "name": "E2 - Reglas de negocio",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    }
+  ],
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [[{ "node": "E2 - Reglas de negocio", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "meta": { "templateId": "mgads-bot-e2-dominio-v1", "instanceId": "local" },
+  "tags": [{ "name": "to-be" }, { "name": "bot" }, { "name": "mgads" }, { "name": "subflujo" }],
+  "versionId": "1.0.0",
+  "id": "bot-e2-dominio"
+}

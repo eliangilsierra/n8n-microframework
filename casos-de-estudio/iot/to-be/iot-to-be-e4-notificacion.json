@@ -1,0 +1,137 @@
+{
+  "name": "IOT-TO-BE - E4 Adaptador de notificacion",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "input-trigger",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": false, "leftValue": "", "typeValidation": "strict" },
+          "conditions": [
+            {
+              "id": "check-notificacion",
+              "leftValue": "={{ $json.analisis.requiereNotificacion }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "if-notificar",
+      "name": "IF - Requiere notificacion?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": false, "leftValue": "", "typeValidation": "loose" },
+          "conditions": [
+            {
+              "id": "check-critico",
+              "leftValue": "={{ $json.analisis.nivel }}",
+              "rightValue": "critico",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "if-critico",
+      "name": "IF - Nivel critico?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:3002/notificaciones/critico",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"run_id\": \"{{ $json.run_id }}\",\n  \"sensor_id\": \"{{ $json.lectura.sensor_id }}\",\n  \"nivel\": \"{{ $json.analisis.nivel }}\",\n  \"anomalias\": {{ JSON.stringify($json.analisis.anomalias) }},\n  \"timestamp\": \"{{ $json.lectura.timestamp }}\",\n  \"canal\": \"critico\"\n}",
+        "options": {
+          "retry": { "enabled": true, "maxRetries": 3, "waitBetweenTries": 2000 }
+        }
+      },
+      "id": "http-critico",
+      "name": "HTTP - Notificar canal CRITICO (con retry)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [900, 120],
+      "credentials": { "httpHeaderAuth": { "id": "notificacion-api-credential", "name": "Notificacion API Key" } }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:3002/notificaciones/warning",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"run_id\": \"{{ $json.run_id }}\",\n  \"sensor_id\": \"{{ $json.lectura.sensor_id }}\",\n  \"nivel\": \"{{ $json.analisis.nivel }}\",\n  \"anomalias\": {{ JSON.stringify($json.analisis.anomalias) }},\n  \"timestamp\": \"{{ $json.lectura.timestamp }}\",\n  \"canal\": \"warning\"\n}",
+        "options": {
+          "retry": { "enabled": true, "maxRetries": 2, "waitBetweenTries": 1000 }
+        }
+      },
+      "id": "http-warning",
+      "name": "HTTP - Notificar canal WARNING (con retry)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [900, 300],
+      "credentials": { "httpHeaderAuth": { "id": "notificacion-api-credential", "name": "Notificacion API Key" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.item.json;\nconst e4_end = new Date().toISOString();\nconsole.log(JSON.stringify({\n  run_id: input.run_id || $('Execute Workflow Trigger').item.json.run_id,\n  etapa: 'E4_notificacion_iot',\n  status: 'ok',\n  nivel: input.analisis ? input.analisis.nivel : 'normal',\n  notificacion_enviada: true,\n  e4_end\n}));\nreturn [{ json: { ...input, e4_end, notificacion_enviada: true } }];"
+      },
+      "id": "code-log-e4-ok",
+      "name": "E4 - Log notificacion enviada",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1120, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.item.json;\nconst e4_end = new Date().toISOString();\nconsole.log(JSON.stringify({\n  run_id: input.run_id,\n  etapa: 'E4_notificacion_iot',\n  status: 'skip',\n  nivel: 'normal',\n  notificacion_enviada: false,\n  e4_end\n}));\nreturn [{ json: { ...input, e4_end, notificacion_enviada: false } }];"
+      },
+      "id": "code-log-e4-skip",
+      "name": "E4 - Log sin notificacion (normal)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 420]
+    }
+  ],
+  "connections": {
+    "Execute Workflow Trigger": { "main": [[{ "node": "IF - Requiere notificacion?", "type": "main", "index": 0 }]] },
+    "IF - Requiere notificacion?": {
+      "main": [
+        [{ "node": "IF - Nivel critico?", "type": "main", "index": 0 }],
+        [{ "node": "E4 - Log sin notificacion (normal)", "type": "main", "index": 0 }]
+      ]
+    },
+    "IF - Nivel critico?": {
+      "main": [
+        [{ "node": "HTTP - Notificar canal CRITICO (con retry)", "type": "main", "index": 0 }],
+        [{ "node": "HTTP - Notificar canal WARNING (con retry)", "type": "main", "index": 0 }]
+      ]
+    },
+    "HTTP - Notificar canal CRITICO (con retry)": { "main": [[{ "node": "E4 - Log notificacion enviada", "type": "main", "index": 0 }]] },
+    "HTTP - Notificar canal WARNING (con retry)": { "main": [[{ "node": "E4 - Log notificacion enviada", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1", "callerPolicy": "workflowsFromSameOwner" },
+  "meta": { "templateId": "mgads-iot-e4-notificacion-v1", "instanceId": "local" },
+  "tags": [{ "name": "to-be" }, { "name": "iot" }, { "name": "mgads" }, { "name": "subflujo" }],
+  "versionId": "1.0.0",
+  "id": "iot-e4-notificacion"
+}

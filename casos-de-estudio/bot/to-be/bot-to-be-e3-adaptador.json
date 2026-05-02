@@ -1,0 +1,83 @@
+{
+  "name": "BOT-TO-BE - E3 Adaptador de persistencia",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "input-trigger",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ETAPA 3 - Adaptador de integracion\n// Responsabilidad unica: preparar payload para el sistema externo\n// Sin logica de negocio - solo transformacion de contrato\n\nconst input = $input.item.json;\nconst e3_start = new Date().toISOString();\n\n// Idempotencia: generar clave unica para evitar duplicados en reintentos\nconst idempotency_key = `${input.run_id}-ticket`;\n\nconst ticketPayload = {\n  idempotency_key,\n  user_id: input.payload.user_id,\n  session_id: input.payload.session_id || null,\n  mensaje: input.payload.message,\n  categoria: input.categoria,\n  prioridad: input.prioridad,\n  requiere_escalacion: input.requiereEscalacion,\n  timestamp: input.start_ts,\n  run_id: input.run_id\n};\n\nreturn [{\n  json: {\n    ...input,\n    e3_start,\n    ticketPayload,\n    idempotency_key,\n    retry_count: 0,\n    max_retries: 3\n  }\n}];"
+      },
+      "id": "code-preparar",
+      "name": "E3 - Preparar payload adaptador",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:3001/api/tickets",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Idempotency-Key", "value": "={{ $json.idempotency_key }}" }
+          ]
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.ticketPayload) }}",
+        "options": {
+          "retry": { "enabled": true, "maxRetries": 3, "waitBetweenTries": 2000 },
+          "response": { "response": { "neverError": false } }
+        }
+      },
+      "id": "http-ticket",
+      "name": "HTTP - POST ticket (con retry)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300],
+      "credentials": { "httpHeaderAuth": { "id": "ticket-api-credential", "name": "Ticket API Key" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $('E3 - Preparar payload adaptador').item.json;\nconst httpResponse = $input.item.json;\nconst e3_end = new Date().toISOString();\nconst duracion_ms = new Date(e3_end) - new Date(input.e3_start);\n\nconsole.log(JSON.stringify({\n  run_id: input.run_id,\n  etapa: 'E3_adaptador',\n  status: 'ok',\n  idempotency_key: input.idempotency_key,\n  ticket_id: httpResponse.id || null,\n  e3_start: input.e3_start,\n  e3_end,\n  duracion_ms\n}));\n\nreturn [{\n  json: {\n    run_id: input.run_id,\n    start_ts: input.start_ts,\n    categoria: input.categoria,\n    prioridad: input.prioridad,\n    respuesta: input.respuesta,\n    ticket_id: httpResponse.id || null,\n    payload: input.payload\n  }\n}];"
+      },
+      "id": "code-log-e3",
+      "name": "E3 - Log salida adaptador",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300]
+    }
+  ],
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [[{ "node": "E3 - Preparar payload adaptador", "type": "main", "index": 0 }]]
+    },
+    "E3 - Preparar payload adaptador": {
+      "main": [[{ "node": "HTTP - POST ticket (con retry)", "type": "main", "index": 0 }]]
+    },
+    "HTTP - POST ticket (con retry)": {
+      "main": [[{ "node": "E3 - Log salida adaptador", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "meta": { "templateId": "mgads-bot-e3-adaptador-v1", "instanceId": "local" },
+  "tags": [{ "name": "to-be" }, { "name": "bot" }, { "name": "mgads" }, { "name": "subflujo" }],
+  "versionId": "1.0.0",
+  "id": "bot-e3-adaptador"
+}

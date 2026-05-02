@@ -126,6 +126,10 @@ function regSecrets(flow) {
 
 function regRunId(flow, file) {
   const text = allCodeText(flow);
+  // Orquestador puro: sin nodos Code pero con Execute Workflow — run_id delegado a subflujo E1
+  if (!text && nodesOfType(flow, 'executeWorkflow').length > 0) {
+    return { cumple: null, evidencia: 'N/A (orquestador puro — run_id generado y propagado por subflujo E1)' };
+  }
   if (!text.includes('run_id')) return { cumple: false, evidencia: 'no se referencia run_id en nodos Code' };
   if (!/console\.log\s*\(\s*JSON\.stringify/.test(text)) {
     return { cumple: false, evidencia: 'no hay console.log(JSON.stringify(...)) con run_id' };
