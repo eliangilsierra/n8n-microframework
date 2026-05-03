@@ -15,8 +15,9 @@
 | RF-BOT-03 | El sistema determina prioridad: alta, media o baja | Alta | Mantenibilidad / Modularidad |
 | RF-BOT-04 | El sistema persiste un ticket en el servicio externo | Alta | Fiabilidad / Madurez + Recuperabilidad |
 | RF-BOT-05 | El sistema responde con categoría, prioridad y mensaje al usuario | Alta | Adecuación funcional / Corrección |
-| RF-BOT-06 | El sistema rechaza con 400 si el token está ausente | Alta | Seguridad / Autenticidad + Adecuación funcional / Corrección |
+| RF-BOT-06 | El sistema retorna 401 si el token es inválido y 400 si el campo token está ausente | Alta | Seguridad / Autenticidad + Adecuación funcional / Corrección |
 | RF-BOT-07 | El sistema rechaza con 400 si el mensaje excede 1000 caracteres | Media | Adecuación funcional / Corrección |
+| RF-BOT-08 | El sistema retorna 500 con body estructurado cuando E2 o E3 fallan durante el procesamiento | Alta | Fiabilidad / Tolerancia a fallos + Operabilidad / Monitoreabilidad |
 
 ---
 
@@ -29,8 +30,9 @@
 | RF-BOT-03 | [ADR-001](../adr/ADR-001-separacion-responsabilidades-flujo.md), [ADR-002](../adr/ADR-002-omision-e4.md) | REG-007, E2 | E2 - Reglas | A, B, F | run-log-bot-*.csv (FASE 6) |
 | RF-BOT-04 | [ADR-001](../adr/ADR-001-separacion-responsabilidades-flujo.md) | REG-004, REG-005, E3 | E3 - Adaptador | A, B, K | run-log-bot-*.csv (FASE 6) |
 | RF-BOT-05 | [ADR-002](../adr/ADR-002-omision-e4.md) | REG-009, E4 | Respond - OK | A, B | run-log-bot-*.csv (FASE 6) |
-| RF-BOT-06 | [ADR-001](../adr/ADR-001-separacion-responsabilidades-flujo.md) | REG-009, E1 | Respond - 400/401 | C | run-log-bot-*.csv (FASE 6) |
+| RF-BOT-06 | [ADR-005](../adr/ADR-005-estrategia-autenticacion.md) | REG-001, REG-009, E1 | Respond - 401 / Respond - 400 | C | run-log-bot-*.csv (FASE 6) |
 | RF-BOT-07 | [ADR-001](../adr/ADR-001-separacion-responsabilidades-flujo.md), [ADR-004](../adr/ADR-004-diseno-experimental-input-sets.md) | REG-009, E1 | E1 - Validacion | D, E, G, J | run-log-bot-*.csv (FASE 6) |
+| RF-BOT-08 | [ADR-001](../adr/ADR-001-separacion-responsabilidades-flujo.md), [ADR-006](../adr/ADR-006-diseno-error-workflow.md) | REG-003, REG-006 | Orquestador (IF-error + Respond-500) | — | run-log-bot-*.csv (FASE 6) |
 
 ---
 

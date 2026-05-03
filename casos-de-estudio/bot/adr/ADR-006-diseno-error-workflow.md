@@ -65,7 +65,7 @@ HTTP 500 Internal Server Error
 { "error": "Internal server error", "run_id": "{{run_id}}" }
 ```
 
-**Nombre del flujo en n8n:** `BOT-ERROR-HANDLER`
+**Nombre del flujo en n8n:** `bot-error-handler`
 **Referencia en orquestador:** `settings.errorWorkflow = "ID_DE_BOT_ERROR_HANDLER"`
 
 ---
