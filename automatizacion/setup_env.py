@@ -172,6 +172,17 @@ def create_table() -> None:
   ts          TIMESTAMPTZ DEFAULT NOW()
 );""",
         ),
+        (
+            "lecturas_sensor_dead_letters",
+            """CREATE TABLE IF NOT EXISTS lecturas_sensor_dead_letters (
+  id               SERIAL PRIMARY KEY,
+  run_id           VARCHAR(100),
+  payload_original JSONB,
+  error_message    TEXT,
+  node_name        VARCHAR(200),
+  ts               TIMESTAMPTZ DEFAULT NOW()
+);""",
+        ),
     ]
     for table_name, sql in statements:
         result = subprocess.run(
@@ -211,12 +222,13 @@ def print_manual_steps() -> None:
     print("   d. casos-de-estudio/bot/as-is/bot-as-is.json")
     print()
     print("   CASO IoT:")
-    print("   a. microframework/plantillas/iot-to-be-e1-validacion.json")
-    print("   b. microframework/plantillas/iot-to-be-e2-dominio.json")
-    print("   c. microframework/plantillas/iot-to-be-e3-persistencia.json")
-    print("   d. microframework/plantillas/iot-to-be-e4-notificacion.json")
-    print("   e. microframework/plantillas/iot-to-be-orquestador.json")
-    print("   f. casos-de-estudio/iot/as-is/iot-as-is.json")
+    print("   a. casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json")
+    print("   b. casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json")
+    print("   c. casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json")
+    print("   d. casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json")
+    print("   e. casos-de-estudio/iot/to-be/iot-error-handler.json")
+    print("   f. casos-de-estudio/iot/to-be/iot-to-be-orquestador.json")
+    print("   g. casos-de-estudio/iot/as-is/iot-as-is.json")
     print()
     print("3. En bot-to-be-orquestador: abre cada nodo 'Execute Workflow',")
     print("   selecciona el subflujo correcto por nombre, guarda.")
