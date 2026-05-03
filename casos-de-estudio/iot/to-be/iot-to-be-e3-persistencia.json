@@ -34,7 +34,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const input = $('E3 - Preparar para persistencia').item.json;\nconst dbResult = $input.item.json;\nconst e3_end = new Date().toISOString();\nconst duracion_ms = new Date(e3_end) - new Date(input.e3_start);\nconsole.log(JSON.stringify({\n  run_id: input.run_id, etapa: 'E3_persistencia_iot',\n  status: 'ok', idempotency_key: input.idempotency_key,\n  registro_id: dbResult.id || 'ya-existia',\n  e3_start: input.e3_start, e3_end, duracion_ms\n}));\nreturn [{ json: { run_id: input.run_id, start_ts: input.start_ts, lectura: input.lectura, analisis: input.analisis, registro_id: dbResult.id || null } }];"
+        "jsCode": "const input = $('E3 - Preparar para persistencia').item.json;\nconst dbResult = $input.item.json;\nconst e3_end = new Date().toISOString();\nconst duracion_ms = new Date(e3_end) - new Date(input.e3_start);\n// ON CONFLICT DO NOTHING retorna 0 filas si ya existia — estado explicito para el contrato\nconst persistStatus = dbResult && dbResult.id ? 'creado' : 'duplicado_omitido';\nconsole.log(JSON.stringify({\n  run_id: input.run_id, etapa: 'E3_persistencia_iot',\n  status: persistStatus, idempotency_key: input.idempotency_key,\n  registro_id: dbResult.id || null,\n  e3_start: input.e3_start, e3_end, duracion_ms\n}));\nreturn [{ json: {\n  run_id: input.run_id,\n  start_ts: input.start_ts,\n  lectura: input.lectura,\n  analisis: input.analisis,\n  registro_id: dbResult.id || null,\n  persistencia: {\n    status: persistStatus,\n    registro_id: dbResult.id || null,\n    idempotency_key: input.idempotency_key,\n    e3_start: input.e3_start,\n    e3_end,\n    duracion_ms\n  }\n} }];"
       },
       "id": "code-log-e3",
       "name": "E3 - Log salida persistencia",
