@@ -17,7 +17,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// ETAPA 1 - Validacion de entrada\n// ADR-005: token validado contra BOT_API_TOKEN (sin hardcodear — REG-001)\nconst run_id = `RUN-BOT-${new Date().toISOString().replace(/[-:.TZ]/g,'').slice(0,15)}-${Math.random().toString(36).substr(2,5).toUpperCase()}`;\nconst start_ts = new Date().toISOString();\nconst body = $input.item.json.body || {};\n\nconst errores = [];\nlet unauthorized = false;\n\nif (!body.token) errores.push('Campo requerido: token');\nif (!body.message || typeof body.message !== 'string') errores.push('Campo requerido: message (string)');\nif (!body.user_id || typeof body.user_id !== 'string') errores.push('Campo requerido: user_id (string)');\nif (body.message && body.message.length > 1000) errores.push('message excede 1000 caracteres');\n\nif (body.token && errores.filter(e => e.includes('token')).length === 0) {\n  const expectedToken = process.env.BOT_API_TOKEN;\n  if (expectedToken && body.token !== expectedToken) {\n    errores.push('Token de autenticacion invalido');\n    unauthorized = true;\n  }\n}\n\nconst valido = errores.length === 0;\n\nconsole.log(JSON.stringify({\n  run_id,\n  etapa: 'E1_validacion',\n  status: valido ? 'ok' : 'fail',\n  errores,\n  n_errores: errores.length,\n  unauthorized,\n  start_ts\n}));\n\nreturn [{\n  json: {\n    run_id,\n    start_ts,\n    valido,\n    unauthorized,\n    errores,\n    payload: body\n  }\n}];"
+        "jsCode": "// ETAPA 1 - Validacion de entrada\n// ADR-005: token validado contra BOT_API_TOKEN (sin hardcodear — REG-001)\nconst run_id = `RUN-BOT-${new Date().toISOString().replace(/[-:.TZ]/g,'').slice(0,15)}-${Math.random().toString(36).substr(2,5).toUpperCase()}`;\nconst start_ts = new Date().toISOString();\nconst body = $input.item.json.body || {};\n\nconst errores = [];\nlet unauthorized = false;\nconst tokenPresente = !!body.token;\n\nif (!tokenPresente) errores.push('Campo requerido: token');\nif (!body.message || typeof body.message !== 'string') errores.push('Campo requerido: message (string)');\nif (!body.user_id || typeof body.user_id !== 'string') errores.push('Campo requerido: user_id (string)');\nif (body.message && body.message.length > 1000) errores.push('message excede 1000 caracteres');\n\nif (tokenPresente) {\n  try {\n    const expectedToken = $env.BOT_API_TOKEN;\n    if (expectedToken && body.token !== expectedToken) {\n      errores.push('Token de autenticacion invalido');\n      unauthorized = true;\n    }\n  } catch(e) { /* $env no disponible — solo se valida presencia */ }\n}\n\nconst valido = errores.length === 0;\n\nconsole.log(JSON.stringify({\n  run_id,\n  etapa: 'E1_validacion',\n  status: valido ? 'ok' : 'fail',\n  errores,\n  n_errores: errores.length,\n  unauthorized,\n  start_ts\n}));\n\nreturn [{\n  json: {\n    run_id,\n    start_ts,\n    valido,\n    unauthorized,\n    errores,\n    payload: body\n  }\n}];"
       },
       "id": "etapa1-validacion",
       "name": "E1 - Validacion de entrada",
@@ -93,23 +93,58 @@
     },
     {
       "parameters": {
-        "workflowId": "REEMPLAZAR_CON_ID_E2"
+        "workflowId": "GLCqR9yqvkmE20QY"
       },
       "id": "exec-e2",
       "name": "Execute - E2 Logica de dominio",
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
-      "position": [900, 200]
+      "position": [900, 200],
+      "continueOnFail": true
     },
     {
       "parameters": {
-        "workflowId": "REEMPLAZAR_CON_ID_E3"
+        "workflowId": "EqMaNbc6Rq60G8u9"
       },
       "id": "exec-e3",
       "name": "Execute - E3 Adaptador persistencia",
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
-      "position": [1120, 200]
+      "position": [1120, 200],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": false, "leftValue": "", "typeValidation": "strict" },
+          "conditions": [
+            {
+              "id": "check-error",
+              "leftValue": "={{ $json.error }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEmpty" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "if-error",
+      "name": "IF - Error en pipeline?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1340, 200]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"ok\": false,\n  \"error\": \"Error interno en el procesamiento de la solicitud\"\n}",
+        "options": { "responseCode": 500 }
+      },
+      "id": "respond-500",
+      "name": "Respond - Error interno (500)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1560, 380]
     },
     {
       "parameters": {
@@ -121,7 +156,7 @@
       "name": "Respond - OK (200)",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [1340, 200]
+      "position": [1560, 200]
     }
   ],
   "connections": {
@@ -147,7 +182,13 @@
       "main": [[{ "node": "Execute - E3 Adaptador persistencia", "type": "main", "index": 0 }]]
     },
     "Execute - E3 Adaptador persistencia": {
-      "main": [[{ "node": "Respond - OK (200)", "type": "main", "index": 0 }]]
+      "main": [[{ "node": "IF - Error en pipeline?", "type": "main", "index": 0 }]]
+    },
+    "IF - Error en pipeline?": {
+      "main": [
+        [{ "node": "Respond - Error interno (500)", "type": "main", "index": 0 }],
+        [{ "node": "Respond - OK (200)", "type": "main", "index": 0 }]
+      ]
     }
   },
   "settings": {
@@ -164,6 +205,6 @@
     "instanceId": "local"
   },
   "tags": [{ "name": "to-be" }, { "name": "bot" }, { "name": "mgads" }, { "name": "orquestador" }],
-  "versionId": "1.1.0",
+  "versionId": "1.2.0",
   "id": "bot-to-be-orquestador"
 }
