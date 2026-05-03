@@ -157,7 +157,11 @@ function regRetry(flow) {
   return { cumple: true, evidencia: `${http.length} nodo(s) HTTP con retry >=2` };
 }
 
-function regIdempotencia(flow) {
+function regIdempotencia(flow, file) {
+  // Los error handlers persisten eventos de error — no requieren idempotencia (cada evento es único)
+  if (/error.handler/i.test(basename(file?.path || ''))) {
+    return { cumple: null, evidencia: 'N/A (error handler — cada evento de error es único)' };
+  }
   const pg = nodesOfType(flow, 'postgres');
   if (pg.length === 0) return { cumple: null, evidencia: 'sin nodos Postgres' };
   for (const n of pg) {
@@ -197,7 +201,8 @@ function regDominioAislado(flow, file) {
 
 function regIntegracionesLugar(flow, file) {
   const name = basename(file.path);
-  const esPermitido = /-e3-|-e4-|orquestador/i.test(name);
+  // Error handlers tienen IO por diseño (HTTP notificación + Postgres dead-letter)
+  const esPermitido = /-e3-|-e4-|orquestador|error.handler/i.test(name);
   const externos = [...nodesOfType(flow, 'httpRequest'), ...nodesOfType(flow, 'postgres')];
   if (externos.length === 0) return { cumple: null, evidencia: 'sin nodos IO' };
   if (!esPermitido) {
@@ -228,6 +233,52 @@ function regAdrPresente(file) {
   return { cumple: true, evidencia: `${adrs.length} ADR(s) presentes` };
 }
 
+// ----------------------- REG-VOC: Vocabulario de enum `nivel` -----------------------
+// Detecta uso de términos en inglés donde el enum oficial es todo en español.
+// Enum oficial (ADR-002 IoT / ADR-007 Bot): { "normal", "advertencia", "critico" }
+// Falsos positivos evitados:
+//   - Fragmentos en comentarios: los patrones buscan comillas o asignaciones de variable
+//   - URLs de endpoints (/notificaciones/warning pasa porque no va entre comillas simples como valor JS)
+//   - El validador mismo: se evalúa el jsCode del nodo, no este archivo
+
+const VOCAB_PROHIBIDO = [
+  // Nivel en inglés dentro de asignaciones o valores de objeto
+  { patron: /[=:]\s*['"]warning['"]/,   correcto: '"advertencia"', razon: 'nivel en inglés' },
+  { patron: /[=:]\s*['"]critical['"]/,  correcto: '"critico"',     razon: 'nivel en inglés' },
+  { patron: /[=:]\s*['"]CRITICAL['"]/,  correcto: '"critico"',     razon: 'nivel en inglés (mayús.)' },
+  { patron: /[=:]\s*['"]WARNING['"]/,   correcto: '"advertencia"', razon: 'nivel en inglés (mayús.)' },
+  // tipo de anomalia en inglés
+  { patron: /tipo\s*:\s*['"]warning['"]/,  correcto: '"advertencia"', razon: 'tipo anomalia en inglés' },
+  { patron: /tipo\s*:\s*['"]critical['"]/, correcto: '"critico"',     razon: 'tipo anomalia en inglés' },
+];
+
+function regVocabulario(flow, file) {
+  // Solo aplica a flujos to-be de los casos de estudio
+  if (file.caso === 'plantilla') return { cumple: null, evidencia: 'N/A (plantilla)' };
+  if (file.estado !== 'to-be') return { cumple: null, evidencia: 'N/A (solo aplica a to-be)' };
+
+  const codeNodes = (flow?.nodes || []).filter(
+    n => (n.type || '').includes('code') || (n.type || '').includes('function')
+  );
+  if (codeNodes.length === 0) return { cumple: null, evidencia: 'sin nodos Code' };
+
+  const violaciones = [];
+  for (const n of codeNodes) {
+    const code = n?.parameters?.jsCode || n?.parameters?.functionCode || '';
+    if (!code) continue;
+    for (const v of VOCAB_PROHIBIDO) {
+      if (v.patron.test(code)) {
+        violaciones.push(`nodo "${n.name}": ${v.razon} — usar ${v.correcto}`);
+      }
+    }
+  }
+
+  if (violaciones.length > 0) {
+    return { cumple: false, evidencia: violaciones.join(' | ') };
+  }
+  return { cumple: true, evidencia: 'vocabulario enum nivel correcto (español)' };
+}
+
 // ----------------------- Evaluación -----------------------
 
 const REGLAS = [
@@ -235,12 +286,13 @@ const REGLAS = [
   { id: 'REG-002', nombre: 'run_id propagado', fn: (f) => regRunId(f.flow, f) },
   { id: 'REG-003', nombre: 'errorWorkflow configurado', fn: (f) => regErrorWorkflow(f.flow, f) },
   { id: 'REG-004', nombre: 'Retry en HTTP', fn: (f) => regRetry(f.flow) },
-  { id: 'REG-005', nombre: 'Idempotencia en escrituras', fn: (f) => regIdempotencia(f.flow) },
+  { id: 'REG-005', nombre: 'Idempotencia en escrituras', fn: (f) => regIdempotencia(f.flow, f) },
   { id: 'REG-006', nombre: 'Log estructurado JSON', fn: (f) => regLogEstructurado(f.flow) },
   { id: 'REG-007', nombre: 'Dominio aislado', fn: (f) => regDominioAislado(f.flow, f) },
   { id: 'REG-008', nombre: 'Integraciones en E3/E4', fn: (f) => regIntegracionesLugar(f.flow, f) },
   { id: 'REG-009', nombre: 'HTTP status codes', fn: (f) => regStatusCodes(f.flow, f) },
-  { id: 'REG-010', nombre: 'ADR presente', fn: (f) => regAdrPresente(f) }
+  { id: 'REG-010', nombre: 'ADR presente', fn: (f) => regAdrPresente(f) },
+  { id: 'REG-VOC', nombre: 'Vocabulario enum nivel (español)', fn: (f) => regVocabulario(f.flow, f) }
 ];
 
 function evaluarArchivo(file) {
