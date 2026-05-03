@@ -163,6 +163,12 @@ Aplicar antes de versionar cualquier flujo to-be:
 
 **Trade-off:** Aumenta la latencia total en caso de fallo, pero garantiza que errores transitorios no resulten en tickets o lecturas perdidas.
 
+> **Limitación de plataforma (n8n v1.x):** El campo `waitBetweenTries` implementa un
+> intervalo **plano** en ms, no exponencial. La documentación del micro-framework
+> especifica "backoff exponencial" como objetivo de diseño; en n8n se aproxima con
+> un valor plano conservador (≥1000ms). Para backoff real se requiere un Code node
+> con loop explícito o delegar al API Gateway externo.
+
 ### Patrón: Idempotencia con clave compuesta
 
 **Problema:** Los reintentos automáticos pueden crear registros duplicados en la base de datos.
@@ -225,6 +231,50 @@ IF analisis.requiereNotificacion === true
 
 ---
 
+### Patrón: Autoridad de timestamp en flujos de series de tiempo
+
+**Aplicable a:** Flujos E1 que reciben timestamps de fuentes externas (sensores IoT, webhooks de eventos).
+
+**Problema:** Usar el reloj del servidor como timestamp rompe la idempotencia: dos envíos
+del mismo dato físico generan claves distintas si llegan en instantes diferentes.
+
+**Solución:** E1 usa el timestamp del cliente (sensor/productor) como autoridad.
+Adicionalmente valida el drift máximo aceptable:
+
+```javascript
+// Usar timestamp del cliente, no del servidor
+const sensorTime = new Date(body.timestamp);
+const diffMs = sensorTime - new Date();
+if (diffMs > 5 * 60 * 1000) {
+  errores.push(`timestamp en el futuro por ${Math.round(diffMs/1000)}s (máximo 300s)`);
+}
+```
+
+**Normalización obligatoria (ADR-008):** Convertir a ISO 8601 antes de propagar:
+```javascript
+timestamp: new Date(body.timestamp).toISOString()
+```
+
+**Trade-off:** Sensores con reloj mal configurado son rechazados en E1. Históricos
+(timestamp pasado sin límite) se aceptan — restringir backfill queda fuera del
+alcance del micro-framework.
+
+---
+
+## Limitaciones conocidas de plataforma (n8n v1.x)
+
+Identificadas durante la implementación del caso IoT (FASE 4, 2026-05-02):
+
+| Limitación | Impacto | Alternativa |
+|------------|---------|-------------|
+| `waitBetweenTries` es intervalo plano, no exponencial | Patrón Retry con backoff solo aproximable | Code node con loop + sleep, o API Gateway |
+| Error handlers (`errorWorkflow`) no pueden hacer Respond to Webhook | El cliente ya recibió timeout antes de que el handler termine | Diseñar respuesta 500 en el orquestador antes del fallo si es posible |
+| Nodos Code referencian otros nodos por nombre display (`$('Nombre nodo').item.json`) | Renombrar un nodo rompe referencias en silencio | Pasar todo el contexto necesario en el output de cada nodo; evitar referencias cruzadas entre nodos del mismo subflujo |
+| Contratos de salida (JSON Schema) no se validan en runtime | Un subflujo puede violar su contrato sin que n8n lo detecte | El validador estático (`validar-flujos.mjs`) puede extenderse para verificar estructura de outputs |
+| Execute Workflow asigna IDs dinámicos en cada instalación | Los orquestadores necesitan actualización manual de IDs post-import | Protocolo de import documentado en `docs/protocolo-evidencias.md` §3 |
+
+---
+
 ## Anti-patrones documentados
 
 | Anti-patrón | Descripción | Consecuencia |
@@ -260,5 +310,7 @@ Todo flujo del micro-framework debe registrar al menos los siguientes eventos:
 
 ### Resultado de notificación (E4)
 ```json
-{ "run_id": "...", "etapa": "E4_notificacion", "status": "ok|skip", "notificacion_enviada": true, "nivel": "critico", "e4_end": "..." }
+{ "run_id": "...", "etapa": "E4_notificacion", "status": "ok|skip", "notificacion_enviada": true, "nivel": "critico", "e4_start": "...", "e4_end": "...", "duracion_ms": 38 }
 ```
+
+> **REC-005:** Incluir `sensor_id` (IoT) o `user_id` (Bot) en los logs de E1 y E2 para poder filtrar por entidad sin parsear el `run_id` o el `idempotency_key`.

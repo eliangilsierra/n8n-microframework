@@ -1,8 +1,8 @@
 # Matriz de trazabilidad — Caso IoT
 
-**Versión:** 1.3
-**Fecha:** 2026-05-01
-**Estado:** Actualizada con ADR-005..008 y escenarios ATAM IOT-Q1..Q6 — pendiente evidencia FASE 6 para to-be.
+**Versión:** 1.4
+**Fecha:** 2026-05-03
+**Estado:** Actualizada post-validación arquitectónica FASE 4 — ADR-005/007/008 implementados, flujos corregidos.
 
 ---
 
@@ -10,7 +10,7 @@
 
 | ID | Requerimiento | Prioridad | Atributo ISO 25010 |
 |----|---------------|-----------|-------------------|
-| RF-IOT-01 | El sistema valida presencia de sensor_id, temperature, humidity, co2 | Alta | Fiabilidad / Madurez + Adecuación funcional / Corrección |
+| RF-IOT-01 | El sistema valida presencia de sensor_id, temperature, humidity, co2, **timestamp** | Alta | Fiabilidad / Madurez + Adecuación funcional / Corrección |
 | RF-IOT-02 | El sistema valida rangos físicamente posibles de cada variable | Alta | Adecuación funcional / Corrección |
 | RF-IOT-03 | El sistema normaliza los datos de entrada (redondeo) | Media | Mantenibilidad / Modularidad |
 | RF-IOT-04 | El sistema clasifica el nivel de alerta: normal, advertencia, crítico | Alta | Mantenibilidad / Modularidad + Adecuación funcional / Corrección |
@@ -54,6 +54,8 @@
 | Fiabilidad | IOT-Q4: lecturas no perdidas en fallo transitorio E3 | Retry REG-004 + error boundary | [ADR-004](../adr/ADR-004-routing-e4-por-severidad.md) |
 | Confiabilidad | IOT-Q5: críticos notificados antes que advertencias | Routing diferenciado E4 | [ADR-004](../adr/ADR-004-routing-e4-por-severidad.md) |
 | Seguridad | IOT-Q6: credenciales PG no en JSON exportado | Credenciales n8n por nombre | [ADR-001](../adr/ADR-001-separacion-responsabilidades-pipeline.md) |
+| Fiabilidad | Fallo de E3 no pierde lectura del sensor | Dead-letter en `lecturas_sensor_dead_letters` | [ADR-005](../adr/ADR-005-diseno-error-workflow.md) |
+| Trazabilidad | Timestamp en clave de idempotencia = timestamp del sensor | Drift ≤5 min validado en E1 | [ADR-007](../adr/ADR-007-timestamp-authority.md) |
 
 ---
 
@@ -83,14 +85,14 @@ de Input Sets).
 | ADR | Título | Estado |
 |-----|--------|--------|
 | [ADR-001](../adr/ADR-001-separacion-responsabilidades-pipeline.md) | Separación de responsabilidades del pipeline (E1–E4) | Aceptado |
-| [ADR-002](../adr/ADR-002-umbrales-y-vocabulario.md) | Umbrales del to-be y vocabulario `nivel` | Aceptado |
+| [ADR-002](../adr/ADR-002-umbrales-y-vocabulario.md) | Umbrales del to-be y vocabulario `nivel` | Implementado 2026-05-02 |
 | [ADR-003](../adr/ADR-003-idempotencia-sensor-timestamp.md) | Idempotencia con clave `{sensor_id, timestamp}` | Aceptado |
-| [ADR-004](../adr/ADR-004-routing-e4-por-severidad.md) | Routing diferenciado de E4 por severidad | Aceptado |
+| [ADR-004](../adr/ADR-004-routing-e4-por-severidad.md) | Routing diferenciado de E4 por severidad | Implementado 2026-05-02 |
 | [ADR-004 Bot](../../bot/adr/ADR-004-diseno-experimental-input-sets.md) | Diseño experimental (compartido) | Aceptado |
-| [ADR-005](../adr/ADR-005-diseno-error-workflow.md) | errorWorkflow con payload para replay de lecturas perdidas (REG-003, REG-006) | Aceptado |
-| [ADR-006](../adr/ADR-006-validacion-schema-e1.md) | Validación de schema en E1 con JavaScript inline y errores por campo | Aceptado |
-| [ADR-007](../adr/ADR-007-timestamp-authority.md) | Autoridad del timestamp: usar timestamp del sensor (REG-005) | Aceptado |
-| [ADR-008](../adr/ADR-008-normalizacion-e1.md) | Normalización de campos en E1 antes de pasar a dominio (REC-001, REG-005) | Aceptado |
+| [ADR-005](../adr/ADR-005-diseno-error-workflow.md) | errorWorkflow con payload para replay de lecturas perdidas (REG-003, REG-006) | Implementado 2026-05-02 |
+| [ADR-006](../adr/ADR-006-validacion-schema-e1.md) | Validación de schema en E1 con JavaScript inline y errores por campo | Implementado 2026-05-02 |
+| [ADR-007](../adr/ADR-007-timestamp-authority.md) | Autoridad del timestamp: usar timestamp del sensor (REG-005) | Implementado 2026-05-02 |
+| [ADR-008](../adr/ADR-008-normalizacion-e1.md) | Normalización de campos en E1 antes de pasar a dominio (REC-001, REG-005) | Implementado 2026-05-02 |
 
 ---
 

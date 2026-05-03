@@ -70,6 +70,21 @@ Verificar que la tabla fue creada:
 docker compose exec postgres psql -U n8n_user -d sensores_db -c "\d lecturas_sensor"
 ```
 
+**Nota:** El script `automatizacion/setup_env.py` crea ambas tablas automáticamente.
+Si se ejecuta manualmente, crear también la tabla dead-letter del IoT error handler (ADR-005):
+
+```bash
+docker compose exec postgres psql -U n8n_user -d sensores_db -c "
+CREATE TABLE IF NOT EXISTS lecturas_sensor_dead_letters (
+  id               SERIAL PRIMARY KEY,
+  run_id           VARCHAR(100),
+  payload_original JSONB,
+  error_message    TEXT,
+  node_name        VARCHAR(200),
+  ts               TIMESTAMPTZ DEFAULT NOW()
+);"
+```
+
 ---
 
 ## 3. Importar flujos en n8n
@@ -86,12 +101,13 @@ de los subflujos para configurar los nodos Execute Workflow.
 4. `microframework/plantillas/bot-as-is.json`
 
 **Caso IoT (orden de import):**
-1. `microframework/plantillas/iot-to-be-e1-validacion.json`
-2. `microframework/plantillas/iot-to-be-e2-dominio.json`
-3. `microframework/plantillas/iot-to-be-e3-persistencia.json`
-4. `microframework/plantillas/iot-to-be-e4-notificacion.json`
-5. `microframework/plantillas/iot-to-be-orquestador.json`
-6. `microframework/plantillas/iot-as-is.json`
+1. `casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json`
+2. `casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json`
+3. `casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json`
+4. `casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json`
+5. `casos-de-estudio/iot/to-be/iot-error-handler.json`  ← **nuevo: ADR-005**
+6. `casos-de-estudio/iot/to-be/iot-to-be-orquestador.json`
+7. `casos-de-estudio/iot/as-is/iot-as-is.json`
 
 ### Procedimiento de import en n8n UI
 
@@ -426,3 +442,24 @@ El delay se configura por set en `DELAY_STRATEGY` (ver `automatizacion/run_corri
 Fórmula set I: `delay_i = 0.300 - (0.250 × i / 199)`
 
 Ver ADR-004 para la justificación completa.
+
+---
+
+## §12 Rangos físicos canónicos de validación (IoT)
+
+Resolución de inconsistencia detectada en FASE 4 (2026-05-03). Fuente normativa: ADR-006 IoT.
+
+| Variable | Mínimo | Máximo | Unidad | Norma de referencia |
+|----------|--------|--------|--------|-------------------|
+| temperature | -50 | 125 | °C | IEC 60068-2-2 (sensores NTC/PT100) |
+| humidity | 0 | 100 | % | — |
+| co2 | 0 | 5000 | ppm | — |
+
+Estos valores aplican a la **validación de rango físico** en E1 (rechazar lo imposible).
+Son distintos de los **umbrales de alerta** definidos en ADR-002 / constante `UMBRALES` de E2.
+
+| Variable | Umbral advertencia | Umbral crítico | Norma |
+|----------|--------------------|----------------|-------|
+| temperature | > 35°C | > 45°C | ISO 7730 |
+| humidity | > 80% | > 95% | ISO 7730 |
+| co2 | > 800 ppm | > 1200 ppm | ASHRAE 62.1 |
