@@ -1,7 +1,7 @@
 # ADR-008 — Normalización de campos en E1 antes de pasar a dominio
 
 **Fecha:** 2026-05-01
-**Estado:** Aceptado
+**Estado:** Implementado 2026-05-02
 **Atributo de calidad:** Fiabilidad / Madurez + Mantenibilidad / Modularidad (ISO/IEC 25010)
 **Reglas relacionadas:** REC-001, REG-005
 **ADR relacionado:** ADR-007 IoT (timestamp authority)

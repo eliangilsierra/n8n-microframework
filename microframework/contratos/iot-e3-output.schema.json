@@ -3,27 +3,29 @@
   "$id": "iot-e3-output.schema.json",
   "title": "IoT — salida de E3 (persistencia en Postgres)",
   "type": "object",
-  "required": ["run_id", "persistencia", "idempotency_key", "e3_start", "e3_end"],
+  "required": ["run_id", "persistencia"],
   "properties": {
     "run_id": { "type": "string" },
-    "idempotency_key": {
-      "type": "string",
-      "description": "Formato: {sensor_id}-{timestamp ISO}"
-    },
+    "registro_id": { "type": ["integer", "null"] },
     "persistencia": {
       "type": "object",
-      "required": ["status", "registro_id"],
+      "required": ["status", "idempotency_key", "e3_start", "e3_end", "duracion_ms"],
       "properties": {
         "status": {
           "type": "string",
           "enum": ["creado", "duplicado_omitido", "fallido"]
         },
-        "registro_id": { "type": ["string", "integer", "null"] }
+        "registro_id": { "type": ["integer", "null"] },
+        "idempotency_key": {
+          "type": "string",
+          "description": "Formato: {sensor_id}-{timestamp ISO}"
+        },
+        "e3_start": { "type": "string", "format": "date-time" },
+        "e3_end": { "type": "string", "format": "date-time" },
+        "duracion_ms": { "type": "number" }
       }
     },
-    "reintentos": { "type": "integer", "minimum": 0 },
-    "analisis": { "type": "object" },
-    "e3_start": { "type": "string", "format": "date-time" },
-    "e3_end": { "type": "string", "format": "date-time" }
+    "lectura": { "type": "object" },
+    "analisis": { "type": "object" }
   }
 }

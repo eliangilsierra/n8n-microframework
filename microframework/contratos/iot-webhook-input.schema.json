@@ -13,8 +13,8 @@
     "temperature": {
       "type": "number",
       "minimum": -50,
-      "maximum": 150,
-      "description": "Temperatura en grados Celsius"
+      "maximum": 125,
+      "description": "Temperatura en grados Celsius (rango canónico IEC 60068-2-2: -50 a 125°C)"
     },
     "humidity": {
       "type": "number",

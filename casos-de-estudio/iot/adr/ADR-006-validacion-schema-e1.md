@@ -1,7 +1,7 @@
 # ADR-006 — Validación de schema en E1: JavaScript inline con errores por campo
 
 **Fecha:** 2026-05-01
-**Estado:** Aceptado
+**Estado:** Implementado 2026-05-02
 **Atributo de calidad:** Adecuación funcional / Corrección + Mantenibilidad / Modularidad (ISO/IEC 25010)
 **Reglas relacionadas:** REG-009, E1 metamodelo
 **Escenario ATAM:** IOT-Q2 relacionado (validación como precondición de HTTP codes correctos)
@@ -53,9 +53,20 @@ if (!Number.isInteger(payload.co2)) errores.push('co2 debe ser entero');
 
 ### Nivel 3 — Rangos físicamente posibles
 
+Rangos canónicos (resolución de inconsistencia detectada 2026-05-02):
+- `temperature`: `-50` a `125°C` (mín. ampliado a -50 para cubrir aplicaciones de frío;
+  máx. 125°C según IEC 60068 para sensores de estado sólido)
+- `humidity`: `0–100%`
+- `co2`: `0–5000 ppm`
+
+El ADR original especificaba -40/125°C. La implementación E1 usaba -50/100°C. El schema
+`iot-webhook-input.schema.json` usaba -50/150°C. Valor canónico adoptado: **-50/125°C**,
+alineando E1, schema del webhook y este ADR. El valor 125°C es el límite operativo de
+sensores de temperatura tipo NTC/PT100 (IEC 60068-2-2).
+
 ```javascript
 const RANGOS = {
-  temperature: { min: -40, max: 125, unidad: '°C' },
+  temperature: { min: -50, max: 125, unidad: '°C' },
   humidity:    { min: 0,   max: 100, unidad: '%'  },
   co2:         { min: 0,   max: 5000, unidad: 'ppm' }
 };

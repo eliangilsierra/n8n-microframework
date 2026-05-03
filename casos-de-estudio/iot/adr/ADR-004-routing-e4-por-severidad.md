@@ -1,6 +1,6 @@
 # ADR-004: Routing diferenciado de E4 por severidad del evento
 
-**Estado:** Aceptado
+**Estado:** Aceptado — Implementado 2026-05-02
 **Fecha:** 2026-04-21
 **Caso:** iot
 **Atributo de calidad afectado:** Adecuación funcional, Confiabilidad, Mantenibilidad
@@ -120,8 +120,23 @@ para que el orquestador pueda registrar métricas diferenciadas por canal.
   rama; un cambio de política en críticos no se refleja automáticamente en advertencias.
   Mitigación: las políticas viven como constantes con nombre al inicio de E4
   (`RETRY_URGENT`, `RETRY_NORMAL`) siguiendo REC-001.
+- **Limitación de plataforma (documentada 2026-05-02):** n8n no soporta backoff
+  exponencial nativo en nodos HTTP Request — el campo `waitBetweenTries` es un intervalo
+  plano en milisegundos. La especificación "backoff exponencial base 200ms/500ms" no es
+  implementable con primitivas nativas de n8n v2.x. La implementación usa intervalos
+  planos de 2000ms (crítico) y 1000ms (advertencia), que en el entorno de laboratorio
+  son adecuados dado que el mock-server responde en <50ms. En producción se recomendaría
+  implementar backoff via Code node + loop explícito, o delegar retry a un API Gateway.
+- **Desviación de valores (documentada 2026-05-02):** los valores implementados en
+  `iot-to-be-e4-notificacion.json` son `maxRetries: 3 / waitBetweenTries: 2000ms`
+  (crítico) y `maxRetries: 2 / waitBetweenTries: 1000ms` (advertencia), en lugar de los
+  5/200ms y 3/500ms originales del ADR. Motivo: el n8n nativo no soporta backoff
+  exponencial; los valores se ajustaron para el entorno de laboratorio minimizando el
+  tiempo total de espera en errores transitorios. Los valores del ADR original son la
+  referencia de diseño para producción.
 - El mock-server de pruebas (`mock-iot-notify`) debe exponer los dos endpoints
-  diferenciados. Mitigación: costo único en infraestructura de pruebas, ya absorbido.
+  diferenciados (`/notificaciones/critico` y `/notificaciones/advertencia`).
+  Mitigación: costo único en infraestructura de pruebas, ya absorbido.
 - El orquestador debe decidir si invocar E4 (nivel ≠ normal) antes de delegar — esto
   es una pequeña decisión de dominio que queda en E2, no en E4. Documentado en
   ADR-001 IoT.

@@ -1,7 +1,7 @@
 # ADR-007 — Autoridad del timestamp: usar timestamp del sensor (cliente)
 
 **Fecha:** 2026-05-01
-**Estado:** Aceptado
+**Estado:** Implementado 2026-05-02
 **Atributo de calidad:** Fiabilidad / Madurez (ISO/IEC 25010)
 **Reglas relacionadas:** REG-005, ADR-003 IoT (idempotencia sensor-timestamp)
 **Escenario ATAM:** IOT-Q3 (reenvío de misma lectura → 0 duplicados)

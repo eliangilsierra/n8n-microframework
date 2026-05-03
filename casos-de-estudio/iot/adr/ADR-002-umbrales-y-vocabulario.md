@@ -1,6 +1,6 @@
 # ADR-002: Umbrales de dominio del to-be y vocabulario oficial del campo `nivel`
 
-**Estado:** Aceptado
+**Estado:** Aceptado — Implementado 2026-05-02
 **Fecha:** 2026-04-21
 **Caso:** iot
 **Atributo de calidad afectado:** Adecuación funcional, Mantenibilidad, Trazabilidad
@@ -111,6 +111,12 @@ con nombre).
   schemas (2 archivos), no en los flujos (0 archivos).
 - REG-007 y REC-001 satisfechas simultáneamente por el patrón "constante `UMBRALES`"
   del subflujo E2.
+- **Corrección aplicada (2026-05-02):** la implementación inicial de `iot-to-be-e2-dominio.json`
+  usó incorrectamente `'warning'` (inglés) en lugar de `'advertencia'` para el nivel
+  intermedio, y valores CO2 1000/2000 en lugar de los 800/1200 del ADR. Ambas
+  discrepancias se corrigieron alineando la implementación con este ADR. El validador
+  estático no detectó la desviación de vocabulario; se añadió lint específico al
+  `validar-flujos.mjs` (ver commit `[FASE-4] feat: validar-flujos — lint vocabulario`).
 
 **Negativas / trade-offs:**
 - Comparar el campo `nivel` entre versiones requiere normalización en el script de

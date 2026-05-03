@@ -1,7 +1,7 @@
 # ADR-005 — Diseño del errorWorkflow del IoT con payload para replay (iot-error-handler)
 
 **Fecha:** 2026-05-01
-**Estado:** Aceptado
+**Estado:** Implementado 2026-05-02
 **Atributo de calidad:** Fiabilidad / Tolerancia a fallos + Operabilidad / Monitoreabilidad (ISO/IEC 25010)
 **Reglas relacionadas:** REG-003, REG-006
 **ADR de framework:** ADR-MF-002
@@ -110,3 +110,25 @@ HTTP 500 Internal Server Error
 1. `settings.errorWorkflow` del orquestador IoT → no vacío (REG-003)
 2. Simular fallo de E3 (detener Postgres) + enviar lectura válida → log con `"status":"error"` + `"payload_original":{...}` (REG-006)
 3. Input Set válido con Postgres detenido → lectura en `dead_letters` después de reactivar Postgres
+
+---
+
+## Implementación (2026-05-02)
+
+- **Archivo:** `casos-de-estudio/iot/to-be/iot-error-handler.json`
+- **Estructura implementada:** Error Trigger → Code (log + payload_original) → HTTP POST mock-iot (retry 2×) → Postgres dead-letter INSERT
+- **Tabla dead-letter:** `lecturas_sensor_dead_letters` creada en `automatizacion/setup_env.py` → `create_table()`
+- **Schema tabla:**
+  ```sql
+  CREATE TABLE IF NOT EXISTS lecturas_sensor_dead_letters (
+    id               SERIAL PRIMARY KEY,
+    run_id           VARCHAR(100),
+    payload_original JSONB,
+    error_message    TEXT,
+    node_name        VARCHAR(200),
+    ts               TIMESTAMPTZ DEFAULT NOW()
+  );
+  ```
+- **Nota:** La implementación no incluye nodo Respond 500 (los errorWorkflows de n8n no
+  pueden responder al cliente original — el webhook ya terminó). El respond 500 está
+  documentado en la spec pero n8n no lo soporta nativamente desde el error handler.
