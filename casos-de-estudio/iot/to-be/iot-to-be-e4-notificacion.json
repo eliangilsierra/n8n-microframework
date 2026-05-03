@@ -11,6 +11,16 @@
     },
     {
       "parameters": {
+        "jsCode": "const input = $input.item.json;\nconst e4_start = new Date().toISOString();\nreturn [{ json: { ...input, e4_start } }];"
+      },
+      "id": "code-e4-start",
+      "name": "E4 - Capturar inicio etapa",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
         "conditions": {
           "options": { "caseSensitive": false, "leftValue": "", "typeValidation": "strict" },
           "conditions": [
@@ -28,7 +38,7 @@
       "name": "IF - Requiere notificacion?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [460, 300]
+      "position": [680, 300]
     },
     {
       "parameters": {
@@ -49,7 +59,7 @@
       "name": "IF - Nivel critico?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [680, 200]
+      "position": [900, 200]
     },
     {
       "parameters": {
@@ -68,52 +78,53 @@
       "name": "HTTP - Notificar canal CRITICO (con retry)",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [900, 120],
+      "position": [1120, 120],
       "credentials": { "httpHeaderAuth": { "id": "notificacion-api-credential", "name": "Notificacion API Key" } }
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "http://host.docker.internal:3002/notificaciones/warning",
+        "url": "http://host.docker.internal:3002/notificaciones/advertencia",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"run_id\": \"{{ $json.run_id }}\",\n  \"sensor_id\": \"{{ $json.lectura.sensor_id }}\",\n  \"nivel\": \"{{ $json.analisis.nivel }}\",\n  \"anomalias\": {{ JSON.stringify($json.analisis.anomalias) }},\n  \"timestamp\": \"{{ $json.lectura.timestamp }}\",\n  \"canal\": \"warning\"\n}",
+        "jsonBody": "={\n  \"run_id\": \"{{ $json.run_id }}\",\n  \"sensor_id\": \"{{ $json.lectura.sensor_id }}\",\n  \"nivel\": \"{{ $json.analisis.nivel }}\",\n  \"anomalias\": {{ JSON.stringify($json.analisis.anomalias) }},\n  \"timestamp\": \"{{ $json.lectura.timestamp }}\",\n  \"canal\": \"advertencia\"\n}",
         "options": {
           "retry": { "enabled": true, "maxRetries": 2, "waitBetweenTries": 1000 }
         }
       },
-      "id": "http-warning",
-      "name": "HTTP - Notificar canal WARNING (con retry)",
+      "id": "http-advertencia",
+      "name": "HTTP - Notificar canal ADVERTENCIA (con retry)",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [900, 300],
+      "position": [1120, 300],
       "credentials": { "httpHeaderAuth": { "id": "notificacion-api-credential", "name": "Notificacion API Key" } }
     },
     {
       "parameters": {
-        "jsCode": "const input = $input.item.json;\nconst e4_end = new Date().toISOString();\nconsole.log(JSON.stringify({\n  run_id: input.run_id || $('Execute Workflow Trigger').item.json.run_id,\n  etapa: 'E4_notificacion_iot',\n  status: 'ok',\n  nivel: input.analisis ? input.analisis.nivel : 'normal',\n  notificacion_enviada: true,\n  e4_end\n}));\nreturn [{ json: { ...input, e4_end, notificacion_enviada: true } }];"
+        "jsCode": "const input = $input.item.json;\nconst e4_end = new Date().toISOString();\nconst duracion_ms = new Date(e4_end) - new Date(input.e4_start);\nconsole.log(JSON.stringify({\n  run_id: input.run_id,\n  etapa: 'E4_notificacion_iot',\n  status: 'ok',\n  nivel: input.analisis ? input.analisis.nivel : null,\n  notificacion_enviada: true,\n  e4_start: input.e4_start, e4_end, duracion_ms\n}));\nreturn [{ json: { ...input, e4_end, duracion_ms, notificacion_enviada: true } }];"
       },
       "id": "code-log-e4-ok",
       "name": "E4 - Log notificacion enviada",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1120, 200]
+      "position": [1340, 200]
     },
     {
       "parameters": {
-        "jsCode": "const input = $input.item.json;\nconst e4_end = new Date().toISOString();\nconsole.log(JSON.stringify({\n  run_id: input.run_id,\n  etapa: 'E4_notificacion_iot',\n  status: 'skip',\n  nivel: 'normal',\n  notificacion_enviada: false,\n  e4_end\n}));\nreturn [{ json: { ...input, e4_end, notificacion_enviada: false } }];"
+        "jsCode": "const input = $input.item.json;\nconst e4_end = new Date().toISOString();\nconst duracion_ms = new Date(e4_end) - new Date(input.e4_start);\nconsole.log(JSON.stringify({\n  run_id: input.run_id,\n  etapa: 'E4_notificacion_iot',\n  status: 'skip',\n  nivel: 'normal',\n  notificacion_enviada: false,\n  e4_start: input.e4_start, e4_end, duracion_ms\n}));\nreturn [{ json: { ...input, e4_end, duracion_ms, notificacion_enviada: false } }];"
       },
       "id": "code-log-e4-skip",
       "name": "E4 - Log sin notificacion (normal)",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [680, 420]
+      "position": [900, 420]
     }
   ],
   "connections": {
-    "Execute Workflow Trigger": { "main": [[{ "node": "IF - Requiere notificacion?", "type": "main", "index": 0 }]] },
+    "Execute Workflow Trigger": { "main": [[{ "node": "E4 - Capturar inicio etapa", "type": "main", "index": 0 }]] },
+    "E4 - Capturar inicio etapa": { "main": [[{ "node": "IF - Requiere notificacion?", "type": "main", "index": 0 }]] },
     "IF - Requiere notificacion?": {
       "main": [
         [{ "node": "IF - Nivel critico?", "type": "main", "index": 0 }],
@@ -123,11 +134,11 @@
     "IF - Nivel critico?": {
       "main": [
         [{ "node": "HTTP - Notificar canal CRITICO (con retry)", "type": "main", "index": 0 }],
-        [{ "node": "HTTP - Notificar canal WARNING (con retry)", "type": "main", "index": 0 }]
+        [{ "node": "HTTP - Notificar canal ADVERTENCIA (con retry)", "type": "main", "index": 0 }]
       ]
     },
     "HTTP - Notificar canal CRITICO (con retry)": { "main": [[{ "node": "E4 - Log notificacion enviada", "type": "main", "index": 0 }]] },
-    "HTTP - Notificar canal WARNING (con retry)": { "main": [[{ "node": "E4 - Log notificacion enviada", "type": "main", "index": 0 }]] }
+    "HTTP - Notificar canal ADVERTENCIA (con retry)": { "main": [[{ "node": "E4 - Log notificacion enviada", "type": "main", "index": 0 }]] }
   },
   "settings": { "executionOrder": "v1", "callerPolicy": "workflowsFromSameOwner" },
   "meta": { "templateId": "mgads-iot-e4-notificacion-v1", "instanceId": "local" },
