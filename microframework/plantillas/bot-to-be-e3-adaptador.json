@@ -49,7 +49,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const input = $('E3 - Preparar payload adaptador').item.json;\nconst httpResponse = $input.item.json;\nconst e3_end = new Date().toISOString();\nconst duracion_ms = new Date(e3_end) - new Date(input.e3_start);\n\nconsole.log(JSON.stringify({\n  run_id: input.run_id,\n  etapa: 'E3_adaptador',\n  status: 'ok',\n  idempotency_key: input.idempotency_key,\n  ticket_id: httpResponse.id || null,\n  e3_start: input.e3_start,\n  e3_end,\n  duracion_ms\n}));\n\nreturn [{\n  json: {\n    run_id: input.run_id,\n    start_ts: input.start_ts,\n    categoria: input.categoria,\n    prioridad: input.prioridad,\n    respuesta: input.respuesta,\n    ticket_id: httpResponse.id || null,\n    payload: input.payload\n  }\n}];"
+        "jsCode": "// Acceso por nombre de nodo — patrón estándar n8n para datos de nodos no-adyacentes\n// Si se renombra el nodo preparar, actualizar esta referencia\nconst input = $node[\"E3 - Preparar payload adaptador\"].json;\nconst httpResponse = $input.item.json;\nconst e3_end = new Date().toISOString();\nconst duracion_ms = new Date(e3_end) - new Date(input.e3_start);\n\nconsole.log(JSON.stringify({\n  run_id: input.run_id,\n  etapa: 'E3_adaptador',\n  status: 'ok',\n  idempotency_key: input.idempotency_key,\n  ticket_id: httpResponse.id || null,\n  e3_start: input.e3_start,\n  e3_end,\n  duracion_ms\n}));\n\nreturn [{\n  json: {\n    run_id: input.run_id,\n    start_ts: input.start_ts,\n    categoria: input.categoria,\n    prioridad: input.prioridad,\n    respuesta: input.respuesta,\n    ticket_id: httpResponse.id || null,\n    payload: input.payload\n  }\n}];"
       },
       "id": "code-log-e3",
       "name": "E3 - Log salida adaptador",
