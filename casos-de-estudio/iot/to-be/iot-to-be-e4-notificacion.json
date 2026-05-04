@@ -103,7 +103,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const input = $input.item.json;\nconst e4_end = new Date().toISOString();\nconst duracion_ms = new Date(e4_end) - new Date(input.e4_start);\nconsole.log(JSON.stringify({\n  run_id: input.run_id,\n  etapa: 'E4_notificacion_iot',\n  status: 'ok',\n  nivel: input.analisis ? input.analisis.nivel : null,\n  notificacion_enviada: true,\n  e4_start: input.e4_start, e4_end, duracion_ms\n}));\nreturn [{ json: { ...input, e4_end, duracion_ms, notificacion_enviada: true } }];"
+        "jsCode": "// Usar datos del nodo anterior al HTTP para recuperar el contexto original.\n// $input.item.json tras un nodo HTTP es la respuesta del servidor externo, no\n// los datos del pipeline — limitacion de plataforma n8n v1.x (documentada en spec).\nconst input = $('E4 - Capturar inicio etapa').item.json;\nconst e4_end = new Date().toISOString();\nconst duracion_ms = new Date(e4_end) - new Date(input.e4_start);\nconsole.log(JSON.stringify({\n  run_id: input.run_id,\n  etapa: 'E4_notificacion_iot',\n  status: 'ok',\n  sensor_id: input.lectura ? input.lectura.sensor_id : null,\n  nivel: input.analisis ? input.analisis.nivel : null,\n  notificacion_enviada: true,\n  e4_start: input.e4_start, e4_end, duracion_ms\n}));\nreturn [{ json: { ...input, e4_end, duracion_ms, notificacion_enviada: true } }];"
       },
       "id": "code-log-e4-ok",
       "name": "E4 - Log notificacion enviada",
