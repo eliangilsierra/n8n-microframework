@@ -8,133 +8,253 @@
         "responseMode": "responseNode",
         "options": {}
       },
-      "id": "webhook-sensor",
+      "id": "4adfb24b-1199-4b5d-bb1f-0a4bf26e62c0",
       "name": "Webhook - Ingesta sensor",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
-      "position": [240, 300],
+      "position": [
+        -656,
+        112
+      ],
       "webhookId": "iot-to-be-001"
     },
     {
       "parameters": {
-        "workflowId": "REEMPLAZAR_CON_ID_E1"
+        "workflowId": "ZV8ZvHeupkqKD0u6",
+        "options": {}
       },
-      "id": "exec-e1",
+      "id": "e10dd87a-dfe5-44f0-a953-f4f23413f4c5",
       "name": "Execute - E1 Validacion entrada",
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
-      "position": [460, 300]
+      "position": [
+        -448,
+        112
+      ]
     },
     {
       "parameters": {
         "conditions": {
-          "options": { "caseSensitive": false, "leftValue": "", "typeValidation": "strict" },
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
           "conditions": [
             {
               "id": "check-valido",
               "leftValue": "={{ $json.valido }}",
               "rightValue": true,
-              "operator": { "type": "boolean", "operation": "equals" }
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
             }
           ],
           "combinator": "and"
-        }
+        },
+        "options": {}
       },
-      "id": "if-valido",
+      "id": "cd5e733a-eb1e-4651-b1ee-0e040717c6b4",
       "name": "IF - Lectura valida?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [680, 300]
+      "position": [
+        -224,
+        112
+      ]
     },
     {
       "parameters": {
         "respondWith": "json",
         "responseBody": "={\n  \"ok\": false,\n  \"run_id\": \"{{ $json.run_id }}\",\n  \"errores\": {{ JSON.stringify($json.errores) }}\n}",
-        "options": { "responseCode": 422 }
+        "options": {
+          "responseCode": 422
+        }
       },
-      "id": "respond-422",
+      "id": "b41ba74e-f8b9-4502-9668-96edc2f137de",
       "name": "Respond - Datos invalidos (422)",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [900, 440]
+      "position": [
+        0,
+        240
+      ]
     },
     {
       "parameters": {
-        "workflowId": "REEMPLAZAR_CON_ID_E2"
+        "workflowId": "stOkVjwANm9n6CSQ",
+        "options": {}
       },
-      "id": "exec-e2",
+      "id": "39c5d76c-1738-4635-8f7d-71d0bc82cc69",
       "name": "Execute - E2 Dominio y umbrales",
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
-      "position": [900, 200]
+      "position": [
+        0,
+        0
+      ]
     },
     {
       "parameters": {
-        "workflowId": "REEMPLAZAR_CON_ID_E3"
+        "workflowId": "HqIO8HSWGr7SkcEs",
+        "options": {}
       },
-      "id": "exec-e3",
+      "id": "dc9a1684-7c05-4987-8bf8-1aae82f9cfca",
       "name": "Execute - E3 Persistencia",
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
-      "position": [1120, 200]
+      "position": [
+        224,
+        0
+      ]
     },
     {
       "parameters": {
-        "workflowId": "REEMPLAZAR_CON_ID_E4"
+        "workflowId": "JAjlBYfOsuzbzQmR",
+        "options": {}
       },
-      "id": "exec-e4",
+      "id": "8c3a2b1c-d39d-465d-867c-980fc57bc100",
       "name": "Execute - E4 Notificacion",
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
-      "position": [1340, 200]
+      "position": [
+        448,
+        0
+      ]
     },
     {
       "parameters": {
         "respondWith": "json",
         "responseBody": "={\n  \"ok\": true,\n  \"run_id\": \"{{ $json.run_id }}\",\n  \"sensor_id\": \"{{ $json.lectura.sensor_id }}\",\n  \"nivel_alerta\": \"{{ $json.analisis.nivel }}\"\n}",
-        "options": { "responseCode": 200 }
+        "options": {
+          "responseCode": 200
+        }
       },
-      "id": "respond-200",
+      "id": "8bc32a4d-1704-4858-bfb6-a74ec6249467",
       "name": "Respond - OK (200)",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [1560, 200]
+      "position": [
+        672,
+        0
+      ]
     }
   ],
+  "pinData": {},
   "connections": {
     "Webhook - Ingesta sensor": {
-      "main": [[{ "node": "Execute - E1 Validacion entrada", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Execute - E1 Validacion entrada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Execute - E1 Validacion entrada": {
-      "main": [[{ "node": "IF - Lectura valida?", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "IF - Lectura valida?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "IF - Lectura valida?": {
       "main": [
-        [{ "node": "Execute - E2 Dominio y umbrales", "type": "main", "index": 0 }],
-        [{ "node": "Respond - Datos invalidos (422)", "type": "main", "index": 0 }]
+        [
+          {
+            "node": "Execute - E2 Dominio y umbrales",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond - Datos invalidos (422)",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Execute - E2 Dominio y umbrales": {
-      "main": [[{ "node": "Execute - E3 Persistencia", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Execute - E3 Persistencia",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Execute - E3 Persistencia": {
-      "main": [[{ "node": "Execute - E4 Notificacion", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Execute - E4 Notificacion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Execute - E4 Notificacion": {
-      "main": [[{ "node": "Respond - OK (200)", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Respond - OK (200)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
+  "active": true,
   "settings": {
     "executionOrder": "v1",
-    "errorWorkflow": "iot-error-handler",
-    "saveDataErrorExecution": "all",
-    "saveDataSuccessExecution": "all",
-    "saveExecutionProgress": true,
-    "callerPolicy": "workflowsFromSameOwner"
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "errorWorkflow": "4GF3XKH6qZRw4i6M",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
   },
-  "staticData": null,
-  "meta": { "templateId": "mgads-iot-to-be-orquestador-v1", "instanceId": "local" },
-  "tags": [{ "name": "to-be" }, { "name": "iot" }, { "name": "mgads" }, { "name": "orquestador" }],
-  "versionId": "1.1.0",
-  "id": "iot-to-be-orquestador"
+  "versionId": "4e98d0a3-44b9-4c99-a539-7bf8051679e0",
+  "meta": {
+    "instanceId": "6bffcee06a1f4cce3b0b97f6785c5cc4ee04361086988f2491e602e876065cf7"
+  },
+  "id": "eoPxs25Meqg63bZo",
+  "tags": [
+    {
+      "updatedAt": "2026-05-02T20:51:01.796Z",
+      "createdAt": "2026-05-02T20:51:01.796Z",
+      "id": "TsK4zmuoIzxhjC8j",
+      "name": "to-be"
+    },
+    {
+      "updatedAt": "2026-04-20T03:32:51.589Z",
+      "createdAt": "2026-04-20T03:32:51.589Z",
+      "id": "NxEq7XoK4Uw0LArT",
+      "name": "iot"
+    },
+    {
+      "updatedAt": "2026-04-20T03:32:06.061Z",
+      "createdAt": "2026-04-20T03:32:06.061Z",
+      "id": "Ltx10swFFL9YbW2n",
+      "name": "mgads"
+    },
+    {
+      "updatedAt": "2026-05-02T21:02:37.298Z",
+      "createdAt": "2026-05-02T21:02:37.298Z",
+      "id": "AB0IAnPCVgGRJBQv",
+      "name": "orquestador"
+    }
+  ]
 }
