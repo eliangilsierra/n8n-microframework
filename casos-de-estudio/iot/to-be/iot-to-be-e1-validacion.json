@@ -1,0 +1,33 @@
+{
+  "name": "IOT-TO-BE - E1 Validacion de entrada",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "input-trigger",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ETAPA 1 - Validacion de entrada IoT\nconst run_id = `RUN-IOT-${Date.now()}-${Math.random().toString(36).substr(2,6).toUpperCase()}`;\nconst start_ts = new Date().toISOString();\nconst body = $input.item.json.body || {};\n\nconst errores = [];\n\n// Nivel 1 - Campos obligatorios\nconst CAMPOS_REQUERIDOS = ['sensor_id', 'temperature', 'humidity', 'co2', 'timestamp'];\nfor (const campo of CAMPOS_REQUERIDOS) {\n  if (body[campo] === undefined || body[campo] === null || body[campo] === '') {\n    errores.push(`${campo}: campo requerido`);\n  }\n}\n\n// Nivel 2 - Tipos de dato\nif (body.sensor_id !== undefined && typeof body.sensor_id !== 'string') errores.push('sensor_id: debe ser string');\n\n// Nivel 3 - Rangos fisicamente posibles (ADR-006: -50 a 125°C, IEC 60068)\nconst temp = parseFloat(body.temperature);\nconst hum = parseFloat(body.humidity);\nconst co2 = parseFloat(body.co2);\n\nif (!isNaN(temp) && (temp < -50 || temp > 125)) errores.push(`temperature fuera de rango fisico: ${temp} (rango: -50 a 125°C)`);\nif (!isNaN(hum) && (hum < 0 || hum > 100)) errores.push(`humidity fuera de rango fisico: ${hum} (rango: 0-100%)`);\nif (!isNaN(co2) && (co2 < 0 || co2 > 5000)) errores.push(`co2 fuera de rango fisico: ${co2} (rango: 0-5000 ppm)`);\n\n// Validacion de drift de timestamp (ADR-007): maximo 5 min en el futuro\nif (body.timestamp) {\n  const sensorTime = new Date(body.timestamp);\n  if (isNaN(sensorTime.getTime())) {\n    errores.push('timestamp: formato no es fecha valida (se espera ISO 8601)');\n  } else {\n    const diffMs = sensorTime - new Date();\n    if (diffMs > 5 * 60 * 1000) {\n      errores.push(`timestamp en el futuro por ${Math.round(diffMs / 1000)}s (maximo permitido: 300s)`);\n    }\n  }\n}\n\nconst valido = errores.length === 0;\n\n// Normalizacion completa (ADR-008) — solo si valido\nconst lectura = valido ? {\n  sensor_id: body.sensor_id.trim(),\n  temperature: Math.round(temp * 10) / 10,\n  humidity: Math.round(hum * 10) / 10,\n  co2: Math.round(co2),\n  timestamp: new Date(body.timestamp).toISOString(),\n  location: body.location ? body.location.trim().toLowerCase() : null\n} : null;\n\nconsole.log(JSON.stringify({\n  run_id, etapa: 'E1_validacion_iot',\n  status: valido ? 'ok' : 'fail',\n  sensor_id: body.sensor_id || null,\n  errores, n_errores: errores.length, start_ts\n}));\n\nreturn [{ json: { run_id, start_ts, valido, errores, lectura } }];"
+      },
+      "id": "code-validacion",
+      "name": "E1 - Validar y normalizar lectura",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    }
+  ],
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [[{ "node": "E1 - Validar y normalizar lectura", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1", "callerPolicy": "workflowsFromSameOwner" },
+  "meta": { "templateId": "mgads-iot-e1-validacion-v1", "instanceId": "local" },
+  "tags": [{ "name": "to-be" }, { "name": "iot" }, { "name": "mgads" }, { "name": "subflujo" }],
+  "versionId": "1.0.0",
+  "id": "iot-e1-validacion"
+}

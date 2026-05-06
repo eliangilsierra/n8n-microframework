@@ -1,0 +1,56 @@
+{
+  "name": "IOT-TO-BE - E3 Adaptador de persistencia",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "input-trigger",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const { run_id, start_ts, lectura, analisis } = $input.item.json;\nconst e3_start = new Date().toISOString();\n// Clave de idempotencia para evitar duplicados en reintentos\nconst idempotency_key = `${lectura.sensor_id}-${lectura.timestamp}`;\nconsole.log(JSON.stringify({ run_id, etapa: 'E3_persistencia_iot', status: 'preparando', idempotency_key, e3_start }));\nreturn [{ json: { run_id, start_ts, e3_start, lectura, analisis, idempotency_key } }];"
+      },
+      "id": "code-preparar",
+      "name": "E3 - Preparar para persistencia",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO lecturas_sensor (idempotency_key, sensor_id, temperature, humidity, co2, timestamp, nivel_alerta, anomalias, run_id)\nVALUES (\n  '{{ $json.idempotency_key }}',\n  '{{ $json.lectura.sensor_id }}',\n  {{ $json.lectura.temperature }},\n  {{ $json.lectura.humidity }},\n  {{ $json.lectura.co2 }},\n  '{{ $json.lectura.timestamp }}',\n  '{{ $json.analisis.nivel }}',\n  '{{ JSON.stringify($json.analisis.anomalias) }}'::jsonb,\n  '{{ $json.run_id }}'\n)\nON CONFLICT (idempotency_key) DO NOTHING\nRETURNING id, idempotency_key",
+        "options": {}
+      },
+      "id": "postgres-upsert",
+      "name": "Postgres - Insertar con idempotencia",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [680, 300],
+      "credentials": { "postgres": { "id": "postgres-local", "name": "Postgres Local" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $('E3 - Preparar para persistencia').item.json;\nconst dbResult = $input.item.json;\nconst e3_end = new Date().toISOString();\nconst duracion_ms = new Date(e3_end) - new Date(input.e3_start);\n// ON CONFLICT DO NOTHING retorna 0 filas si ya existia — estado explicito para el contrato\nconst persistStatus = dbResult && dbResult.id ? 'creado' : 'duplicado_omitido';\nconsole.log(JSON.stringify({\n  run_id: input.run_id, etapa: 'E3_persistencia_iot',\n  status: persistStatus, idempotency_key: input.idempotency_key,\n  registro_id: dbResult.id || null,\n  e3_start: input.e3_start, e3_end, duracion_ms\n}));\nreturn [{ json: {\n  run_id: input.run_id,\n  start_ts: input.start_ts,\n  lectura: input.lectura,\n  analisis: input.analisis,\n  registro_id: dbResult.id || null,\n  persistencia: {\n    status: persistStatus,\n    registro_id: dbResult.id || null,\n    idempotency_key: input.idempotency_key,\n    e3_start: input.e3_start,\n    e3_end,\n    duracion_ms\n  }\n} }];"
+      },
+      "id": "code-log-e3",
+      "name": "E3 - Log salida persistencia",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300]
+    }
+  ],
+  "connections": {
+    "Execute Workflow Trigger": { "main": [[{ "node": "E3 - Preparar para persistencia", "type": "main", "index": 0 }]] },
+    "E3 - Preparar para persistencia": { "main": [[{ "node": "Postgres - Insertar con idempotencia", "type": "main", "index": 0 }]] },
+    "Postgres - Insertar con idempotencia": { "main": [[{ "node": "E3 - Log salida persistencia", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1", "callerPolicy": "workflowsFromSameOwner" },
+  "meta": { "templateId": "mgads-iot-e3-persistencia-v1", "instanceId": "local" },
+  "tags": [{ "name": "to-be" }, { "name": "iot" }, { "name": "mgads" }, { "name": "subflujo" }],
+  "versionId": "1.0.0",
+  "id": "iot-e3-persistencia"
+}

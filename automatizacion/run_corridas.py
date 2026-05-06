@@ -69,15 +69,27 @@ EXPECTED_HTTP: dict[tuple[str, str, str], int] = {
     ("bot", "to-be", "E"): 400,  # E1 rechaza user_id ausente
     ("iot", "as-is", "E"): 200,  # no valida co2 ausente — antipatron visible
     ("iot", "to-be", "E"): 422,  # E1 requiere co2
-    # Sets dinámicos F, G — la mayoría son valid inputs (éxito esperado)
+    # Set F — tráfico normal variable: todos los payloads son válidos → 200 esperado.
     ("bot", "as-is", "F"): 200,   ("bot", "to-be", "F"): 200,
     ("iot", "as-is", "F"): 200,   ("iot", "to-be", "F"): 200,
-    ("bot", "as-is", "G"): 200,   ("bot", "to-be", "G"): 200,  # mezcla: se analiza por payload
+    # Set G — mezcla industrial 70/15/10/5. EXPECTED_HTTP=200 es el denominador común,
+    # pero ~20 payloads de bot tienen token inválido:
+    #   - to-be: E1 los rechaza correctamente con HTTP 400/401 → ~20 runs status="fail".
+    #     Estos "fallos" son COMPORTAMIENTO CORRECTO del to-be, no defectos.
+    #   - as-is: token hardcodeado (REG-001) devuelve 401 → ~20 runs status="fail" también.
+    # Los ~20 fails de Set G en ambas versiones son evidencia de validación E1 activa.
+    # La conformidad semántica de G se evalúa en analizar_runlogs.py §8, no aquí.
+    ("bot", "as-is", "G"): 200,   ("bot", "to-be", "G"): 200,
     ("iot", "as-is", "G"): 200,   ("iot", "to-be", "G"): 200,
     # Set I — degradación: todos válidos estructuralmente, esperado 200
     ("bot", "as-is", "I"): 200,   ("bot", "to-be", "I"): 200,
     ("iot", "as-is", "I"): 200,   ("iot", "to-be", "I"): 200,
-    # Set J — percentiles extremos: válidos semánticamente
+    # Set J — percentiles extremos p1/p99.
+    # bot/as-is: sin validación de longitud → acepta todos → 200.
+    # bot/to-be: E1 rechaza los 100 payloads con message > 1000 chars con HTTP 400.
+    #   EXPECTED_HTTP=200 hace que esos 100 runs aparezcan como "fail" en el run-log.
+    #   Comportamiento CORRECTO del to-be. Conformidad semántica evaluada en §8.
+    # iot: todos los payloads tienen valores dentro de rangos físicos → 200.
     ("bot", "as-is", "J"): 200,   ("bot", "to-be", "J"): 200,
     ("iot", "as-is", "J"): 200,   ("iot", "to-be", "J"): 200,
     # Set K — duplicados: el expected es 200 (el rechazo se mide en BD, no en HTTP)

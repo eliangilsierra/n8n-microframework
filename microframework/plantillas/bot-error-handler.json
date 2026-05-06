@@ -1,0 +1,66 @@
+{
+  "name": "BOT - Error Handler",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "error-trigger",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Error Handler — recibe contexto del error del workflow orquestador\n// REG-003: workflow de error configurado en settings.errorWorkflow\nconst ctx = $input.item.json;\n\nconst log = {\n  run_id: ctx.workflow?.runId || ctx.execution?.id || 'unknown',\n  etapa: 'ERROR_HANDLER',\n  status: 'error',\n  workflow_name: ctx.workflow?.name || 'bot-to-be-orquestador',\n  node_name: ctx.execution?.lastNodeExecuted || 'unknown',\n  error_message: ctx.error?.message || 'Error desconocido',\n  error_stack: ctx.error?.stack ? ctx.error.stack.split('\\n')[0] : null,\n  ts: new Date().toISOString()\n};\n\nconsole.log(JSON.stringify(log));\n\nreturn [{ json: log }];"
+      },
+      "id": "code-log-error",
+      "name": "Code - Log error estructurado",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:3001/api/errors",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "retry": { "enabled": true, "maxRetries": 1, "waitBetweenTries": 1000 },
+          "response": { "response": { "neverError": true } }
+        }
+      },
+      "id": "http-notify-error",
+      "name": "HTTP - Notificar error (mock)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300]
+    }
+  ],
+  "connections": {
+    "Error Trigger": {
+      "main": [[{ "node": "Code - Log error estructurado", "type": "main", "index": 0 }]]
+    },
+    "Code - Log error estructurado": {
+      "main": [[{ "node": "HTTP - Notificar error (mock)", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "callerPolicy": "any"
+  },
+  "staticData": null,
+  "meta": { "templateId": "mgads-bot-error-handler-v1", "instanceId": "local" },
+  "tags": [{ "name": "to-be" }, { "name": "bot" }, { "name": "mgads" }, { "name": "error-handler" }],
+  "versionId": "1.0.0",
+  "id": "bot-error-handler"
+}

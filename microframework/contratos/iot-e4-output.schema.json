@@ -12,7 +12,7 @@
     },
     "nivel": {
       "type": "string",
-      "enum": ["normal", "warning", "critico"]
+      "enum": ["normal", "advertencia", "critico"]
     },
     "notificacion": {
       "type": "object",
@@ -21,7 +21,7 @@
         "enviada": { "type": "boolean" },
         "canal": {
           "type": ["string", "null"],
-          "enum": ["critico", "warning", null]
+          "enum": ["critico", "advertencia", null]
         },
         "reintentos": { "type": "integer", "minimum": 0 }
       }

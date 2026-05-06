@@ -109,7 +109,8 @@ El caso Bot se compone de 4 archivos JSON importables en n8n:
 - Nodo: `IF` (¿entrada válida?)
 - Nodo: `Execute Workflow` → subflujo E2
 - Nodo: `Execute Workflow` → subflujo E3
-- Nodo: `Respond to Webhook` (200 OK o 400 Bad Request)
+- Nodo: `IF` (¿error en pipeline?)
+- Nodo: `Respond to Webhook` — 200 OK / 400 Bad Request / 401 Unauthorized / 500 Internal Server Error
 - Settings: `errorWorkflow: "bot-error-handler"`, `saveDataSuccessExecution: "all"`
 
 **2. bot-to-be-e2-dominio.json** — Subflujo de lógica de negocio

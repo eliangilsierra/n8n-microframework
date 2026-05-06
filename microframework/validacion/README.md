@@ -2,7 +2,7 @@
 
 Implementación del Pilar 2 de DevSecOps (§4.3 del anteproyecto).
 
-Especificación: `microframework/validacion-estatica-flujos.md`.
+Especificación: `microframework/reglas/reglas-obligatorias.md`.
 
 ## Uso
 
@@ -26,6 +26,6 @@ El as-is reporta incumplimientos sin fallar el exit code (es la línea base por 
 
 ## Reglas evaluadas
 
-Ver tabla completa en `microframework/validacion-estatica-flujos.md`. Cada regla
+Ver tabla completa en `microframework/reglas/reglas-obligatorias.md`. Cada regla
 devuelve `{ cumple: true|false|null, evidencia: string }`; `null` = no aplicable
 al archivo (p. ej. REG-003 solo aplica a orquestadores).

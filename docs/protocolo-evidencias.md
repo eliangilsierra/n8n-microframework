@@ -70,6 +70,21 @@ Verificar que la tabla fue creada:
 docker compose exec postgres psql -U n8n_user -d sensores_db -c "\d lecturas_sensor"
 ```
 
+**Nota:** El script `automatizacion/setup_env.py` crea ambas tablas automáticamente.
+Si se ejecuta manualmente, crear también la tabla dead-letter del IoT error handler (ADR-005):
+
+```bash
+docker compose exec postgres psql -U n8n_user -d sensores_db -c "
+CREATE TABLE IF NOT EXISTS lecturas_sensor_dead_letters (
+  id               SERIAL PRIMARY KEY,
+  run_id           VARCHAR(100),
+  payload_original JSONB,
+  error_message    TEXT,
+  node_name        VARCHAR(200),
+  ts               TIMESTAMPTZ DEFAULT NOW()
+);"
+```
+
 ---
 
 ## 3. Importar flujos en n8n
@@ -86,12 +101,13 @@ de los subflujos para configurar los nodos Execute Workflow.
 4. `microframework/plantillas/bot-as-is.json`
 
 **Caso IoT (orden de import):**
-1. `microframework/plantillas/iot-to-be-e1-validacion.json`
-2. `microframework/plantillas/iot-to-be-e2-dominio.json`
-3. `microframework/plantillas/iot-to-be-e3-persistencia.json`
-4. `microframework/plantillas/iot-to-be-e4-notificacion.json`
-5. `microframework/plantillas/iot-to-be-orquestador.json`
-6. `microframework/plantillas/iot-as-is.json`
+1. `casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json`
+2. `casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json`
+3. `casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json`
+4. `casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json`
+5. `casos-de-estudio/iot/to-be/iot-error-handler.json`  ← **nuevo: ADR-005**
+6. `casos-de-estudio/iot/to-be/iot-to-be-orquestador.json`
+7. `casos-de-estudio/iot/as-is/iot-as-is.json`
 
 ### Procedimiento de import en n8n UI
 
@@ -178,6 +194,14 @@ RUN-BOT-002,bot,as-is,C,2026-06-08T10:01:00Z,2026-06-08T10:01:01Z,fail,validatio
 - Si hay error en el registro: agregar nueva fila correcta y marcar la incorrecta con `status: invalid`
 - `commit_hash`: los primeros 7 caracteres del commit activo al momento de la corrida
 
+**Nota sobre `run_id` en as-is vs to-be:**
+El as-is genera el `run_id` en el harness de medición (`automatizacion/run_corridas.py`)
+con formato simplificado `{caso}-{version}-{set}-{index}-{hash}` porque los flujos
+as-is violan REG-002 (no propagan run_id internamente). En el to-be, el `run_id` se
+genera en E1 siguiendo el formato de REG-002
+(`RUN-{CASO}-{ISO8601}-{SUFFIX}`) y se propaga por todas las etapas hasta la respuesta
+y la BD. El análisis comparativo en FASE 6 reconoce ambos formatos.
+
 ---
 
 ## 6. Registrar una entrada en el cr-log
@@ -187,16 +211,22 @@ Usar al ejecutar el protocolo de Cambio de Requisito (CR) durante FASE 6.
 **Archivo:** `medicion/cr-logs/{caso}/cr-log-{caso}-{estado}.csv`
 
 ```
-cr_id,case,version,start_ts,end_ts,nodes_touched,deps_touched,attempts,commit_hash
+cr_id,cr_type,case,version,start_ts,end_ts,nodes_touched,deps_touched,attempts,commit_hash,notes
 
-CR1,bot,as-is,2026-06-22T09:00:00Z,2026-06-22T09:45:00Z,8,2,3,b2c3d4e
-CR1,bot,to-be,2026-06-29T09:00:00Z,2026-06-29T09:20:00Z,2,0,1,c3d4e5f
+CR-BOT-001,CR1,bot,as-is,2026-04-21T10:15:00-05:00,2026-04-21T10:52:00-05:00,8,0,3,152fd2d,prioridad R002 media->alta
+CR-BOT-001,CR1,bot,to-be,2026-06-29T09:00:00Z,2026-06-29T09:20:00Z,1,0,1,c3d4e5f,cambio en constante E2
 ```
 
 **Campos:**
+- `cr_id`: identificador único por fila (`CR-{CASO}-{NNN}`)
+- `cr_type`: tipo funcional — `CR1` (negocio), `CR2` (integración), `CR3` (validación)
 - `nodes_touched`: número de nodos modificados para implementar el cambio
-- `deps_touched`: número de subflujos que requirieron actualización por el cambio
-- `attempts`: número de veces que se ejecutó el flujo para verificar el cambio
+- `deps_touched`: número de endpoints o tablas externas con contrato modificado
+- `attempts`: número de iteraciones de edición+ejecución hasta verificación exitosa
+- `notes`: texto libre — rationale breve, incidentes durante la edición, etc.
+
+Los valores de as-is están pre-medidos en FASE 3 (ver `cr-design.md` por caso);
+los de to-be se poblán en FASE 6.
 
 ---
 
@@ -286,6 +316,61 @@ en `automatizacion/run_corridas.py`. La tabla de referencia es:
 
 ---
 
+## 9. Anomalía commit_hash="unknown" — Documentación metodológica
+
+### Causa raíz
+
+`automatizacion/run_corridas.py` obtiene el hash con:
+
+```python
+subprocess.run(['git', 'rev-parse', 'HEAD'], capture_output=True, text=True)
+```
+
+El proceso se ejecutaba desde el directorio de trabajo del intérprete Python, que en
+algunas sesiones no era el directorio raíz del repositorio sino un subdirectorio.
+`git rev-parse HEAD` falla silenciosamente fuera de un repo y devuelve cadena vacía,
+que el harness captura como `"unknown"`.
+
+### Impacto en la validez de los datos
+
+Los run-logs con `commit_hash="unknown"` corresponden a corridas as-is ejecutadas
+el 2026-04-20/21. La validez de los datos **no se ve afectada**: el campo `commit_hash`
+es un campo de auditoría para trazabilidad, no un campo de integridad de los datos
+de medición. Los campos `run_id`, `status`, `error_type`, `start_ts`, `end_ts` son
+generados por el propio harness desde la respuesta HTTP del webhook y son correctos.
+
+### Asociación histórica
+
+Para el análisis comparativo de FASE 6, los datos as-is con `commit_hash="unknown"`
+se tratan como pertenecientes al commit **`152fd2d`**, que es el último commit
+documentado antes de las corridas as-is (2026-04-20). Esta asociación se registra en
+este protocolo como fuente de verdad y no requiere corrección retroactiva de los CSVs.
+
+### Resolución para FASE 6
+
+Las corridas to-be se ejecutarán con la corrección aplicada en `run_corridas.py`:
+
+1. Pasar `cwd=REPO_ROOT` al `subprocess.run` para que git se ejecute desde la raíz.
+2. Verificar `git status --porcelain` antes de cada sesión de medición para confirmar
+   que el estado está limpio.
+3. Documentar el commit hash activo en `estado-actual.md` antes de iniciar corridas.
+
+**Corrección en el código:**
+
+```python
+import os
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+def get_commit_hash():
+    result = subprocess.run(
+        ['git', 'rev-parse', '--short', 'HEAD'],
+        capture_output=True, text=True, cwd=REPO_ROOT
+    )
+    return result.stdout.strip() if result.returncode == 0 else 'unknown'
+```
+
+---
+
 ## §9 Datasets dinámicos y semillas
 
 ### Propósito
@@ -357,3 +442,24 @@ El delay se configura por set en `DELAY_STRATEGY` (ver `automatizacion/run_corri
 Fórmula set I: `delay_i = 0.300 - (0.250 × i / 199)`
 
 Ver ADR-004 para la justificación completa.
+
+---
+
+## §12 Rangos físicos canónicos de validación (IoT)
+
+Resolución de inconsistencia detectada en FASE 4 (2026-05-03). Fuente normativa: ADR-006 IoT.
+
+| Variable | Mínimo | Máximo | Unidad | Norma de referencia |
+|----------|--------|--------|--------|-------------------|
+| temperature | -50 | 125 | °C | IEC 60068-2-2 (sensores NTC/PT100) |
+| humidity | 0 | 100 | % | — |
+| co2 | 0 | 5000 | ppm | — |
+
+Estos valores aplican a la **validación de rango físico** en E1 (rechazar lo imposible).
+Son distintos de los **umbrales de alerta** definidos en ADR-002 / constante `UMBRALES` de E2.
+
+| Variable | Umbral advertencia | Umbral crítico | Norma |
+|----------|--------------------|----------------|-------|
+| temperature | > 35°C | > 45°C | ISO 7730 |
+| humidity | > 80% | > 95% | ISO 7730 |
+| co2 | > 800 ppm | > 1200 ppm | ASHRAE 62.1 |

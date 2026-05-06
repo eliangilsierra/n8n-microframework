@@ -4,6 +4,9 @@ Pipeline ad-hoc de sensor IoT. Diseñado intencionalmente para exhibir los
 antipatrones del microframework (REG-001 a REG-010) en un escenario realista de
 14 nodos que replica lo encontrado en implementaciones IoT sin arquitectura definida.
 
+> Para el registro cronológico de cambios al as-is y su evidencia (commits, rationale,
+> vinculación a REG-*), ver [`cambios-y-evidencia.md`](cambios-y-evidencia.md).
+
 ---
 
 ## Estructura del flujo (14 nodos)

@@ -13,8 +13,8 @@
     "temperature": {
       "type": "number",
       "minimum": -50,
-      "maximum": 150,
-      "description": "Temperatura en grados Celsius"
+      "maximum": 125,
+      "description": "Temperatura en grados Celsius (rango canónico IEC 60068-2-2: -50 a 125°C)"
     },
     "humidity": {
       "type": "number",
@@ -38,7 +38,7 @@
     },
     "idempotency_key": {
       "type": "string",
-      "description": "Clave de idempotencia para deduplicación (requerida en set K)"
+      "description": "Clave de idempotencia opcional propagada al run_id para trazabilidad. En el to-be la idempotencia a nivel BD se garantiza por la clave compuesta (sensor_id, timestamp) según ADR-003 IoT; el as-is no la usa. Set K inyecta este campo duplicado por diseño para medir REG-005."
     }
   }
 }

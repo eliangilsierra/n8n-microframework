@@ -1,0 +1,82 @@
+{
+  "name": "IOT-TO-BE - Error Handler",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "error-trigger",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ADR-005: Error Handler IoT con preservacion de payload (dead-letter)\n// REG-003: workflow de error configurado en settings.errorWorkflow del orquestador\nconst ctx = $input.item.json;\n\nconst run_id = ctx.workflow?.runId || ctx.execution?.id || 'unknown';\nconst node_name = ctx.execution?.lastNodeExecuted || 'unknown';\nconst error_message = ctx.error?.message || 'Error desconocido';\n\n// Intentar recuperar el payload original del webhook para dead-letter\nconst payload_original = ctx.data?.resultData?.runData?.['webhook-sensor']?.[0]?.data?.main?.[0]?.[0]?.json?.body || null;\n\nconst log = {\n  run_id,\n  etapa: 'ERROR_HANDLER',\n  status: 'error',\n  workflow_name: ctx.workflow?.name || 'iot-to-be-orquestador',\n  node_name,\n  error_message,\n  error_type: error_message.includes('connection') ? 'integration' : 'logic',\n  payload_original_disponible: payload_original !== null,\n  ts: new Date().toISOString()\n};\n\nconsole.log(JSON.stringify(log));\n\nreturn [{ json: { ...log, payload_original, run_id, node_name, error_message } }];"
+      },
+      "id": "code-log-error",
+      "name": "Code - Log error y contexto",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:3002/api/errors",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ run_id: $json.run_id, node_name: $json.node_name, error_message: $json.error_message, ts: $json.ts }) }}",
+        "options": {
+          "retry": { "enabled": true, "maxRetries": 2, "waitBetweenTries": 1000 },
+          "response": { "response": { "neverError": true } }
+        }
+      },
+      "id": "http-notify-error",
+      "name": "HTTP - Notificar error (mock-iot)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO lecturas_sensor_dead_letters (run_id, payload_original, error_message, node_name, ts)\nVALUES (\n  '{{ $json.run_id }}',\n  '{{ JSON.stringify($json.payload_original) }}'::jsonb,\n  '{{ $json.error_message }}',\n  '{{ $json.node_name }}',\n  NOW()\n)\nRETURNING id",
+        "options": {}
+      },
+      "id": "postgres-dead-letter",
+      "name": "Postgres - Insertar en dead-letter",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [900, 300],
+      "credentials": { "postgres": { "id": "postgres-local", "name": "Postgres Local" } }
+    }
+  ],
+  "connections": {
+    "Error Trigger": {
+      "main": [[{ "node": "Code - Log error y contexto", "type": "main", "index": 0 }]]
+    },
+    "Code - Log error y contexto": {
+      "main": [[{ "node": "HTTP - Notificar error (mock-iot)", "type": "main", "index": 0 }]]
+    },
+    "HTTP - Notificar error (mock-iot)": {
+      "main": [[{ "node": "Postgres - Insertar en dead-letter", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "callerPolicy": "any"
+  },
+  "staticData": null,
+  "meta": { "templateId": "mgads-iot-error-handler-v1", "instanceId": "local" },
+  "tags": [{ "name": "to-be" }, { "name": "iot" }, { "name": "mgads" }, { "name": "error-handler" }],
+  "versionId": "1.0.0",
+  "id": "iot-error-handler"
+}

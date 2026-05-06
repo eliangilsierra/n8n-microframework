@@ -12,13 +12,23 @@
       "properties": {
         "nivel": {
           "type": "string",
-          "enum": ["normal", "warning", "critico"]
+          "enum": ["normal", "advertencia", "critico"]
         },
         "requiereNotificacion": { "type": "boolean" },
         "regla_aplicada": { "type": "string", "pattern": "^R[0-9]{3}$" },
-        "umbral_excedido": { "type": ["string", "null"] },
-        "valor_umbral": { "type": ["number", "null"] },
-        "valor_observado": { "type": ["number", "null"] }
+        "anomalias": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["campo", "valor", "umbral", "tipo"],
+            "properties": {
+              "campo": { "type": "string" },
+              "valor": { "type": "number" },
+              "umbral": { "type": "number" },
+              "tipo": { "type": "string", "enum": ["advertencia", "critico"] }
+            }
+          }
+        }
       }
     },
     "lectura": { "type": "object" },

@@ -1,1 +1,4 @@
-cr_id,case,version,start_ts,end_ts,nodes_touched,deps_touched,attempts,commit_hash
+cr_id,cr_type,case,version,start_ts,end_ts,nodes_touched,deps_touched,attempts,commit_hash,notes
+CR-IOT-001,CR1,iot,as-is,2026-04-21T13:00:00-05:00,2026-04-21T13:35:00-05:00,6,0,3,152fd2d,umbral temp critica 35->30; nodos 5, 6, 7, 11, 12, 14; 3 iteraciones por umbral duplicado en nodo 5 (jsCode) y nodo 6 (IF)
+CR-IOT-002,CR2,iot,as-is,2026-04-21T13:45:00-05:00,2026-04-21T14:12:00-05:00,4,1,2,152fd2d,endpoint /api/notify -> /api/v2/notify/urgent con incident_class; nodos 11, 12, 13, 14
+CR-IOT-003,CR3,iot,as-is,2026-04-21T14:20:00-05:00,2026-04-21T14:42:00-05:00,3,0,2,152fd2d,validacion co2>=0 con codigo CO2_NEGATIVE 422; nodos 3, 4, 14

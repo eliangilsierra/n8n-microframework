@@ -19,6 +19,7 @@
         "sensor_id": { "type": "string" },
         "temperature": { "type": "number" },
         "humidity": { "type": "number" },
+        "co2": { "type": "number", "minimum": 0, "description": "Concentración de CO₂ en ppm (opcional en E1; obligatorio para cálculo de nivel en E2)" },
         "timestamp": { "type": "string", "format": "date-time" },
         "location": { "type": "string" }
       }

@@ -1,23 +1,23 @@
 # Matriz de trazabilidad — Caso IoT
 
-**Versión:** 1.0
-**Fecha:** 2026-04-07
-**Estado:** Plantilla — completar durante FASE 4 y FASE 7
+**Versión:** 1.4
+**Fecha:** 2026-05-03
+**Estado:** Actualizada post-validación arquitectónica FASE 4 — ADR-005/007/008 implementados, flujos corregidos.
 
 ---
 
 ## Requerimientos funcionales
 
-| ID | Requerimiento | Prioridad |
-|----|---------------|-----------|
-| RF-IOT-01 | El sistema valida presencia de sensor_id, temperature, humidity, co2 | Alta |
-| RF-IOT-02 | El sistema valida rangos físicamente posibles de cada variable | Alta |
-| RF-IOT-03 | El sistema normaliza los datos de entrada (redondeo) | Media |
-| RF-IOT-04 | El sistema clasifica el nivel de alerta: normal, warning, crítico | Alta |
-| RF-IOT-05 | El sistema persiste la lectura en PostgreSQL con idempotencia | Alta |
-| RF-IOT-06 | El sistema notifica por canal diferenciado según nivel de alerta | Alta |
-| RF-IOT-07 | El sistema responde 422 si la lectura es inválida, sin persistir | Alta |
-| RF-IOT-08 | El sistema no envía notificación si el nivel es normal | Media |
+| ID | Requerimiento | Prioridad | Atributo ISO 25010 |
+|----|---------------|-----------|-------------------|
+| RF-IOT-01 | El sistema valida presencia de sensor_id, temperature, humidity, co2, **timestamp** | Alta | Fiabilidad / Madurez + Adecuación funcional / Corrección |
+| RF-IOT-02 | El sistema valida rangos físicamente posibles de cada variable | Alta | Adecuación funcional / Corrección |
+| RF-IOT-03 | El sistema normaliza los datos de entrada (redondeo) | Media | Mantenibilidad / Modularidad |
+| RF-IOT-04 | El sistema clasifica el nivel de alerta: normal, advertencia, crítico | Alta | Mantenibilidad / Modularidad + Adecuación funcional / Corrección |
+| RF-IOT-05 | El sistema persiste la lectura en PostgreSQL con idempotencia | Alta | Fiabilidad / Madurez |
+| RF-IOT-06 | El sistema notifica por canal diferenciado según nivel de alerta | Alta | Fiabilidad / Tolerancia a fallos + Confiabilidad |
+| RF-IOT-07 | El sistema responde 422 si la lectura es inválida, sin persistir | Alta | Adecuación funcional / Corrección |
+| RF-IOT-08 | El sistema no envía notificación si el nivel es normal | Media | Eficiencia de desempeño / Comportamiento temporal |
 
 ---
 
@@ -25,14 +25,14 @@
 
 | Requerimiento | ADR relacionado | Regla micro-framework | Nodo/Etapa | Input Set | Evidencia (FASE 6) |
 |---------------|-----------------|----------------------|------------|-----------|-------------------|
-| RF-IOT-01 | ADR-001 (pendiente) | E1 | E1 - Validacion | C | run-log-iot-*.csv |
-| RF-IOT-02 | ADR-001 (pendiente) | E1 | E1 - Validacion | C | run-log-iot-*.csv |
-| RF-IOT-03 | — | REC-001 | E1 - Normalizacion | A, B | run-log-iot-*.csv |
-| RF-IOT-04 | ADR-002 (pendiente) | REG-007, E2 | E2 - Dominio | A, B | run-log-iot-*.csv |
-| RF-IOT-05 | ADR-003 (pendiente) | REG-005, E3 | E3 - Persistencia | A, B | SELECT lecturas_sensor |
-| RF-IOT-06 | ADR-004 (pendiente) | REG-004, E4 | E4 - Notificacion | B | run-log-iot-*.csv |
-| RF-IOT-07 | ADR-001 (pendiente) | REG-009 | Respond - 422 | C | run-log-iot-*.csv |
-| RF-IOT-08 | — | E4 | IF - requiereNotificacion | A | run-log-iot-*.csv |
+| RF-IOT-01 | [ADR-001](../adr/ADR-001-separacion-responsabilidades-pipeline.md) | E1, REG-009 | E1 - Validacion | C, D, E | run-log-iot-*.csv (FASE 6) |
+| RF-IOT-02 | [ADR-001](../adr/ADR-001-separacion-responsabilidades-pipeline.md) | E1, REG-009 | E1 - Validacion | C, D, J | run-log-iot-*.csv (FASE 6) |
+| RF-IOT-03 | — | REC-001 | E1 - Normalizacion | A, B, F | run-log-iot-*.csv (FASE 6) |
+| RF-IOT-04 | [ADR-002](../adr/ADR-002-umbrales-y-vocabulario.md) | REG-007, E2 | E2 - Dominio | A, B, F, J | run-log-iot-*.csv (FASE 6) |
+| RF-IOT-05 | [ADR-003](../adr/ADR-003-idempotencia-sensor-timestamp.md) | REG-005, E3 | E3 - Persistencia | A, B, K | SELECT + COUNT(DISTINCT) |
+| RF-IOT-06 | [ADR-004](../adr/ADR-004-routing-e4-por-severidad.md) | REG-004, REG-008, E4 | E4 - Notificacion | B, I, J | run-log-iot-*.csv (FASE 6) |
+| RF-IOT-07 | [ADR-001](../adr/ADR-001-separacion-responsabilidades-pipeline.md) | REG-009 | Respond - 422 | C, D | run-log-iot-*.csv (FASE 6) |
+| RF-IOT-08 | [ADR-004](../adr/ADR-004-routing-e4-por-severidad.md) | E2, E4 | IF - requiereNotificacion | A, F | run-log-iot-*.csv (FASE 6) |
 
 ---
 
@@ -40,23 +40,61 @@
 
 | Atributo de calidad | Escenario ATAM | Decisión arquitectónica | ADR |
 |--------------------|----------------|------------------------|-----|
-| Mantenibilidad | Modificar umbral crítico de temperatura toca solo E2 | Umbrales centralizados en E2 | ADR-002 (pendiente) |
-| Seguridad | Credenciales PostgreSQL no aparecen en JSON exportado | Credenciales en n8n | ADR-001 (pendiente) |
-| Confiabilidad | Reintento de inserción no crea lecturas duplicadas | Idempotencia con ON CONFLICT | ADR-003 (pendiente) |
-| Confiabilidad | Fallo en notificación no pierde la lectura persistida | E3 y E4 separados | Metamodelo E1-E4 |
-| Trazabilidad | Toda lectura tiene run_id y sensor_id en logs y BD | run_id desde E1 | REG-002 |
+| Mantenibilidad | Modificar umbral crítico de temperatura toca solo E2 | Umbrales centralizados en E2 (`UMBRALES`) | [ADR-002](../adr/ADR-002-umbrales-y-vocabulario.md) |
+| Adecuación funcional | Vocabulario `nivel` consistente entre as-is y to-be | Enum `{normal, advertencia, critico}` | [ADR-002](../adr/ADR-002-umbrales-y-vocabulario.md) |
+| Seguridad | Credenciales PostgreSQL no aparecen en JSON exportado | Credenciales en n8n (credential-reference) | [ADR-001](../adr/ADR-001-separacion-responsabilidades-pipeline.md) |
+| Confiabilidad | Reintento de inserción no crea lecturas duplicadas | Clave compuesta + ON CONFLICT DO NOTHING | [ADR-003](../adr/ADR-003-idempotencia-sensor-timestamp.md) |
+| Confiabilidad | TTD de eventos críticos desacoplado del tráfico de advertencias | Routing por `nivel` en E4 con retry diferenciado | [ADR-004](../adr/ADR-004-routing-e4-por-severidad.md) |
+| Confiabilidad | Fallo en notificación no pierde la lectura persistida | E3 y E4 separados | [ADR-001](../adr/ADR-001-separacion-responsabilidades-pipeline.md) |
+| Validez interna | REG-005 medible con evidencia cuantitativa | Set K (duplicados idempotencia) | [ADR-004 Bot](../../bot/adr/ADR-004-diseno-experimental-input-sets.md) |
+| Trazabilidad | Toda lectura tiene run_id y sensor_id en logs y BD | run_id propagado desde E1 | REG-002 |
+| Mantenibilidad | IOT-Q1: CR1 (umbral 35→30°C) toca ≤1 nodo en to-be | Constante UMBRALES centralizada en E2 | [ADR-002](../adr/ADR-002-umbrales-y-vocabulario.md) |
+| Mantenibilidad | IOT-Q2: CR2 (endpoint urgente) toca ≤1 nodo en to-be | Routing E4 aislado | [ADR-004](../adr/ADR-004-routing-e4-por-severidad.md) |
+| Fiabilidad | IOT-Q3: 0 lecturas duplicadas en Set K | Idempotencia clave {sensor_id, timestamp} | [ADR-003](../adr/ADR-003-idempotencia-sensor-timestamp.md) + [ADR-007](../adr/ADR-007-timestamp-authority.md) |
+| Fiabilidad | IOT-Q4: lecturas no perdidas en fallo transitorio E3 | Retry REG-004 + error boundary | [ADR-004](../adr/ADR-004-routing-e4-por-severidad.md) |
+| Confiabilidad | IOT-Q5: críticos notificados antes que advertencias | Routing diferenciado E4 | [ADR-004](../adr/ADR-004-routing-e4-por-severidad.md) |
+| Seguridad | IOT-Q6: credenciales PG no en JSON exportado | Credenciales n8n por nombre | [ADR-001](../adr/ADR-001-separacion-responsabilidades-pipeline.md) |
+| Fiabilidad | Fallo de E3 no pierde lectura del sensor | Dead-letter en `lecturas_sensor_dead_letters` | [ADR-005](../adr/ADR-005-diseno-error-workflow.md) |
+| Trazabilidad | Timestamp en clave de idempotencia = timestamp del sensor | Drift ≤5 min validado en E1 | [ADR-007](../adr/ADR-007-timestamp-authority.md) |
 
 ---
 
 ## Change Requests y cobertura
 
-| CR | Descripción | RF afectado | Etapa impactada (as-is) | Etapa impactada (to-be) |
-|----|-------------|-------------|------------------------|------------------------|
-| CR1 | Bajar umbral crítico temperatura de 45°C a 40°C | RF-IOT-04 | Nodo Code monolítico | Solo E2 |
-| CR2 | Cambiar endpoint de notificaciones | RF-IOT-06 | Nodo HTTP Request en flujo | Solo E4 |
-| CR3 | Agregar validación co2 ≥ 0 (rechazar negativos) | RF-IOT-02 | Nodo Code monolítico | Solo E1 |
+| CR | Descripción | RF afectado | Etapa impactada (as-is) | Etapa impactada (to-be) | Medido as-is | Medido to-be |
+|----|-------------|-------------|------------------------|------------------------|--------------|--------------|
+| CR1 | Reducir umbral temp crítica 35°C → 30°C | RF-IOT-04 | 6 nodos | Solo constante `UMBRALES` en E2 (1 nodo) | CR-IOT-001 @ 152fd2d (2026-04-21) | FASE 6 |
+| CR2 | Cambiar endpoint notificación urgente → /api/v2/notify/urgent | RF-IOT-06 | 4 nodos | Solo HTTP de rama crítica en E4 (1 nodo) | CR-IOT-002 @ 152fd2d (2026-04-21) | FASE 6 |
+| CR3 | Agregar validación co2 ≥ 0 (rechazar negativos) | RF-IOT-02 | 3 nodos | Solo schema E1 (0 nodos) | CR-IOT-003 @ 152fd2d (2026-04-21) | FASE 6 |
+
+Ver detalle en `casos-de-estudio/iot/cr-design.md` y datos crudos en
+`medicion/cr-logs/iot/cr-log-iot-as-is.csv`.
 
 ---
 
-*Completar columnas "Evidencia (FASE 6)" con referencias a run_id y commit_hash
-una vez ejecutadas las corridas de medición comparativa.*
+## Cambios al as-is (FASE 2)
+
+Ver `casos-de-estudio/iot/as-is/cambios-y-evidencia.md` para el change-log cronológico
+(rediseño estructural 6→14 nodos, remoción de credenciales PG del nodo, ampliación
+de Input Sets).
+
+---
+
+## ADRs del caso IoT
+
+| ADR | Título | Estado |
+|-----|--------|--------|
+| [ADR-001](../adr/ADR-001-separacion-responsabilidades-pipeline.md) | Separación de responsabilidades del pipeline (E1–E4) | Aceptado |
+| [ADR-002](../adr/ADR-002-umbrales-y-vocabulario.md) | Umbrales del to-be y vocabulario `nivel` | Implementado 2026-05-02 |
+| [ADR-003](../adr/ADR-003-idempotencia-sensor-timestamp.md) | Idempotencia con clave `{sensor_id, timestamp}` | Aceptado |
+| [ADR-004](../adr/ADR-004-routing-e4-por-severidad.md) | Routing diferenciado de E4 por severidad | Implementado 2026-05-02 |
+| [ADR-004 Bot](../../bot/adr/ADR-004-diseno-experimental-input-sets.md) | Diseño experimental (compartido) | Aceptado |
+| [ADR-005](../adr/ADR-005-diseno-error-workflow.md) | errorWorkflow con payload para replay de lecturas perdidas (REG-003, REG-006) | Implementado 2026-05-02 |
+| [ADR-006](../adr/ADR-006-validacion-schema-e1.md) | Validación de schema en E1 con JavaScript inline y errores por campo | Implementado 2026-05-02 |
+| [ADR-007](../adr/ADR-007-timestamp-authority.md) | Autoridad del timestamp: usar timestamp del sensor (REG-005) | Implementado 2026-05-02 |
+| [ADR-008](../adr/ADR-008-normalizacion-e1.md) | Normalización de campos en E1 antes de pasar a dominio (REC-001, REG-005) | Implementado 2026-05-02 |
+
+---
+
+*Las celdas "Evidencia (FASE 6)" y "Medido to-be" se completan cuando se ejecuten las
+corridas de medición comparativa del to-be (FASE 6).*

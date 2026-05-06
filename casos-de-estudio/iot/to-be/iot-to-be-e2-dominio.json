@@ -1,0 +1,33 @@
+{
+  "name": "IOT-TO-BE - E2 Dominio y analisis de umbrales",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "input-trigger",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ETAPA 2 - Logica de dominio IoT\n// Responsabilidad: analizar lectura contra umbrales y determinar nivel de alerta\n// Sin conocimiento de BD ni canales de notificacion\n\nconst { run_id, start_ts, lectura } = $input.item.json;\nconst e2_start = new Date().toISOString();\n\n// Umbrales centralizados segun ADR-002 (ASHRAE 62.1 / ISO 7730)\n// CR1: cambiar un umbral = modificar solo esta constante\nconst UMBRALES = {\n  temperature: { min: 10, max: 35, critical_max: 45 },\n  humidity:    { min: 20, max: 80, critical_max: 95 },\n  co2:         { max: 800, critical_max: 1200 }  // ASHRAE 62.1: 800 ppm alerta, 1200 ppm critico\n};\n\n// Enum oficial ADR-002: normal | advertencia | critico (todo en español)\nconst anomalias = [];\nlet nivel = 'normal';\n\n// Analisis temperatura\nif (lectura.temperature > UMBRALES.temperature.critical_max) {\n  anomalias.push({ campo: 'temperature', valor: lectura.temperature, umbral: UMBRALES.temperature.critical_max, tipo: 'critico' });\n  nivel = 'critico';\n} else if (lectura.temperature > UMBRALES.temperature.max || lectura.temperature < UMBRALES.temperature.min) {\n  const umbral = lectura.temperature > UMBRALES.temperature.max ? UMBRALES.temperature.max : UMBRALES.temperature.min;\n  anomalias.push({ campo: 'temperature', valor: lectura.temperature, umbral, tipo: 'advertencia' });\n  if (nivel !== 'critico') nivel = 'advertencia';\n}\n\n// Analisis humedad\nif (lectura.humidity > UMBRALES.humidity.critical_max) {\n  anomalias.push({ campo: 'humidity', valor: lectura.humidity, umbral: UMBRALES.humidity.critical_max, tipo: 'critico' });\n  nivel = 'critico';\n} else if (lectura.humidity > UMBRALES.humidity.max) {\n  anomalias.push({ campo: 'humidity', valor: lectura.humidity, umbral: UMBRALES.humidity.max, tipo: 'advertencia' });\n  if (nivel !== 'critico') nivel = 'advertencia';\n}\n\n// Analisis CO2\nif (lectura.co2 > UMBRALES.co2.critical_max) {\n  anomalias.push({ campo: 'co2', valor: lectura.co2, umbral: UMBRALES.co2.critical_max, tipo: 'critico' });\n  nivel = 'critico';\n} else if (lectura.co2 > UMBRALES.co2.max) {\n  anomalias.push({ campo: 'co2', valor: lectura.co2, umbral: UMBRALES.co2.max, tipo: 'advertencia' });\n  if (nivel !== 'critico') nivel = 'advertencia';\n}\n\nconst requiereNotificacion = nivel !== 'normal';\n// R001=normal, R002=advertencia, R003=critico (REC-002: trazabilidad de regla aplicada)\nconst regla_aplicada = nivel === 'normal' ? 'R001' : nivel === 'advertencia' ? 'R002' : 'R003';\n\nconst e2_end = new Date().toISOString();\nconst duracion_ms = new Date(e2_end) - new Date(e2_start);\n\nconsole.log(JSON.stringify({\n  run_id, etapa: 'E2_dominio_iot',\n  status: 'ok', nivel, regla_aplicada,\n  sensor_id: lectura.sensor_id,\n  anomalias_detectadas: anomalias.length,\n  e2_start, e2_end, duracion_ms\n}));\n\n// umbrales_usados omitido del output — es dominio interno de E2 (ISP)\nconst analisis = { nivel, anomalias, requiereNotificacion, regla_aplicada };\n\nreturn [{ json: { run_id, start_ts, e2_start, e2_end, lectura, analisis } }];"
+      },
+      "id": "code-dominio",
+      "name": "E2 - Analisis de umbrales y clasificacion",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    }
+  ],
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [[{ "node": "E2 - Analisis de umbrales y clasificacion", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1", "callerPolicy": "workflowsFromSameOwner" },
+  "meta": { "templateId": "mgads-iot-e2-dominio-v1", "instanceId": "local" },
+  "tags": [{ "name": "to-be" }, { "name": "iot" }, { "name": "mgads" }, { "name": "subflujo" }],
+  "versionId": "1.0.0",
+  "id": "iot-e2-dominio"
+}
