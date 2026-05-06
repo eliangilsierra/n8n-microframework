@@ -66,45 +66,77 @@ VERSIONS = ["as-is", "to-be"]
 SETS     = ["A", "B", "C", "D", "E", "F", "G", "I", "J", "K"]
 
 # Comportamiento esperado por (case, version, input_set)
-# "success" = HTTP coincide con lo esperado; "fail" = debería fallar por diseño
+#
+# SEMÁNTICA TÉCNICA — alineada con run_corridas.py:
+#   "success" → se espera status="success" en el run-log para todas las corridas del set.
+#               run_corridas.py registra "success" cuando HTTP_recibido == EXPECTED_HTTP,
+#               independientemente de si EXPECTED_HTTP es 200 (aceptación) o 400/422 (rechazo).
+#               Por tanto, un rechazo correcto (to-be devuelve 400 para token ausente) también
+#               produce status="success" en el run-log. conforme=True ↔ success_rate ≈ 100 %.
+#   "mixed"  → set con payloads mixtos (válidos e inválidos); se analiza en §8, no aquí.
+#   None     → sin expectativa definida; conformidad no evaluada.
+#
+# ANTIPATRÓN REG-002 visible en bot/as-is/Set A:
+#   El rate limiter in-memory (LIMITE=150) provoca ~25 % de fallos cuando N=200.
+#   Esto se evidencia como success_rate ≈ 75 % → conforme=False → antipatrón documentado.
+#
+# SETS DE RECHAZO (C, D, E en to-be):
+#   EXPECTED_STATUS="success" porque EXPECTED_HTTP ya captura el código de rechazo (400/422).
+#   Si el to-be devuelve 200 en lugar de 400, run_corridas.py lo marcará "fail" y
+#   success_rate caerá, evidenciando el defecto. La expectativa es success_rate=100 %.
 EXPECTED_STATUS: dict[tuple, str] = {
-    # Bot as-is — sin validación estricta (antipatrón)
-    ("bot", "as-is", "A"): "success",   # input válido
-    ("bot", "as-is", "B"): "success",   # input crítico válido
-    ("bot", "as-is", "C"): "fail",      # token ausente → HTTP 401
-    ("bot", "as-is", "D"): "success",   # mensaje vacío → as-is acepta (antipatrón REG-003)
-    ("bot", "as-is", "E"): "success",   # user_id ausente → as-is acepta (antipatrón REG-003)
-    # Bot to-be — validación E1 estricta
-    ("bot", "to-be", "A"): "success",
-    ("bot", "to-be", "B"): "success",
-    ("bot", "to-be", "C"): "fail",      # token ausente → HTTP 400
-    ("bot", "to-be", "D"): "fail",      # mensaje vacío → HTTP 400
-    ("bot", "to-be", "E"): "fail",      # user_id ausente → HTTP 400
-    # IoT as-is — sin validación (antipatrón)
-    ("iot", "as-is", "A"): "success",
-    ("iot", "as-is", "B"): "success",   # crítico, procesa y alerta
-    ("iot", "as-is", "C"): "success",   # campos faltantes → as-is procesa con NaN (antipatrón REG-003)
-    ("iot", "as-is", "D"): "success",   # valores en umbral
-    ("iot", "as-is", "E"): "success",   # CO2 ausente → as-is procesa (antipatrón REG-003)
-    # IoT to-be — validación E1 estricta
-    ("iot", "to-be", "A"): "success",
-    ("iot", "to-be", "B"): "success",
-    ("iot", "to-be", "C"): "fail",      # campos faltantes → HTTP 422
-    ("iot", "to-be", "D"): "success",
-    ("iot", "to-be", "E"): "fail",      # CO2 ausente → HTTP 422
-    # Sets dinámicos F (normal variable) — todos éxito
+    # ── Bot as-is ───────────────────────────────────────────────────────────────
+    ("bot", "as-is", "A"): "success",   # input válido → HTTP 200. Rate limiter causa ~25 % fail (REG-002).
+    ("bot", "as-is", "B"): "success",   # input crítico válido → HTTP 200.
+    ("bot", "as-is", "C"): "success",   # token ausente → as-is devuelve HTTP 401. EXPECTED_HTTP=401 → success.
+    ("bot", "as-is", "D"): "success",   # mensaje vacío → as-is acepta sin validar (REG-003) → HTTP 200.
+    ("bot", "as-is", "E"): "success",   # user_id ausente → as-is acepta sin validar (REG-003) → HTTP 200.
+
+    # ── Bot to-be — validación E1 estricta ─────────────────────────────────────
+    ("bot", "to-be", "A"): "success",   # input válido → HTTP 200.
+    ("bot", "to-be", "B"): "success",   # input crítico válido → HTTP 200.
+    ("bot", "to-be", "C"): "success",   # token ausente → E1 rechaza HTTP 400. EXPECTED_HTTP=400 → success.
+    ("bot", "to-be", "D"): "success",   # mensaje vacío → E1 rechaza HTTP 400. EXPECTED_HTTP=400 → success.
+    ("bot", "to-be", "E"): "success",   # user_id ausente → E1 rechaza HTTP 400. EXPECTED_HTTP=400 → success.
+
+    # ── IoT as-is — sin validación E1 (antipatrón REG-003) ─────────────────────
+    ("iot", "as-is", "A"): "success",   # lectura normal → HTTP 200.
+    ("iot", "as-is", "B"): "success",   # lectura crítica → HTTP 200 (procesa y alerta).
+    ("iot", "as-is", "C"): "success",   # campos faltantes → as-is procesa con undefined → HTTP 200 (antipatrón).
+    ("iot", "as-is", "D"): "success",   # valores en umbral → HTTP 200.
+    ("iot", "as-is", "E"): "success",   # CO2 ausente → as-is procesa sin validar (REG-003) → HTTP 200.
+
+    # ── IoT to-be — validación E1 estricta ─────────────────────────────────────
+    ("iot", "to-be", "A"): "success",   # lectura normal → HTTP 200.
+    ("iot", "to-be", "B"): "success",   # lectura crítica → HTTP 200.
+    ("iot", "to-be", "C"): "success",   # campos faltantes → E1 rechaza HTTP 422. EXPECTED_HTTP=422 → success.
+    ("iot", "to-be", "D"): "success",   # valores en umbral válidos → HTTP 200.
+    ("iot", "to-be", "E"): "success",   # CO2 ausente → E1 rechaza HTTP 422. EXPECTED_HTTP=422 → success.
+
+    # ── Sets dinámicos ──────────────────────────────────────────────────────────
+    # F — tráfico normal variable: todos los payloads son válidos.
     ("bot", "as-is", "F"): "success",   ("bot", "to-be", "F"): "success",
     ("iot", "as-is", "F"): "success",   ("iot", "to-be", "F"): "success",
-    # Set G (mezcla) — éxito como promedio (la conformidad real es mixta, ver §8)
+
+    # G — mezcla industrial 70/15/10/5: contiene payloads con token inválido (~10 %).
+    # El to-be rechaza esos tokens (HTTP 400/401) mientras EXPECTED_HTTP=200 → ~20 fails.
+    # Conformidad semántica evaluada en §8; excluida del check técnico aquí.
     ("bot", "as-is", "G"): "mixed",     ("bot", "to-be", "G"): "mixed",
     ("iot", "as-is", "G"): "mixed",     ("iot", "to-be", "G"): "mixed",
-    # Set I (degradación) — éxito (todos válidos estructuralmente)
+
+    # I — degradación gradual: todos los payloads son válidos estructuralmente.
     ("bot", "as-is", "I"): "success",   ("bot", "to-be", "I"): "success",
     ("iot", "as-is", "I"): "success",   ("iot", "to-be", "I"): "success",
-    # Set J (extremos) — éxito (válidos numéricamente)
-    ("bot", "as-is", "J"): "success",   ("bot", "to-be", "J"): "success",
+
+    # J — percentiles extremos p1/p99.
+    # bot/as-is: sin validación de longitud → todos aceptados → success.
+    # bot/to-be: E1 rechaza los 100 payloads con message > 1000 chars → 50 % fail técnico.
+    #            Se marca "mixed" para evaluación semántica en §8.
+    # iot: rangos físicos válidos en todos los payloads → success.
+    ("bot", "as-is", "J"): "success",   ("bot", "to-be", "J"): "mixed",
     ("iot", "as-is", "J"): "success",   ("iot", "to-be", "J"): "success",
-    # Set K (duplicados) — éxito HTTP (la diferencia se mide en BD)
+
+    # K — duplicados: HTTP siempre 200 (idempotencia verificada en BD, no en HTTP status).
     ("bot", "as-is", "K"): "success",   ("bot", "to-be", "K"): "success",
     ("iot", "as-is", "K"): "success",   ("iot", "to-be", "K"): "success",
 }
@@ -235,10 +267,19 @@ def detect_anomalies(df: pd.DataFrame, metrics: pd.DataFrame) -> list[dict]:
     """Detecta anomalías automáticamente. Retorna lista de {severity, msg, detail}."""
     issues = []
 
-    # Conformidad por set
-    non_conforme = metrics[~metrics["conforme"] & metrics["expected_status"].notna()]
+    # Conformidad por set — se excluyen sets "mixed" (evaluados en §8) y None
+    non_conforme = metrics[
+        ~metrics["conforme"]
+        & metrics["expected_status"].notna()
+        & (metrics["expected_status"] != "mixed")
+    ]
     for _, row in non_conforme.iterrows():
-        exp_label = "100% éxito" if row["expected_status"] == "success" else "100% fallo"
+        if row["expected_status"] == "success":
+            exp_label = "100% éxito"
+        elif row["expected_status"] == "fail":
+            exp_label = "100% fallo"
+        else:
+            exp_label = str(row["expected_status"])
         issues.append({
             "severity": "CRÍTICA",
             "msg": f"[{row['case'].upper()} / {row['version']} / Set {row['input_set']}] "
@@ -784,12 +825,33 @@ SEMANTIC_NOTES = {
         "proporcionalmente (normal → warning → critical). La distribución de latencia "
         "correlaciona con el índice i — artefacto esperado, no anomalía (ver ADR-004)."
     ),
+    "J": (
+        "<b>Set J — Percentiles extremos p1/p99 (bot):</b> el dataset contiene 200 payloads "
+        "con valores en los extremos de la distribución. <b>100 payloads tienen "
+        "<code>message.length &gt; 1000</code></b> (percentil p99 de longitud de mensaje). "
+        "<br><b>Comportamiento esperado por versión:</b><br>"
+        "• <b>as-is:</b> no valida longitud de mensaje (REG-003) → acepta los 200 payloads "
+        "→ success_rate = 100 %.<br>"
+        "• <b>to-be:</b> E1 rechaza los 100 payloads con message &gt; 1000 chars con HTTP 400 "
+        "→ success_rate ≈ 50 % (técnico). Esto es <em>comportamiento correcto del to-be</em> "
+        "— evidencia de REG-003 corregido. Los 100 'fallos' no son defectos del instrumento.<br>"
+        "La diferencia de comportamiento entre as-is (100 %) y to-be (~50 %) en Set J "
+        "cuantifica el impacto de la validación de longitud de E1."
+    ),
     "G": (
-        "Distribución de categorías: 140 normal (70%), 30 urgente (15%), "
-        "20 token inválido (10%), 10 boundary (5%). "
-        "El as-is acepta los 20 payloads con token inválido (antipatrón REG-001). "
-        "El to-be los rechaza con HTTP 400/401. La tasa de éxito HTTP global del set G "
-        "puede diferir entre as-is y to-be por esta razón."
+        "<b>Distribución de categorías (bot):</b> 140 normal (70 %), 30 urgente (15 %), "
+        "20 token inválido (10 %), 10 boundary (5 %). "
+        "<br><b>Comportamiento esperado por versión:</b><br>"
+        "• <b>as-is:</b> los 20 payloads con token inválido devuelven HTTP 401 "
+        "(token hardcodeado, REG-001) → ~20 runs status=<code>fail</code> "
+        "(EXPECTED_HTTP=200, recibido=401). Estos fallos evidencian REG-001, no son defectos "
+        "del instrumento de medición.<br>"
+        "• <b>to-be:</b> E1 rechaza los 20 payloads inválidos con HTTP 400/401 → ~20 runs "
+        "status=<code>fail</code>. Esto es el <em>comportamiento correcto del to-be</em> "
+        "(E1 activo, REG-001 corregido). Los ~20 fallos de Set G contribuyen al total de "
+        "fallos to-be pero no representan defectos.<br>"
+        "La tasa de éxito técnica del set G diferirá entre versiones por esta razón, "
+        "y es precisamente la evidencia cuantitativa del impacto de la validación E1."
     ),
 }
 
