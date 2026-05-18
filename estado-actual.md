@@ -4,7 +4,7 @@ Fuente única de verdad del avance. Actualizar al completar cada ítem: cambiar 
 refrescar "Última actualización".
 
 **Última actualización:** 2026-05-18
-**Fase activa:** FASE 7 — Evaluación ATAM (~90 % — encuesta pendiente de ejecución) · FASE 8 y FASE 9 pendientes
+**Fase activa:** FASE 7 — Evaluación ATAM (~90 % — encuesta pendiente de ejecución) · FASE 8 Completada ✓ · FASE 9 pendiente
 
 ---
 
@@ -20,7 +20,7 @@ refrescar "Última actualización".
 | 5 | Prueba piloto de instrumentos | Completada ✓ (2026-05-05) |
 | 6 | Medición comparativa | Completada ✓ (2026-05-05) — JMeter micro-benchmark pendiente (opcional) |
 | 7 | Evaluación ATAM | En ejecución avanzada (~90%) ✓ artefactos completos — pendiente encuesta y análisis |
-| 8 | Diseño de arquitectura AWS | Pendiente |
+| 8 | Diseño de arquitectura AWS | Completada ✓ (2026-05-18) — OE4 cumplido |
 | 9 | Guía de buenas prácticas y cierre | Pendiente |
 
 ---
@@ -297,9 +297,47 @@ refrescar "Última actualización".
 
 ---
 
+## FASE 8 — Diseño de Arquitectura AWS — Completada ✓ (2026-05-18)
+
+### Artefactos producidos ✓
+- ✓ `docs/aws/arquitectura-aws.md` — Documento principal: VPC multi-AZ, ECS Fargate, RDS Multi-AZ, ElastiCache Redis, S3, mapeo local→AWS, resolución de riesgos ATAM
+- ✓ `docs/aws/seguridad-iam.md` — IAM Task Roles (4 roles), Secrets Manager, ACM, WAF, Security Groups, KMS CMK. Diagramas 5 y 6
+- ✓ `docs/aws/observabilidad-aws.md` — CloudWatch Log Groups, 6 Log Insights queries, 7 alarmas, Dashboard. Resolución R-GLOBAL-01
+- ✓ `docs/aws/escalabilidad.md` — Queue Mode, auto-scaling workers (2–8), rolling/blue-green deploy, mapeo REGs. Diagrama 4
+- ✓ `docs/aws/estimacion-costos.md` — Costos 3 tiers (Dev ~$33, Staging ~$208, Prod ~$458), optimizaciones Fargate Spot. Diagrama 7
+- ✓ `docs/aws/diagramas-aws.md` — Fuente canónica de 7 diagramas Mermaid con código, justificación académica e instrucciones de render
+- ✓ `docs/aws/INDEX.md` — Índice de todos los artefactos de Fase 8
+- ✓ `microframework/adr/ADR-MF-005-ecs-fargate-vs-ec2.md` — ECS Fargate vs EC2 vs EKS
+- ✓ `microframework/adr/ADR-MF-006-n8n-queue-mode.md` — Queue Mode con Redis BullMQ
+- ✓ `microframework/adr/ADR-MF-007-rds-multi-az.md` — RDS PostgreSQL Multi-AZ en Producción
+
+### Diagramas Mermaid producidos (7 total)
+
+| # | Tipo | Documento | Propósito |
+|---|---|---|---|
+| 1 | `C4Context` | `arquitectura-aws.md §1` | Contexto del sistema — actores y sistemas externos |
+| 2 | `C4Container` | `arquitectura-aws.md §2` | Contenedores AWS y protocolos |
+| 3 | `flowchart TD` | `arquitectura-aws.md §3` | Topología multi-AZ con VPC, subnets, AZs |
+| 4 | `sequenceDiagram` | `escalabilidad.md §1` | Flujo temporal webhook → Queue → RDS → Auto Scaling |
+| 5 | `flowchart LR` | `seguridad-iam.md §1` | Zonas de confianza y controles de seguridad |
+| 6 | `graph TD` | `seguridad-iam.md §2` | Jerarquía IAM roles → políticas → recursos |
+| 7 | `xychart-beta` | `estimacion-costos.md §3` | Costos mensuales por componente y tier |
+
+### Resolución de riesgos ATAM en AWS
+
+| Riesgo ATAM | Resolución |
+|---|---|
+| R-GLOBAL-01 — Logs efímeros | ✅ CloudWatch Logs — persistencia 30 días |
+| R-BOT-01 — Sin rotación de tokens | ✅ Secrets Manager — rotación automática 30 días |
+| R-IOT-01 — Dead-letter bloqueado | ✅ CloudWatch Alarm → SNS como canal independiente |
+| SP-IOT-01 — Canal error handler = canal E4 | ✅ Alarm SNS independiente de canal de notificación E4 |
+| R-GLOBAL-02 — Contratos sin versionado | ⚠️ Parcial — API Gateway versioning fuera del alcance |
+
+---
+
 ## Pendiente inmediato (próximos pasos)
 
-> FASE 7 al 90 % — ejecución de encuesta en curso. FASE 8 (diseño AWS) es la siguiente fase formal.
+> FASE 7 al 90 % — ejecución de encuesta en curso. FASE 8 completada ✓. FASE 9 es la siguiente fase formal.
 
 1. **[FASE 7 — REQUERIDO]** Producir y hostear material de encuesta:
    - Generar PDF desde `docs/atam/material-apoyo/resumen-proyecto.md` → subir Google Drive → URL pública
@@ -307,7 +345,7 @@ refrescar "Última actualización".
    - Crear Google Form según `docs/atam/instrumento-encuesta.md` → actualizar URLs en material
    - Pilotar con 2–3 personas → ajustar si es necesario → difundir según `docs/atam/plan-difusion.md`
 2. **[FASE 7 — POST-ENCUESTA]** Analizar respuestas y completar §8 del informe ATAM
-3. **[FASE 8]** Diseño de arquitectura AWS (diagrama, IAM, VPC, CloudWatch, estimación de costos)
+3. **[FASE 9]** Guía de buenas prácticas (R5) y consolidación del documento final de tesis (R6)
 4. **[OPCIONAL — menor]** Reemplazar `casos-de-estudio/iot/to-be/iot-to-be-orquestador.json` con export real de n8n (placeholders en `workflowId` — no afecta REGs evaluadas)
 
 ---
@@ -366,4 +404,14 @@ docs/atam/instrumento-encuesta.md                    Encuesta de validación ext
 docs/atam/material-apoyo/resumen-proyecto.md         Fuente Markdown del PDF de 4 páginas para respondentes
 docs/atam/material-apoyo/guion-video.md              Guion del video de 5–7 minutos
 microframework/adr/ADR-MF-004-atam-adaptado-individual.md  Adaptación metodológica ATAM individual
+docs/aws/INDEX.md                                   Índice de todos los artefactos de Fase 8
+docs/aws/arquitectura-aws.md                        Documento principal AWS: VPC, ECS, RDS, Redis, S3, riesgos ATAM
+docs/aws/seguridad-iam.md                           IAM, Secrets Manager, ACM, WAF, Security Groups (Diagramas 5 y 6)
+docs/aws/observabilidad-aws.md                      CloudWatch Logs, Alarms, Dashboard, Log Insights queries
+docs/aws/escalabilidad.md                           Queue Mode, auto-scaling workers, deploy strategies (Diagrama 4)
+docs/aws/estimacion-costos.md                       Costos 3 tiers, optimizaciones, comparativa (Diagrama 7)
+docs/aws/diagramas-aws.md                           Fuente canónica de los 7 diagramas Mermaid de Fase 8
+microframework/adr/ADR-MF-005-ecs-fargate-vs-ec2.md  Decisión ECS Fargate vs EC2/EKS
+microframework/adr/ADR-MF-006-n8n-queue-mode.md    Decisión Queue Mode con Redis BullMQ
+microframework/adr/ADR-MF-007-rds-multi-az.md      Decisión RDS PostgreSQL Multi-AZ en Producción
 ```
