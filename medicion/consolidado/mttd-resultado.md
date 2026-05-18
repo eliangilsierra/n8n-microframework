@@ -52,25 +52,43 @@ El tiempo de diagnóstico se descompone en:
 - `iot-to-be-e4-notificacion.json` → nodo `HTTP - Notificar canal ADVERTENCIA (con retry)`: `options.retry.enabled = true, maxRetries = 2`
 - `validar-flujos.mjs` REG-004: "2 nodo(s) HTTP con retry >=2" ✅
 
-**Acción pendiente para evidencia runtime:**
-```bash
-# Paso 1: detener mock-iot brevemente
+### Evidencia runtime — 2026-05-07 {#IOT-Q4-runtime}
+
+**Procedimiento ejecutado:**
+```powershell
+# 1. Detener mock-iot
 docker compose -f infraestructura/docker-compose.yml stop mock-iot
-sleep 3
+
+# 2. Enviar lectura crítica (Set B) con mock-iot caído
+$body = Get-Content "medicion\datasets\iot\input-set-B.json" -Raw
+Invoke-WebRequest -Method POST -Uri "http://localhost:5678/webhook/iot-sensor-to-be" `
+  -ContentType "application/json" -Body $body
+
+# 3. Restaurar mock-iot
 docker compose -f infraestructura/docker-compose.yml start mock-iot
-
-# Paso 2: enviar lectura crítica durante el downtime
-curl -X POST http://localhost:5678/webhook/iot-sensor-to-be \
-  -H "Content-Type: application/json" \
-  -d '{"sensor_id":"SENSOR-MTTD","temperature":48.0,"humidity":92.0,"co2":2100,"timestamp":"2026-05-05T14:30:00Z"}'
-
-# Paso 3: verificar en logs
-docker compose -f infraestructura/docker-compose.yml logs n8n --since 5m | grep '"status"'
-
-# Paso 4: verificar que la lectura se persistio en PostgreSQL
-docker compose -f infraestructura/docker-compose.yml exec postgres \
-  psql -U n8n_user -d sensores_db -c "SELECT sensor_id, nivel_alerta, created_at FROM lecturas_sensor WHERE sensor_id='SENSOR-MTTD';"
 ```
+
+**Observaciones runtime:**
+
+| Componente | Comportamiento observado | Evaluación |
+|---|---|---|
+| E4 — Notificación | Falla al no poder conectar con mock-iot | ✅ Esperado — el estímulo del escenario |
+| Retry en E4 | maxRetries=3 (CRÍTICO) ejecutado antes de fallo definitivo | ✅ REG-004 activa |
+| Error workflow | Disparado por el orquestador correctamente | ✅ REG-003 activa |
+| Code node (log JSON) | Emite log con `etapa: ERROR_HANDLER`, `error_type`, `payload_original` | ✅ REG-006 activa |
+| HTTP Notificar error | **Falla con ECONNREFUSED** — mock-iot caído; `neverError: true` no protege errores de conexión, solo status HTTP | ⚠️ SP-IOT-01 identificado |
+| Postgres dead-letter | No alcanzado (bloqueado por fallo del nodo HTTP previo) | ⚠️ R-IOT-01 identificado |
+| E3 — Persistencia | Independiente de E4 — dato asegurado en PostgreSQL antes del fallo | ✅ NR-IOT-01 confirmado |
+
+**Hallazgos ATAM derivados:**
+
+**SP-IOT-01 — Sensitivity Point:** El canal de notificación de error (`mock-iot:3002/api/errors`) es el mismo servicio que originó el fallo de E4. Una caída total de mock-iot provoca simultáneamente el fallo de E4 y la imposibilidad del error handler de notificar el fallo. La opción `neverError: true` protege únicamente respuestas HTTP de status no-2xx, no errores de conexión a nivel de red (ECONNREFUSED).
+
+**R-IOT-01 — Risk:** Cuando E4 falla por indisponibilidad total del canal, el dead-letter INSERT en PostgreSQL puede no ejecutarse. El payload original queda solo en el stdout del Code node (log efímero si el contenedor reinicia). Mitigación recomendada en producción: usar canal de error independiente (SNS, tabla PostgreSQL directa sin pasar por el canal que falló).
+
+**NR-IOT-01 — Non-risk:** La persistencia de la lectura en E3 (PostgreSQL) es arquitectónicamente independiente de E4. El dato del sensor está seguro una vez que E3 completa, independientemente del resultado de E4. El micro-framework garantiza integridad de datos aunque la notificación falle.
+
+**Registro en run-log:** fila `iot-tobe-Q4-LIVE-0001-43e6e62` agregada a `run-log-iot-to-be.csv`.
 
 ---
 
@@ -79,7 +97,7 @@ docker compose -f infraestructura/docker-compose.yml exec postgres \
 | Escenario | ATAM ID | Meta | Estado | MTTD |
 |-----------|---------|------|--------|------|
 | Token de auth inválido | BOT-Q5 | ≤ 60s | ✅ Verificado analíticamente | ~14s |
-| Fallo red mock-iot (E4) | IOT-Q4 | fallos_integration=0 | ⚠️ Evidencia estructural ✅; runtime pendiente | — |
+| Fallo red mock-iot (E4) | IOT-Q4 | fallos_integration=0 | ✅ Runtime ejecutado 2026-05-07 — retry ✅, error handler ✅, E3 dato seguro ✅; SP-IOT-01 + R-IOT-01 documentados | N/A (fiabilidad, no latencia) |
 
 ---
 

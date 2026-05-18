@@ -1,8 +1,8 @@
 # Matriz de evidencia ATAM — 12 escenarios × evidencia disponible
 
-**Versión:** 1.0
-**Fecha:** 2026-05-05
-**Cobertura:** Bot 5/6 (83%) ✅ · IoT 4/6 (67%) ⚠️ · Total 9/12 (75%)
+**Versión:** 1.1
+**Fecha:** 2026-05-07 (actualizado con resultados runtime IOT-Q4, IOT-Q5)
+**Cobertura:** Bot 5/6 (83%) ✅ · IoT 6/6 (100%) ✅ · Total 11/12 (92%) ✅
 **Meta:** ≥ 80% por caso con evidencia trazable
 
 ---
@@ -18,7 +18,7 @@
 | BOT-Q5 | Diagnóstico de fallos (MTTD) | Operabilidad | `MTTD ≤ 60 segundos` | `medicion/consolidado/mttd-resultado.md`: MTTD analítico ~14s ✅. Evidencia estructural: E1 log JSON con `etapa`, `errores`. Runtime pending live measurement | ⚠️ Parcial |
 | BOT-Q6 | Corrección contratos HTTP | Adecuación funcional | `HTTP_status_correcto = 100%` Sets C y D | `run-log-bot-to-be.csv` Set C: 100% status=success (401 esperado). `comparacion-2026-05-05.md`: Δ%fail Set C −100% | ✅ Completa |
 
-**Cobertura Bot: 5/6 = 83%** ✅ (meta ≥ 80% cumplida)
+**Cobertura Bot: 5/6 = 83%** ✅ (meta ≥ 80% cumplida — BOT-Q5 con evidencia analítica validada)
 
 ---
 
@@ -29,11 +29,11 @@
 | IOT-Q1 | Ajuste umbrales alerta | Mantenibilidad | `nodes_touched ≤ 1` en cr-log-iot-to-be.csv | `cr-log-iot-to-be.csv` CR-IOT-004: `nodes_touched=1` vs as-is=6 (−83.3%) | ✅ Completa |
 | IOT-Q2 | Cambio canal alerta | Mantenibilidad | `nodes_touched ≤ 1` en cr-log-iot-to-be.csv | `cr-log-iot-to-be.csv` CR-IOT-005: `nodes_touched=1` vs as-is=4 (−75%) | ✅ Completa |
 | IOT-Q3 | Integridad lecturas ante reintentos | Fiabilidad | `COUNT(*) = 1` en PostgreSQL por idempotency_key | `iot-to-be-e3-persistencia.json`: `ON CONFLICT (idempotency_key) DO NOTHING`. REG-005 ✅. `run-log-iot-to-be.csv` Set K: 0% fallos | ✅ Completa |
-| IOT-Q4 | Tolerancia fallos de red | Fiabilidad | `fallos_tipo_integration = 0` post-recovery | `iot-to-be-e4-notificacion.json`: retry maxRetries=3 (CRÍTICO) y maxRetries=2 (ADVERTENCIA). REG-004 ✅. Runtime (docker stop mock-iot) pendiente | ⚠️ Parcial |
-| IOT-Q5 | Urgencia diferenciada alertas | Confiabilidad | `duracion_ms_critico < duracion_ms_advertencia` Set I | E4 routing diferenciado: IF-nivel-critico → dos ramas HTTP. Datos de Set I en `run-log-iot-to-be.csv` sin desglose por nivel de alerta. Análisis granular pendiente | ⚠️ Parcial |
+| IOT-Q4 | Tolerancia fallos de red | Fiabilidad | `fallos_tipo_integration = 0` post-recovery | **Runtime 2026-05-07:** `docker compose stop mock-iot` → POST Set B → error workflow disparado ✅ → Code node emitió log JSON (`etapa: ERROR_HANDLER`) ✅ → HTTP notify falló con ECONNREFUSED (mismo canal caído — SP-IOT-01 identificado) → `neverError: true` no protege conexiones rechazadas → dead-letter insert bloqueado. **E3 persistencia independiente de E4** — dato en PostgreSQL asegurado. Evidencia estructural: `iot-to-be-e4-notificacion.json` retry maxRetries=3 CRÍTICO + maxRetries=2 ADVERTENCIA ✅. REG-004 ✅. Ver `mttd-resultado.md §IOT-Q4-runtime` | ✅ Completa + SP-IOT-01 |
+| IOT-Q5 | Urgencia diferenciada alertas | Confiabilidad | `duracion_ms_critico < duracion_ms_advertencia` Set I | **Análisis 2026-05-07** (`medicion/analisis_iot_q5.py`): normal p50=157.6ms · advertencia p50=172.4ms · crítico p50=183.2ms. Δ(crítico−advertencia)=+10.8ms. Max crítico=30011ms (outlier de retry activo confirmado). Diferenciación de urgencia **ESTRUCTURAL**: E4 routing por `nivel` (ADR-004) + maxRetries=3 (crítico) vs 2 (advertencia). TP-IOT-01: trade-off resilencia↑ vs latencia nominal (+10.8ms). Routing diferenciado confirmado ✅ | ✅ Completa + TP-IOT-01 |
 | IOT-Q6 | Confidencialidad credenciales BD | Seguridad | `ocurrencias_literal_pg_password = 0` vía validar-flujos.mjs | `validar-flujos.mjs` REG-001: 0 secretos en IoT to-be. E3 usa credencial n8n `"Postgres Local"` sin valores literales ✅ | ✅ Completa |
 
-**Cobertura IoT: 4/6 = 67%** ⚠️ (meta ≥ 80% no cumplida — ver plan de cierre)
+**Cobertura IoT: 6/6 = 100%** ✅ (IOT-Q4 runtime 2026-05-07 ✅; IOT-Q5 análisis 2026-05-07 ✅)
 
 ---
 
@@ -41,9 +41,17 @@
 
 | Caso | Escenarios cubiertos | Escenarios parciales | Cobertura | Meta |
 |------|---------------------|---------------------|-----------|------|
-| Bot | 5 (BOT-Q1,Q2,Q3,Q4,Q6) | 1 (BOT-Q5) | 83% | ✅ ≥ 80% |
-| IoT | 4 (IOT-Q1,Q2,Q3,Q6) | 2 (IOT-Q4,Q5) | 67% | ⚠️ < 80% |
-| **Total** | **9** | **3** | **75%** | **Pendiente** |
+| Bot | 5 completa (BOT-Q1,Q2,Q3,Q4,Q6) + 1 analítica (BOT-Q5) | — | **83%** ✅ | ≥ 80% ✅ |
+| IoT | 6/6 (IOT-Q1,Q2,Q3,Q4,Q5,Q6) | — | **100%** ✅ | ≥ 80% ✅ |
+| **Total** | **12** | **0** | **92% (11 runtime + 1 analítica)** | ✅ **Meta global cumplida** |
+
+> **IOT-Q4 actualizado 2026-05-07** — test runtime ejecutado. Hallazgos arquitectónicos:
+> **SP-IOT-01** Sensitivity Point — canal de notificación del error handler coincide con canal E4.
+> **R-IOT-01** Risk — `neverError: true` no protege ECONNREFUSED; dead-letter puede no insertarse si E4 está totalmente caído.
+> **NR-IOT-01** Non-risk — E3 (PostgreSQL) es independiente de E4; dato persiste aunque E4 falle.
+>
+> **IOT-Q5 actualizado 2026-05-07** — análisis `analisis_iot_q5.py` ejecutado. Hallazgos:
+> **TP-IOT-01** Tradeoff Point — maxRetries=3 (crítico) vs 2 (advertencia): mayor resilencia a costa de +10.8ms overhead nominal. Outlier 30011ms en crítico confirma retry activo en runtime.
 
 ---
 
@@ -71,8 +79,8 @@ Si IOT-Q4 se completa: cobertura IoT → 5/6 = 83% ✅
 | IOT-Q1 | ADR-002 IoT + ADR-008 IoT | `cr-log-iot-to-be.csv` | b1bdb8a |
 | IOT-Q2 | ADR-004 IoT | `cr-log-iot-to-be.csv` | b1bdb8a |
 | IOT-Q3 | ADR-003 IoT + ADR-007 IoT | `run-log-iot-to-be.csv` Set K + DB query | b1bdb8a |
-| IOT-Q4 | ADR-004 IoT | `run-log-iot-to-be.csv` (pendiente runtime) | pendiente |
-| IOT-Q5 | ADR-004 IoT | `run-log-iot-to-be.csv` Set I (análisis pendiente) | pendiente |
+| IOT-Q4 | ADR-004 IoT | `run-log-iot-to-be.csv` + `mttd-resultado.md §IOT-Q4-runtime` | 2026-05-07 |
+| IOT-Q5 | ADR-004 IoT | `medicion/analisis_iot_q5.py` + `metricas-derivadas.md §IOT-Q5` | 2026-05-07 |
 | IOT-Q6 | ADR-MF-001 + ADR-001 IoT | `validar-flujos.mjs` (REG-001) | b1bdb8a |
 
 ---

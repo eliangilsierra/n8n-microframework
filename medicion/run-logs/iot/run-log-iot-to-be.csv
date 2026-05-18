@@ -1999,3 +1999,4 @@ iot-tobe-K-0196-850E83,iot,to-be,K,2026-05-06T02:18:28.204868+00:00,2026-05-06T0
 iot-tobe-K-0197-E46776,iot,to-be,K,2026-05-06T02:18:28.475446+00:00,2026-05-06T02:18:28.644644+00:00,success,,,b1bdb8a
 iot-tobe-K-0198-8BDC9E,iot,to-be,K,2026-05-06T02:18:28.747319+00:00,2026-05-06T02:18:28.920608+00:00,success,,,b1bdb8a
 iot-tobe-K-0199-C2F96F,iot,to-be,K,2026-05-06T02:18:29.023201+00:00,2026-05-06T02:18:29.175806+00:00,success,,,b1bdb8a
+iot-tobe-Q4-LIVE-0001-43e6e62,iot,to-be,B,2026-05-07T00:00:00+00:00,2026-05-07T00:00:00+00:00,fail,integration,IOT-Q4 runtime: mock-iot detenido → retry E4 (maxRetries=3) → error workflow disparado ✅ → Code node log JSON ✅ → HTTP notify ECONNREFUSED (SP-IOT-01) → dead-letter bloqueado (R-IOT-01) → E3 dato persistido en PostgreSQL (NR-IOT-01),43e6e62

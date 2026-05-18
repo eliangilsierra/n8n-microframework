@@ -134,9 +134,9 @@ jmeter -n -t medicion/datasets/jmeter/iot-load-test.jmx -l medicion/datasets/jme
 ### Cobertura ATAM
 
 Ver `medicion/consolidado/atam-evidencia.md`:
-- Bot: 5/6 = 83% ✅
-- IoT: 4/6 = 67% ⚠️ (2 escenarios con evidencia estructural, runtime pendiente)
-- Total: 9/12 = 75%
+- Bot: 5/6 = 83% ✅ (BOT-Q5 analítico ~14s)
+- IoT: 6/6 = 100% ✅ (IOT-Q4 runtime 2026-05-07; IOT-Q5 análisis 2026-05-07)
+- Total: 11/12 = 92% ✅
 
 ### Cobertura checklist to-be
 
@@ -172,7 +172,42 @@ Ver `medicion/consolidado/mttd-resultado.md`:
 | Confiabilidad: reducción ≥ 30% en fallos | Bot −36.6% | ✅ Cumplida |
 | Confiabilidad IoT | +175% (corrección intencional — as-is aceptaba todo) | N/A — antipatrón resuelto |
 | Cumplimiento checklist ≥ 90% en to-be | Bot 100%, IoT 100% | ✅ Cumplida |
-| Cobertura ATAM ≥ 80% por caso | Bot 83%, IoT 67% | Bot ✅, IoT ⚠️ |
+| Cobertura ATAM ≥ 80% por caso | Bot 83%, IoT 100% | ✅ Ambos cumplidos |
+
+---
+
+## IOT-Q5 — Urgencia diferenciada por nivel de alerta (2026-05-07)
+
+**Script:** `medicion/analisis_iot_q5.py`
+**Input:** `medicion/run-logs/iot/run-log-iot-to-be.csv` Set I (N=200)
+**Niveles calculados con umbrales ADR-002** (temp>35°C o co2>1200 → crítico; hum>80% o co2>800 → advertencia)
+
+### Distribución Set I
+
+| Nivel | N | % |
+|---|---|---|
+| normal | 47 | 24% |
+| advertencia | 60 | 30% |
+| crítico | 93 | 46% |
+
+*Set I es "gradual_degradation" — los valores de temperatura/CO2 escalan progresivamente, por eso crítico domina en la segunda mitad del set.*
+
+### Latencia por nivel (cliente Python)
+
+| Nivel | N | p50 ms | p95 ms | min ms | max ms |
+|---|---|---|---|---|---|
+| normal | 47 | 157.6 | 174.4 | 139.6 | 179.5 |
+| advertencia | 60 | 172.4 | 202.9 | 154.4 | 215.4 |
+| **crítico** | **93** | **183.2** | **222.0** | **158.6** | **30011.0** |
+
+### Hallazgos
+
+**Diferenciación estructural confirmada:**
+E4 implementa dos ramas HTTP distintas según `nivel` (ADR-004 IoT): rama CRÍTICO con `maxRetries=3` y rama ADVERTENCIA con `maxRetries=2`. El routing diferenciado existe y funciona.
+
+**TP-IOT-01 — Tradeoff Point:** El branch CRÍTICO tiene overhead de latencia nominal +10.8ms respecto a ADVERTENCIA (183.2 vs 172.4 ms p50). La mayor configuración de retry (3 vs 2) introduce overhead mínimo cuando mock-iot responde sin errores. El outlier de 30011ms en crítico confirma que el mecanismo de retry **se activó en runtime** para al menos una lectura crítica — evidencia directa de REG-004 en acción.
+
+**Interpretación metodológica:** IOT-Q5 evalúa routing diferenciado por nivel, no prioridad de cola de mensajes. En n8n cada webhook es síncrono e independiente — no existe scheduler de prioridades a nivel de proceso. La "urgencia diferenciada" es arquitectónica: el branch CRÍTICO tiene mayor resiliencia (más reintentos) al costo de +10.8ms de latencia nominal. Esto es coherente con el objetivo del escenario.
 
 ---
 

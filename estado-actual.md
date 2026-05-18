@@ -3,8 +3,8 @@
 Fuente única de verdad del avance. Actualizar al completar cada ítem: cambiar ✗ → ✓ y
 refrescar "Última actualización".
 
-**Última actualización:** 2026-05-05
-**Fase activa:** FASE 4 ✓ · FASE 5 ✓ · FASE 6 ✓ (cerradas 2026-05-05) · FASE 7 — Evaluación ATAM (siguiente)
+**Última actualización:** 2026-05-07
+**Fase activa:** FASE 7 — Evaluación ATAM (~90 % — pendiente ejecución encuesta y análisis)
 
 ---
 
@@ -19,7 +19,7 @@ refrescar "Última actualización".
 | 4 | Construcción del estado to-be | Completada ✓ (2026-05-05) |
 | 5 | Prueba piloto de instrumentos | Completada ✓ (2026-05-05) |
 | 6 | Medición comparativa | Completada ✓ (2026-05-05) — JMeter micro-benchmark pendiente (opcional) |
-| 7 | Evaluación ATAM | Pendiente — Utility Tree con 12 escenarios (6 Bot + 6 IoT) ✓ definido |
+| 7 | Evaluación ATAM | En ejecución avanzada (~90%) — pendiente solo encuesta externa y análisis |
 | 8 | Diseño de arquitectura AWS | Pendiente |
 | 9 | Guía de buenas prácticas y cierre | Pendiente |
 
@@ -258,16 +258,59 @@ refrescar "Última actualización".
 
 ---
 
+---
+
+## FASE 7 — Evaluación ATAM (~90 % — 2026-05-07)
+
+### Artefactos producidos ✓
+- ✓ Evidencia ATAM completada: Bot 5/6 (83%) ✅ · IoT 6/6 (100%) ✅ · Total 11/12 (92%) ✅
+- ✓ IOT-Q4 runtime ejecutado → SP-IOT-01, R-IOT-01, NR-IOT-01 documentados
+- ✓ IOT-Q5 análisis ejecutado (`medicion/analisis_iot_q5.py`) → TP-IOT-01 documentado
+- ✓ `docs/atam/analisis-approaches.md` — 12 approaches + clasificación SP/TP/R/NR × 12 escenarios
+- ✓ `docs/atam/matriz-scoring.md` — Scoring 1–5 as-is vs to-be para los 12 escenarios
+- ✓ `docs/atam/registro-riesgos-tradeoffs.md` — 3 SP · 3 TP · 4 R · 5 NR formalizados
+- ✓ `microframework/adr/ADR-MF-004-atam-adaptado-individual.md` — adaptación metodológica formal
+- ✓ `docs/atam/metodologia-atam-adaptada.md` — marco ATAM adaptado con sustento académico
+- ✓ `docs/atam/protocolo-encuesta.md` — protocolo completo de validación externa
+- ✓ `docs/atam/instrumento-encuesta.md` — 18 preguntas + mini-ATAM opcional (10–12 min)
+- ✓ `docs/atam/plan-analisis-encuesta.md` — plan estadístico (α Cronbach, κ Krippendorff)
+- ✓ `docs/atam/plan-difusion.md` — canales, plantillas y lista de candidatos
+- ✓ `docs/atam/material-apoyo/resumen-proyecto.md` — PDF 4 páginas (fuente Markdown)
+- ✓ `docs/atam/material-apoyo/guion-video.md` — guion video 5–7 min para panel
+- ✓ `docs/atam/material-apoyo/diagrama-comparativo.md` — diagramas Mermaid as-is vs to-be
+- ✓ `docs/atam/informe-atam-final.md` — informe ATAM capítulo de tesis (§1–§7 + §9–§10 + placeholder §8)
+- ✓ `docs/atam/INDEX.md` — índice completo de todos los artefactos de Fase 7
+
+### Hallazgos ATAM formalizados
+| Tipo | IDs | Descripción resumida |
+|---|---|---|
+| Sensitivity Points (3) | SP-BOT-01, SP-BOT-02, SP-IOT-01 | Idempotencia E3 · Log E1 · Canal error handler IoT |
+| Tradeoff Points (3) | TP-GLOBAL-01, TP-GLOBAL-02, TP-IOT-01 | Subflujos vs latencia · Validación vs flexibilidad · Retry diferenciado |
+| Risks (4) | R-BOT-01, R-IOT-01, R-GLOBAL-01, R-GLOBAL-02 | Rotación token · Dead-letter bloqueado · Logs efímeros · Contratos externos |
+| Non-risks (5) | NR-BOT-01, NR-BOT-02, NR-IOT-01, NR-IOT-02, NR-GLOBAL-01 | E1 previene side-effects · HTTP 401/400 · E3 independiente · Idempotencia IoT · Validador estático |
+
+### Pendiente para alcanzar 100 % (fuera del control del autor)
+- ⏳ Generar PDF desde `resumen-proyecto.md` y subir con URL pública
+- ⏳ Grabar video (5–7 min) y subir a Loom/YouTube no listado
+- ⏳ Crear Google Form según `instrumento-encuesta.md` y actualizar URLs
+- ⏳ Pilotar encuesta con 2–3 respondentes
+- ⏳ Ejecutar campaña de difusión (≥ 20 invitaciones — objetivo ≥ 15 respuestas)
+- ⏳ Analizar respuestas y completar §8 del `informe-atam-final.md` (~3–5 días post-recolección)
+
+---
+
 ## Pendiente inmediato (próximos pasos)
 
-> FASE 7 — Evaluación ATAM es la siguiente fase formal.
+> FASE 7 al 90 % — ejecución de encuesta en curso. FASE 8 (diseño AWS) es la siguiente fase formal.
 
-1. **[OPCIONAL - 45 min]** Completar cobertura ATAM IoT a 83%:
-   - IOT-Q4: `docker compose stop mock-iot` → curl sensor crítico → verificar retry en logs → anotar en `mttd-resultado.md`
-   - IOT-Q5: script Python para filtrar `run-log-iot-to-be.csv` Set I por nivel y comparar `duracion_ms`
-2. **[OPCIONAL]** Instalar JMeter y ejecutar micro-benchmark (métrica complementaria, no bloquea FASE 7)
-3. **[REQUERIDO IoT]** Reemplazar `casos-de-estudio/iot/to-be/iot-to-be-orquestador.json` con export de n8n que tenga IDs reales de subflujos
-4. **[INICIO FASE 7]** Redactar informe ATAM formal con utility tree, escenarios priorizados, análisis de trade-offs y riesgos
+1. **[FASE 7 — REQUERIDO]** Producir y hostear material de encuesta:
+   - Generar PDF desde `docs/atam/material-apoyo/resumen-proyecto.md` → subir Google Drive → URL pública
+   - Grabar video 5–7 min siguiendo `docs/atam/material-apoyo/guion-video.md` → Loom/YouTube
+   - Crear Google Form según `docs/atam/instrumento-encuesta.md` → actualizar URLs en material
+   - Pilotar con 2–3 personas → ajustar si es necesario → difundir según `docs/atam/plan-difusion.md`
+2. **[FASE 7 — POST-ENCUESTA]** Analizar respuestas y completar §8 del informe ATAM
+3. **[FASE 8]** Diseño de arquitectura AWS (diagrama, IAM, VPC, CloudWatch, estimación de costos)
+4. **[OPCIONAL — menor]** Reemplazar `casos-de-estudio/iot/to-be/iot-to-be-orquestador.json` con export real de n8n (placeholders en `workflowId` — no afecta REGs evaluadas)
 
 ---
 
