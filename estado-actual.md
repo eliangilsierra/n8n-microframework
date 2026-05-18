@@ -3,8 +3,8 @@
 Fuente única de verdad del avance. Actualizar al completar cada ítem: cambiar ✗ → ✓ y
 refrescar "Última actualización".
 
-**Última actualización:** 2026-05-07
-**Fase activa:** FASE 7 — Evaluación ATAM (~90 % — pendiente ejecución encuesta y análisis)
+**Última actualización:** 2026-05-18
+**Fase activa:** FASE 7 — Evaluación ATAM (~90 % — encuesta pendiente de ejecución) · FASE 8 y FASE 9 pendientes
 
 ---
 
@@ -19,7 +19,7 @@ refrescar "Última actualización".
 | 4 | Construcción del estado to-be | Completada ✓ (2026-05-05) |
 | 5 | Prueba piloto de instrumentos | Completada ✓ (2026-05-05) |
 | 6 | Medición comparativa | Completada ✓ (2026-05-05) — JMeter micro-benchmark pendiente (opcional) |
-| 7 | Evaluación ATAM | En ejecución avanzada (~90%) — pendiente solo encuesta externa y análisis |
+| 7 | Evaluación ATAM | En ejecución avanzada (~90%) ✓ artefactos completos — pendiente encuesta y análisis |
 | 8 | Diseño de arquitectura AWS | Pendiente |
 | 9 | Guía de buenas prácticas y cierre | Pendiente |
 
@@ -240,7 +240,7 @@ refrescar "Última actualización".
 - ✓ Comparación latencia y fallos: `medicion/consolidado/comparacion-2026-05-05.md`
 - ✓ Reporte HTML interactivo: `medicion/consolidado/reporte-runlogs.html`
 - ✓ Métricas derivadas: `medicion/consolidado/metricas-derivadas.md`
-- ✓ Matriz ATAM × evidencia: `medicion/consolidado/atam-evidencia.md` (Bot 83% ✅, IoT 67% ⚠️)
+- ✓ Matriz ATAM × evidencia: `medicion/consolidado/atam-evidencia.md` v1.1 (Bot 83% ✅, IoT 100% ✅ — actualizado 2026-05-07)
 - ✓ MTTD documentado: `medicion/consolidado/mttd-resultado.md`
 
 ### Resultados clave
@@ -249,18 +249,16 @@ refrescar "Última actualización".
 | Impacto CR ≥ 20% reducción nodos | Bot −81%, IoT −84% ✅ |
 | Fallos ≥ 30% reducción | Bot −36.6% ✅ |
 | Checklist ≥ 90% en to-be | Bot 100%, IoT 100% ✅ |
-| Cobertura ATAM ≥ 80% | Bot 83% ✅ / IoT 67% ⚠️ |
+| Cobertura ATAM ≥ 80% | Bot 83% ✅ · IoT 100% ✅ · Total 92% ✅ |
 
-### Pendiente menor (no bloquea FASE 7)
-- ⚠️ IOT-Q4 runtime: ejecutar `docker compose stop mock-iot` + lectura crítica + verificar retry en logs (15 min)
-- ⚠️ IOT-Q5 análisis: filtrar `run-log-iot-to-be.csv` Set I por nivel de alerta y comparar `duracion_ms` (30 min)
-- ⚠️ JMeter micro-benchmark: instalar JMeter y ejecutar `.jmx` files (métrica complementaria)
-
----
+### Pendiente menor (no bloquea fases siguientes)
+- ✓ IOT-Q4 runtime: ejecutado 2026-05-07 → SP-IOT-01, R-IOT-01, NR-IOT-01 identificados
+- ✓ IOT-Q5 análisis: ejecutado 2026-05-07 → TP-IOT-01 cuantificado (+10.8 ms)
+- ⚠️ JMeter micro-benchmark: herramienta no instalada — métrica complementaria, no bloquea tesis
 
 ---
 
-## FASE 7 — Evaluación ATAM (~90 % — 2026-05-07)
+## FASE 7 — Evaluación ATAM (~90 % — iniciada 2026-05-07, artefactos completos 2026-05-18)
 
 ### Artefactos producidos ✓
 - ✓ Evidencia ATAM completada: Bot 5/6 (83%) ✅ · IoT 6/6 (100%) ✅ · Total 11/12 (92%) ✅
@@ -359,4 +357,13 @@ docs/context/atam-utility-tree.md                    Utility Tree ATAM: 12 escen
 docs/protocolo-mttd.md                               Protocolo de medición MTTD — reproducible, meta < 60 segundos
 docs/context/justificacion-casos-de-estudio.md       Taxonomía LC/NC y representatividad formal de Bot e IoT
 docs/context/justificacion-rediseno-asis.md          Validez metodológica del rediseño intencional del as-is
+docs/atam/INDEX.md                                   Índice de todos los artefactos de Fase 7
+docs/atam/informe-atam-final.md                      Informe ATAM capítulo de tesis (R4) — §1–§7 + §9–§10 completos
+docs/atam/analisis-approaches.md                     12 approaches + clasificación SP/TP/R/NR × 12 escenarios
+docs/atam/matriz-scoring.md                          Scoring 1–5 as-is vs to-be por escenario
+docs/atam/registro-riesgos-tradeoffs.md              3 SP · 3 TP · 4 R · 5 NR formalizados
+docs/atam/instrumento-encuesta.md                    Encuesta de validación externa — 18 preguntas + mini-ATAM
+docs/atam/material-apoyo/resumen-proyecto.md         Fuente Markdown del PDF de 4 páginas para respondentes
+docs/atam/material-apoyo/guion-video.md              Guion del video de 5–7 minutos
+microframework/adr/ADR-MF-004-atam-adaptado-individual.md  Adaptación metodológica ATAM individual
 ```
