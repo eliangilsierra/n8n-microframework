@@ -4,7 +4,7 @@ Fuente única de verdad del avance. Actualizar al completar cada ítem: cambiar 
 refrescar "Última actualización".
 
 **Última actualización:** 2026-05-18
-**Fase activa:** FASE 7 — Evaluación ATAM (~90 % — encuesta pendiente de ejecución) · FASE 8 Completada ✓ · FASE 9 pendiente
+**Fase activa:** FASE 7 — Evaluación ATAM (~90 % — encuesta pendiente de ejecución) · FASE 8 Completada ✓ · FASE 9 R5 Completada ✓ — R6 pendiente
 
 ---
 
@@ -21,7 +21,7 @@ refrescar "Última actualización".
 | 6 | Medición comparativa | Completada ✓ (2026-05-05) — JMeter micro-benchmark pendiente (opcional) |
 | 7 | Evaluación ATAM | En ejecución avanzada (~90%) ✓ artefactos completos — pendiente encuesta y análisis |
 | 8 | Diseño de arquitectura AWS | Completada ✓ (2026-05-18) — OE4 cumplido |
-| 9 | Guía de buenas prácticas y cierre | Pendiente |
+| 9 | Guía de buenas prácticas y cierre | R5 Completada ✓ (2026-05-18) — R6 (documento final tesis) pendiente |
 
 ---
 
@@ -335,9 +335,38 @@ refrescar "Última actualización".
 
 ---
 
+## FASE 9 — Guía de Buenas Prácticas (R5) — Completada ✓ (2026-05-18)
+
+### Artefacto producido ✓
+- ✓ `docs/guia-buenas-practicas.md` — Guía monolítica v1.0, ~12 capítulos + 5 apéndices
+  - Cap 1 introducción + glosario de 25 términos
+  - Cap 2 pre-requisitos y estructura del repo
+  - Cap 3 Quick Start 30 minutos ejecutable (Docker → n8n → import → curl → logs → validador)
+  - Cap 4 metamodelo E1-E4 con diagrama Mermaid y mapeo ISO 25010
+  - Cap 5 Validación E/S (REG-007/008/009 + 9 schemas + ejemplos Bot/IoT) — sección anteproyecto ✅
+  - Cap 6 Manejo de errores (REG-003/004/005 + 5 patrones + TP-IOT-01 + SP-IOT-01) — sección anteproyecto ✅
+  - Cap 7 Seguridad (REG-001 + 8 ítems DevSecOps + ADR-MF-001 + R-BOT-01) — sección anteproyecto ✅
+  - Cap 8 Observabilidad (REG-006 + contrato log JSON + plantilla Code node + ADR-MF-003) — sección anteproyecto ✅
+  - Cap 9 Catálogo 11 antipatrones + señales de detección
+  - Cap 10 Checklist final aplicable (arquitectura + DevSecOps + quick check + comando único) — sección anteproyecto ✅
+  - Cap 11 Escalando local→AWS (mapeo + preservación REGs + costos + referencia docs/aws/)
+  - Cap 12 Trazabilidad RF→ADR→REG→ISO→ATAM + modelo madurez 5 niveles + auto-evaluación
+  - Apéndices A-E (referencia REGs/ADRs/evidencia/recursos externos/mapa archivos)
+
+### Cumplimiento con anteproyecto
+- ✓ Las 5 secciones obligatorias cubiertas: validación E/S, manejo errores, seguridad, observabilidad, checklist
+- ✓ Cada REG-001…010 referenciado al menos una vez
+- ✓ Los 11 antipatrones catalogados
+- ✓ Los 5 patrones explicados
+- ✓ Glosario con 25 términos críticos
+- ✓ Cap 11 referencia docs/aws/ sin duplicar contenido
+- ✓ TOC navegable con anclas Markdown
+
+---
+
 ## Pendiente inmediato (próximos pasos)
 
-> FASE 7 al 90 % — ejecución de encuesta en curso. FASE 8 completada ✓. FASE 9 es la siguiente fase formal.
+> FASE 7 al 90 % — ejecución de encuesta en curso. FASE 8 completada ✓. FASE 9 R5 completada ✓. Falta R6 (documento final de tesis).
 
 1. **[FASE 7 — REQUERIDO]** Producir y hostear material de encuesta:
    - Generar PDF desde `docs/atam/material-apoyo/resumen-proyecto.md` → subir Google Drive → URL pública
@@ -345,7 +374,7 @@ refrescar "Última actualización".
    - Crear Google Form según `docs/atam/instrumento-encuesta.md` → actualizar URLs en material
    - Pilotar con 2–3 personas → ajustar si es necesario → difundir según `docs/atam/plan-difusion.md`
 2. **[FASE 7 — POST-ENCUESTA]** Analizar respuestas y completar §8 del informe ATAM
-3. **[FASE 9]** Guía de buenas prácticas (R5) y consolidación del documento final de tesis (R6)
+3. **[FASE 9 — R6]** Consolidación del documento final de tesis (integración de R1–R5 con anexos técnicos)
 4. **[OPCIONAL — menor]** Reemplazar `casos-de-estudio/iot/to-be/iot-to-be-orquestador.json` con export real de n8n (placeholders en `workflowId` — no afecta REGs evaluadas)
 
 ---
@@ -414,4 +443,5 @@ docs/aws/diagramas-aws.md                           Fuente canónica de los 7 di
 microframework/adr/ADR-MF-005-ecs-fargate-vs-ec2.md  Decisión ECS Fargate vs EC2/EKS
 microframework/adr/ADR-MF-006-n8n-queue-mode.md    Decisión Queue Mode con Redis BullMQ
 microframework/adr/ADR-MF-007-rds-multi-az.md      Decisión RDS PostgreSQL Multi-AZ en Producción
+docs/guia-buenas-practicas.md                       Entregable R5 — guía monolítica de 12 capítulos + 5 apéndices
 ```
