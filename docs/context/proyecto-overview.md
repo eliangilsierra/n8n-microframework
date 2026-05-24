@@ -6,17 +6,17 @@ Análisis y diseño de un micro-framework LC/NC para n8n con arquitecturas limpi
 
 ## Objetivo general
 
-Investigar y desarrollar un micro-framework para soluciones Low-Code/No-Code en n8n, fundamentado en principios de Clean Architecture y prácticas DevSecOps, con el propósito de estructurar y evaluar arquitecturas de software mediante la comparación de diseños as-is y to-be usando ATAM, analizar su impacto en atributos de calidad como mantenibilidad, trazabilidad, seguridad y confiabilidad, y orientar el diseño de arquitecturas costo-eficientes y escalables en AWS.
+Desarrollar un micro-framework para soluciones Low-Code/No-Code en n8n, fundamentado en principios de Clean Architecture y prácticas DevSecOps, que permita estructurar y evaluar arquitecturas de software mediante la comparación de diseños as-is y to-be usando ATAM, analizar su impacto en atributos de calidad como mantenibilidad, trazabilidad, seguridad y confiabilidad, y orientar el diseño de arquitecturas costo-eficientes y escalables en AWS.
 
 ## Objetivos específicos
 
-**OE1:** Proponer y conceptualizar un marco arquitectónico para flujos LC/NC en n8n, basado en principios de arquitectura limpia, que relacione atributos de calidad con decisiones de diseño, reglas de organización, patrones y criterios de buenas prácticas.
+**OE1:** Definir un marco arquitectónico para flujos Low-Code/No-Code en n8n, basado en principios de arquitectura limpia, que relacione atributos de calidad con decisiones de diseño, reglas de organización, patrones y criterios de buenas prácticas.
 
-**OE2:** Evaluar el uso del marco arquitectónico en dos casos de estudio representativos, documentando arquitecturas as-is y to-be con diagramas claros, registro de decisiones (ADR) y una matriz de trazabilidad entre requerimientos, decisiones y atributos de calidad.
+**OE2:** Sistematizar el uso del marco arquitectónico en dos casos de estudio representativos, documentando arquitecturas as-is y to-be con diagramas claros, registro de decisiones (ADR) y una matriz de trazabilidad entre requerimientos, decisiones y atributos de calidad.
 
-**OE3:** Aplicar un protocolo de evaluación arquitectónica basado en ATAM que permita analizar y comparar impactos, riesgos y compromisos de diseño entre las arquitecturas as-is y to-be de los casos de estudio seleccionados.
+**OE3:** Implementar un protocolo de evaluación arquitectónica basado en ATAM que permita analizar y comparar impactos, riesgos y compromisos de diseño entre las arquitecturas as-is y to-be de los casos de estudio seleccionados.
 
-**OE4:** Diseñar una arquitectura en AWS costo-eficiente y escalable, alineada con el micro-framework, que describa opciones de despliegue, puntos de escalado, controles de seguridad, observabilidad y operación para soportar adopción y evolución en entornos productivos.
+**OE4:** Proponer un diseño de arquitectura en AWS, costo-eficiente y escalable, alineado con el micro-framework, que describa opciones de despliegue, puntos de escalado, controles de seguridad, observabilidad y operación para soportar adopción y evolución en entornos productivos.
 
 ## Metodología
 

@@ -8,8 +8,8 @@
 
 ## Objetivo del entregable R3
 
-> "Diseñar una arquitectura en AWS costo-eficiente y escalable, alineada con el
-> micro-framework, que describa opciones de despliegue, puntos de escalado, controles
+> "Proponer un diseño de arquitectura en AWS, costo-eficiente y escalable, alineado con
+> el micro-framework, que describa opciones de despliegue, puntos de escalado, controles
 > de seguridad, observabilidad y operación para soportar adopción y evolución en
 > entornos productivos." — Anteproyecto MGADS, OE4
 

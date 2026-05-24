@@ -27,6 +27,12 @@ medicion/consolidado/*.html
 # --- Archivos de planificación -----------------------------------------------
 CLAUDE.md
 
+# --- Base de conocimiento externa --------------------------------------------
+# La carpeta final/ es consumida por una base de conocimiento que lee todos los
+# documentos en una carpeta plana. No se versiona: se regenera desde las fuentes
+# canónicas del repositorio.
+final/
+
 # --- n8n datos persistentes --------------------------------------------------
 n8n_data/
 infraestructura/n8n_data/

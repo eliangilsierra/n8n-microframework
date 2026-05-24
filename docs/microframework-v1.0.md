@@ -20,10 +20,13 @@ aplicables al construir flujos.
 
 Responde directamente a los objetivos específicos del anteproyecto:
 
-- **OE1** — Definir un micro-framework LC/NC orientado a automatizaciones con n8n,
-  basado en Clean Architecture y DevSecOps.
-- **OE2** — Evaluar el micro-framework mediante dos casos de estudio (as-is vs to-be) con
-  métricas cuantitativas reproducibles.
+- **OE1** — Definir un marco arquitectónico para flujos Low-Code/No-Code en n8n, basado
+  en principios de arquitectura limpia, que relacione atributos de calidad con decisiones
+  de diseño, reglas de organización, patrones y criterios de buenas prácticas.
+- **OE2** — Sistematizar el uso del marco arquitectónico en dos casos de estudio
+  representativos, documentando arquitecturas as-is y to-be con diagramas claros, registro
+  de decisiones (ADR) y una matriz de trazabilidad entre requerimientos, decisiones y
+  atributos de calidad.
 
 ---
 

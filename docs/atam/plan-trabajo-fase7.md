@@ -3,7 +3,7 @@
 **Versión:** 1.0
 **Fecha:** 2026-05-07
 **Autor:** Elian Hernando Gil Sierra
-**Propósito:** Llevar OE3 (aplicación del protocolo ATAM) del 45 % al máximo alcanzable antes de la ejecución de la encuesta, dejando únicamente pendiente la recolección de respuestas y su análisis posterior.
+**Propósito:** Llevar OE3 (implementación del protocolo ATAM) del 45 % al máximo alcanzable antes de la ejecución de la encuesta, dejando únicamente pendiente la recolección de respuestas y su análisis posterior.
 
 ---
 
