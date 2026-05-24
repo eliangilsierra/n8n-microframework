@@ -25,7 +25,7 @@
 |---------|--------|-----------|
 | Secretos fuera del JSON exportado | ❌ | Ver checklist-arquitectura §REG-001 — 5 literales presentes |
 | Uso de credential-reference de n8n para servicios externos | ❌ | Nodos 8, 12, 14 usan header literal en vez de credential |
-| `.env` excluido de git (`.gitignore`) | ✓ | `.gitignore` incluye `.env`, `n8n_data/`, `*.env` (regla del CLAUDE.md) |
+| `.env` excluido de git (`.gitignore`) | ✓ | `.gitignore` incluye `.env`, `n8n_data/`, `*.env` (convención del repositorio) |
 | Rotación documentada | N/A | No aplica en as-is ad-hoc |
 
 ### Pilar 2 — Validación automatizada (parcial)

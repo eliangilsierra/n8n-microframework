@@ -398,7 +398,7 @@ refrescar "Última actualización".
 
 ```
 estado-actual.md                                     este archivo (única fuente de verdad del avance)
-CLAUDE.md                                            punto de entrada para Claude Code
+CLAUDE.md                                            configuración y convenciones del repositorio
 docs/context/ANTEPROYECTO_ELIAN_GIL_MGADS.pdf        anteproyecto (fuente normativa del alcance)
 docs/context/proyecto-overview.md                    objetivos, metodología, métricas, metas, mapeo ISO 25010
 docs/context/arquitectura-flujos.md                  arquitectura as-is y to-be, detalle técnico

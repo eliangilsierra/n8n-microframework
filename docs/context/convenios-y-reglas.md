@@ -1,6 +1,6 @@
 # Convenciones y reglas de trabajo
 
-Este archivo define las reglas que Claude Code debe seguir al trabajar en el repositorio. Leer completo antes de hacer cualquier modificación.
+Este archivo define las convenciones y reglas que aplican al trabajar en el repositorio. Leer completo antes de hacer cualquier modificación.
 
 ---
 

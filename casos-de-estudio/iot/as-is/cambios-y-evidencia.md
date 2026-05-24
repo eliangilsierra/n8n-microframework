@@ -80,7 +80,7 @@ Se removieron los literales y se referencia una credential `postgres-iot-credent
 configurada en la instancia local de n8n.
 
 **Rationale:** Aunque el proyecto documenta que "el as-is viola REG-001 intencionalmente",
-las credenciales reales NUNCA deben estar en el repositorio (regla crítica del CLAUDE.md).
+las credenciales reales NUNCA deben estar en el repositorio (regla crítica definida en las convenciones del proyecto).
 La violación de REG-001 queda representada por los tokens HTTP hardcodeados (nodos 9, 11,
 13), que sí son valores ficticios sin riesgo operativo. Las credenciales de la BD real
 van en `.env` (ignorado por git) y se inyectan vía credential de n8n.
