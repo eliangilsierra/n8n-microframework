@@ -45,7 +45,8 @@ Responde directamente a los objetivos específicos del anteproyecto:
 | Checklist arquitectura | [`microframework/checklists/checklist-arquitectura.md`](../microframework/checklists/checklist-arquitectura.md) | 10 ítems binarios alineados con REG-* |
 | Checklist DevSecOps | [`microframework/checklists/checklist-devsecops.md`](../microframework/checklists/checklist-devsecops.md) | 8 ítems de seguridad (Pilar 1) |
 | Guía de observabilidad | [`microframework/guia-observabilidad.md`](../microframework/guia-observabilidad.md) | Pilar 3: contrato de logs estructurados por etapa |
-| Validación estática | [`microframework/validacion/validar-flujos.mjs`](../microframework/validacion/validar-flujos.mjs) | Pilar 2: script Node que verifica REG-001…010 sobre el JSON |
+| Validación estática (Lite) | [`microframework/validacion/validar-flujos.mjs`](../microframework/validacion/validar-flujos.mjs) | Pilar 2 — un único archivo `.mjs`, cero dependencias, HTML offline. Evalúa 11 REG-* + 6 antipatrones AP-* sobre el grafo del flujo |
+| Validación estática (Pro) | [`microframework/validacion-pro/`](../microframework/validacion-pro/) | Pilar 2 — módulo con DSL YAML de reglas, codemods `--fix`, SARIF para GitHub Code Scanning, suite vitest |
 | Plantillas ADR y JSON | [`microframework/plantillas/`](../microframework/plantillas/) | 10 plantillas JSON (2 as-is + 8 to-be/subflujos) + plantilla ADR Markdown |
 | Fundamento teórico | [`docs/context/fundamento-teorico.md`](context/fundamento-teorico.md) | Base conceptual: Clean Architecture, NIST SSDF, literatura LC/NC, posicionamiento |
 | Utility Tree ATAM | [`docs/context/atam-utility-tree.md`](context/atam-utility-tree.md) | 12 escenarios top-K (6 Bot + 6 IoT) con medidas de respuesta para FASE 7 |
@@ -78,7 +79,7 @@ Alineados con §4.3 del anteproyecto:
 | Pilar | Instrumentación | Verificación |
 |---|---|---|
 | 1. Gestión de Secretos | Credenciales n8n referenciadas por nombre; `.env` fuera de Git | Ítems 1–5 del checklist DevSecOps + REG-001 |
-| 2. Validaciones Automatizadas | [`microframework/validacion/validar-flujos.mjs`](../microframework/validacion/validar-flujos.mjs) | Script evalúa REG-001…010 sobre cada JSON |
+| 2. Validaciones Automatizadas | Lite [`validar-flujos.mjs`](../microframework/validacion/validar-flujos.mjs) + Pro [`validacion-pro/`](../microframework/validacion-pro/) | Evalúa 17 reglas (11 REG-* + 6 AP-*) sobre el grafo del flujo. Cada finding lleva severidad, confianza, ISO 25010, ATAM, ADR. Salidas: md, json canónico, html offline, sarif, junit |
 | 3. Resiliencia Operativa | Patrones retry e idempotencia + [`guia-observabilidad.md`](../microframework/guia-observabilidad.md) | REG-004, REG-005, REG-006 |
 
 ---

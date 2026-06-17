@@ -3,8 +3,8 @@
 Fuente única de verdad del avance. Actualizar al completar cada ítem: cambiar ✗ → ✓ y
 refrescar "Última actualización".
 
-**Última actualización:** 2026-05-18
-**Fase activa:** FASE 7 — Evaluación ATAM (~90 % — encuesta pendiente de ejecución) · FASE 8 Completada ✓ · FASE 9 R5 Completada ✓ — R6 pendiente
+**Última actualización:** 2026-05-31
+**Fase activa:** FASE 7 — Evaluación ATAM (~90 % — encuesta pendiente de ejecución) · FASE 8 Completada ✓ · FASE 9 R5 Completada ✓ — R6 pendiente · Validador estático v2 (Lite + Pro) Completado ✓ (2026-05-31)
 
 ---
 
@@ -361,6 +361,51 @@ refrescar "Última actualización".
 - ✓ Glosario con 25 términos críticos
 - ✓ Cap 11 referencia docs/aws/ sin duplicar contenido
 - ✓ TOC navegable con anclas Markdown
+
+---
+
+## Validador estático v2 — Refactor mayor (2026-05-31) ✓
+
+Refactorización completa del validador (Pilar 2 DevSecOps) en **dos ediciones coexistentes**
+que comparten el modelo canónico `report.schema.json`:
+
+### Edición Lite — Reescritura del archivo único
+- ✓ `microframework/validacion/validar-flujos.mjs` reescrito (~1600 LOC, cero dependencias)
+- ✓ Parser de grafo dirigido a partir de `nodes` + `connections` (no más regex sobre JSON.stringify)
+- ✓ Clasificador de etapas E1–E4 por heurísticas tipadas (no depende del nombre del archivo)
+- ✓ 17 reglas: 11 REG-* + 6 antipatrones AP-* (god-node, chatty, dual-write, exception swallowing, hardcoded ID, stage leak)
+- ✓ Severidad (error|warning|info) + confianza (high|medium|low) por finding
+- ✓ Métricas: complejidad ciclomática, profundidad, cohesion score, fan-out
+- ✓ Mapeo automático ISO 25010 / ATAM / ADR vía `mapeo-calidad.json`
+- ✓ Renderers: md, json, sarif (v2.1.0), junit, html offline autocontenido
+- ✓ HTML: 100% offline, 0 URLs externas, grafo SVG + radar ISO 25010 + tabla filtrable + sparkline histórico + panel "explica este finding" + branding académico
+- ✓ Diff contra baseline JSON con findings nuevos/resueltos/regresiones
+- ✓ `microframework/validacion/legacy/validar-flujos-v1.mjs` — v1 conservada como evidencia histórica
+- ✓ Test runner artesanal: 6 fixtures, 6/6 pass
+
+### Edición Pro — Paquete modular extensible
+- ✓ `microframework/validacion-pro/` — estructura `src/{cli,parser,rules,metrics,fixers,report,shared}`
+- ✓ CLI multi-subcomando: `analyze` · `report` · `diff` · `fix` · `watch`
+- ✓ DSL YAML de reglas declarativas — `rules-custom/*.yaml` (2 ejemplos)
+- ✓ Codemods (`--fix`): `add-http-retry` (REG-004), `envify-secret` (REG-001), `add-on-conflict` (REG-005) — idempotentes
+- ✓ HTML CDN con Tailwind + Mermaid + Chart.js (radar)
+- ✓ SARIF v2.1.0 para GitHub Code Scanning + workflow ejemplo
+- ✓ Suite vitest: parser, rules (fixtures compartidos con Lite), DSL, fixers, render-sarif
+- ✓ Docs: `dsl-spec.md`, `codemods.md`, `sarif-github.md`
+
+### Resultados de la corrida final contra el repo
+| Métrica | Lite v2 |
+|---|---|
+| Archivos analizados | 23 (5 as-is + 18 to-be) |
+| Score promedio to-be | 84% |
+| To-be con errors | 0 |
+| Reglas ejercitadas | 13/17 (4 dormidas: AP-001/002/003/006) |
+| Exit code | 0 |
+
+### Documentación
+- ✓ `microframework/adr/ADR-MF-008-validador-dos-ediciones.md` — decisión arquitectónica
+- ✓ `microframework/validacion-pro/README.md` — comparativa Lite vs Pro + quick start
+- ✓ Schema canónico publicado en `microframework/validacion/report.schema.json`
 
 ---
 

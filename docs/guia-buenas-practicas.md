@@ -685,18 +685,51 @@ Las variables de entorno se gestionan en dos niveles:
 
 ### 7.4 Validación automática (Pilar 2 DevSecOps)
 
-El repositorio incluye `microframework/validacion/validar-flujos.mjs`, un script Node.js sin dependencias externas que recorre todos los JSONs de flujos y verifica las REGs. Para REG-001, busca:
+El repositorio incluye el validador estático en **dos ediciones coexistentes** (ver
+[`ADR-MF-008`](../microframework/adr/ADR-MF-008-validador-dos-ediciones.md)):
 
-- Patrones: `token`, `api_key`, `password`, `Bearer`, `secret` con valor literal en cualquier campo `parameters`.
-- Si encuentra un patrón sospechoso, marca el flujo como **FAIL** en el reporte.
+- **Lite** — `microframework/validacion/validar-flujos.mjs` (un archivo, cero
+  dependencias, HTML offline autocontenido). **Edición recomendada para defensa
+  académica y evaluadores externos.**
+- **Pro** — `microframework/validacion-pro/` (módulo con DSL YAML, codemods
+  `--fix`, salida SARIF para GitHub Code Scanning, suite vitest). Para equipos
+  externos adoptando el micro-framework.
 
-**Cómo ejecutarlo:**
+Ambas evalúan las mismas 17 reglas (11 REG-* obligatorias + 6 antipatrones de grafo
+AP-*) y producen el mismo JSON canónico (`report.schema.json`). Cada finding lleva
+severidad, confianza, mapeo a ISO 25010, escenarios ATAM y ADRs relevantes.
+
+**Comandos esenciales — Lite (defensa académica):**
 
 ```bash
+# Reporte completo (md + json + html offline)
+node microframework/validacion/validar-flujos.mjs --format html
+
+# Solo verificación rápida (exit code 0/1)
 node microframework/validacion/validar-flujos.mjs
+
+# Diff contra reporte anterior
+node microframework/validacion/validar-flujos.mjs --baseline reportes/anterior.json
+
+# Tests del propio validador
+node microframework/validacion/tests/run-tests.mjs
 ```
 
-**Cuándo:** antes de cada commit que toque flujos, y como gate en CI/CD.
+**Comandos esenciales — Pro (equipos externos):**
+
+```bash
+cd microframework/validacion-pro && npm install
+node bin/n8nmf.mjs analyze                                # resumen tabla
+node bin/n8nmf.mjs report --format html --out ./reportes  # HTML CDN
+node bin/n8nmf.mjs report --format sarif --out ./reportes # SARIF para GitHub
+node bin/n8nmf.mjs fix --rule REG-004 --dry-run           # ver codemod
+node bin/n8nmf.mjs analyze --rules-dir ./rules-custom     # incluir reglas DSL
+npm test                                                   # vitest
+```
+
+**Cuándo ejecutar:** antes de cada commit que toque flujos, y como gate en CI/CD
+(workflow ejemplo en
+[`microframework/validacion-pro/docs/sarif-github.md`](../microframework/validacion-pro/docs/sarif-github.md)).
 
 ### 7.5 Riesgo abierto: rotación de tokens (R-BOT-01)
 
