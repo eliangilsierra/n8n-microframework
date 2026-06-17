@@ -1,0 +1,135 @@
+{
+  "$comment": "Fuente única de mapeo regla → ISO 25010 / ATAM / ADR. Consumido por Lite y Pro.",
+  "version": "1.0",
+  "iso25010Catalog": [
+    "functionalSuitability",
+    "performanceEfficiency",
+    "compatibility",
+    "usability",
+    "reliability",
+    "security",
+    "maintainability",
+    "portability"
+  ],
+  "reglas": {
+    "REG-001": {
+      "nombre": "Sin secretos hardcodeados",
+      "severityDefault": "error",
+      "iso25010": ["security", "maintainability"],
+      "atam": ["R-BOT-01"],
+      "adr": ["ADR-MF-001"]
+    },
+    "REG-002": {
+      "nombre": "run_id propagado",
+      "severityDefault": "warning",
+      "iso25010": ["maintainability", "reliability"],
+      "atam": ["SP-BOT-02"],
+      "adr": ["ADR-MF-003"]
+    },
+    "REG-003": {
+      "nombre": "errorWorkflow configurado",
+      "severityDefault": "error",
+      "iso25010": ["reliability"],
+      "atam": ["SP-IOT-01", "R-IOT-01"],
+      "adr": ["ADR-MF-002"]
+    },
+    "REG-004": {
+      "nombre": "Retry en HTTP",
+      "severityDefault": "warning",
+      "iso25010": ["reliability", "performanceEfficiency"],
+      "atam": ["TP-IOT-01"],
+      "adr": ["ADR-MF-002"]
+    },
+    "REG-005": {
+      "nombre": "Idempotencia en escrituras",
+      "severityDefault": "error",
+      "iso25010": ["reliability", "functionalSuitability"],
+      "atam": ["SP-BOT-01", "NR-IOT-02"],
+      "adr": []
+    },
+    "REG-006": {
+      "nombre": "Log estructurado JSON",
+      "severityDefault": "warning",
+      "iso25010": ["maintainability", "reliability"],
+      "atam": ["SP-BOT-02", "R-GLOBAL-01"],
+      "adr": ["ADR-MF-003"]
+    },
+    "REG-007": {
+      "nombre": "Dominio aislado (E2 sin IO)",
+      "severityDefault": "error",
+      "iso25010": ["maintainability"],
+      "atam": ["TP-GLOBAL-01"],
+      "adr": []
+    },
+    "REG-008": {
+      "nombre": "Integraciones en E3/E4",
+      "severityDefault": "warning",
+      "iso25010": ["maintainability"],
+      "atam": ["TP-GLOBAL-01"],
+      "adr": []
+    },
+    "REG-009": {
+      "nombre": "HTTP status codes apropiados",
+      "severityDefault": "warning",
+      "iso25010": ["functionalSuitability", "usability"],
+      "atam": ["NR-BOT-02"],
+      "adr": []
+    },
+    "REG-010": {
+      "nombre": "ADR presente",
+      "severityDefault": "info",
+      "iso25010": ["maintainability"],
+      "atam": [],
+      "adr": []
+    },
+    "REG-VOC": {
+      "nombre": "Vocabulario enum nivel (español)",
+      "severityDefault": "warning",
+      "iso25010": ["maintainability", "usability"],
+      "atam": [],
+      "adr": []
+    },
+    "AP-001": {
+      "nombre": "God-node (fan-in + fan-out > 6)",
+      "severityDefault": "warning",
+      "iso25010": ["maintainability"],
+      "atam": ["TP-GLOBAL-01"],
+      "adr": []
+    },
+    "AP-002": {
+      "nombre": "Chatty (HTTP en loop)",
+      "severityDefault": "warning",
+      "iso25010": ["performanceEfficiency"],
+      "atam": ["TP-IOT-01"],
+      "adr": []
+    },
+    "AP-003": {
+      "nombre": "Dual-write sin saga ni transacción",
+      "severityDefault": "error",
+      "iso25010": ["reliability"],
+      "atam": ["SP-BOT-01"],
+      "adr": []
+    },
+    "AP-004": {
+      "nombre": "Exception swallowing (rama error sin log)",
+      "severityDefault": "error",
+      "iso25010": ["reliability", "maintainability"],
+      "atam": ["R-GLOBAL-01"],
+      "adr": ["ADR-MF-002", "ADR-MF-003"]
+    },
+    "AP-005": {
+      "nombre": "Hardcoded workflow ID en Execute Workflow",
+      "severityDefault": "warning",
+      "iso25010": ["maintainability", "portability"],
+      "atam": [],
+      "adr": []
+    },
+    "AP-006": {
+      "nombre": "Stage leak (IO inferido fuera de E3/E4)",
+      "severityDefault": "error",
+      "iso25010": ["maintainability"],
+      "atam": ["TP-GLOBAL-01"],
+      "adr": []
+    }
+  }
+}

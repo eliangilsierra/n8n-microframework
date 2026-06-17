@@ -1,0 +1,27 @@
+{
+  "name": "fixture-ap-001",
+  "nodes": [
+    { "id": "n1", "name": "Webhook", "type": "n8n-nodes-base.webhook", "position": [0,0], "parameters": {} },
+    { "id": "n2", "name": "God", "type": "n8n-nodes-base.code", "position": [200,0], "parameters": { "jsCode": "return $input.all();" } },
+    { "id": "n3", "name": "A", "type": "n8n-nodes-base.set", "position": [400,0], "parameters": {} },
+    { "id": "n4", "name": "B", "type": "n8n-nodes-base.set", "position": [400,100], "parameters": {} },
+    { "id": "n5", "name": "C", "type": "n8n-nodes-base.set", "position": [400,200], "parameters": {} },
+    { "id": "n6", "name": "D", "type": "n8n-nodes-base.set", "position": [400,300], "parameters": {} },
+    { "id": "n7", "name": "E", "type": "n8n-nodes-base.set", "position": [400,400], "parameters": {} },
+    { "id": "n8", "name": "F", "type": "n8n-nodes-base.set", "position": [400,500], "parameters": {} },
+    { "id": "n9", "name": "G", "type": "n8n-nodes-base.set", "position": [400,600], "parameters": {} },
+    { "id": "n10", "name": "Respond", "type": "n8n-nodes-base.respondToWebhook", "position": [600,0], "parameters": { "responseCode": 200 } }
+  ],
+  "connections": {
+    "Webhook": { "main": [[{ "node": "God", "type": "main", "index": 0 }]] },
+    "God": { "main": [[
+      { "node": "A", "type": "main", "index": 0 },
+      { "node": "B", "type": "main", "index": 0 },
+      { "node": "C", "type": "main", "index": 0 },
+      { "node": "D", "type": "main", "index": 0 },
+      { "node": "E", "type": "main", "index": 0 },
+      { "node": "F", "type": "main", "index": 0 },
+      { "node": "G", "type": "main", "index": 0 }
+    ]] }
+  }
+}

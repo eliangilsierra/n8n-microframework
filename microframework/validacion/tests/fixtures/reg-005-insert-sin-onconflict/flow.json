@@ -1,0 +1,36 @@
+{
+  "name": "fixture-reg-005",
+  "nodes": [
+    {
+      "id": "n1",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "parameters": {}
+    },
+    {
+      "id": "n2",
+      "name": "Insert sin idempotencia",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2,
+      "position": [200, 0],
+      "parameters": {
+        "operation": "insert",
+        "query": "INSERT INTO lecturas_sensor (id, valor) VALUES ($1, $2)"
+      }
+    },
+    {
+      "id": "n3",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [400, 0],
+      "parameters": { "responseCode": 200 }
+    }
+  ],
+  "connections": {
+    "Webhook": { "main": [[{ "node": "Insert sin idempotencia", "type": "main", "index": 0 }]] },
+    "Insert sin idempotencia": { "main": [[{ "node": "Respond", "type": "main", "index": 0 }]] }
+  }
+}

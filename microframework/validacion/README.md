@@ -1,480 +1,495 @@
-# Validador estático de flujos n8n
+# Validador estático de flujos n8n — v2.0
 
 **Componente:** Pilar 2 DevSecOps — Validaciones Automatizadas (§4.3 del anteproyecto)
-**Script:** `microframework/validacion/validar-flujos.mjs`
-**Versión:** 1.1
+**Versión:** 2.0 — Edición Lite (`validar-flujos.mjs`) + Edición Pro (`../validacion-pro/`)
+**Versión anterior:** 1.x conservada en [`legacy/validar-flujos-v1.mjs`](legacy/validar-flujos-v1.mjs)
 **Autor:** Elian Hernando Gil Sierra — MGADS UNAB 2026
+**ADR:** [`ADR-MF-008`](../adr/ADR-MF-008-validador-dos-ediciones.md)
 
 ---
 
 ## Tabla de contenidos
 
 1. [Propósito y rol en el micro-framework](#1-propósito-y-rol-en-el-micro-framework)
-2. [Decisión de implementación: Node.js vs Python](#2-decisión-de-implementación-nodejs-vs-python)
-3. [Flujo de ejecución](#3-flujo-de-ejecución)
-4. [Reglas evaluadas](#4-reglas-evaluadas)
-5. [Dependencia en convenciones de nombre de archivo](#5-dependencia-en-convenciones-de-nombre-de-archivo)
-6. [Comandos disponibles](#6-comandos-disponibles)
-7. [Salidas generadas](#7-salidas-generadas)
-8. [Interpretación del reporte](#8-interpretación-del-reporte)
-9. [Uso con un flujo externo o arbitrario](#9-uso-con-un-flujo-externo-o-arbitrario)
-10. [Limitaciones conocidas](#10-limitaciones-conocidas)
-11. [Evidencia de ejecución](#11-evidencia-de-ejecución)
-12. [Trazabilidad académica](#12-trazabilidad-académica)
+2. [Dos ediciones, un modelo de datos](#2-dos-ediciones-un-modelo-de-datos)
+3. [Catálogo de 17 reglas](#3-catálogo-de-17-reglas)
+4. [Arquitectura técnica](#4-arquitectura-técnica)
+5. [Comandos esenciales](#5-comandos-esenciales)
+6. [Salidas generadas](#6-salidas-generadas)
+7. [Reporte HTML interactivo](#7-reporte-html-interactivo)
+8. [Análisis sobre flujos externos arbitrarios](#8-análisis-sobre-flujos-externos-arbitrarios)
+9. [DSL YAML de reglas custom (Pro)](#9-dsl-yaml-de-reglas-custom-pro)
+10. [Codemods `--fix` (Pro)](#10-codemods---fix-pro)
+11. [Integración con CI/CD y SARIF](#11-integración-con-cicd-y-sarif)
+12. [Tests del validador](#12-tests-del-validador)
+13. [Limitaciones conocidas](#13-limitaciones-conocidas)
+14. [Evidencia de ejecución y trazabilidad académica](#14-evidencia-de-ejecución-y-trazabilidad-académica)
 
 ---
 
 ## 1. Propósito y rol en el micro-framework
 
-El validador estático es el mecanismo de verificación objetiva y reproducible de las diez reglas obligatorias (REG-001 a REG-010) del micro-framework. Convierte las reglas de diseño, que de otro modo serían puramente declarativas, en **criterios comprobables automáticamente** sobre el JSON exportado de cualquier flujo n8n.
+El validador convierte las reglas de diseño del micro-framework — que de otro modo serían
+puramente declarativas — en **criterios comprobables automáticamente** sobre el JSON
+exportado de cualquier flujo n8n.
 
-### ¿Qué resuelve?
-
-n8n no dispone de un motor de política arquitectónica nativo. Las decisiones de diseño como "ningún nodo hardcodea credenciales" o "E2 no contiene IO" son convenios que, sin una herramienta de verificación, dependen de la memoria y disciplina del desarrollador. El validador cierra esa brecha: cualquiera puede ejecutar el script sobre un flujo y obtener un reporte binario que responde ¿este flujo cumple el micro-framework?
+n8n no dispone de un motor de política arquitectónica nativo: convenciones como "ningún
+nodo hardcodea credenciales" o "E2 no contiene IO" dependerían de la disciplina del
+desarrollador. El validador cierra esa brecha: cualquiera ejecuta el comando y obtiene un
+reporte cuantificado con severidad, confianza, mapeo a ISO/IEC 25010 y escenarios ATAM
+para cada hallazgo.
 
 ### Posición en el Pilar 2 DevSecOps
-
-El anteproyecto define tres pilares DevSecOps:
 
 | Pilar | Mecanismo | Verificación |
 |---|---|---|
 | 1. Gestión de Secretos | Credenciales referenciadas por nombre en n8n | REG-001 + checklist DevSecOps |
-| **2. Validaciones Automatizadas** | **`validar-flujos.mjs`** | **REG-001…010 sobre el JSON** |
+| **2. Validaciones Automatizadas** | **Lite + Pro (este documento)** | **17 reglas sobre el grafo del flujo** |
 | 3. Resiliencia Operativa | Patrones retry + idempotencia + log estructurado | REG-004, REG-005, REG-006 |
 
 ### Rol en la evidencia académica
 
-Los reportes generados por el validador constituyen **evidencia documental** del tipo (i) en la triangulación metodológica del ATAM (ver `docs/atam/metodologia-atam-adaptada.md`). Cada reporte con timestamp en `microframework/validacion/reportes/` es un artefacto auditable que demuestra el nivel de cumplimiento de los flujos to-be en un momento dado.
+Los reportes generados constituyen **evidencia documental** del tipo (i) en la
+triangulación metodológica del ATAM (`docs/atam/metodologia-atam-adaptada.md`). Cada
+reporte JSON canónico (`reportes/validacion-YYYY-MM-DD.json`) es un artefacto auditable y
+diffeable que demuestra el nivel de cumplimiento de los flujos to-be en un momento dado.
 
 ---
 
-## 2. Decisión de implementación: Node.js vs Python
+## 2. Dos ediciones, un modelo de datos
 
-El proyecto usa Python en otras fases (`automatizacion/run_corridas.py`, `medicion/analizar_runlogs.py`). Esta decisión de usar Node.js para el validador estático está justificada por cuatro razones técnicas y una operativa, documentadas como criterio de diseño explícito.
+Ambas ediciones implementan las **mismas 17 reglas** y producen el **mismo JSON canónico**
+(esquema en [`report.schema.json`](report.schema.json)). Difieren en empaquetado, audiencia
+y capacidades extra:
 
-### 2.1 Cohesión tecnológica con n8n
+|                       | **Edición Lite**                              | **Edición Pro**                                                  |
+|-----------------------|-----------------------------------------------|------------------------------------------------------------------|
+| Ubicación             | [`validar-flujos.mjs`](validar-flujos.mjs)    | [`../validacion-pro/`](../validacion-pro/)                       |
+| Forma                 | Un único archivo `.mjs` (~1600 LOC)           | Módulo `src/{cli,parser,rules,metrics,fixers,report,shared}`     |
+| Dependencias runtime  | **Cero** (Node ≥ 18 y nada más)               | Opcional: `yaml` (con fallback inline)                            |
+| Dependencias dev      | Ninguna — runner artesanal                    | `vitest`                                                          |
+| HTML                  | **Offline autocontenido** (SVG inline ~200 KB) | CDN Tailwind + Mermaid + Chart.js                                 |
+| Reglas                | 17 builtins                                   | 17 builtins + **DSL YAML del usuario**                            |
+| Codemods `--fix`      | —                                             | `add-http-retry`, `envify-secret`, `add-on-conflict`              |
+| Subcomandos           | flags (`--format`, `--baseline`)              | `analyze · report · diff · fix · watch`                           |
+| Formatos de salida    | md · json · html · sarif · junit              | md · json · html · sarif · junit                                  |
+| Tests                 | runner artesanal + fixtures                   | vitest + fixtures (compartidos con Lite)                          |
+| Audiencia recomendada | **Defensa académica · evaluador externo**     | Equipos adoptando el micro-framework · GitHub Code Scanning · demos públicas |
 
-n8n es una aplicación Node.js. Su JSON exportado es producido por un motor JavaScript y su estructura interna (tipos de nodos, parámetros, expresiones) está pensada en términos de JavaScript. Parsear y evaluar ese JSON con el mismo runtime elimina cualquier fricción de interpretación: los tipos, las rutas de propiedades y las expresiones de los nodos se leen de forma nativa sin capas de traducción.
+### Qué edición usar
 
-### 2.2 Cero dependencias externas
+- **Para la defensa MGADS y para que el jurado pueda reproducir en su máquina:** Lite.
+  Un solo archivo, `node validar-flujos.mjs --format html` y nada más. El HTML resultante
+  abre offline sin red en la sala de defensa.
+- **Para CI/CD del proyecto y para equipos externos que adopten el framework:** Pro.
+  SARIF para GitHub Code Scanning, DSL YAML para añadir reglas internas, codemods para
+  remediar automáticamente.
 
-El script usa exclusivamente módulos de la librería estándar de Node.js 18+: `fs`, `path` y `url`. No requiere `npm install`, no genera `node_modules`, no introduce dependencias que puedan quedar desactualizadas o causar conflictos con otras herramientas del repositorio. Python habría requerido al menos `json` (estándar, pero también `re`, `os`, `pathlib`) y potencialmente `jsonschema` para validaciones más expresivas, agregando surface de dependencias.
+Esta decisión está documentada en
+[`ADR-MF-008-validador-dos-ediciones.md`](../adr/ADR-MF-008-validador-dos-ediciones.md).
 
-### 2.3 Disponibilidad garantizada en el entorno CI/CD
+---
 
-El entorno de ejecución ya tiene Node.js instalado porque n8n lo requiere. Cualquier pipeline de CI que levante el contenedor n8n o que simplemente verifique el repositorio antes de importar flujos tiene Node disponible sin instalación adicional. Python, en cambio, requeriría un paso de configuración explícito en el pipeline (`setup-python`, imagen base diferente, etc.), añadiendo complejidad sin beneficio funcional.
+## 3. Catálogo de 17 reglas
 
-### 2.4 Separación de responsabilidades entre scripts
+11 reglas obligatorias del anteproyecto (REG-001…REG-VOC) + 6 antipatrones detectados como
+queries sobre el grafo (AP-001…AP-006). Cada regla tiene severidad por defecto y mapeo a
+ISO 25010 / ATAM / ADR vía [`mapeo-calidad.json`](mapeo-calidad.json).
 
-Los scripts Python del proyecto tienen una responsabilidad diferente: **ejecutar y medir** (enviar peticiones HTTP, recolectar run-logs, calcular métricas de latencia). El validador tiene la responsabilidad de **analizar estructura estática**. Mantener lenguajes distintos para responsabilidades distintas comunica claramente la separación: Python para orquestación de pruebas dinámicas, Node.js para análisis estático de artefactos n8n.
+| ID | Nombre | Severidad | ISO 25010 | Aplica si |
+|----|--------|-----------|-----------|-----------|
+| **REG-001** | Sin secretos hardcodeados | error | security, maintainability | siempre |
+| **REG-002** | `run_id` propagado | warning | maintainability, reliability | hay nodos Code |
+| **REG-003** | `errorWorkflow` configurado | error | reliability | flujo es orquestador |
+| **REG-004** | Retry ≥ 2 en HTTP | warning | reliability, performanceEfficiency | hay nodos HTTP |
+| **REG-005** | Idempotencia en escrituras | error | reliability, functionalSuitability | hay INSERT a Postgres |
+| **REG-006** | Log estructurado JSON | warning | maintainability, reliability | hay nodos Code |
+| **REG-007** | Dominio aislado (E2 sin IO) | error | maintainability | archivo `-e2-dominio` |
+| **REG-008** | Integraciones en E3/E4 | warning | maintainability | hay nodos IO |
+| **REG-009** | HTTP status codes apropiados | warning | functionalSuitability, usability | flujo es orquestador |
+| **REG-010** | ADR presente | info | maintainability | caso con convención |
+| **REG-VOC** | Vocabulario enum `nivel` en español | warning | maintainability, usability | to-be con nodos Code |
+| **AP-001** | God-node (grado in+out > 6) | warning | maintainability | siempre |
+| **AP-002** | Chatty IO (HTTP dentro de loop) | warning | performanceEfficiency | hay HTTP y loops |
+| **AP-003** | Dual-write sin saga/transacción | error | reliability | ≥ 2 escrituras |
+| **AP-004** | Exception swallowing | error | reliability, maintainability | hay ramas error |
+| **AP-005** | Workflow ID no resuelto en Execute Workflow | warning | maintainability, portability | hay Execute Workflow |
+| **AP-006** | Stage leak (IO en nodo E2) | error | maintainability | siempre |
 
-### 2.5 Portabilidad sin runtime adicional en el contexto académico
+> Cada finding lleva además **confianza** (high/medium/low) y, cuando aplica, una
+> **sugerencia de fix** (texto o referencia a codemod). El mapeo regla → ISO/ATAM/ADR se
+> resuelve en tiempo de ejecución desde `mapeo-calidad.json`, por lo que reordenar
+> atributos en la matriz de trazabilidad no requiere recompilar el validador.
 
-En el contexto de un trabajo de grado reproducible por evaluadores externos, reducir las dependencias de entorno reduce la fricción de reproducibilidad. Un evaluador con Docker y n8n corriendo ya tiene Node.js. Ejecutar `node validar-flujos.mjs` es el comando mínimo posible: un binario, un archivo, sin setup.
+---
 
-### Resumen de la decisión
+## 4. Arquitectura técnica
 
-| Criterio | Node.js | Python |
+Cambios fundamentales respecto a v1:
+
+| Aspecto | v1 | v2 (Lite y Pro) |
 |---|---|---|
-| Cohesión con n8n | ✓ nativo | ✗ requiere traducción |
-| Dependencias externas | ✓ cero | ✗ potencialmente `jsonschema` |
-| Disponibilidad en CI con n8n | ✓ garantizada | ✗ requiere configuración |
-| Coherencia con scripts existentes | ✓ separación clara | ✗ mezcla de responsabilidades |
-| Portabilidad para evaluadores | ✓ mínima fricción | ✗ paso adicional de setup |
+| Análisis | Regex sobre `JSON.stringify(node.parameters)` | Grafo dirigido tipado a partir de `nodes` + `connections` |
+| Etapas E1–E4 | Inferidas del **nombre del archivo** | Inferidas del **tipo del nodo** por heurística en cascada |
+| Antipatrones | — | 6 queries sobre el grafo (god-node, chatty, dual-write, swallowing, hardcoded ID, stage leak) |
+| Métricas | — | Ciclomática, profundidad, fan-out, cohesion score, distribución por etapa |
+| Mapeo calidad | Tabla en documentos separados | `mapeo-calidad.json` inyectado en cada finding |
+| Resultado | Booleano `cumple: true\|false\|null` | Severidad (error/warning/info) + confianza (high/medium/low) |
+| Salidas | md, json | md, **json canónico**, **html offline**, **sarif**, junit |
+| Diff | — | Contra baseline JSON: nuevos/resueltos/regresiones |
 
-> **ADR de referencia:** Esta decisión no tiene ADR dedicado porque el razonamiento queda capturado en este documento. Si en el futuro se migra el validador, este README es el punto de partida para el ADR correspondiente.
+### Heurística de clasificación E1–E4 (cascada, primer match gana)
 
----
+1. Nombre del nodo contiene `e1`/`e2`/`e3`/`e4` → respeta la anotación (autoritativa).
+2. `type` contiene `webhook` o `trigger` (no `respond`) → **E1**.
+3. `type` `respondToWebhook` → **E4**.
+4. `type` `executeWorkflow` → **UNKNOWN** (heredaría del subflujo).
+5. `type` es un IO (httpRequest, postgres, mysql, mongodb, redis, kafka, mqtt, …) → **E3**.
+6. `type` es Code/Function y su `jsCode` contiene `fetch`/`axios`/`pg`/`http.get` → **E3** (stage leak detectable).
+7. `type` es Code/Function sin IO → **E2**.
+8. `type` es Set/IF/Switch/Merge/ItemLists → **E2**.
+9. Default → **UNKNOWN**.
 
-## 3. Flujo de ejecución
+Esto permite analizar **cualquier JSON de n8n**, no sólo los del repositorio.
 
-```
-Invocación: node validar-flujos.mjs [opciones]
-                    │
-                    ▼
-         parseArgs()  ─────────────────────────────────┐
-         Lee --caso, --estado, --format                 │
-                    │                                   │
-                    ▼                                   │
-         listJsonFlows()                                │
-         Escanea casos-de-estudio/{caso}/{estado}/*.json│
-         y microframework/plantillas/*.json             │
-                    │                                   │
-         Para cada archivo JSON encontrado:             │
-                    │                                   │
-                    ▼                                   │
-         parseFlow(path)                                │
-         JSON.parse del archivo                         │
-         Si falla → { __error: mensaje }                │
-                    │                                   │
-                    ▼                                   │
-         evaluarArchivo(file)                           │
-         Ejecuta los 11 predicados en secuencia:        │
-           REG-001 regSecrets()                         │
-           REG-002 regRunId()                           │
-           REG-003 regErrorWorkflow()                   │
-           REG-004 regRetry()                           │
-           REG-005 regIdempotencia()                    │
-           REG-006 regLogEstructurado()                 │
-           REG-007 regDominioAislado()                  │
-           REG-008 regIntegracionesLugar()              │
-           REG-009 regStatusCodes()                     │
-           REG-010 regAdrPresente()                     │
-           REG-VOC  regVocabulario()                    │
-         Cada predicado → { cumple: true|false|null,    │
-                            evidencia: string }          │
-                    │                                   │
-                    ▼                                   │
-         resumirArchivo()                               │
-         Calcula cumplen/total/pct                      │
-         (solo cuenta reglas donde cumple ≠ null)       │
-                    │                                   │
-                    ▼                                   │
-         renderMd() o renderJson()   ◄──────────────────┘
-         Genera reporte completo
-                    │
-         ┌──────────┴──────────┐
-         ▼                     ▼
-  console.log(reporte)   writeFileSync(
-                         reportes/validacion-YYYY-MM-DD.md)
-                    │
-                    ▼
-         Exit code:
-           0 → ningún to-be tiene cumple: false
-           1 → al menos un to-be tiene cumple: false
-           (as-is reporta fallos sin afectar el exit code)
-```
+### Métricas calculadas
 
-### Comportamiento ante errores de parseo
-
-Si un archivo JSON es inválido (malformado, truncado, encoding incorrecto), el validador registra el error en el reporte con el mensaje de excepción y continúa con los demás archivos. No aborta la ejecución.
+- **Complejidad ciclomática**: `max(0, E − N + 2P)` donde `P` es el número de componentes conexos.
+- **Profundidad máxima**: BFS desde las fuentes (nodos con in-degree 0).
+- **Cohesion score**: proporción de aristas que **no** saltan más de una frontera de etapa
+  (E1→E2 cuenta; E1→E4 es leak). Excluye etapas UNKNOWN.
+- **Distribución por etapa**: conteo {E1, E2, E3, E4, UNKNOWN}.
+- **Fan-out top 5**: nodos con mayor out-degree.
 
 ---
 
-## 4. Reglas evaluadas
+## 5. Comandos esenciales
 
-Cada predicado analiza el objeto JSON del flujo en memoria. Ninguno hace llamadas de red, accede a la instancia de n8n ni ejecuta código del flujo.
-
-### REG-001 — Sin secretos hardcodeados
-
-**Qué analiza:** El `parameters` serializado de cada nodo, contra 7 patrones regex:
-
-| Patrón | Qué detecta |
-|---|---|
-| `Bearer\s+[A-Za-z0-9._-]{8,}` | Tokens Bearer literales en cualquier campo |
-| `sk-[A-Za-z0-9]{16,}` | API keys estilo OpenAI |
-| `ghp_[A-Za-z0-9]{16,}` | Personal Access Tokens de GitHub |
-| `"(password\|api_key\|secret\|token)": "<valor>"` | Campos semánticos con valor literal |
-| `"rightValue": "<cadena ≥12 chars>"` | Comparaciones literales en nodos IF/Switch |
-| `"name": "x-api-key" ... "value": "<literal>"` | Headers HTTP con API key embebida |
-| `const/let/var *token* = '<literal>'` | Asignaciones en nodos Code |
-
-**Resultado N/A:** Nunca — aplica a todos los flujos.
-**Nota:** El as-is del caso Bot tiene violaciones deliberadas de esta regla (tokens hardcodeados en nodo IF "Validar Token" y headers de nodos HTTP). Esto es la línea base intencional.
-
----
-
-### REG-002 — run_id propagado
-
-**Qué analiza:** El texto completo de todos los nodos Code/Function del flujo.
-
-- Busca la cadena `run_id` (presencia del campo)
-- Busca `console.log(JSON.stringify` (presencia del log estructurado)
-
-**Resultado N/A:** Orquestadores puros (sin nodos Code pero con nodos Execute Workflow). En ese caso el `run_id` es generado en el subflujo E1 y propagado automáticamente — no existe código que verificar en el orquestador.
-
----
-
-### REG-003 — errorWorkflow configurado
-
-**Qué analiza:** `flow.settings.errorWorkflow` — debe existir y no ser una cadena vacía.
-
-**Resultado N/A:** Todos los archivos cuyo nombre no contiene `orquestador`. Los subflujos E1–E4 y los error handlers no son orquestadores y no aplican esta regla.
-
----
-
-### REG-004 — Retry en HTTP
-
-**Qué analiza:** Todos los nodos de tipo `httpRequest`. Para cada uno:
-- `parameters.options.retry.enabled` debe ser `true`
-- `parameters.options.retry.maxRetries` o `maxTries` debe ser `≥ 2`
-
-**Resultado N/A:** Flujos sin ningún nodo httpRequest (ej: E1 de validación, E2 de dominio, orquestador puro).
-
----
-
-### REG-005 — Idempotencia en escrituras
-
-**Qué analiza:** Todos los nodos de tipo `postgres`. Para los que tienen operación INSERT (detectado por la presencia de `"insert"` en los parámetros):
-- El query debe contener `ON CONFLICT` o el campo `idempotency_key`
-
-**Resultado N/A:**
-- Flujos sin nodos Postgres
-- Error handlers (cada evento de error es único por naturaleza — aplicar idempotencia generaría falsos positivos silenciando errores duplicados)
-
----
-
-### REG-006 — Log estructurado JSON
-
-**Qué analiza:** El texto completo de todos los nodos Code/Function.
-
-- Presencia de `console.log(JSON.stringify` (forma de log estructurado)
-- Presencia de los campos mínimos: `run_id`, `etapa`, `status`
-
-**Resultado N/A:** Flujos sin nodos Code (ej: orquestador puro que solo tiene nodos Execute Workflow y Respond to Webhook).
-
----
-
-### REG-007 — Dominio aislado (E2)
-
-**Qué analiza:** Solo en archivos cuyo nombre contiene `-e2-dominio`. Verifica que no existan nodos `httpRequest` ni `postgres`.
-
-**Resultado N/A:** Cualquier archivo que no sea un subflujo E2 identificado por nombre.
-
----
-
-### REG-008 — Integraciones en E3/E4
-
-**Qué analiza:** Si el flujo tiene nodos `httpRequest` o `postgres`, verifica que el nombre del archivo contenga `-e3-`, `-e4-`, `orquestador` o `error-handler`. Si el archivo no cumple alguna de esas condiciones pero tiene nodos IO, la regla falla.
-
-**Resultado N/A:** Flujos sin ningún nodo IO.
-
----
-
-### REG-009 — HTTP status codes apropiados
-
-**Qué analiza:** Solo en archivos cuyo nombre contiene `orquestador`. Busca todos los nodos `respondToWebhook` y recolecta los valores de `parameters.responseCode`. La regla requiere al menos **2 valores distintos** (éxito y error).
-
-**Resultado N/A:** Archivos que no son orquestadores.
-
----
-
-### REG-010 — ADR presente
-
-**Qué analiza:** La existencia de la carpeta `casos-de-estudio/{caso}/adr/` y de al menos un archivo que coincida con el patrón `ADR-*.md`.
-
-**Resultado N/A:** Archivos en `microframework/plantillas/` (son plantillas genéricas, no casos con ADR específico).
-
----
-
-### REG-VOC — Vocabulario enum `nivel` en español
-
-**Qué analiza:** El código JavaScript de todos los nodos Code en flujos **to-be** de casos de estudio. Detecta el uso de términos en inglés donde el enum oficial del micro-framework es en español:
-
-| Detecta | Correcto |
-|---|---|
-| `= 'warning'` / `= "warning"` | `"advertencia"` |
-| `= 'critical'` / `= "CRITICAL"` | `"critico"` |
-
-**Resultado N/A:**
-- Flujos de plantillas
-- Flujos as-is (la línea base puede usar cualquier vocabulario)
-- Flujos to-be sin nodos Code
-
----
-
-## 5. Dependencia en convenciones de nombre de archivo
-
-Varias reglas usan el **nombre del archivo JSON** para determinar si aplican. Esta es la tabla completa de activación:
-
-| Patrón en el nombre del archivo | Reglas que activa o modifica |
-|---|---|
-| contiene `orquestador` | REG-003 (activa), REG-008 (exime), REG-009 (activa) |
-| contiene `-e2-dominio` | REG-007 (activa) |
-| contiene `-e3-` | REG-008 (permite IO) |
-| contiene `-e4-` | REG-008 (permite IO) |
-| contiene `error-handler` o `error.handler` | REG-005 (exime), REG-008 (permite IO) |
-| está en `microframework/plantillas/` | REG-010 (N/A), REG-VOC (N/A) |
-
-### Consecuencia directa
-
-Si se importa un flujo n8n con nombre arbitrario (ej: `Mi-flujo-nuevo.json`) y se coloca en `casos-de-estudio/{caso}/to-be/`, las reglas que dependen del nombre devolverán `– N/A` en lugar de evaluarse. Las únicas reglas que siempre evalúan, independientemente del nombre, son:
-
-- **REG-001** (secretos) — siempre aplica
-- **REG-004** (retry) — aplica si hay nodos HTTP
-- **REG-005** (idempotencia) — aplica si hay nodos Postgres con INSERT
-- **REG-006** (log estructurado) — aplica si hay nodos Code
-
-Para obtener cobertura completa, los archivos deben seguir las convenciones de naming definidas en `microframework/convenciones/naming-conventions.md`.
-
----
-
-## 6. Comandos disponibles
+### Lite (un solo archivo, cero deps)
 
 ```bash
-# Evalúa todo el repositorio (casos-de-estudio/ + microframework/plantillas/)
+# Reporte completo: md + json + html offline + sarif + xml junit
+node microframework/validacion/validar-flujos.mjs --format html
+
+# Verificación rápida — exit 0 si to-be sin errors, 1 si hay errors
 node microframework/validacion/validar-flujos.mjs
 
-# Solo el caso Bot, todos los estados
-node microframework/validacion/validar-flujos.mjs --caso bot
+# Filtrar por caso/estado (compatibilidad con v1)
+node microframework/validacion/validar-flujos.mjs --caso bot --estado to-be
 
-# Solo los to-be del caso IoT
-node microframework/validacion/validar-flujos.mjs --caso iot --estado to-be
+# Analizar un flujo n8n arbitrario fuera del repo
+node microframework/validacion/validar-flujos.mjs --input ruta/a/mi-flow.json --format html
 
-# Solo los as-is del caso Bot
-node microframework/validacion/validar-flujos.mjs --caso bot --estado as-is
+# Diff contra un baseline previo
+node microframework/validacion/validar-flujos.mjs --baseline reportes/validacion-2026-05-31.json
 
-# Salida JSON (para procesar con jq, integrar en CI o alimentar dashboards)
-node microframework/validacion/validar-flujos.mjs --format json
+# Sólo json a stdout (sin escribir archivos)
+node microframework/validacion/validar-flujos.mjs --format json --quiet
 
-# Guardar salida JSON en archivo
-node microframework/validacion/validar-flujos.mjs --format json > reporte.json
-
-# Ayuda
-node microframework/validacion/validar-flujos.mjs --help
+# Tests del validador
+node microframework/validacion/tests/run-tests.mjs
 ```
 
-**Requisitos:** Node.js ≥ 18. Sin npm install. Sin dependencias externas.
+Flags disponibles: `--input`, `--caso`, `--estado`, `--format`, `--out`, `--baseline`,
+`--strict` (exit 1 también ante warnings), `--quiet`, `--help`.
+
+### Pro (módulo con subcomandos)
+
+```bash
+cd microframework/validacion-pro
+npm install                                                # opcional
+
+node bin/n8nmf.mjs analyze                                 # tabla resumen + exit code
+node bin/n8nmf.mjs report --format html --out ./reportes   # HTML CDN
+node bin/n8nmf.mjs report --format sarif --out ./reportes  # SARIF v2.1.0 para GitHub
+node bin/n8nmf.mjs diff --current hoy.json --baseline ayer.json
+node bin/n8nmf.mjs fix --rule REG-004 --dry-run            # vista previa codemod
+node bin/n8nmf.mjs fix --rule REG-001                      # aplicar codemod
+node bin/n8nmf.mjs watch                                   # re-analizar al detectar mtime
+node bin/n8nmf.mjs analyze --rules-dir ./rules-custom      # cargar reglas YAML
+
+npm test                                                    # vitest
+```
 
 ---
 
-## 7. Salidas generadas
+## 6. Salidas generadas
 
-### 7.1 Salida en consola
+Por defecto se escriben en `microframework/validacion/reportes/` (Lite) o `./reportes/`
+(Pro). El `--out <dir>` redirige.
 
-Siempre se imprime el reporte completo en `stdout`, independientemente del formato.
+| Archivo | Cuándo | Propósito |
+|---|---|---|
+| `validacion-YYYY-MM-DD.md`     | `--format md` (default)  | Reporte humano, navegable por GitHub |
+| `validacion-YYYY-MM-DD.json`   | siempre que se escribe md o html | **Canónico** — alimenta diff, histórico y baseline |
+| `validacion-YYYY-MM-DD.html`   | `--format html`          | Reporte interactivo (ver §7) |
+| `validacion-YYYY-MM-DD.sarif`  | `--format sarif`         | Para GitHub Code Scanning / dashboards externos |
+| `validacion-YYYY-MM-DD.xml`    | `--format junit`         | JUnit XML para CI tradicionales (Jenkins, GitLab) |
 
-### 7.2 Archivo de reporte (solo formato Markdown)
-
-Cuando se ejecuta sin `--format json`, el script crea o sobrescribe automáticamente:
-
-```
-microframework/validacion/reportes/validacion-YYYY-MM-DD.md
-```
-
-El nombre incluye la fecha UTC del día de ejecución. Si se ejecuta dos veces el mismo día, el archivo se sobrescribe con la ejecución más reciente.
-
-### 7.3 Exit code
+### Exit code
 
 | Código | Significado |
 |---|---|
-| `0` | Todos los flujos to-be cumplen todas las reglas aplicables (o N/A) |
-| `1` | Al menos un flujo to-be tiene `cumple: false` en alguna regla |
+| `0` | Ningún flujo `to-be` tiene findings de severidad `error` (warnings permitidos) |
+| `1` | Al menos un `to-be` tiene un `error` — o un `warning` si se pasó `--strict` |
 
-**Nota importante:** Los flujos as-is pueden tener violaciones (`cumple: false`) sin que el exit code sea 1. El as-is es la línea base intencional: documentar sus incumplimientos es parte del análisis, no una falla del pipeline.
+Los flujos `as-is` pueden tener errors sin afectar el exit code: documentan la línea base
+intencional.
+
+### JSON canónico — esquema
+
+Validado contra [`report.schema.json`](report.schema.json). Estructura resumida:
+
+```jsonc
+{
+  "tool": "n8n-microframework-validator",
+  "version": "2.0.0",
+  "edition": "lite" | "pro",
+  "generatedAt": "ISO-8601",
+  "commit": "<git rev-parse HEAD>",
+  "author": "Elian Hernando Gil Sierra",
+  "director": "Sebastian Roa Prada, PhD",
+  "files": [
+    {
+      "path": "...", "caso": "bot|iot|plantilla", "estado": "as-is|to-be",
+      "graph": { "nodes": [...], "edges": [...], "subflowRefs": [...] },
+      "metrics": { "nodeCount", "edgeCount", "cyclomaticComplexity",
+                   "maxDepth", "stageDistribution", "cohesionScore", "fanOutTop" },
+      "findings": [
+        { "id", "ruleId", "ruleName", "severity", "confidence",
+          "nodeId", "nodeName", "position", "message", "evidence",
+          "iso25010": [...], "atamScenarios": [...], "adr": [...],
+          "fixSuggestion": { "kind", "codemodId", "preview" } }
+      ],
+      "summary": { "errors", "warnings", "infos", "score",
+                   "rulesApplicable", "rulesPassed" }
+    }
+  ],
+  "coverage": { "rulesDefined": [...], "rulesExercised": [...], "rulesDormant": [...] },
+  "history": [{ "date", "score", "errors", "warnings" }]
+}
+```
 
 ---
 
-## 8. Interpretación del reporte
+## 7. Reporte HTML interactivo
 
-### Tabla resumen
+El HTML generado con `--format html` es el artefacto visual del entregable. Diseñado para
+imprimirse como anexo del documento de tesis (`@media print` ajusta colores y bordes).
 
-```
-| Archivo                         | Caso | %    | Cumple / Aplica |
-|---------------------------------|------|------|-----------------|
-| casos-de-estudio/iot/to-be/...  | iot  | 100% | 7/7             |
-```
+### Lite — autocontenido, offline, ~200 KB
 
-- **%:** porcentaje de reglas que cumplen sobre las que aplican (excluye N/A)
-- **Cumple / Aplica:** conteo absoluto (numerador = ✓, denominador = reglas con `cumple ≠ null`)
+- 0 URLs externas. 0 `<script src>`. Todo CSS y JS embebido inline.
+- Grafo de cada flujo como **SVG construido a partir de `node.position`** (las coordenadas
+  que n8n ya guarda). Sin Mermaid.
+- Radar ISO/IEC 25010 como SVG polígono. Sin Chart.js.
+- Sparkline histórico (score promedio por fecha) como SVG polyline. Lee los JSON previos
+  de `reportes/`.
+- Tabla de findings filtrable por severidad y texto, ordenable, exportable a CSV.
+- Panel **"explica este finding"**: click en un nodo → cita textual del parámetro
+  ofensor, regla violada, ISO 25010 + ATAM + ADR vinculados, sugerencia de fix.
+- Portada académica con autor, director, proyecto, fecha, hash del commit, conteo de flujos.
 
-### Detalle por archivo
+### Pro — CDN con visualizaciones de nivel comercial
 
-```
-- ✓  REG-001  Sin secretos hardcodeados: sin patrones de secretos literales
-- ✗  REG-004  Retry en HTTP: nodo "Llamar API" maxRetries=0 (<2)
-- –  REG-003  errorWorkflow configurado: N/A (no es orquestador)
-```
-
-| Símbolo | Significado |
-|---|---|
-| `✓` | La regla aplica y el flujo la cumple |
-| `✗` | La regla aplica y el flujo la viola — es un hallazgo real |
-| `–` | La regla no aplica a este tipo de flujo (N/A) |
-
-La cadena `evidencia` explica siempre **por qué** se tomó esa decisión: nombre del nodo problemático, patrón detectado, valor encontrado, o razón de la exención.
+Mismo contenido lógico que Lite, pero usando Mermaid para grafos (renderizado con curvas
+y dagre layout) y Chart.js para el radar (animado, hover interactivo). Requiere red al
+abrir el HTML.
 
 ---
 
-## 9. Uso con un flujo externo o arbitrario
+## 8. Análisis sobre flujos externos arbitrarios
 
-Se puede evaluar cualquier JSON exportado de n8n. El procedimiento:
+El validador v1 estaba acoplado a la convención de nombres del repositorio. **v2 analiza
+cualquier JSON de n8n** porque la clasificación E1–E4 es por tipo de nodo, no por nombre
+de archivo.
 
-**Paso 1:** Exportar el flujo desde n8n (menú del flujo → *Download*).
-
-**Paso 2:** Copiar el archivo JSON a la estructura del repositorio:
-
-```
-casos-de-estudio/
-  {caso}/          ← usar "bot", "iot" o crear una carpeta nueva
-    to-be/
-      {nombre-con-convencion}.json
-```
-
-**Paso 3:** Nombrar el archivo siguiendo las convenciones para obtener cobertura completa:
-
-```
-{caso}-to-be-orquestador.json          → activa REG-003 y REG-009
-{caso}-to-be-e1-validacion.json        → activa REG-007 si fuera e2
-{caso}-to-be-e2-dominio.json           → activa REG-007
-{caso}-to-be-e3-{nombre}.json          → permite IO en REG-008
-{caso}-to-be-e4-{nombre}.json          → permite IO en REG-008
-{caso}-error-handler.json              → exime REG-005, permite IO
-```
-
-**Paso 4:** Ejecutar:
+**Lite:**
 ```bash
-node microframework/validacion/validar-flujos.mjs --caso {caso} --estado to-be
+node microframework/validacion/validar-flujos.mjs --input /ruta/mi-flow.json --format html
 ```
 
-**Consideración:** Si el flujo es de un caso completamente nuevo (no bot ni iot), REG-010 buscará la carpeta `casos-de-estudio/{caso}/adr/`. Crearla con al menos un `ADR-001-*.md` satisface la regla.
+**Pro:**
+```bash
+node microframework/validacion-pro/bin/n8nmf.mjs analyze /ruta/mi-flow.json
+node microframework/validacion-pro/bin/n8nmf.mjs report /ruta/al/repo/ --format html --out ./out
+```
+
+Para obtener cobertura plena de REG-007 (E2 sin IO), basta con que **algún nodo** tenga el
+nombre `*-e2-*` o sea clasificado E2 por la heurística. REG-010 (ADR presente) sí requiere
+la convención `casos-de-estudio/{caso}/adr/` — para casos arbitrarios devuelve N/A.
 
 ---
 
-## 10. Limitaciones conocidas
+## 9. DSL YAML de reglas custom (Pro)
 
-### 10.1 Análisis léxico, no semántico
+Pro permite escribir reglas declarativas en YAML — convierte el validador en un *framework
+de validación*, no un script cerrado. Inspirado en Semgrep / OPA aplicado al dominio n8n.
 
-El validador analiza el **texto y la estructura del JSON**, no ejecuta los nodos. Por eso:
+Ejemplo: prohibir nodos Postgres en la etapa E1 de entrada.
 
-- **REG-001** puede generar **falsos negativos** si un secreto se construye dinámicamente en un nodo Code (ej: concatenación de fragmentos almacenados en variables de entorno). El validador no puede detectar secretos que no estén como literales en el JSON.
-- **REG-002** confirma que `run_id` aparece en el código, no que el valor correcto se propague en runtime. Un nodo que tenga `run_id` hardcodeado como `"fijo"` pasaría la regla estática.
-- **REG-004** verifica la configuración del nodo HTTP, pero si el retry está deshabilitado condicionalmente por una expresión n8n, el validador no lo detecta.
+```yaml
+id: CUSTOM-001
+name: Prohibir Postgres en E1
+severity: error
+confidence: high
+iso25010: [maintainability, security]
+atam: [SP-IOT-01]
+match:
+  stage: E1
+  nodeType: postgres
+assert:
+  not: true
+message: "Postgres detectado en E1 — mover a un subflujo E3 dedicado a IO."
+fix:
+  hint: "Extraer este nodo a un subflujo Execute Workflow → E3 Adaptador."
+```
 
-### 10.2 Dependencia en naming conventions
+Colócalo en `microframework/validacion-pro/rules-custom/` y ejecuta:
 
-Descrita en la [sección 5](#5-dependencia-en-convenciones-de-nombre-de-archivo). Un flujo con nombre arbitrario recibe cobertura parcial.
+```bash
+node bin/n8nmf.mjs analyze --rules-dir ./rules-custom
+```
 
-### 10.3 REG-010 verifica presencia, no calidad
-
-El validador confirma que existe al menos un archivo `ADR-*.md`, no que el ADR esté completo, que tenga la plantilla correcta ni que sus decisiones sean coherentes con el flujo. La calidad del ADR requiere revisión manual.
-
-### 10.4 REG-009 cuenta valores distintos, no semántica HTTP
-
-La regla verifica que haya ≥ 2 `responseCode` distintos, pero no valida que 200 corresponda a éxito ni que 422 corresponda a input inválido. Un orquestador con `responseCode: 200` y `responseCode: 201` pasaría la regla aunque ambos sean respuestas de éxito.
-
-### 10.5 Un reporte por día
-
-Los reportes se guardan con granularidad de fecha (`validacion-YYYY-MM-DD.md`). Si se ejecuta el validador múltiples veces en el mismo día, solo persiste la última ejecución. Para comparación histórica inter-día, los reportes anteriores están versionados en Git.
-
-### 10.6 Alcance: solo casos-de-estudio y plantillas
-
-El script escanea únicamente `casos-de-estudio/` y `microframework/plantillas/`. No evalúa flujos en otras rutas del repositorio.
+Gramática completa: [`validacion-pro/docs/dsl-spec.md`](../validacion-pro/docs/dsl-spec.md).
 
 ---
 
-## 11. Evidencia de ejecución
+## 10. Codemods `--fix` (Pro)
 
-Los siguientes reportes están versionados en este repositorio como evidencia de ejecuciones reales:
+Pro incluye tres codemods idempotentes que remedian automáticamente los findings más
+mecánicos:
 
-| Reporte | Flujos evaluados | Resultado |
+| Codemod | Regla | Acción |
 |---|---|---|
-| [`reportes/validacion-2026-05-02.md`](reportes/validacion-2026-05-02.md) | IoT as-is + to-be (primeros subflujos) | Línea base establecida |
-| [`reportes/validacion-2026-05-03.md`](reportes/validacion-2026-05-03.md) | IoT to-be completo | REG-VOC corregido |
-| [`reportes/validacion-2026-05-06.md`](reportes/validacion-2026-05-06.md) | 6 flujos IoT to-be | 100% en todos |
+| `add-http-retry` | REG-004 | Inyecta `options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }` en nodos HTTP sin retry o con `maxRetries < 2`. |
+| `envify-secret` | REG-001 | Reemplaza valor literal de headers `x-api-key` / `authorization` / `api-key` / `x-auth-token` por la expresión n8n `={{ $env.<VAR> }}`. No toca código JS por riesgo semántico. |
+| `add-on-conflict` | REG-005 | Anexa ` ON CONFLICT (id) DO NOTHING` a queries `INSERT INTO ...` sin idempotencia. |
 
-El reporte de 2026-05-06 representa el estado final del caso IoT: 6 flujos, 100% de cumplimiento en todas las reglas aplicables, incluyendo REG-VOC (vocabulario en español), REG-005 (idempotencia con `ON CONFLICT`), REG-003 (`errorWorkflow` configurado con ID real de n8n) y REG-009 (status codes 200 y 422).
+```bash
+node bin/n8nmf.mjs fix --rule REG-004 --dry-run   # vista previa
+node bin/n8nmf.mjs fix --rule REG-004              # aplicar
+```
+
+Detalle: [`validacion-pro/docs/codemods.md`](../validacion-pro/docs/codemods.md).
 
 ---
 
-## 12. Trazabilidad académica
+## 11. Integración con CI/CD y SARIF
+
+### Lite — gate simple en cualquier CI
+
+```yaml
+- name: Validar flujos n8n
+  run: node microframework/validacion/validar-flujos.mjs --strict
+```
+
+Exit code 0/1 cierra el pipeline cuando hay errors (o warnings con `--strict`).
+
+### Pro — GitHub Code Scanning con SARIF
+
+`render-sarif.mjs` produce SARIF v2.1.0 con `runs[].tool.driver.rules[]` derivados del
+catálogo, y `runs[].results[]` derivados de findings (incluyendo `properties.iso25010`,
+`properties.atam`, `properties.adr` para dashboards externos).
+
+Workflow ejemplo en [`validacion-pro/docs/sarif-github.md`](../validacion-pro/docs/sarif-github.md).
+Una vez subido con `github/codeql-action/upload-sarif@v3`, los findings aparecen como
+anotaciones inline en los PRs y en la pestaña Security → Code scanning alerts.
+
+---
+
+## 12. Tests del validador
+
+### Lite — runner artesanal sin dependencias
+
+```bash
+node microframework/validacion/tests/run-tests.mjs
+```
+
+Recorre [`tests/fixtures/`](tests/fixtures/) (un JSON mínimo por antipatrón con su
+`expected.json` paralelo), ejecuta el validador y compara los `ruleId` esperados contra
+los emitidos.
+
+Estado actual: **6/6 pass** (reg-001, reg-004, reg-005, reg-006, ap-001, baseline-conforme).
+
+### Pro — vitest
+
+```bash
+cd microframework/validacion-pro
+npm install
+npm test
+```
+
+Suite: `parser.test.mjs` · `rules.test.mjs` (reutiliza los mismos fixtures que Lite) ·
+`dsl.test.mjs` · `fixers.test.mjs` · `render-sarif.test.mjs`.
+
+---
+
+## 13. Limitaciones conocidas
+
+### 13.1 Análisis léxico-estructural, no semántico
+
+- **REG-001**: no detecta secretos construidos dinámicamente por concatenación dentro de
+  un nodo Code. Análisis sobre literales en el JSON.
+- **REG-002**: confirma presencia de `run_id` en el código; no verifica que el valor se
+  propague correctamente en runtime.
+- **REG-004**: lee la configuración del nodo; no detecta retry deshabilitado por una
+  expresión dinámica de n8n.
+
+### 13.2 REG-010 verifica presencia, no calidad del ADR
+
+Confirma que existe `casos-de-estudio/{caso}/adr/ADR-*.md`. No valida estructura ni
+coherencia del ADR con el flujo.
+
+### 13.3 REG-009 cuenta códigos distintos, no semántica HTTP
+
+Verifica ≥ 2 `responseCode` distintos. Un orquestador con `200` + `201` pasa la regla
+aunque ambos sean respuestas de éxito.
+
+### 13.4 Resolución de subflujos referenciados
+
+`Execute Workflow` con `workflowId` no resuelto se reporta como **AP-005**. La resolución
+contra archivos del workspace está reservada para versiones futuras.
+
+### 13.5 Un reporte por día
+
+Granularidad de fecha (`validacion-YYYY-MM-DD.*`). Múltiples ejecuciones el mismo día
+sobrescriben. Para histórico, los reportes anteriores se versionan en Git o se renombran
+manualmente.
+
+---
+
+## 14. Evidencia de ejecución y trazabilidad académica
+
+### Reportes versionados como evidencia
+
+| Reporte | Versión | Notas |
+|---|---|---|
+| [`reportes/validacion-2026-05-02.md`](reportes/validacion-2026-05-02.md) | v1 | IoT as-is + to-be primeros subflujos — línea base |
+| [`reportes/validacion-2026-05-03.md`](reportes/validacion-2026-05-03.md) | v1 | IoT to-be completo — REG-VOC corregido |
+| [`reportes/validacion-2026-05-06.md`](reportes/validacion-2026-05-06.md) | v1 | 6 flujos IoT to-be — 100% en todas las reglas v1 |
+| `reportes/validacion-YYYY-MM-DD.html` (último) | **v2 Lite** | 23 archivos, to-be score 84%, 0 errors, 4 reglas dormidas |
+
+### Trazabilidad
 
 | Artefacto | Referencia |
 |---|---|
-| Especificación de las 10 reglas | [`microframework/reglas/reglas-obligatorias.md`](../reglas/reglas-obligatorias.md) |
-| Mapeo REG → ISO/IEC 25010 | [`microframework/reglas/reglas-obligatorias.md §Mapeo`](../reglas/reglas-obligatorias.md) |
+| Reglas obligatorias | [`microframework/reglas/reglas-obligatorias.md`](../reglas/reglas-obligatorias.md) |
+| Antipatrones (catálogo) | [`microframework/antipatrones.md`](../antipatrones.md) |
+| Mapeo regla → ISO/ATAM/ADR | [`mapeo-calidad.json`](mapeo-calidad.json) |
+| Esquema canónico del reporte | [`report.schema.json`](report.schema.json) |
+| Decisión Lite + Pro | [`ADR-MF-008-validador-dos-ediciones.md`](../adr/ADR-MF-008-validador-dos-ediciones.md) |
 | Pilar 2 DevSecOps | [`docs/context/microframework-spec.md §DevSecOps`](../../docs/context/microframework-spec.md) |
 | Rol en evidencia ATAM | [`docs/atam/metodologia-atam-adaptada.md`](../../docs/atam/metodologia-atam-adaptada.md) |
 | Entregable R1 del anteproyecto | [`docs/microframework-v1.0.md`](../../docs/microframework-v1.0.md) |
-| Convenciones de naming | [`microframework/convenciones/naming-conventions.md`](../convenciones/naming-conventions.md) |
-| Checklist de arquitectura | [`microframework/checklists/checklist-arquitectura.md`](../checklists/checklist-arquitectura.md) |
+| Guía de buenas prácticas (Cap. 7.4) | [`docs/guia-buenas-practicas.md`](../../docs/guia-buenas-practicas.md) |
+| Spec independiente del análisis estático | [`microframework/validacion-estatica-flujos.md`](../validacion-estatica-flujos.md) |
+
+### Por qué Node.js sigue siendo la implementación elegida (heredado de v1)
+
+Cohesión tecnológica con n8n (JS nativo), cero dependencias runtime, disponibilidad
+garantizada en CI donde corre n8n, separación de responsabilidades con los scripts Python
+de medición, portabilidad para evaluadores externos. Justificación completa en el
+[ADR-MF-008 §3](../adr/ADR-MF-008-validador-dos-ediciones.md) y, para la decisión original
+Node vs Python en cinco subsecciones, en la versión v1 de este README (conservada en
+[`legacy/README-v1.md §2`](legacy/README-v1.md)).

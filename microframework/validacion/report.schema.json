@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gilsierra.dev/n8n-microframework/report.schema.json",
+  "title": "n8n-microframework-validator report",
+  "description": "Contrato común entre engine y renderers (md/json/sarif/junit/html) para ediciones Lite y Pro.",
+  "type": "object",
+  "required": ["tool", "version", "generatedAt", "files"],
+  "properties": {
+    "tool": { "const": "n8n-microframework-validator" },
+    "version": { "type": "string" },
+    "edition": { "enum": ["lite", "pro"] },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "commit": { "type": ["string", "null"] },
+    "author": { "type": "string" },
+    "director": { "type": "string" },
+    "project": { "type": "string" },
+    "files": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/fileReport" }
+    },
+    "coverage": {
+      "type": "object",
+      "properties": {
+        "rulesDefined": { "type": "array", "items": { "type": "string" } },
+        "rulesExercised": { "type": "array", "items": { "type": "string" } },
+        "rulesDormant": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": { "type": "string" },
+          "score": { "type": "number" },
+          "errors": { "type": "integer" },
+          "warnings": { "type": "integer" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "fileReport": {
+      "type": "object",
+      "required": ["path", "graph", "metrics", "findings", "summary"],
+      "properties": {
+        "path": { "type": "string" },
+        "caso": { "type": ["string", "null"] },
+        "estado": { "enum": ["as-is", "to-be", null] },
+        "isOrquestador": { "type": "boolean" },
+        "isErrorHandler": { "type": "boolean" },
+        "graph": {
+          "type": "object",
+          "properties": {
+            "nodes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["id", "name", "type", "stage"],
+                "properties": {
+                  "id": { "type": "string" },
+                  "name": { "type": "string" },
+                  "type": { "type": "string" },
+                  "stage": { "enum": ["E1", "E2", "E3", "E4", "UNKNOWN"] },
+                  "stageInferred": { "type": "boolean" },
+                  "position": { "type": "array", "items": { "type": "number" } },
+                  "inDegree": { "type": "integer" },
+                  "outDegree": { "type": "integer" },
+                  "hasErrorBranch": { "type": "boolean" }
+                }
+              }
+            },
+            "edges": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "from": { "type": "string" },
+                  "to": { "type": "string" },
+                  "branch": { "enum": ["main", "error"] }
+                }
+              }
+            },
+            "subflowRefs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "nodeId": { "type": "string" },
+                  "workflowId": { "type": ["string", "null"] }
+                }
+              }
+            }
+          }
+        },
+        "metrics": {
+          "type": "object",
+          "properties": {
+            "nodeCount": { "type": "integer" },
+            "edgeCount": { "type": "integer" },
+            "cyclomaticComplexity": { "type": "integer" },
+            "maxDepth": { "type": "integer" },
+            "stageDistribution": {
+              "type": "object",
+              "properties": {
+                "E1": { "type": "integer" },
+                "E2": { "type": "integer" },
+                "E3": { "type": "integer" },
+                "E4": { "type": "integer" },
+                "UNKNOWN": { "type": "integer" }
+              }
+            },
+            "cohesionScore": { "type": "number", "minimum": 0, "maximum": 1 },
+            "fanOutTop": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "nodeId": { "type": "string" },
+                  "value": { "type": "integer" }
+                }
+              }
+            }
+          }
+        },
+        "findings": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/finding" }
+        },
+        "summary": {
+          "type": "object",
+          "properties": {
+            "errors": { "type": "integer" },
+            "warnings": { "type": "integer" },
+            "infos": { "type": "integer" },
+            "score": { "type": "number", "minimum": 0, "maximum": 100 },
+            "rulesApplicable": { "type": "integer" },
+            "rulesPassed": { "type": "integer" }
+          }
+        },
+        "parseError": { "type": ["string", "null"] }
+      }
+    },
+    "finding": {
+      "type": "object",
+      "required": ["id", "ruleId", "severity", "message"],
+      "properties": {
+        "id": { "type": "string" },
+        "ruleId": { "type": "string" },
+        "ruleName": { "type": "string" },
+        "severity": { "enum": ["error", "warning", "info"] },
+        "confidence": { "enum": ["high", "medium", "low"] },
+        "nodeId": { "type": ["string", "null"] },
+        "nodeName": { "type": ["string", "null"] },
+        "position": { "type": ["array", "null"], "items": { "type": "number" } },
+        "message": { "type": "string" },
+        "evidence": { "type": ["string", "null"] },
+        "iso25010": { "type": "array", "items": { "type": "string" } },
+        "atamScenarios": { "type": "array", "items": { "type": "string" } },
+        "adr": { "type": "array", "items": { "type": "string" } },
+        "fixSuggestion": {
+          "type": ["object", "null"],
+          "properties": {
+            "kind": { "enum": ["codemod-id", "hint"] },
+            "codemodId": { "type": "string" },
+            "preview": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

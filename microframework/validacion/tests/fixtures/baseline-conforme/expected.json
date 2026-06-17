@@ -1,0 +1,4 @@
+{
+  "shouldFail": [],
+  "shouldPass": ["REG-001", "REG-002", "REG-005", "REG-006", "REG-009"]
+}
