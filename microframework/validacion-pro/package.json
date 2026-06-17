@@ -1,0 +1,24 @@
+{
+  "name": "n8n-microframework-validator-pro",
+  "version": "2.0.0",
+  "description": "Edición Pro del validador estático de flujos n8n — módulo con DSL YAML, codemods, CLI multi-subcomando, salida SARIF/JUnit, HTML CDN.",
+  "type": "module",
+  "bin": {
+    "n8nmf": "./bin/n8nmf.mjs"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "analyze": "node ./bin/n8nmf.mjs analyze",
+    "report:html": "node ./bin/n8nmf.mjs report --format html"
+  },
+  "engines": { "node": ">=18" },
+  "devDependencies": {
+    "vitest": "^1.6.0"
+  },
+  "optionalDependencies": {
+    "yaml": "^2.4.0"
+  },
+  "author": "Elian Hernando Gil Sierra",
+  "license": "MIT"
+}

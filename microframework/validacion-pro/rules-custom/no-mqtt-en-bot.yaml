@@ -1,0 +1,9 @@
+id: CUSTOM-002
+name: MQTT prohibido en caso Bot
+severity: warning
+iso25010: [compatibility, maintainability]
+match:
+  nodeType: mqtt
+assert:
+  not: true
+message: "Caso Bot usa HTTP webhook; no debería tener nodos MQTT."

@@ -1,0 +1,14 @@
+id: CUSTOM-001
+name: Prohibir Postgres en E1 (entrada)
+severity: error
+confidence: high
+iso25010: [maintainability, security]
+atam: [SP-IOT-01]
+match:
+  stage: E1
+  nodeType: postgres
+assert:
+  not: true
+message: "Postgres detectado en E1 — mover a un subflujo E3 dedicado a IO."
+fix:
+  hint: "Extraer este nodo a un subflujo Execute Workflow → E3 Adaptador."
