@@ -1,0 +1,4079 @@
+{
+  "tool": "n8n-microframework-validator",
+  "version": "2.0.0",
+  "edition": "lite",
+  "generatedAt": "2026-06-17T22:50:28.369Z",
+  "commit": "202f98542c8d9771a3bbe8701f1d3292541bc382",
+  "author": "Elian Hernando Gil Sierra",
+  "director": "Sebastian Roa Prada, PhD",
+  "project": "Micro-framework LC/NC para n8n — MGADS UNAB 2026",
+  "files": [
+    {
+      "path": "D:\\Git\\n8n-microframework\\casos-de-estudio\\bot\\to-be\\bot-to-be-e2-dominio.json",
+      "caso": "bot",
+      "estado": "to-be",
+      "isOrquestador": false,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "input-trigger",
+            "name": "Execute Workflow Trigger",
+            "type": "n8n-nodes-base.executeWorkflowTrigger",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              300
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-dominio",
+            "name": "E2 - Reglas de negocio",
+            "type": "n8n-nodes-base.code",
+            "stage": "E2",
+            "stageInferred": false,
+            "position": [
+              460,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "input-trigger",
+            "to": "code-dominio",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": []
+      },
+      "metrics": {
+        "nodeCount": 2,
+        "edgeCount": 1,
+        "cyclomaticComplexity": 1,
+        "maxDepth": 1,
+        "stageDistribution": {
+          "E1": 1,
+          "E2": 1,
+          "E3": 0,
+          "E4": 0,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 1,
+        "fanOutTop": [
+          {
+            "nodeId": "input-trigger",
+            "nodeName": "Execute Workflow Trigger",
+            "value": 1
+          },
+          {
+            "nodeId": "code-dominio",
+            "nodeName": "E2 - Reglas de negocio",
+            "value": 0
+          }
+        ]
+      },
+      "findings": [],
+      "summary": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "score": 100,
+        "rulesApplicable": 6,
+        "rulesPassed": 6
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-002",
+        "REG-006",
+        "REG-007",
+        "REG-010",
+        "REG-VOC"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-003",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-004",
+          "reason": "sin nodos HTTP"
+        },
+        {
+          "id": "REG-005",
+          "reason": "sin nodos Postgres"
+        },
+        {
+          "id": "REG-008",
+          "reason": "sin nodos IO"
+        },
+        {
+          "id": "REG-009",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-001",
+        "REG-002",
+        "REG-006",
+        "REG-007",
+        "REG-010",
+        "REG-VOC"
+      ]
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\casos-de-estudio\\bot\\to-be\\bot-to-be-e3-adaptador.json",
+      "caso": "bot",
+      "estado": "to-be",
+      "isOrquestador": false,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "input-trigger",
+            "name": "Execute Workflow Trigger",
+            "type": "n8n-nodes-base.executeWorkflowTrigger",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              300
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-preparar",
+            "name": "E3 - Preparar payload adaptador",
+            "type": "n8n-nodes-base.code",
+            "stage": "E3",
+            "stageInferred": false,
+            "position": [
+              460,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "http-ticket",
+            "name": "HTTP - POST ticket (con retry)",
+            "type": "n8n-nodes-base.httpRequest",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              680,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-log-e3",
+            "name": "E3 - Log salida adaptador",
+            "type": "n8n-nodes-base.code",
+            "stage": "E3",
+            "stageInferred": false,
+            "position": [
+              900,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "input-trigger",
+            "to": "code-preparar",
+            "branch": "main"
+          },
+          {
+            "from": "code-preparar",
+            "to": "http-ticket",
+            "branch": "main"
+          },
+          {
+            "from": "http-ticket",
+            "to": "code-log-e3",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": []
+      },
+      "metrics": {
+        "nodeCount": 4,
+        "edgeCount": 3,
+        "cyclomaticComplexity": 1,
+        "maxDepth": 3,
+        "stageDistribution": {
+          "E1": 1,
+          "E2": 0,
+          "E3": 3,
+          "E4": 0,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 0.667,
+        "fanOutTop": [
+          {
+            "nodeId": "input-trigger",
+            "nodeName": "Execute Workflow Trigger",
+            "value": 1
+          },
+          {
+            "nodeId": "code-preparar",
+            "nodeName": "E3 - Preparar payload adaptador",
+            "value": 1
+          },
+          {
+            "nodeId": "http-ticket",
+            "nodeName": "HTTP - POST ticket (con retry)",
+            "value": 1
+          },
+          {
+            "nodeId": "code-log-e3",
+            "nodeName": "E3 - Log salida adaptador",
+            "value": 0
+          }
+        ]
+      },
+      "findings": [
+        {
+          "id": "0c309511",
+          "ruleId": "REG-006",
+          "ruleName": "Log estructurado JSON",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": "code-preparar",
+          "nodeName": "E3 - Preparar payload adaptador",
+          "position": [
+            460,
+            300
+          ],
+          "message": "Nodo Code sin console.log(JSON.stringify(...))",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "reliability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-02",
+            "R-GLOBAL-01"
+          ],
+          "adr": [
+            "ADR-MF-003"
+          ],
+          "fixSuggestion": {
+            "kind": "hint",
+            "preview": "console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"
+          }
+        }
+      ],
+      "summary": {
+        "errors": 0,
+        "warnings": 1,
+        "infos": 0,
+        "score": 86,
+        "rulesApplicable": 7,
+        "rulesPassed": 6
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-002",
+        "REG-004",
+        "REG-006",
+        "REG-008",
+        "REG-010",
+        "REG-VOC"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-003",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-005",
+          "reason": "sin nodos Postgres"
+        },
+        {
+          "id": "REG-007",
+          "reason": "no es subflujo E2 por nombre"
+        },
+        {
+          "id": "REG-009",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-001",
+        "REG-002",
+        "REG-004",
+        "REG-008",
+        "REG-010",
+        "REG-VOC"
+      ]
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\casos-de-estudio\\bot\\to-be\\bot-to-be-orquestador.json",
+      "caso": "bot",
+      "estado": "to-be",
+      "isOrquestador": true,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "webhook-entrada",
+            "name": "Webhook - Entrada",
+            "type": "n8n-nodes-base.webhook",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              300
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "etapa1-validacion",
+            "name": "E1 - Validacion de entrada",
+            "type": "n8n-nodes-base.code",
+            "stage": "E1",
+            "stageInferred": false,
+            "position": [
+              460,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "if-valido",
+            "name": "IF - Entrada valida?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              680,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "if-unauthorized",
+            "name": "IF - Token invalido?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              900,
+              460
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "respond-401",
+            "name": "Respond - Token invalido (401)",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              1120,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "respond-400",
+            "name": "Respond - Entrada invalida (400)",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              1120,
+              560
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "exec-e2",
+            "name": "Execute - E2 Logica de dominio",
+            "type": "n8n-nodes-base.executeWorkflow",
+            "stage": "E2",
+            "stageInferred": false,
+            "position": [
+              900,
+              200
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "exec-e3",
+            "name": "Execute - E3 Adaptador persistencia",
+            "type": "n8n-nodes-base.executeWorkflow",
+            "stage": "E3",
+            "stageInferred": false,
+            "position": [
+              1120,
+              200
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "if-error",
+            "name": "IF - Error en pipeline?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              1340,
+              200
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "respond-500",
+            "name": "Respond - Error interno (500)",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              1560,
+              380
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "respond-200",
+            "name": "Respond - OK (200)",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              1560,
+              200
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "webhook-entrada",
+            "to": "etapa1-validacion",
+            "branch": "main"
+          },
+          {
+            "from": "etapa1-validacion",
+            "to": "if-valido",
+            "branch": "main"
+          },
+          {
+            "from": "if-valido",
+            "to": "exec-e2",
+            "branch": "main"
+          },
+          {
+            "from": "if-valido",
+            "to": "if-unauthorized",
+            "branch": "main"
+          },
+          {
+            "from": "if-unauthorized",
+            "to": "respond-401",
+            "branch": "main"
+          },
+          {
+            "from": "if-unauthorized",
+            "to": "respond-400",
+            "branch": "main"
+          },
+          {
+            "from": "exec-e2",
+            "to": "exec-e3",
+            "branch": "main"
+          },
+          {
+            "from": "exec-e3",
+            "to": "if-error",
+            "branch": "main"
+          },
+          {
+            "from": "if-error",
+            "to": "respond-500",
+            "branch": "main"
+          },
+          {
+            "from": "if-error",
+            "to": "respond-200",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": [
+          {
+            "nodeId": "exec-e2",
+            "nodeName": "Execute - E2 Logica de dominio",
+            "workflowId": "GLCqR9yqvkmE20QY"
+          },
+          {
+            "nodeId": "exec-e3",
+            "nodeName": "Execute - E3 Adaptador persistencia",
+            "workflowId": "EqMaNbc6Rq60G8u9"
+          }
+        ]
+      },
+      "metrics": {
+        "nodeCount": 11,
+        "edgeCount": 10,
+        "cyclomaticComplexity": 1,
+        "maxDepth": 6,
+        "stageDistribution": {
+          "E1": 2,
+          "E2": 4,
+          "E3": 1,
+          "E4": 4,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 0.6,
+        "fanOutTop": [
+          {
+            "nodeId": "if-valido",
+            "nodeName": "IF - Entrada valida?",
+            "value": 2
+          },
+          {
+            "nodeId": "if-unauthorized",
+            "nodeName": "IF - Token invalido?",
+            "value": 2
+          },
+          {
+            "nodeId": "if-error",
+            "nodeName": "IF - Error en pipeline?",
+            "value": 2
+          },
+          {
+            "nodeId": "webhook-entrada",
+            "nodeName": "Webhook - Entrada",
+            "value": 1
+          },
+          {
+            "nodeId": "etapa1-validacion",
+            "nodeName": "E1 - Validacion de entrada",
+            "value": 1
+          }
+        ]
+      },
+      "findings": [],
+      "summary": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "score": 100,
+        "rulesApplicable": 7,
+        "rulesPassed": 7
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-002",
+        "REG-003",
+        "REG-006",
+        "REG-009",
+        "REG-010",
+        "REG-VOC"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-004",
+          "reason": "sin nodos HTTP"
+        },
+        {
+          "id": "REG-005",
+          "reason": "sin nodos Postgres"
+        },
+        {
+          "id": "REG-007",
+          "reason": "no es subflujo E2 por nombre"
+        },
+        {
+          "id": "REG-008",
+          "reason": "sin nodos IO"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-001",
+        "REG-002",
+        "REG-003",
+        "REG-006",
+        "REG-009",
+        "REG-010",
+        "REG-VOC"
+      ]
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\casos-de-estudio\\iot\\to-be\\iot-error-handler.json",
+      "caso": "iot",
+      "estado": "to-be",
+      "isOrquestador": false,
+      "isErrorHandler": true,
+      "graph": {
+        "nodes": [
+          {
+            "id": "error-trigger",
+            "name": "Error Trigger",
+            "type": "n8n-nodes-base.errorTrigger",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              300
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-log-error",
+            "name": "Code - Log error y contexto",
+            "type": "n8n-nodes-base.code",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              460,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "http-notify-error",
+            "name": "HTTP - Notificar error (mock-iot)",
+            "type": "n8n-nodes-base.httpRequest",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              680,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "postgres-dead-letter",
+            "name": "Postgres - Insertar en dead-letter",
+            "type": "n8n-nodes-base.postgres",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              900,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "error-trigger",
+            "to": "code-log-error",
+            "branch": "main"
+          },
+          {
+            "from": "code-log-error",
+            "to": "http-notify-error",
+            "branch": "main"
+          },
+          {
+            "from": "http-notify-error",
+            "to": "postgres-dead-letter",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": []
+      },
+      "metrics": {
+        "nodeCount": 4,
+        "edgeCount": 3,
+        "cyclomaticComplexity": 1,
+        "maxDepth": 3,
+        "stageDistribution": {
+          "E1": 1,
+          "E2": 1,
+          "E3": 2,
+          "E4": 0,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 1,
+        "fanOutTop": [
+          {
+            "nodeId": "error-trigger",
+            "nodeName": "Error Trigger",
+            "value": 1
+          },
+          {
+            "nodeId": "code-log-error",
+            "nodeName": "Code - Log error y contexto",
+            "value": 1
+          },
+          {
+            "nodeId": "http-notify-error",
+            "nodeName": "HTTP - Notificar error (mock-iot)",
+            "value": 1
+          },
+          {
+            "nodeId": "postgres-dead-letter",
+            "nodeName": "Postgres - Insertar en dead-letter",
+            "value": 0
+          }
+        ]
+      },
+      "findings": [],
+      "summary": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "score": 100,
+        "rulesApplicable": 7,
+        "rulesPassed": 7
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-002",
+        "REG-004",
+        "REG-006",
+        "REG-008",
+        "REG-010",
+        "REG-VOC"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-003",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-005",
+          "reason": "error handler (cada evento es único)"
+        },
+        {
+          "id": "REG-007",
+          "reason": "no es subflujo E2 por nombre"
+        },
+        {
+          "id": "REG-009",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-001",
+        "REG-002",
+        "REG-004",
+        "REG-006",
+        "REG-008",
+        "REG-010",
+        "REG-VOC"
+      ]
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\casos-de-estudio\\iot\\to-be\\iot-to-be-e1-validacion.json",
+      "caso": "iot",
+      "estado": "to-be",
+      "isOrquestador": false,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "input-trigger",
+            "name": "Execute Workflow Trigger",
+            "type": "n8n-nodes-base.executeWorkflowTrigger",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              300
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-validacion",
+            "name": "E1 - Validar y normalizar lectura",
+            "type": "n8n-nodes-base.code",
+            "stage": "E1",
+            "stageInferred": false,
+            "position": [
+              460,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "input-trigger",
+            "to": "code-validacion",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": []
+      },
+      "metrics": {
+        "nodeCount": 2,
+        "edgeCount": 1,
+        "cyclomaticComplexity": 1,
+        "maxDepth": 1,
+        "stageDistribution": {
+          "E1": 2,
+          "E2": 0,
+          "E3": 0,
+          "E4": 0,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 1,
+        "fanOutTop": [
+          {
+            "nodeId": "input-trigger",
+            "nodeName": "Execute Workflow Trigger",
+            "value": 1
+          },
+          {
+            "nodeId": "code-validacion",
+            "nodeName": "E1 - Validar y normalizar lectura",
+            "value": 0
+          }
+        ]
+      },
+      "findings": [],
+      "summary": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "score": 100,
+        "rulesApplicable": 5,
+        "rulesPassed": 5
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-002",
+        "REG-006",
+        "REG-010",
+        "REG-VOC"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-003",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-004",
+          "reason": "sin nodos HTTP"
+        },
+        {
+          "id": "REG-005",
+          "reason": "sin nodos Postgres"
+        },
+        {
+          "id": "REG-007",
+          "reason": "no es subflujo E2 por nombre"
+        },
+        {
+          "id": "REG-008",
+          "reason": "sin nodos IO"
+        },
+        {
+          "id": "REG-009",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-001",
+        "REG-002",
+        "REG-006",
+        "REG-010",
+        "REG-VOC"
+      ]
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\casos-de-estudio\\iot\\to-be\\iot-to-be-e2-dominio.json",
+      "caso": "iot",
+      "estado": "to-be",
+      "isOrquestador": false,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "input-trigger",
+            "name": "Execute Workflow Trigger",
+            "type": "n8n-nodes-base.executeWorkflowTrigger",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              300
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-dominio",
+            "name": "E2 - Analisis de umbrales y clasificacion",
+            "type": "n8n-nodes-base.code",
+            "stage": "E2",
+            "stageInferred": false,
+            "position": [
+              460,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "input-trigger",
+            "to": "code-dominio",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": []
+      },
+      "metrics": {
+        "nodeCount": 2,
+        "edgeCount": 1,
+        "cyclomaticComplexity": 1,
+        "maxDepth": 1,
+        "stageDistribution": {
+          "E1": 1,
+          "E2": 1,
+          "E3": 0,
+          "E4": 0,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 1,
+        "fanOutTop": [
+          {
+            "nodeId": "input-trigger",
+            "nodeName": "Execute Workflow Trigger",
+            "value": 1
+          },
+          {
+            "nodeId": "code-dominio",
+            "nodeName": "E2 - Analisis de umbrales y clasificacion",
+            "value": 0
+          }
+        ]
+      },
+      "findings": [],
+      "summary": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "score": 100,
+        "rulesApplicable": 6,
+        "rulesPassed": 6
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-002",
+        "REG-006",
+        "REG-007",
+        "REG-010",
+        "REG-VOC"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-003",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-004",
+          "reason": "sin nodos HTTP"
+        },
+        {
+          "id": "REG-005",
+          "reason": "sin nodos Postgres"
+        },
+        {
+          "id": "REG-008",
+          "reason": "sin nodos IO"
+        },
+        {
+          "id": "REG-009",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-001",
+        "REG-002",
+        "REG-006",
+        "REG-007",
+        "REG-010",
+        "REG-VOC"
+      ]
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\casos-de-estudio\\iot\\to-be\\iot-to-be-e3-persistencia.json",
+      "caso": "iot",
+      "estado": "to-be",
+      "isOrquestador": false,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "input-trigger",
+            "name": "Execute Workflow Trigger",
+            "type": "n8n-nodes-base.executeWorkflowTrigger",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              300
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-preparar",
+            "name": "E3 - Preparar para persistencia",
+            "type": "n8n-nodes-base.code",
+            "stage": "E3",
+            "stageInferred": false,
+            "position": [
+              460,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "postgres-upsert",
+            "name": "Postgres - Insertar con idempotencia",
+            "type": "n8n-nodes-base.postgres",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              680,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-log-e3",
+            "name": "E3 - Log salida persistencia",
+            "type": "n8n-nodes-base.code",
+            "stage": "E3",
+            "stageInferred": false,
+            "position": [
+              900,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "input-trigger",
+            "to": "code-preparar",
+            "branch": "main"
+          },
+          {
+            "from": "code-preparar",
+            "to": "postgres-upsert",
+            "branch": "main"
+          },
+          {
+            "from": "postgres-upsert",
+            "to": "code-log-e3",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": []
+      },
+      "metrics": {
+        "nodeCount": 4,
+        "edgeCount": 3,
+        "cyclomaticComplexity": 1,
+        "maxDepth": 3,
+        "stageDistribution": {
+          "E1": 1,
+          "E2": 0,
+          "E3": 3,
+          "E4": 0,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 0.667,
+        "fanOutTop": [
+          {
+            "nodeId": "input-trigger",
+            "nodeName": "Execute Workflow Trigger",
+            "value": 1
+          },
+          {
+            "nodeId": "code-preparar",
+            "nodeName": "E3 - Preparar para persistencia",
+            "value": 1
+          },
+          {
+            "nodeId": "postgres-upsert",
+            "nodeName": "Postgres - Insertar con idempotencia",
+            "value": 1
+          },
+          {
+            "nodeId": "code-log-e3",
+            "nodeName": "E3 - Log salida persistencia",
+            "value": 0
+          }
+        ]
+      },
+      "findings": [],
+      "summary": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "score": 100,
+        "rulesApplicable": 7,
+        "rulesPassed": 7
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-002",
+        "REG-005",
+        "REG-006",
+        "REG-008",
+        "REG-010",
+        "REG-VOC"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-003",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-004",
+          "reason": "sin nodos HTTP"
+        },
+        {
+          "id": "REG-007",
+          "reason": "no es subflujo E2 por nombre"
+        },
+        {
+          "id": "REG-009",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-001",
+        "REG-002",
+        "REG-005",
+        "REG-006",
+        "REG-008",
+        "REG-010",
+        "REG-VOC"
+      ]
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\casos-de-estudio\\iot\\to-be\\iot-to-be-e4-notificacion.json",
+      "caso": "iot",
+      "estado": "to-be",
+      "isOrquestador": false,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "input-trigger",
+            "name": "Execute Workflow Trigger",
+            "type": "n8n-nodes-base.executeWorkflowTrigger",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              300
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-e4-start",
+            "name": "E4 - Capturar inicio etapa",
+            "type": "n8n-nodes-base.code",
+            "stage": "E4",
+            "stageInferred": false,
+            "position": [
+              460,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "if-notificar",
+            "name": "IF - Requiere notificacion?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              680,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "if-critico",
+            "name": "IF - Nivel critico?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              900,
+              200
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "http-critico",
+            "name": "HTTP - Notificar canal CRITICO (con retry)",
+            "type": "n8n-nodes-base.httpRequest",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              1120,
+              120
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "http-advertencia",
+            "name": "HTTP - Notificar canal ADVERTENCIA (con retry)",
+            "type": "n8n-nodes-base.httpRequest",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              1120,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-log-e4-ok",
+            "name": "E4 - Log notificacion enviada",
+            "type": "n8n-nodes-base.code",
+            "stage": "E4",
+            "stageInferred": false,
+            "position": [
+              1340,
+              200
+            ],
+            "inDegree": 2,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-log-e4-skip",
+            "name": "E4 - Log sin notificacion (normal)",
+            "type": "n8n-nodes-base.code",
+            "stage": "E4",
+            "stageInferred": false,
+            "position": [
+              900,
+              420
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "input-trigger",
+            "to": "code-e4-start",
+            "branch": "main"
+          },
+          {
+            "from": "code-e4-start",
+            "to": "if-notificar",
+            "branch": "main"
+          },
+          {
+            "from": "if-notificar",
+            "to": "if-critico",
+            "branch": "main"
+          },
+          {
+            "from": "if-notificar",
+            "to": "code-log-e4-skip",
+            "branch": "main"
+          },
+          {
+            "from": "if-critico",
+            "to": "http-critico",
+            "branch": "main"
+          },
+          {
+            "from": "if-critico",
+            "to": "http-advertencia",
+            "branch": "main"
+          },
+          {
+            "from": "http-critico",
+            "to": "code-log-e4-ok",
+            "branch": "main"
+          },
+          {
+            "from": "http-advertencia",
+            "to": "code-log-e4-ok",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": []
+      },
+      "metrics": {
+        "nodeCount": 8,
+        "edgeCount": 8,
+        "cyclomaticComplexity": 2,
+        "maxDepth": 5,
+        "stageDistribution": {
+          "E1": 1,
+          "E2": 2,
+          "E3": 2,
+          "E4": 3,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 0.625,
+        "fanOutTop": [
+          {
+            "nodeId": "if-notificar",
+            "nodeName": "IF - Requiere notificacion?",
+            "value": 2
+          },
+          {
+            "nodeId": "if-critico",
+            "nodeName": "IF - Nivel critico?",
+            "value": 2
+          },
+          {
+            "nodeId": "input-trigger",
+            "nodeName": "Execute Workflow Trigger",
+            "value": 1
+          },
+          {
+            "nodeId": "code-e4-start",
+            "nodeName": "E4 - Capturar inicio etapa",
+            "value": 1
+          },
+          {
+            "nodeId": "http-critico",
+            "nodeName": "HTTP - Notificar canal CRITICO (con retry)",
+            "value": 1
+          }
+        ]
+      },
+      "findings": [
+        {
+          "id": "90a00b82",
+          "ruleId": "REG-006",
+          "ruleName": "Log estructurado JSON",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": "code-e4-start",
+          "nodeName": "E4 - Capturar inicio etapa",
+          "position": [
+            460,
+            300
+          ],
+          "message": "Nodo Code sin console.log(JSON.stringify(...))",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "reliability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-02",
+            "R-GLOBAL-01"
+          ],
+          "adr": [
+            "ADR-MF-003"
+          ],
+          "fixSuggestion": {
+            "kind": "hint",
+            "preview": "console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"
+          }
+        }
+      ],
+      "summary": {
+        "errors": 0,
+        "warnings": 1,
+        "infos": 0,
+        "score": 86,
+        "rulesApplicable": 7,
+        "rulesPassed": 6
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-002",
+        "REG-004",
+        "REG-006",
+        "REG-008",
+        "REG-010",
+        "REG-VOC"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-003",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-005",
+          "reason": "sin nodos Postgres"
+        },
+        {
+          "id": "REG-007",
+          "reason": "no es subflujo E2 por nombre"
+        },
+        {
+          "id": "REG-009",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-001",
+        "REG-002",
+        "REG-004",
+        "REG-008",
+        "REG-010",
+        "REG-VOC"
+      ]
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\casos-de-estudio\\iot\\to-be\\iot-to-be-orquestador.json",
+      "caso": "iot",
+      "estado": "to-be",
+      "isOrquestador": true,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "4adfb24b-1199-4b5d-bb1f-0a4bf26e62c0",
+            "name": "Webhook - Ingesta sensor",
+            "type": "n8n-nodes-base.webhook",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              -656,
+              112
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "e10dd87a-dfe5-44f0-a953-f4f23413f4c5",
+            "name": "Execute - E1 Validacion entrada",
+            "type": "n8n-nodes-base.executeWorkflow",
+            "stage": "E1",
+            "stageInferred": false,
+            "position": [
+              -448,
+              112
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "cd5e733a-eb1e-4651-b1ee-0e040717c6b4",
+            "name": "IF - Lectura valida?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              -224,
+              112
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "b41ba74e-f8b9-4502-9668-96edc2f137de",
+            "name": "Respond - Datos invalidos (422)",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              0,
+              240
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "39c5d76c-1738-4635-8f7d-71d0bc82cc69",
+            "name": "Execute - E2 Dominio y umbrales",
+            "type": "n8n-nodes-base.executeWorkflow",
+            "stage": "E2",
+            "stageInferred": false,
+            "position": [
+              0,
+              0
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "dc9a1684-7c05-4987-8bf8-1aae82f9cfca",
+            "name": "Execute - E3 Persistencia",
+            "type": "n8n-nodes-base.executeWorkflow",
+            "stage": "E3",
+            "stageInferred": false,
+            "position": [
+              224,
+              0
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "8c3a2b1c-d39d-465d-867c-980fc57bc100",
+            "name": "Execute - E4 Notificacion",
+            "type": "n8n-nodes-base.executeWorkflow",
+            "stage": "E4",
+            "stageInferred": false,
+            "position": [
+              448,
+              0
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "8bc32a4d-1704-4858-bfb6-a74ec6249467",
+            "name": "Respond - OK (200)",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              672,
+              0
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "4adfb24b-1199-4b5d-bb1f-0a4bf26e62c0",
+            "to": "e10dd87a-dfe5-44f0-a953-f4f23413f4c5",
+            "branch": "main"
+          },
+          {
+            "from": "e10dd87a-dfe5-44f0-a953-f4f23413f4c5",
+            "to": "cd5e733a-eb1e-4651-b1ee-0e040717c6b4",
+            "branch": "main"
+          },
+          {
+            "from": "cd5e733a-eb1e-4651-b1ee-0e040717c6b4",
+            "to": "39c5d76c-1738-4635-8f7d-71d0bc82cc69",
+            "branch": "main"
+          },
+          {
+            "from": "cd5e733a-eb1e-4651-b1ee-0e040717c6b4",
+            "to": "b41ba74e-f8b9-4502-9668-96edc2f137de",
+            "branch": "main"
+          },
+          {
+            "from": "39c5d76c-1738-4635-8f7d-71d0bc82cc69",
+            "to": "dc9a1684-7c05-4987-8bf8-1aae82f9cfca",
+            "branch": "main"
+          },
+          {
+            "from": "dc9a1684-7c05-4987-8bf8-1aae82f9cfca",
+            "to": "8c3a2b1c-d39d-465d-867c-980fc57bc100",
+            "branch": "main"
+          },
+          {
+            "from": "8c3a2b1c-d39d-465d-867c-980fc57bc100",
+            "to": "8bc32a4d-1704-4858-bfb6-a74ec6249467",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": [
+          {
+            "nodeId": "e10dd87a-dfe5-44f0-a953-f4f23413f4c5",
+            "nodeName": "Execute - E1 Validacion entrada",
+            "workflowId": "ZV8ZvHeupkqKD0u6"
+          },
+          {
+            "nodeId": "39c5d76c-1738-4635-8f7d-71d0bc82cc69",
+            "nodeName": "Execute - E2 Dominio y umbrales",
+            "workflowId": "stOkVjwANm9n6CSQ"
+          },
+          {
+            "nodeId": "dc9a1684-7c05-4987-8bf8-1aae82f9cfca",
+            "nodeName": "Execute - E3 Persistencia",
+            "workflowId": "HqIO8HSWGr7SkcEs"
+          },
+          {
+            "nodeId": "8c3a2b1c-d39d-465d-867c-980fc57bc100",
+            "nodeName": "Execute - E4 Notificacion",
+            "workflowId": "JAjlBYfOsuzbzQmR"
+          }
+        ]
+      },
+      "metrics": {
+        "nodeCount": 8,
+        "edgeCount": 7,
+        "cyclomaticComplexity": 1,
+        "maxDepth": 6,
+        "stageDistribution": {
+          "E1": 2,
+          "E2": 2,
+          "E3": 1,
+          "E4": 3,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 0.857,
+        "fanOutTop": [
+          {
+            "nodeId": "cd5e733a-eb1e-4651-b1ee-0e040717c6b4",
+            "nodeName": "IF - Lectura valida?",
+            "value": 2
+          },
+          {
+            "nodeId": "4adfb24b-1199-4b5d-bb1f-0a4bf26e62c0",
+            "nodeName": "Webhook - Ingesta sensor",
+            "value": 1
+          },
+          {
+            "nodeId": "e10dd87a-dfe5-44f0-a953-f4f23413f4c5",
+            "nodeName": "Execute - E1 Validacion entrada",
+            "value": 1
+          },
+          {
+            "nodeId": "39c5d76c-1738-4635-8f7d-71d0bc82cc69",
+            "nodeName": "Execute - E2 Dominio y umbrales",
+            "value": 1
+          },
+          {
+            "nodeId": "dc9a1684-7c05-4987-8bf8-1aae82f9cfca",
+            "nodeName": "Execute - E3 Persistencia",
+            "value": 1
+          }
+        ]
+      },
+      "findings": [],
+      "summary": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "score": 100,
+        "rulesApplicable": 5,
+        "rulesPassed": 5
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-003",
+        "REG-009",
+        "REG-010",
+        "REG-VOC"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-002",
+          "reason": "orquestador puro (run_id delegado a subflujo E1)"
+        },
+        {
+          "id": "REG-004",
+          "reason": "sin nodos HTTP"
+        },
+        {
+          "id": "REG-005",
+          "reason": "sin nodos Postgres"
+        },
+        {
+          "id": "REG-006",
+          "reason": "sin nodos Code"
+        },
+        {
+          "id": "REG-007",
+          "reason": "no es subflujo E2 por nombre"
+        },
+        {
+          "id": "REG-008",
+          "reason": "sin nodos IO"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-001",
+        "REG-003",
+        "REG-009",
+        "REG-010",
+        "REG-VOC"
+      ]
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\microframework\\plantillas\\bot-error-handler.json",
+      "caso": "plantilla",
+      "estado": "to-be",
+      "isOrquestador": false,
+      "isErrorHandler": true,
+      "graph": {
+        "nodes": [
+          {
+            "id": "error-trigger",
+            "name": "Error Trigger",
+            "type": "n8n-nodes-base.errorTrigger",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              300
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-log-error",
+            "name": "Code - Log error estructurado",
+            "type": "n8n-nodes-base.code",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              460,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "http-notify-error",
+            "name": "HTTP - Notificar error (mock)",
+            "type": "n8n-nodes-base.httpRequest",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              680,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "error-trigger",
+            "to": "code-log-error",
+            "branch": "main"
+          },
+          {
+            "from": "code-log-error",
+            "to": "http-notify-error",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": []
+      },
+      "metrics": {
+        "nodeCount": 3,
+        "edgeCount": 2,
+        "cyclomaticComplexity": 1,
+        "maxDepth": 2,
+        "stageDistribution": {
+          "E1": 1,
+          "E2": 1,
+          "E3": 1,
+          "E4": 0,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 1,
+        "fanOutTop": [
+          {
+            "nodeId": "error-trigger",
+            "nodeName": "Error Trigger",
+            "value": 1
+          },
+          {
+            "nodeId": "code-log-error",
+            "nodeName": "Code - Log error estructurado",
+            "value": 1
+          },
+          {
+            "nodeId": "http-notify-error",
+            "nodeName": "HTTP - Notificar error (mock)",
+            "value": 0
+          }
+        ]
+      },
+      "findings": [
+        {
+          "id": "fcd64283",
+          "ruleId": "REG-004",
+          "ruleName": "Retry en HTTP",
+          "severity": "warning",
+          "confidence": "high",
+          "nodeId": "http-notify-error",
+          "nodeName": "HTTP - Notificar error (mock)",
+          "position": [
+            680,
+            300
+          ],
+          "message": "maxRetries=1 < 2",
+          "evidence": "options.retry.maxRetries = 1",
+          "iso25010": [
+            "reliability",
+            "performanceEfficiency"
+          ],
+          "atamScenarios": [
+            "TP-IOT-01"
+          ],
+          "adr": [
+            "ADR-MF-002"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "add-http-retry",
+            "preview": "Subir maxRetries a 3 con backoff exponencial."
+          }
+        }
+      ],
+      "summary": {
+        "errors": 0,
+        "warnings": 1,
+        "infos": 0,
+        "score": 80,
+        "rulesApplicable": 5,
+        "rulesPassed": 4
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-002",
+        "REG-004",
+        "REG-006",
+        "REG-008"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-003",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-005",
+          "reason": "error handler (cada evento es único)"
+        },
+        {
+          "id": "REG-007",
+          "reason": "no es subflujo E2 por nombre"
+        },
+        {
+          "id": "REG-009",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-010",
+          "reason": "plantilla o caso sin convención"
+        },
+        {
+          "id": "REG-VOC",
+          "reason": "plantilla"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-001",
+        "REG-002",
+        "REG-006",
+        "REG-008"
+      ]
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\microframework\\plantillas\\bot-to-be-e2-dominio.json",
+      "caso": "plantilla",
+      "estado": "to-be",
+      "isOrquestador": false,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "input-trigger",
+            "name": "Execute Workflow Trigger",
+            "type": "n8n-nodes-base.executeWorkflowTrigger",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              300
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-dominio",
+            "name": "E2 - Reglas de negocio",
+            "type": "n8n-nodes-base.code",
+            "stage": "E2",
+            "stageInferred": false,
+            "position": [
+              460,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "input-trigger",
+            "to": "code-dominio",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": []
+      },
+      "metrics": {
+        "nodeCount": 2,
+        "edgeCount": 1,
+        "cyclomaticComplexity": 1,
+        "maxDepth": 1,
+        "stageDistribution": {
+          "E1": 1,
+          "E2": 1,
+          "E3": 0,
+          "E4": 0,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 1,
+        "fanOutTop": [
+          {
+            "nodeId": "input-trigger",
+            "nodeName": "Execute Workflow Trigger",
+            "value": 1
+          },
+          {
+            "nodeId": "code-dominio",
+            "nodeName": "E2 - Reglas de negocio",
+            "value": 0
+          }
+        ]
+      },
+      "findings": [],
+      "summary": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "score": 100,
+        "rulesApplicable": 4,
+        "rulesPassed": 4
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-002",
+        "REG-006",
+        "REG-007"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-003",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-004",
+          "reason": "sin nodos HTTP"
+        },
+        {
+          "id": "REG-005",
+          "reason": "sin nodos Postgres"
+        },
+        {
+          "id": "REG-008",
+          "reason": "sin nodos IO"
+        },
+        {
+          "id": "REG-009",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-010",
+          "reason": "plantilla o caso sin convención"
+        },
+        {
+          "id": "REG-VOC",
+          "reason": "plantilla"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-001",
+        "REG-002",
+        "REG-006",
+        "REG-007"
+      ]
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\microframework\\plantillas\\bot-to-be-e3-adaptador.json",
+      "caso": "plantilla",
+      "estado": "to-be",
+      "isOrquestador": false,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "input-trigger",
+            "name": "Execute Workflow Trigger",
+            "type": "n8n-nodes-base.executeWorkflowTrigger",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              300
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-preparar",
+            "name": "E3 - Preparar payload adaptador",
+            "type": "n8n-nodes-base.code",
+            "stage": "E3",
+            "stageInferred": false,
+            "position": [
+              460,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "http-ticket",
+            "name": "HTTP - POST ticket (con retry)",
+            "type": "n8n-nodes-base.httpRequest",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              680,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-log-e3",
+            "name": "E3 - Log salida adaptador",
+            "type": "n8n-nodes-base.code",
+            "stage": "E3",
+            "stageInferred": false,
+            "position": [
+              900,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "input-trigger",
+            "to": "code-preparar",
+            "branch": "main"
+          },
+          {
+            "from": "code-preparar",
+            "to": "http-ticket",
+            "branch": "main"
+          },
+          {
+            "from": "http-ticket",
+            "to": "code-log-e3",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": []
+      },
+      "metrics": {
+        "nodeCount": 4,
+        "edgeCount": 3,
+        "cyclomaticComplexity": 1,
+        "maxDepth": 3,
+        "stageDistribution": {
+          "E1": 1,
+          "E2": 0,
+          "E3": 3,
+          "E4": 0,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 0.667,
+        "fanOutTop": [
+          {
+            "nodeId": "input-trigger",
+            "nodeName": "Execute Workflow Trigger",
+            "value": 1
+          },
+          {
+            "nodeId": "code-preparar",
+            "nodeName": "E3 - Preparar payload adaptador",
+            "value": 1
+          },
+          {
+            "nodeId": "http-ticket",
+            "nodeName": "HTTP - POST ticket (con retry)",
+            "value": 1
+          },
+          {
+            "nodeId": "code-log-e3",
+            "nodeName": "E3 - Log salida adaptador",
+            "value": 0
+          }
+        ]
+      },
+      "findings": [
+        {
+          "id": "081b1718",
+          "ruleId": "REG-006",
+          "ruleName": "Log estructurado JSON",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": "code-preparar",
+          "nodeName": "E3 - Preparar payload adaptador",
+          "position": [
+            460,
+            300
+          ],
+          "message": "Nodo Code sin console.log(JSON.stringify(...))",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "reliability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-02",
+            "R-GLOBAL-01"
+          ],
+          "adr": [
+            "ADR-MF-003"
+          ],
+          "fixSuggestion": {
+            "kind": "hint",
+            "preview": "console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"
+          }
+        }
+      ],
+      "summary": {
+        "errors": 0,
+        "warnings": 1,
+        "infos": 0,
+        "score": 80,
+        "rulesApplicable": 5,
+        "rulesPassed": 4
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-002",
+        "REG-004",
+        "REG-006",
+        "REG-008"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-003",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-005",
+          "reason": "sin nodos Postgres"
+        },
+        {
+          "id": "REG-007",
+          "reason": "no es subflujo E2 por nombre"
+        },
+        {
+          "id": "REG-009",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-010",
+          "reason": "plantilla o caso sin convención"
+        },
+        {
+          "id": "REG-VOC",
+          "reason": "plantilla"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-001",
+        "REG-002",
+        "REG-004",
+        "REG-008"
+      ]
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\microframework\\plantillas\\bot-to-be-orquestador.json",
+      "caso": "plantilla",
+      "estado": "to-be",
+      "isOrquestador": true,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "webhook-entrada",
+            "name": "Webhook - Entrada",
+            "type": "n8n-nodes-base.webhook",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              300
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "etapa1-validacion",
+            "name": "E1 - Validacion de entrada",
+            "type": "n8n-nodes-base.code",
+            "stage": "E1",
+            "stageInferred": false,
+            "position": [
+              460,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "if-valido",
+            "name": "IF - Entrada valida?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              680,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "if-unauthorized",
+            "name": "IF - Token invalido?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              900,
+              460
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "respond-401",
+            "name": "Respond - Token invalido (401)",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              1120,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "respond-400",
+            "name": "Respond - Entrada invalida (400)",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              1120,
+              560
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "exec-e2",
+            "name": "Execute - E2 Logica de dominio",
+            "type": "n8n-nodes-base.executeWorkflow",
+            "stage": "E2",
+            "stageInferred": false,
+            "position": [
+              900,
+              200
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "exec-e3",
+            "name": "Execute - E3 Adaptador persistencia",
+            "type": "n8n-nodes-base.executeWorkflow",
+            "stage": "E3",
+            "stageInferred": false,
+            "position": [
+              1120,
+              200
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "if-error",
+            "name": "IF - Error en pipeline?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              1340,
+              200
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "respond-500",
+            "name": "Respond - Error interno (500)",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              1560,
+              380
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "respond-200",
+            "name": "Respond - OK (200)",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              1560,
+              200
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "webhook-entrada",
+            "to": "etapa1-validacion",
+            "branch": "main"
+          },
+          {
+            "from": "etapa1-validacion",
+            "to": "if-valido",
+            "branch": "main"
+          },
+          {
+            "from": "if-valido",
+            "to": "exec-e2",
+            "branch": "main"
+          },
+          {
+            "from": "if-valido",
+            "to": "if-unauthorized",
+            "branch": "main"
+          },
+          {
+            "from": "if-unauthorized",
+            "to": "respond-401",
+            "branch": "main"
+          },
+          {
+            "from": "if-unauthorized",
+            "to": "respond-400",
+            "branch": "main"
+          },
+          {
+            "from": "exec-e2",
+            "to": "exec-e3",
+            "branch": "main"
+          },
+          {
+            "from": "exec-e3",
+            "to": "if-error",
+            "branch": "main"
+          },
+          {
+            "from": "if-error",
+            "to": "respond-500",
+            "branch": "main"
+          },
+          {
+            "from": "if-error",
+            "to": "respond-200",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": [
+          {
+            "nodeId": "exec-e2",
+            "nodeName": "Execute - E2 Logica de dominio",
+            "workflowId": "GLCqR9yqvkmE20QY"
+          },
+          {
+            "nodeId": "exec-e3",
+            "nodeName": "Execute - E3 Adaptador persistencia",
+            "workflowId": "EqMaNbc6Rq60G8u9"
+          }
+        ]
+      },
+      "metrics": {
+        "nodeCount": 11,
+        "edgeCount": 10,
+        "cyclomaticComplexity": 1,
+        "maxDepth": 6,
+        "stageDistribution": {
+          "E1": 2,
+          "E2": 4,
+          "E3": 1,
+          "E4": 4,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 0.6,
+        "fanOutTop": [
+          {
+            "nodeId": "if-valido",
+            "nodeName": "IF - Entrada valida?",
+            "value": 2
+          },
+          {
+            "nodeId": "if-unauthorized",
+            "nodeName": "IF - Token invalido?",
+            "value": 2
+          },
+          {
+            "nodeId": "if-error",
+            "nodeName": "IF - Error en pipeline?",
+            "value": 2
+          },
+          {
+            "nodeId": "webhook-entrada",
+            "nodeName": "Webhook - Entrada",
+            "value": 1
+          },
+          {
+            "nodeId": "etapa1-validacion",
+            "nodeName": "E1 - Validacion de entrada",
+            "value": 1
+          }
+        ]
+      },
+      "findings": [],
+      "summary": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "score": 100,
+        "rulesApplicable": 5,
+        "rulesPassed": 5
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-002",
+        "REG-003",
+        "REG-006",
+        "REG-009"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-004",
+          "reason": "sin nodos HTTP"
+        },
+        {
+          "id": "REG-005",
+          "reason": "sin nodos Postgres"
+        },
+        {
+          "id": "REG-007",
+          "reason": "no es subflujo E2 por nombre"
+        },
+        {
+          "id": "REG-008",
+          "reason": "sin nodos IO"
+        },
+        {
+          "id": "REG-010",
+          "reason": "plantilla o caso sin convención"
+        },
+        {
+          "id": "REG-VOC",
+          "reason": "plantilla"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-001",
+        "REG-002",
+        "REG-003",
+        "REG-006",
+        "REG-009"
+      ]
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\microframework\\plantillas\\iot-to-be-e1-validacion.json",
+      "caso": "plantilla",
+      "estado": "to-be",
+      "isOrquestador": false,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "input-trigger",
+            "name": "Execute Workflow Trigger",
+            "type": "n8n-nodes-base.executeWorkflowTrigger",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              300
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-validacion",
+            "name": "E1 - Validar y normalizar lectura",
+            "type": "n8n-nodes-base.code",
+            "stage": "E1",
+            "stageInferred": false,
+            "position": [
+              460,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "input-trigger",
+            "to": "code-validacion",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": []
+      },
+      "metrics": {
+        "nodeCount": 2,
+        "edgeCount": 1,
+        "cyclomaticComplexity": 1,
+        "maxDepth": 1,
+        "stageDistribution": {
+          "E1": 2,
+          "E2": 0,
+          "E3": 0,
+          "E4": 0,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 1,
+        "fanOutTop": [
+          {
+            "nodeId": "input-trigger",
+            "nodeName": "Execute Workflow Trigger",
+            "value": 1
+          },
+          {
+            "nodeId": "code-validacion",
+            "nodeName": "E1 - Validar y normalizar lectura",
+            "value": 0
+          }
+        ]
+      },
+      "findings": [],
+      "summary": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "score": 100,
+        "rulesApplicable": 3,
+        "rulesPassed": 3
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-002",
+        "REG-006"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-003",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-004",
+          "reason": "sin nodos HTTP"
+        },
+        {
+          "id": "REG-005",
+          "reason": "sin nodos Postgres"
+        },
+        {
+          "id": "REG-007",
+          "reason": "no es subflujo E2 por nombre"
+        },
+        {
+          "id": "REG-008",
+          "reason": "sin nodos IO"
+        },
+        {
+          "id": "REG-009",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-010",
+          "reason": "plantilla o caso sin convención"
+        },
+        {
+          "id": "REG-VOC",
+          "reason": "plantilla"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-001",
+        "REG-002",
+        "REG-006"
+      ]
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\microframework\\plantillas\\iot-to-be-e2-dominio.json",
+      "caso": "plantilla",
+      "estado": "to-be",
+      "isOrquestador": false,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "input-trigger",
+            "name": "Execute Workflow Trigger",
+            "type": "n8n-nodes-base.executeWorkflowTrigger",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              300
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-dominio",
+            "name": "E2 - Analisis de umbrales y clasificacion",
+            "type": "n8n-nodes-base.code",
+            "stage": "E2",
+            "stageInferred": false,
+            "position": [
+              460,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "input-trigger",
+            "to": "code-dominio",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": []
+      },
+      "metrics": {
+        "nodeCount": 2,
+        "edgeCount": 1,
+        "cyclomaticComplexity": 1,
+        "maxDepth": 1,
+        "stageDistribution": {
+          "E1": 1,
+          "E2": 1,
+          "E3": 0,
+          "E4": 0,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 1,
+        "fanOutTop": [
+          {
+            "nodeId": "input-trigger",
+            "nodeName": "Execute Workflow Trigger",
+            "value": 1
+          },
+          {
+            "nodeId": "code-dominio",
+            "nodeName": "E2 - Analisis de umbrales y clasificacion",
+            "value": 0
+          }
+        ]
+      },
+      "findings": [],
+      "summary": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "score": 100,
+        "rulesApplicable": 4,
+        "rulesPassed": 4
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-002",
+        "REG-006",
+        "REG-007"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-003",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-004",
+          "reason": "sin nodos HTTP"
+        },
+        {
+          "id": "REG-005",
+          "reason": "sin nodos Postgres"
+        },
+        {
+          "id": "REG-008",
+          "reason": "sin nodos IO"
+        },
+        {
+          "id": "REG-009",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-010",
+          "reason": "plantilla o caso sin convención"
+        },
+        {
+          "id": "REG-VOC",
+          "reason": "plantilla"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-001",
+        "REG-002",
+        "REG-006",
+        "REG-007"
+      ]
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\microframework\\plantillas\\iot-to-be-e3-persistencia.json",
+      "caso": "plantilla",
+      "estado": "to-be",
+      "isOrquestador": false,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "input-trigger",
+            "name": "Execute Workflow Trigger",
+            "type": "n8n-nodes-base.executeWorkflowTrigger",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              300
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-preparar",
+            "name": "E3 - Preparar para persistencia",
+            "type": "n8n-nodes-base.code",
+            "stage": "E3",
+            "stageInferred": false,
+            "position": [
+              460,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "postgres-upsert",
+            "name": "Postgres - Insertar con idempotencia",
+            "type": "n8n-nodes-base.postgres",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              680,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-log-e3",
+            "name": "E3 - Log salida persistencia",
+            "type": "n8n-nodes-base.code",
+            "stage": "E3",
+            "stageInferred": false,
+            "position": [
+              900,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "input-trigger",
+            "to": "code-preparar",
+            "branch": "main"
+          },
+          {
+            "from": "code-preparar",
+            "to": "postgres-upsert",
+            "branch": "main"
+          },
+          {
+            "from": "postgres-upsert",
+            "to": "code-log-e3",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": []
+      },
+      "metrics": {
+        "nodeCount": 4,
+        "edgeCount": 3,
+        "cyclomaticComplexity": 1,
+        "maxDepth": 3,
+        "stageDistribution": {
+          "E1": 1,
+          "E2": 0,
+          "E3": 3,
+          "E4": 0,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 0.667,
+        "fanOutTop": [
+          {
+            "nodeId": "input-trigger",
+            "nodeName": "Execute Workflow Trigger",
+            "value": 1
+          },
+          {
+            "nodeId": "code-preparar",
+            "nodeName": "E3 - Preparar para persistencia",
+            "value": 1
+          },
+          {
+            "nodeId": "postgres-upsert",
+            "nodeName": "Postgres - Insertar con idempotencia",
+            "value": 1
+          },
+          {
+            "nodeId": "code-log-e3",
+            "nodeName": "E3 - Log salida persistencia",
+            "value": 0
+          }
+        ]
+      },
+      "findings": [],
+      "summary": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "score": 100,
+        "rulesApplicable": 5,
+        "rulesPassed": 5
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-002",
+        "REG-005",
+        "REG-006",
+        "REG-008"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-003",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-004",
+          "reason": "sin nodos HTTP"
+        },
+        {
+          "id": "REG-007",
+          "reason": "no es subflujo E2 por nombre"
+        },
+        {
+          "id": "REG-009",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-010",
+          "reason": "plantilla o caso sin convención"
+        },
+        {
+          "id": "REG-VOC",
+          "reason": "plantilla"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-001",
+        "REG-002",
+        "REG-005",
+        "REG-006",
+        "REG-008"
+      ]
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\microframework\\plantillas\\iot-to-be-e4-notificacion.json",
+      "caso": "plantilla",
+      "estado": "to-be",
+      "isOrquestador": false,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "input-trigger",
+            "name": "Execute Workflow Trigger",
+            "type": "n8n-nodes-base.executeWorkflowTrigger",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              300
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "if-notificar",
+            "name": "IF - Requiere notificacion?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              460,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "if-critico",
+            "name": "IF - Nivel critico?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              680,
+              200
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "http-critico",
+            "name": "HTTP - Notificar canal CRITICO (con retry)",
+            "type": "n8n-nodes-base.httpRequest",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              900,
+              120
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "http-warning",
+            "name": "HTTP - Notificar canal WARNING (con retry)",
+            "type": "n8n-nodes-base.httpRequest",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              900,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-log-e4-ok",
+            "name": "E4 - Log notificacion enviada",
+            "type": "n8n-nodes-base.code",
+            "stage": "E4",
+            "stageInferred": false,
+            "position": [
+              1120,
+              200
+            ],
+            "inDegree": 2,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "code-log-e4-skip",
+            "name": "E4 - Log sin notificacion (normal)",
+            "type": "n8n-nodes-base.code",
+            "stage": "E4",
+            "stageInferred": false,
+            "position": [
+              680,
+              420
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "input-trigger",
+            "to": "if-notificar",
+            "branch": "main"
+          },
+          {
+            "from": "if-notificar",
+            "to": "if-critico",
+            "branch": "main"
+          },
+          {
+            "from": "if-notificar",
+            "to": "code-log-e4-skip",
+            "branch": "main"
+          },
+          {
+            "from": "if-critico",
+            "to": "http-critico",
+            "branch": "main"
+          },
+          {
+            "from": "if-critico",
+            "to": "http-warning",
+            "branch": "main"
+          },
+          {
+            "from": "http-critico",
+            "to": "code-log-e4-ok",
+            "branch": "main"
+          },
+          {
+            "from": "http-warning",
+            "to": "code-log-e4-ok",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": []
+      },
+      "metrics": {
+        "nodeCount": 7,
+        "edgeCount": 7,
+        "cyclomaticComplexity": 2,
+        "maxDepth": 4,
+        "stageDistribution": {
+          "E1": 1,
+          "E2": 2,
+          "E3": 2,
+          "E4": 2,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 0.857,
+        "fanOutTop": [
+          {
+            "nodeId": "if-notificar",
+            "nodeName": "IF - Requiere notificacion?",
+            "value": 2
+          },
+          {
+            "nodeId": "if-critico",
+            "nodeName": "IF - Nivel critico?",
+            "value": 2
+          },
+          {
+            "nodeId": "input-trigger",
+            "nodeName": "Execute Workflow Trigger",
+            "value": 1
+          },
+          {
+            "nodeId": "http-critico",
+            "nodeName": "HTTP - Notificar canal CRITICO (con retry)",
+            "value": 1
+          },
+          {
+            "nodeId": "http-warning",
+            "nodeName": "HTTP - Notificar canal WARNING (con retry)",
+            "value": 1
+          }
+        ]
+      },
+      "findings": [],
+      "summary": {
+        "errors": 0,
+        "warnings": 0,
+        "infos": 0,
+        "score": 100,
+        "rulesApplicable": 5,
+        "rulesPassed": 5
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-002",
+        "REG-004",
+        "REG-006",
+        "REG-008"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-003",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-005",
+          "reason": "sin nodos Postgres"
+        },
+        {
+          "id": "REG-007",
+          "reason": "no es subflujo E2 por nombre"
+        },
+        {
+          "id": "REG-009",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-010",
+          "reason": "plantilla o caso sin convención"
+        },
+        {
+          "id": "REG-VOC",
+          "reason": "plantilla"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-001",
+        "REG-002",
+        "REG-004",
+        "REG-006",
+        "REG-008"
+      ]
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\microframework\\plantillas\\iot-to-be-orquestador.json",
+      "caso": "plantilla",
+      "estado": "to-be",
+      "isOrquestador": true,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "webhook-sensor",
+            "name": "Webhook - Ingesta sensor",
+            "type": "n8n-nodes-base.webhook",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              300
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "exec-e1",
+            "name": "Execute - E1 Validacion entrada",
+            "type": "n8n-nodes-base.executeWorkflow",
+            "stage": "E1",
+            "stageInferred": false,
+            "position": [
+              460,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "if-valido",
+            "name": "IF - Lectura valida?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              680,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "respond-422",
+            "name": "Respond - Datos invalidos (422)",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              900,
+              440
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "exec-e2",
+            "name": "Execute - E2 Dominio y umbrales",
+            "type": "n8n-nodes-base.executeWorkflow",
+            "stage": "E2",
+            "stageInferred": false,
+            "position": [
+              900,
+              200
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "exec-e3",
+            "name": "Execute - E3 Persistencia",
+            "type": "n8n-nodes-base.executeWorkflow",
+            "stage": "E3",
+            "stageInferred": false,
+            "position": [
+              1120,
+              200
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "exec-e4",
+            "name": "Execute - E4 Notificacion",
+            "type": "n8n-nodes-base.executeWorkflow",
+            "stage": "E4",
+            "stageInferred": false,
+            "position": [
+              1340,
+              200
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "respond-200",
+            "name": "Respond - OK (200)",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              1560,
+              200
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "webhook-sensor",
+            "to": "exec-e1",
+            "branch": "main"
+          },
+          {
+            "from": "exec-e1",
+            "to": "if-valido",
+            "branch": "main"
+          },
+          {
+            "from": "if-valido",
+            "to": "exec-e2",
+            "branch": "main"
+          },
+          {
+            "from": "if-valido",
+            "to": "respond-422",
+            "branch": "main"
+          },
+          {
+            "from": "exec-e2",
+            "to": "exec-e3",
+            "branch": "main"
+          },
+          {
+            "from": "exec-e3",
+            "to": "exec-e4",
+            "branch": "main"
+          },
+          {
+            "from": "exec-e4",
+            "to": "respond-200",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": [
+          {
+            "nodeId": "exec-e1",
+            "nodeName": "Execute - E1 Validacion entrada",
+            "workflowId": "REEMPLAZAR_CON_ID_E1"
+          },
+          {
+            "nodeId": "exec-e2",
+            "nodeName": "Execute - E2 Dominio y umbrales",
+            "workflowId": "REEMPLAZAR_CON_ID_E2"
+          },
+          {
+            "nodeId": "exec-e3",
+            "nodeName": "Execute - E3 Persistencia",
+            "workflowId": "REEMPLAZAR_CON_ID_E3"
+          },
+          {
+            "nodeId": "exec-e4",
+            "nodeName": "Execute - E4 Notificacion",
+            "workflowId": "REEMPLAZAR_CON_ID_E4"
+          }
+        ]
+      },
+      "metrics": {
+        "nodeCount": 8,
+        "edgeCount": 7,
+        "cyclomaticComplexity": 1,
+        "maxDepth": 6,
+        "stageDistribution": {
+          "E1": 2,
+          "E2": 2,
+          "E3": 1,
+          "E4": 3,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 0.857,
+        "fanOutTop": [
+          {
+            "nodeId": "if-valido",
+            "nodeName": "IF - Lectura valida?",
+            "value": 2
+          },
+          {
+            "nodeId": "webhook-sensor",
+            "nodeName": "Webhook - Ingesta sensor",
+            "value": 1
+          },
+          {
+            "nodeId": "exec-e1",
+            "nodeName": "Execute - E1 Validacion entrada",
+            "value": 1
+          },
+          {
+            "nodeId": "exec-e2",
+            "nodeName": "Execute - E2 Dominio y umbrales",
+            "value": 1
+          },
+          {
+            "nodeId": "exec-e3",
+            "nodeName": "Execute - E3 Persistencia",
+            "value": 1
+          }
+        ]
+      },
+      "findings": [
+        {
+          "id": "4e993ce8",
+          "ruleId": "AP-005",
+          "ruleName": "Hardcoded workflow ID en Execute Workflow",
+          "severity": "warning",
+          "confidence": "high",
+          "nodeId": "exec-e1",
+          "nodeName": "Execute - E1 Validacion entrada",
+          "position": null,
+          "message": "Execute Workflow con workflowId no resuelto: \"REEMPLAZAR_CON_ID_E1\"",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "portability"
+          ],
+          "atamScenarios": [],
+          "adr": [],
+          "fixSuggestion": null
+        },
+        {
+          "id": "8d49ed28",
+          "ruleId": "AP-005",
+          "ruleName": "Hardcoded workflow ID en Execute Workflow",
+          "severity": "warning",
+          "confidence": "high",
+          "nodeId": "exec-e2",
+          "nodeName": "Execute - E2 Dominio y umbrales",
+          "position": null,
+          "message": "Execute Workflow con workflowId no resuelto: \"REEMPLAZAR_CON_ID_E2\"",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "portability"
+          ],
+          "atamScenarios": [],
+          "adr": [],
+          "fixSuggestion": null
+        },
+        {
+          "id": "44917098",
+          "ruleId": "AP-005",
+          "ruleName": "Hardcoded workflow ID en Execute Workflow",
+          "severity": "warning",
+          "confidence": "high",
+          "nodeId": "exec-e3",
+          "nodeName": "Execute - E3 Persistencia",
+          "position": null,
+          "message": "Execute Workflow con workflowId no resuelto: \"REEMPLAZAR_CON_ID_E3\"",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "portability"
+          ],
+          "atamScenarios": [],
+          "adr": [],
+          "fixSuggestion": null
+        },
+        {
+          "id": "2867974b",
+          "ruleId": "AP-005",
+          "ruleName": "Hardcoded workflow ID en Execute Workflow",
+          "severity": "warning",
+          "confidence": "high",
+          "nodeId": "exec-e4",
+          "nodeName": "Execute - E4 Notificacion",
+          "position": null,
+          "message": "Execute Workflow con workflowId no resuelto: \"REEMPLAZAR_CON_ID_E4\"",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "portability"
+          ],
+          "atamScenarios": [],
+          "adr": [],
+          "fixSuggestion": null
+        }
+      ],
+      "summary": {
+        "errors": 0,
+        "warnings": 4,
+        "infos": 0,
+        "score": 75,
+        "rulesApplicable": 4,
+        "rulesPassed": 3
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-003",
+        "REG-009",
+        "AP-005"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-002",
+          "reason": "orquestador puro (run_id delegado a subflujo E1)"
+        },
+        {
+          "id": "REG-004",
+          "reason": "sin nodos HTTP"
+        },
+        {
+          "id": "REG-005",
+          "reason": "sin nodos Postgres"
+        },
+        {
+          "id": "REG-006",
+          "reason": "sin nodos Code"
+        },
+        {
+          "id": "REG-007",
+          "reason": "no es subflujo E2 por nombre"
+        },
+        {
+          "id": "REG-008",
+          "reason": "sin nodos IO"
+        },
+        {
+          "id": "REG-010",
+          "reason": "plantilla o caso sin convención"
+        },
+        {
+          "id": "REG-VOC",
+          "reason": "plantilla"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-001",
+        "REG-003",
+        "REG-009"
+      ]
+    }
+  ],
+  "coverage": {
+    "rulesDefined": [
+      "REG-001",
+      "REG-002",
+      "REG-003",
+      "REG-004",
+      "REG-005",
+      "REG-006",
+      "REG-007",
+      "REG-008",
+      "REG-009",
+      "REG-010",
+      "REG-VOC",
+      "AP-001",
+      "AP-002",
+      "AP-003",
+      "AP-004",
+      "AP-005",
+      "AP-006"
+    ],
+    "rulesExercised": [
+      "REG-001",
+      "REG-002",
+      "REG-006",
+      "REG-007",
+      "REG-010",
+      "REG-VOC",
+      "REG-004",
+      "REG-008",
+      "REG-003",
+      "REG-009",
+      "REG-005",
+      "AP-005"
+    ],
+    "rulesDormant": [
+      "AP-001",
+      "AP-002",
+      "AP-003",
+      "AP-004",
+      "AP-006"
+    ]
+  },
+  "history": [
+    {
+      "date": "2026-06-01",
+      "score": 70,
+      "errors": 13,
+      "warnings": 51
+    }
+  ]
+}

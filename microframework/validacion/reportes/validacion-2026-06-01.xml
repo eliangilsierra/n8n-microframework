@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json" tests="17" failures="13">
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json" name="REG-001"><failure message="error: Secreto literal detectado: Comparación literal de token en IF/Switch | error: Header HTTP &quot;x-api-key&quot; con valor literal | error: Header HTTP &quot;x-api-key&quot; con valor literal | error: Header HTTP &quot;x-api-key&quot; con valor literal">&quot;rightValue&quot;:&quot;mi-token-secreto-hardcodeado-123&quot;
+x-api-key: clave-api-externa-hardcodeada-456…
+x-api-key: clave-api-externa-hardcodeada-456…
+x-api-key: clave-api-externa-hardcodeada-456…</failure></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json" name="REG-002"><failure message="warning: No se detectó console.log(JSON.stringify(...)) con run_id"></failure></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json" name="REG-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json" name="REG-004"><failure message="warning: Nodo HTTP sin retry habilitado | warning: Nodo HTTP sin retry habilitado | warning: Nodo HTTP sin retry habilitado">options.retry.enabled = false
+options.retry.enabled = false
+options.retry.enabled = false</failure></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json" name="REG-005"><failure message="error: INSERT sin ON CONFLICT ni idempotency_key">INSERT INTO interacciones_bot (user_id, session_id, categoria, prioridad, ticket_id) VALUES ('{{ $('Clasificar y Preparar Ticket').item.json.user_id }}', '{{ $('Clasificar y Preparar Ticket').item.jso</failure></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json" name="REG-006"><failure message="warning: Nodo Code sin console.log(JSON.stringify(...)) | warning: Nodo Code sin console.log(JSON.stringify(...)) | warning: Nodo Code sin console.log(JSON.stringify(...))">
+
+</failure></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json" name="REG-007"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json" name="REG-008"><failure message="warning: Nodos IO en archivo sin convención E3/E4/orquestador: Consultar Historial Usuario, Crear Ticket, Guardar Interaccion, Notificar Sistema Externo"></failure></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json" name="REG-009"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json" name="REG-010"/>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json" name="REG-VOC"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json" name="AP-005"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="casos-de-estudio/bot/as-is/bot-as-is.json" tests="17" failures="13">
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is.json" name="REG-001"><failure message="error: Secreto literal detectado: Comparación literal de token en IF/Switch | error: Header HTTP &quot;x-api-key&quot; con valor literal | error: Header HTTP &quot;x-api-key&quot; con valor literal | error: Header HTTP &quot;x-api-key&quot; con valor literal">&quot;rightValue&quot;:&quot;mi-token-secreto-hardcodeado-123&quot;
+x-api-key: clave-api-externa-hardcodeada-456…
+x-api-key: clave-api-externa-hardcodeada-456…
+x-api-key: clave-api-externa-hardcodeada-456…</failure></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is.json" name="REG-002"><failure message="warning: No se detectó console.log(JSON.stringify(...)) con run_id"></failure></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is.json" name="REG-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is.json" name="REG-004"><failure message="warning: Nodo HTTP sin retry habilitado | warning: Nodo HTTP sin retry habilitado | warning: Nodo HTTP sin retry habilitado">options.retry.enabled = false
+options.retry.enabled = false
+options.retry.enabled = false</failure></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is.json" name="REG-005"><failure message="error: INSERT sin ON CONFLICT ni idempotency_key">INSERT INTO interacciones_bot (user_id, session_id, categoria, prioridad, ticket_id) VALUES ('{{ $('Clasificar y Preparar Ticket').item.json.user_id }}', '{{ $('Clasificar y Preparar Ticket').item.jso</failure></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is.json" name="REG-006"><failure message="warning: Nodo Code sin console.log(JSON.stringify(...)) | warning: Nodo Code sin console.log(JSON.stringify(...)) | warning: Nodo Code sin console.log(JSON.stringify(...))">
+
+</failure></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is.json" name="REG-007"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is.json" name="REG-008"><failure message="warning: Nodos IO en archivo sin convención E3/E4/orquestador: Consultar Historial Usuario, Crear Ticket, Guardar Interaccion, Notificar Sistema Externo"></failure></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is.json" name="REG-009"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is.json" name="REG-010"/>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is.json" name="REG-VOC"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is.json" name="AP-005"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/as-is/bot-as-is.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="casos-de-estudio/bot/to-be/bot-to-be-e2-dominio.json" tests="17" failures="1">
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e2-dominio.json" name="REG-001"/>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e2-dominio.json" name="REG-002"/>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e2-dominio.json" name="REG-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e2-dominio.json" name="REG-004"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e2-dominio.json" name="REG-005"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e2-dominio.json" name="REG-006"/>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e2-dominio.json" name="REG-007"/>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e2-dominio.json" name="REG-008"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e2-dominio.json" name="REG-009"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e2-dominio.json" name="REG-010"/>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e2-dominio.json" name="REG-VOC"/>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e2-dominio.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e2-dominio.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e2-dominio.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e2-dominio.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e2-dominio.json" name="AP-005"><failure message="warning: Execute Workflow con workflowId no resuelto: &quot;null&quot;"></failure></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e2-dominio.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="casos-de-estudio/bot/to-be/bot-to-be-e3-adaptador.json" tests="17" failures="2">
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e3-adaptador.json" name="REG-001"/>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e3-adaptador.json" name="REG-002"/>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e3-adaptador.json" name="REG-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e3-adaptador.json" name="REG-004"/>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e3-adaptador.json" name="REG-005"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e3-adaptador.json" name="REG-006"><failure message="warning: Nodo Code sin console.log(JSON.stringify(...))"></failure></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e3-adaptador.json" name="REG-007"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e3-adaptador.json" name="REG-008"/>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e3-adaptador.json" name="REG-009"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e3-adaptador.json" name="REG-010"/>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e3-adaptador.json" name="REG-VOC"/>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e3-adaptador.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e3-adaptador.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e3-adaptador.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e3-adaptador.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e3-adaptador.json" name="AP-005"><failure message="warning: Execute Workflow con workflowId no resuelto: &quot;null&quot;"></failure></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-e3-adaptador.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="casos-de-estudio/bot/to-be/bot-to-be-orquestador.json" tests="17" failures="0">
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-orquestador.json" name="REG-001"/>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-orquestador.json" name="REG-002"/>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-orquestador.json" name="REG-003"/>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-orquestador.json" name="REG-004"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-orquestador.json" name="REG-005"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-orquestador.json" name="REG-006"/>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-orquestador.json" name="REG-007"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-orquestador.json" name="REG-008"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-orquestador.json" name="REG-009"/>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-orquestador.json" name="REG-010"/>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-orquestador.json" name="REG-VOC"/>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-orquestador.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-orquestador.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-orquestador.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-orquestador.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-orquestador.json" name="AP-005"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/bot/to-be/bot-to-be-orquestador.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="casos-de-estudio/iot/as-is/iot-as-is.json" tests="17" failures="8">
+    <testcase classname="casos-de-estudio/iot/as-is/iot-as-is.json" name="REG-001"/>
+    <testcase classname="casos-de-estudio/iot/as-is/iot-as-is.json" name="REG-002"/>
+    <testcase classname="casos-de-estudio/iot/as-is/iot-as-is.json" name="REG-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/as-is/iot-as-is.json" name="REG-004"><failure message="warning: Nodo HTTP sin retry habilitado | warning: Nodo HTTP sin retry habilitado">options.retry.enabled = false
+options.retry.enabled = false</failure></testcase>
+    <testcase classname="casos-de-estudio/iot/as-is/iot-as-is.json" name="REG-005"><failure message="error: INSERT sin ON CONFLICT ni idempotency_key">INSERT INTO lecturas_sensor (sensor_id, temperatura, humedad, co2, nivel, location, ts)
+VALUES ('{{ $('Determinar Nivel Final').item.json.sensor_id }}',
+        {{ $('Determinar Nivel Final').item.jso</failure></testcase>
+    <testcase classname="casos-de-estudio/iot/as-is/iot-as-is.json" name="REG-006"><failure message="warning: Nodo Code sin console.log(JSON.stringify(...)) | warning: Nodo Code sin console.log(JSON.stringify(...)) | warning: Nodo Code sin console.log(JSON.stringify(...)) | warning: Log JSON sin campos: status">
+
+
+</failure></testcase>
+    <testcase classname="casos-de-estudio/iot/as-is/iot-as-is.json" name="REG-007"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/as-is/iot-as-is.json" name="REG-008"><failure message="warning: Nodos IO en archivo sin convención E3/E4/orquestador: Guardar en InfluxDB, Persistir en PostgreSQL, Enviar Notificacion"></failure></testcase>
+    <testcase classname="casos-de-estudio/iot/as-is/iot-as-is.json" name="REG-009"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/as-is/iot-as-is.json" name="REG-010"/>
+    <testcase classname="casos-de-estudio/iot/as-is/iot-as-is.json" name="REG-VOC"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/as-is/iot-as-is.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/as-is/iot-as-is.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/as-is/iot-as-is.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/as-is/iot-as-is.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/as-is/iot-as-is.json" name="AP-005"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/as-is/iot-as-is.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="casos-de-estudio/iot/to-be/iot-error-handler.json" tests="17" failures="0">
+    <testcase classname="casos-de-estudio/iot/to-be/iot-error-handler.json" name="REG-001"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-error-handler.json" name="REG-002"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-error-handler.json" name="REG-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-error-handler.json" name="REG-004"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-error-handler.json" name="REG-005"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-error-handler.json" name="REG-006"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-error-handler.json" name="REG-007"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-error-handler.json" name="REG-008"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-error-handler.json" name="REG-009"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-error-handler.json" name="REG-010"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-error-handler.json" name="REG-VOC"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-error-handler.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-error-handler.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-error-handler.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-error-handler.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-error-handler.json" name="AP-005"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-error-handler.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json" tests="17" failures="1">
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json" name="REG-001"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json" name="REG-002"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json" name="REG-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json" name="REG-004"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json" name="REG-005"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json" name="REG-006"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json" name="REG-007"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json" name="REG-008"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json" name="REG-009"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json" name="REG-010"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json" name="REG-VOC"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json" name="AP-005"><failure message="warning: Execute Workflow con workflowId no resuelto: &quot;null&quot;"></failure></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json" tests="17" failures="1">
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json" name="REG-001"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json" name="REG-002"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json" name="REG-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json" name="REG-004"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json" name="REG-005"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json" name="REG-006"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json" name="REG-007"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json" name="REG-008"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json" name="REG-009"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json" name="REG-010"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json" name="REG-VOC"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json" name="AP-005"><failure message="warning: Execute Workflow con workflowId no resuelto: &quot;null&quot;"></failure></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json" tests="17" failures="1">
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json" name="REG-001"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json" name="REG-002"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json" name="REG-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json" name="REG-004"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json" name="REG-005"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json" name="REG-006"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json" name="REG-007"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json" name="REG-008"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json" name="REG-009"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json" name="REG-010"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json" name="REG-VOC"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json" name="AP-005"><failure message="warning: Execute Workflow con workflowId no resuelto: &quot;null&quot;"></failure></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json" tests="17" failures="2">
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json" name="REG-001"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json" name="REG-002"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json" name="REG-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json" name="REG-004"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json" name="REG-005"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json" name="REG-006"><failure message="warning: Nodo Code sin console.log(JSON.stringify(...))"></failure></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json" name="REG-007"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json" name="REG-008"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json" name="REG-009"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json" name="REG-010"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json" name="REG-VOC"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json" name="AP-005"><failure message="warning: Execute Workflow con workflowId no resuelto: &quot;null&quot;"></failure></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="casos-de-estudio/iot/to-be/iot-to-be-orquestador.json" tests="17" failures="0">
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-orquestador.json" name="REG-001"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-orquestador.json" name="REG-002"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-orquestador.json" name="REG-003"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-orquestador.json" name="REG-004"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-orquestador.json" name="REG-005"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-orquestador.json" name="REG-006"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-orquestador.json" name="REG-007"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-orquestador.json" name="REG-008"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-orquestador.json" name="REG-009"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-orquestador.json" name="REG-010"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-orquestador.json" name="REG-VOC"/>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-orquestador.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-orquestador.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-orquestador.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-orquestador.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-orquestador.json" name="AP-005"><skipped/></testcase>
+    <testcase classname="casos-de-estudio/iot/to-be/iot-to-be-orquestador.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="microframework/plantillas/bot-as-is.json" tests="17" failures="4">
+    <testcase classname="microframework/plantillas/bot-as-is.json" name="REG-001"><failure message="error: Secreto literal detectado: Comparación literal de token en IF/Switch | error: Header HTTP &quot;x-api-key&quot; con valor literal">&quot;rightValue&quot;:&quot;mi-token-secreto-hardcodeado-123&quot;
+x-api-key: clave-api-externa-hardcodeada-456…</failure></testcase>
+    <testcase classname="microframework/plantillas/bot-as-is.json" name="REG-002"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-as-is.json" name="REG-003"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-as-is.json" name="REG-004"><failure message="warning: Nodo HTTP sin retry habilitado">options.retry.enabled = false</failure></testcase>
+    <testcase classname="microframework/plantillas/bot-as-is.json" name="REG-005"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-as-is.json" name="REG-006"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-as-is.json" name="REG-007"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-as-is.json" name="REG-008"><failure message="warning: Nodos IO en archivo sin convención E3/E4/orquestador: Notificar Sistema Externo"></failure></testcase>
+    <testcase classname="microframework/plantillas/bot-as-is.json" name="REG-009"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-as-is.json" name="REG-010"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-as-is.json" name="REG-VOC"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-as-is.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-as-is.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-as-is.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-as-is.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-as-is.json" name="AP-005"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-as-is.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="microframework/plantillas/bot-error-handler.json" tests="17" failures="1">
+    <testcase classname="microframework/plantillas/bot-error-handler.json" name="REG-001"/>
+    <testcase classname="microframework/plantillas/bot-error-handler.json" name="REG-002"/>
+    <testcase classname="microframework/plantillas/bot-error-handler.json" name="REG-003"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-error-handler.json" name="REG-004"><failure message="warning: maxRetries=1 &lt; 2">options.retry.maxRetries = 1</failure></testcase>
+    <testcase classname="microframework/plantillas/bot-error-handler.json" name="REG-005"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-error-handler.json" name="REG-006"/>
+    <testcase classname="microframework/plantillas/bot-error-handler.json" name="REG-007"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-error-handler.json" name="REG-008"/>
+    <testcase classname="microframework/plantillas/bot-error-handler.json" name="REG-009"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-error-handler.json" name="REG-010"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-error-handler.json" name="REG-VOC"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-error-handler.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-error-handler.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-error-handler.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-error-handler.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-error-handler.json" name="AP-005"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-error-handler.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="microframework/plantillas/bot-to-be-e2-dominio.json" tests="17" failures="1">
+    <testcase classname="microframework/plantillas/bot-to-be-e2-dominio.json" name="REG-001"/>
+    <testcase classname="microframework/plantillas/bot-to-be-e2-dominio.json" name="REG-002"/>
+    <testcase classname="microframework/plantillas/bot-to-be-e2-dominio.json" name="REG-003"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e2-dominio.json" name="REG-004"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e2-dominio.json" name="REG-005"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e2-dominio.json" name="REG-006"/>
+    <testcase classname="microframework/plantillas/bot-to-be-e2-dominio.json" name="REG-007"/>
+    <testcase classname="microframework/plantillas/bot-to-be-e2-dominio.json" name="REG-008"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e2-dominio.json" name="REG-009"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e2-dominio.json" name="REG-010"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e2-dominio.json" name="REG-VOC"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e2-dominio.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e2-dominio.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e2-dominio.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e2-dominio.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e2-dominio.json" name="AP-005"><failure message="warning: Execute Workflow con workflowId no resuelto: &quot;null&quot;"></failure></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e2-dominio.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="microframework/plantillas/bot-to-be-e3-adaptador.json" tests="17" failures="2">
+    <testcase classname="microframework/plantillas/bot-to-be-e3-adaptador.json" name="REG-001"/>
+    <testcase classname="microframework/plantillas/bot-to-be-e3-adaptador.json" name="REG-002"/>
+    <testcase classname="microframework/plantillas/bot-to-be-e3-adaptador.json" name="REG-003"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e3-adaptador.json" name="REG-004"/>
+    <testcase classname="microframework/plantillas/bot-to-be-e3-adaptador.json" name="REG-005"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e3-adaptador.json" name="REG-006"><failure message="warning: Nodo Code sin console.log(JSON.stringify(...))"></failure></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e3-adaptador.json" name="REG-007"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e3-adaptador.json" name="REG-008"/>
+    <testcase classname="microframework/plantillas/bot-to-be-e3-adaptador.json" name="REG-009"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e3-adaptador.json" name="REG-010"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e3-adaptador.json" name="REG-VOC"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e3-adaptador.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e3-adaptador.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e3-adaptador.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e3-adaptador.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e3-adaptador.json" name="AP-005"><failure message="warning: Execute Workflow con workflowId no resuelto: &quot;null&quot;"></failure></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-e3-adaptador.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="microframework/plantillas/bot-to-be-orquestador.json" tests="17" failures="0">
+    <testcase classname="microframework/plantillas/bot-to-be-orquestador.json" name="REG-001"/>
+    <testcase classname="microframework/plantillas/bot-to-be-orquestador.json" name="REG-002"/>
+    <testcase classname="microframework/plantillas/bot-to-be-orquestador.json" name="REG-003"/>
+    <testcase classname="microframework/plantillas/bot-to-be-orquestador.json" name="REG-004"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-orquestador.json" name="REG-005"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-orquestador.json" name="REG-006"/>
+    <testcase classname="microframework/plantillas/bot-to-be-orquestador.json" name="REG-007"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-orquestador.json" name="REG-008"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-orquestador.json" name="REG-009"/>
+    <testcase classname="microframework/plantillas/bot-to-be-orquestador.json" name="REG-010"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-orquestador.json" name="REG-VOC"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-orquestador.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-orquestador.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-orquestador.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-orquestador.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-orquestador.json" name="AP-005"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/bot-to-be-orquestador.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="microframework/plantillas/iot-as-is.json" tests="17" failures="6">
+    <testcase classname="microframework/plantillas/iot-as-is.json" name="REG-001"/>
+    <testcase classname="microframework/plantillas/iot-as-is.json" name="REG-002"><failure message="warning: Ningún nodo Code referencia run_id | warning: No se detectó console.log(JSON.stringify(...)) con run_id">
+</failure></testcase>
+    <testcase classname="microframework/plantillas/iot-as-is.json" name="REG-003"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-as-is.json" name="REG-004"><failure message="warning: Nodo HTTP sin retry habilitado | warning: Nodo HTTP sin retry habilitado">options.retry.enabled = false
+options.retry.enabled = false</failure></testcase>
+    <testcase classname="microframework/plantillas/iot-as-is.json" name="REG-005"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-as-is.json" name="REG-006"><failure message="warning: Nodo Code sin console.log(JSON.stringify(...))"></failure></testcase>
+    <testcase classname="microframework/plantillas/iot-as-is.json" name="REG-007"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-as-is.json" name="REG-008"><failure message="warning: Nodos IO en archivo sin convención E3/E4/orquestador: Guardar en InfluxDB, Enviar Notificacion"></failure></testcase>
+    <testcase classname="microframework/plantillas/iot-as-is.json" name="REG-009"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-as-is.json" name="REG-010"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-as-is.json" name="REG-VOC"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-as-is.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-as-is.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-as-is.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-as-is.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-as-is.json" name="AP-005"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-as-is.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="microframework/plantillas/iot-to-be-e1-validacion.json" tests="17" failures="1">
+    <testcase classname="microframework/plantillas/iot-to-be-e1-validacion.json" name="REG-001"/>
+    <testcase classname="microframework/plantillas/iot-to-be-e1-validacion.json" name="REG-002"/>
+    <testcase classname="microframework/plantillas/iot-to-be-e1-validacion.json" name="REG-003"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e1-validacion.json" name="REG-004"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e1-validacion.json" name="REG-005"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e1-validacion.json" name="REG-006"/>
+    <testcase classname="microframework/plantillas/iot-to-be-e1-validacion.json" name="REG-007"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e1-validacion.json" name="REG-008"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e1-validacion.json" name="REG-009"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e1-validacion.json" name="REG-010"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e1-validacion.json" name="REG-VOC"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e1-validacion.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e1-validacion.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e1-validacion.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e1-validacion.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e1-validacion.json" name="AP-005"><failure message="warning: Execute Workflow con workflowId no resuelto: &quot;null&quot;"></failure></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e1-validacion.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="microframework/plantillas/iot-to-be-e2-dominio.json" tests="17" failures="1">
+    <testcase classname="microframework/plantillas/iot-to-be-e2-dominio.json" name="REG-001"/>
+    <testcase classname="microframework/plantillas/iot-to-be-e2-dominio.json" name="REG-002"/>
+    <testcase classname="microframework/plantillas/iot-to-be-e2-dominio.json" name="REG-003"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e2-dominio.json" name="REG-004"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e2-dominio.json" name="REG-005"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e2-dominio.json" name="REG-006"/>
+    <testcase classname="microframework/plantillas/iot-to-be-e2-dominio.json" name="REG-007"/>
+    <testcase classname="microframework/plantillas/iot-to-be-e2-dominio.json" name="REG-008"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e2-dominio.json" name="REG-009"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e2-dominio.json" name="REG-010"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e2-dominio.json" name="REG-VOC"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e2-dominio.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e2-dominio.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e2-dominio.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e2-dominio.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e2-dominio.json" name="AP-005"><failure message="warning: Execute Workflow con workflowId no resuelto: &quot;null&quot;"></failure></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e2-dominio.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="microframework/plantillas/iot-to-be-e3-persistencia.json" tests="17" failures="1">
+    <testcase classname="microframework/plantillas/iot-to-be-e3-persistencia.json" name="REG-001"/>
+    <testcase classname="microframework/plantillas/iot-to-be-e3-persistencia.json" name="REG-002"/>
+    <testcase classname="microframework/plantillas/iot-to-be-e3-persistencia.json" name="REG-003"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e3-persistencia.json" name="REG-004"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e3-persistencia.json" name="REG-005"/>
+    <testcase classname="microframework/plantillas/iot-to-be-e3-persistencia.json" name="REG-006"/>
+    <testcase classname="microframework/plantillas/iot-to-be-e3-persistencia.json" name="REG-007"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e3-persistencia.json" name="REG-008"/>
+    <testcase classname="microframework/plantillas/iot-to-be-e3-persistencia.json" name="REG-009"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e3-persistencia.json" name="REG-010"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e3-persistencia.json" name="REG-VOC"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e3-persistencia.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e3-persistencia.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e3-persistencia.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e3-persistencia.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e3-persistencia.json" name="AP-005"><failure message="warning: Execute Workflow con workflowId no resuelto: &quot;null&quot;"></failure></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e3-persistencia.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="microframework/plantillas/iot-to-be-e4-notificacion.json" tests="17" failures="1">
+    <testcase classname="microframework/plantillas/iot-to-be-e4-notificacion.json" name="REG-001"/>
+    <testcase classname="microframework/plantillas/iot-to-be-e4-notificacion.json" name="REG-002"/>
+    <testcase classname="microframework/plantillas/iot-to-be-e4-notificacion.json" name="REG-003"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e4-notificacion.json" name="REG-004"/>
+    <testcase classname="microframework/plantillas/iot-to-be-e4-notificacion.json" name="REG-005"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e4-notificacion.json" name="REG-006"/>
+    <testcase classname="microframework/plantillas/iot-to-be-e4-notificacion.json" name="REG-007"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e4-notificacion.json" name="REG-008"/>
+    <testcase classname="microframework/plantillas/iot-to-be-e4-notificacion.json" name="REG-009"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e4-notificacion.json" name="REG-010"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e4-notificacion.json" name="REG-VOC"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e4-notificacion.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e4-notificacion.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e4-notificacion.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e4-notificacion.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e4-notificacion.json" name="AP-005"><failure message="warning: Execute Workflow con workflowId no resuelto: &quot;null&quot;"></failure></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-e4-notificacion.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+  <testsuite name="microframework/plantillas/iot-to-be-orquestador.json" tests="17" failures="4">
+    <testcase classname="microframework/plantillas/iot-to-be-orquestador.json" name="REG-001"/>
+    <testcase classname="microframework/plantillas/iot-to-be-orquestador.json" name="REG-002"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-orquestador.json" name="REG-003"/>
+    <testcase classname="microframework/plantillas/iot-to-be-orquestador.json" name="REG-004"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-orquestador.json" name="REG-005"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-orquestador.json" name="REG-006"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-orquestador.json" name="REG-007"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-orquestador.json" name="REG-008"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-orquestador.json" name="REG-009"/>
+    <testcase classname="microframework/plantillas/iot-to-be-orquestador.json" name="REG-010"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-orquestador.json" name="REG-VOC"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-orquestador.json" name="AP-001"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-orquestador.json" name="AP-002"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-orquestador.json" name="AP-003"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-orquestador.json" name="AP-004"><skipped/></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-orquestador.json" name="AP-005"><failure message="warning: Execute Workflow con workflowId no resuelto: &quot;REEMPLAZAR_CON_ID_E1&quot; | warning: Execute Workflow con workflowId no resuelto: &quot;REEMPLAZAR_CON_ID_E2&quot; | warning: Execute Workflow con workflowId no resuelto: &quot;REEMPLAZAR_CON_ID_E3&quot; | warning: Execute Workflow con workflowId no resuelto: &quot;REEMPLAZAR_CON_ID_E4&quot;">
+
+
+</failure></testcase>
+    <testcase classname="microframework/plantillas/iot-to-be-orquestador.json" name="AP-006"><skipped/></testcase>
+  </testsuite>
+</testsuites>

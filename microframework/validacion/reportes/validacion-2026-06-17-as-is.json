@@ -1,0 +1,3107 @@
+{
+  "tool": "n8n-microframework-validator",
+  "version": "2.0.0",
+  "edition": "lite",
+  "generatedAt": "2026-06-17T22:50:26.879Z",
+  "commit": "202f98542c8d9771a3bbe8701f1d3292541bc382",
+  "author": "Elian Hernando Gil Sierra",
+  "director": "Sebastian Roa Prada, PhD",
+  "project": "Micro-framework LC/NC para n8n — MGADS UNAB 2026",
+  "files": [
+    {
+      "path": "D:\\Git\\n8n-microframework\\casos-de-estudio\\bot\\as-is\\bot-as-is-ratelimit-demo.json",
+      "caso": "bot",
+      "estado": "as-is",
+      "isOrquestador": false,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "a1b2c3d4-0001-0001-0001-000000000001",
+            "name": "Webhook Entrada",
+            "type": "n8n-nodes-base.webhook",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              400
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0002-0002-0002-000000000002",
+            "name": "Sanitizar Input",
+            "type": "n8n-nodes-base.code",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              460,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0003-0003-0003-000000000003",
+            "name": "Verificar Rate Limit",
+            "type": "n8n-nodes-base.code",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              680,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0004-0004-0004-000000000004",
+            "name": "Limite Excedido?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              900,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0005-0005-0005-000000000005",
+            "name": "Error Rate Limit",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              1120,
+              240
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0006-0006-0006-000000000006",
+            "name": "Token Valido?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              1120,
+              480
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0007-0007-0007-000000000007",
+            "name": "Error Token",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              1340,
+              620
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0008-0008-0008-000000000008",
+            "name": "Consultar Historial Usuario",
+            "type": "n8n-nodes-base.httpRequest",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              1340,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0009-0009-0009-000000000009",
+            "name": "Clasificar y Preparar Ticket",
+            "type": "n8n-nodes-base.code",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              1560,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0010-0010-0010-000000000010",
+            "name": "Detectar Urgencia",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              1780,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0011-0011-0011-000000000011",
+            "name": "Marcar Escalacion",
+            "type": "n8n-nodes-base.set",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              2000,
+              280
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0012-0012-0012-000000000012",
+            "name": "Crear Ticket",
+            "type": "n8n-nodes-base.httpRequest",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              2220,
+              400
+            ],
+            "inDegree": 2,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0013-0013-0013-000000000013",
+            "name": "Guardar Interaccion",
+            "type": "n8n-nodes-base.postgres",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              2440,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0014-0014-0014-000000000014",
+            "name": "Notificar Sistema Externo",
+            "type": "n8n-nodes-base.httpRequest",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              2660,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0015-0015-0015-000000000015",
+            "name": "Preparar Respuesta",
+            "type": "n8n-nodes-base.set",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              2880,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0016-0016-0016-000000000016",
+            "name": "Responder al Cliente",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              3100,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "a1b2c3d4-0001-0001-0001-000000000001",
+            "to": "a1b2c3d4-0002-0002-0002-000000000002",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0002-0002-0002-000000000002",
+            "to": "a1b2c3d4-0003-0003-0003-000000000003",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0003-0003-0003-000000000003",
+            "to": "a1b2c3d4-0004-0004-0004-000000000004",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0004-0004-0004-000000000004",
+            "to": "a1b2c3d4-0005-0005-0005-000000000005",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0004-0004-0004-000000000004",
+            "to": "a1b2c3d4-0006-0006-0006-000000000006",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0006-0006-0006-000000000006",
+            "to": "a1b2c3d4-0008-0008-0008-000000000008",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0006-0006-0006-000000000006",
+            "to": "a1b2c3d4-0007-0007-0007-000000000007",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0008-0008-0008-000000000008",
+            "to": "a1b2c3d4-0009-0009-0009-000000000009",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0009-0009-0009-000000000009",
+            "to": "a1b2c3d4-0010-0010-0010-000000000010",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0010-0010-0010-000000000010",
+            "to": "a1b2c3d4-0011-0011-0011-000000000011",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0010-0010-0010-000000000010",
+            "to": "a1b2c3d4-0012-0012-0012-000000000012",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0011-0011-0011-000000000011",
+            "to": "a1b2c3d4-0012-0012-0012-000000000012",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0012-0012-0012-000000000012",
+            "to": "a1b2c3d4-0013-0013-0013-000000000013",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0013-0013-0013-000000000013",
+            "to": "a1b2c3d4-0014-0014-0014-000000000014",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0014-0014-0014-000000000014",
+            "to": "a1b2c3d4-0015-0015-0015-000000000015",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0015-0015-0015-000000000015",
+            "to": "a1b2c3d4-0016-0016-0016-000000000016",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": []
+      },
+      "metrics": {
+        "nodeCount": 16,
+        "edgeCount": 16,
+        "cyclomaticComplexity": 2,
+        "maxDepth": 13,
+        "stageDistribution": {
+          "E1": 1,
+          "E2": 8,
+          "E3": 4,
+          "E4": 3,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 0.813,
+        "fanOutTop": [
+          {
+            "nodeId": "a1b2c3d4-0004-0004-0004-000000000004",
+            "nodeName": "Limite Excedido?",
+            "value": 2
+          },
+          {
+            "nodeId": "a1b2c3d4-0006-0006-0006-000000000006",
+            "nodeName": "Token Valido?",
+            "value": 2
+          },
+          {
+            "nodeId": "a1b2c3d4-0010-0010-0010-000000000010",
+            "nodeName": "Detectar Urgencia",
+            "value": 2
+          },
+          {
+            "nodeId": "a1b2c3d4-0001-0001-0001-000000000001",
+            "nodeName": "Webhook Entrada",
+            "value": 1
+          },
+          {
+            "nodeId": "a1b2c3d4-0002-0002-0002-000000000002",
+            "nodeName": "Sanitizar Input",
+            "value": 1
+          }
+        ]
+      },
+      "findings": [
+        {
+          "id": "1f1e98c8",
+          "ruleId": "REG-001",
+          "ruleName": "Sin secretos hardcodeados",
+          "severity": "error",
+          "confidence": "high",
+          "nodeId": "a1b2c3d4-0006-0006-0006-000000000006",
+          "nodeName": "Token Valido?",
+          "position": [
+            1120,
+            480
+          ],
+          "message": "Secreto literal detectado: Comparación literal de token en IF/Switch",
+          "evidence": "\"rightValue\":\"mi-token-secreto-hardcodeado-123\"",
+          "iso25010": [
+            "security",
+            "maintainability"
+          ],
+          "atamScenarios": [
+            "R-BOT-01"
+          ],
+          "adr": [
+            "ADR-MF-001"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "envify-secret",
+            "preview": "Reemplazar literal por credencial n8n o {{$env.VAR_NAME}}"
+          }
+        },
+        {
+          "id": "2a790f1c",
+          "ruleId": "REG-001",
+          "ruleName": "Sin secretos hardcodeados",
+          "severity": "error",
+          "confidence": "high",
+          "nodeId": "a1b2c3d4-0008-0008-0008-000000000008",
+          "nodeName": "Consultar Historial Usuario",
+          "position": [
+            1340,
+            400
+          ],
+          "message": "Header HTTP \"x-api-key\" con valor literal",
+          "evidence": "x-api-key: clave-api-externa-hardcodeada-456…",
+          "iso25010": [
+            "security",
+            "maintainability"
+          ],
+          "atamScenarios": [
+            "R-BOT-01"
+          ],
+          "adr": [
+            "ADR-MF-001"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "envify-secret",
+            "preview": "Header debe usar {{$env.X_API_KEY}}"
+          }
+        },
+        {
+          "id": "47a11c45",
+          "ruleId": "REG-001",
+          "ruleName": "Sin secretos hardcodeados",
+          "severity": "error",
+          "confidence": "high",
+          "nodeId": "a1b2c3d4-0012-0012-0012-000000000012",
+          "nodeName": "Crear Ticket",
+          "position": [
+            2220,
+            400
+          ],
+          "message": "Header HTTP \"x-api-key\" con valor literal",
+          "evidence": "x-api-key: clave-api-externa-hardcodeada-456…",
+          "iso25010": [
+            "security",
+            "maintainability"
+          ],
+          "atamScenarios": [
+            "R-BOT-01"
+          ],
+          "adr": [
+            "ADR-MF-001"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "envify-secret",
+            "preview": "Header debe usar {{$env.X_API_KEY}}"
+          }
+        },
+        {
+          "id": "fcdcf1f7",
+          "ruleId": "REG-001",
+          "ruleName": "Sin secretos hardcodeados",
+          "severity": "error",
+          "confidence": "high",
+          "nodeId": "a1b2c3d4-0014-0014-0014-000000000014",
+          "nodeName": "Notificar Sistema Externo",
+          "position": [
+            2660,
+            400
+          ],
+          "message": "Header HTTP \"x-api-key\" con valor literal",
+          "evidence": "x-api-key: clave-api-externa-hardcodeada-456…",
+          "iso25010": [
+            "security",
+            "maintainability"
+          ],
+          "atamScenarios": [
+            "R-BOT-01"
+          ],
+          "adr": [
+            "ADR-MF-001"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "envify-secret",
+            "preview": "Header debe usar {{$env.X_API_KEY}}"
+          }
+        },
+        {
+          "id": "a70083fd",
+          "ruleId": "REG-002",
+          "ruleName": "run_id propagado",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": null,
+          "nodeName": null,
+          "position": null,
+          "message": "No se detectó console.log(JSON.stringify(...)) con run_id",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "reliability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-02"
+          ],
+          "adr": [
+            "ADR-MF-003"
+          ],
+          "fixSuggestion": null
+        },
+        {
+          "id": "7f70c85f",
+          "ruleId": "REG-004",
+          "ruleName": "Retry en HTTP",
+          "severity": "warning",
+          "confidence": "high",
+          "nodeId": "a1b2c3d4-0008-0008-0008-000000000008",
+          "nodeName": "Consultar Historial Usuario",
+          "position": [
+            1340,
+            400
+          ],
+          "message": "Nodo HTTP sin retry habilitado",
+          "evidence": "options.retry.enabled = false",
+          "iso25010": [
+            "reliability",
+            "performanceEfficiency"
+          ],
+          "atamScenarios": [
+            "TP-IOT-01"
+          ],
+          "adr": [
+            "ADR-MF-002"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "add-http-retry",
+            "preview": "options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"
+          }
+        },
+        {
+          "id": "7ea7462c",
+          "ruleId": "REG-004",
+          "ruleName": "Retry en HTTP",
+          "severity": "warning",
+          "confidence": "high",
+          "nodeId": "a1b2c3d4-0012-0012-0012-000000000012",
+          "nodeName": "Crear Ticket",
+          "position": [
+            2220,
+            400
+          ],
+          "message": "Nodo HTTP sin retry habilitado",
+          "evidence": "options.retry.enabled = false",
+          "iso25010": [
+            "reliability",
+            "performanceEfficiency"
+          ],
+          "atamScenarios": [
+            "TP-IOT-01"
+          ],
+          "adr": [
+            "ADR-MF-002"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "add-http-retry",
+            "preview": "options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"
+          }
+        },
+        {
+          "id": "8088e24f",
+          "ruleId": "REG-004",
+          "ruleName": "Retry en HTTP",
+          "severity": "warning",
+          "confidence": "high",
+          "nodeId": "a1b2c3d4-0014-0014-0014-000000000014",
+          "nodeName": "Notificar Sistema Externo",
+          "position": [
+            2660,
+            400
+          ],
+          "message": "Nodo HTTP sin retry habilitado",
+          "evidence": "options.retry.enabled = false",
+          "iso25010": [
+            "reliability",
+            "performanceEfficiency"
+          ],
+          "atamScenarios": [
+            "TP-IOT-01"
+          ],
+          "adr": [
+            "ADR-MF-002"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "add-http-retry",
+            "preview": "options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"
+          }
+        },
+        {
+          "id": "78c20c07",
+          "ruleId": "REG-005",
+          "ruleName": "Idempotencia en escrituras",
+          "severity": "error",
+          "confidence": "high",
+          "nodeId": "a1b2c3d4-0013-0013-0013-000000000013",
+          "nodeName": "Guardar Interaccion",
+          "position": [
+            2440,
+            400
+          ],
+          "message": "INSERT sin ON CONFLICT ni idempotency_key",
+          "evidence": "INSERT INTO interacciones_bot (user_id, session_id, categoria, prioridad, ticket_id) VALUES ('{{ $('Clasificar y Preparar Ticket').item.json.user_id }}', '{{ $('Clasificar y Preparar Ticket').item.jso",
+          "iso25010": [
+            "reliability",
+            "functionalSuitability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-01",
+            "NR-IOT-02"
+          ],
+          "adr": [],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "add-on-conflict",
+            "preview": "Agregar ON CONFLICT (id) DO NOTHING o columna idempotency_key UNIQUE."
+          }
+        },
+        {
+          "id": "67fbf1c8",
+          "ruleId": "REG-006",
+          "ruleName": "Log estructurado JSON",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": "a1b2c3d4-0002-0002-0002-000000000002",
+          "nodeName": "Sanitizar Input",
+          "position": [
+            460,
+            400
+          ],
+          "message": "Nodo Code sin console.log(JSON.stringify(...))",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "reliability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-02",
+            "R-GLOBAL-01"
+          ],
+          "adr": [
+            "ADR-MF-003"
+          ],
+          "fixSuggestion": {
+            "kind": "hint",
+            "preview": "console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"
+          }
+        },
+        {
+          "id": "7e03c782",
+          "ruleId": "REG-006",
+          "ruleName": "Log estructurado JSON",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": "a1b2c3d4-0003-0003-0003-000000000003",
+          "nodeName": "Verificar Rate Limit",
+          "position": [
+            680,
+            400
+          ],
+          "message": "Nodo Code sin console.log(JSON.stringify(...))",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "reliability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-02",
+            "R-GLOBAL-01"
+          ],
+          "adr": [
+            "ADR-MF-003"
+          ],
+          "fixSuggestion": {
+            "kind": "hint",
+            "preview": "console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"
+          }
+        },
+        {
+          "id": "24482109",
+          "ruleId": "REG-006",
+          "ruleName": "Log estructurado JSON",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": "a1b2c3d4-0009-0009-0009-000000000009",
+          "nodeName": "Clasificar y Preparar Ticket",
+          "position": [
+            1560,
+            400
+          ],
+          "message": "Nodo Code sin console.log(JSON.stringify(...))",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "reliability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-02",
+            "R-GLOBAL-01"
+          ],
+          "adr": [
+            "ADR-MF-003"
+          ],
+          "fixSuggestion": {
+            "kind": "hint",
+            "preview": "console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"
+          }
+        },
+        {
+          "id": "09869e17",
+          "ruleId": "REG-008",
+          "ruleName": "Integraciones en E3/E4",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": null,
+          "nodeName": null,
+          "position": null,
+          "message": "Nodos IO en archivo sin convención E3/E4/orquestador: Consultar Historial Usuario, Crear Ticket, Guardar Interaccion, Notificar Sistema Externo",
+          "evidence": null,
+          "iso25010": [
+            "maintainability"
+          ],
+          "atamScenarios": [
+            "TP-GLOBAL-01"
+          ],
+          "adr": [],
+          "fixSuggestion": null
+        }
+      ],
+      "summary": {
+        "errors": 5,
+        "warnings": 8,
+        "infos": 0,
+        "score": 14,
+        "rulesApplicable": 7,
+        "rulesPassed": 1
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-002",
+        "REG-004",
+        "REG-005",
+        "REG-006",
+        "REG-008",
+        "REG-010"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-003",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-007",
+          "reason": "no es subflujo E2 por nombre"
+        },
+        {
+          "id": "REG-009",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-VOC",
+          "reason": "sólo aplica a to-be"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-010"
+      ]
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\casos-de-estudio\\bot\\as-is\\bot-as-is.json",
+      "caso": "bot",
+      "estado": "as-is",
+      "isOrquestador": false,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "a1b2c3d4-0001-0001-0001-000000000001",
+            "name": "Webhook Entrada",
+            "type": "n8n-nodes-base.webhook",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              400
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0002-0002-0002-000000000002",
+            "name": "Sanitizar Input",
+            "type": "n8n-nodes-base.code",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              460,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0003-0003-0003-000000000003",
+            "name": "Verificar Rate Limit",
+            "type": "n8n-nodes-base.code",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              680,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0004-0004-0004-000000000004",
+            "name": "Limite Excedido?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              900,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0005-0005-0005-000000000005",
+            "name": "Error Rate Limit",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              1120,
+              240
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0006-0006-0006-000000000006",
+            "name": "Token Valido?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              1120,
+              480
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0007-0007-0007-000000000007",
+            "name": "Error Token",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              1340,
+              620
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0008-0008-0008-000000000008",
+            "name": "Consultar Historial Usuario",
+            "type": "n8n-nodes-base.httpRequest",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              1340,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0009-0009-0009-000000000009",
+            "name": "Clasificar y Preparar Ticket",
+            "type": "n8n-nodes-base.code",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              1560,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0010-0010-0010-000000000010",
+            "name": "Detectar Urgencia",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              1780,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0011-0011-0011-000000000011",
+            "name": "Marcar Escalacion",
+            "type": "n8n-nodes-base.set",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              2000,
+              280
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0012-0012-0012-000000000012",
+            "name": "Crear Ticket",
+            "type": "n8n-nodes-base.httpRequest",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              2220,
+              400
+            ],
+            "inDegree": 2,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0013-0013-0013-000000000013",
+            "name": "Guardar Interaccion",
+            "type": "n8n-nodes-base.postgres",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              2440,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0014-0014-0014-000000000014",
+            "name": "Notificar Sistema Externo",
+            "type": "n8n-nodes-base.httpRequest",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              2660,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0015-0015-0015-000000000015",
+            "name": "Preparar Respuesta",
+            "type": "n8n-nodes-base.set",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              2880,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0016-0016-0016-000000000016",
+            "name": "Responder al Cliente",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              3100,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "a1b2c3d4-0001-0001-0001-000000000001",
+            "to": "a1b2c3d4-0002-0002-0002-000000000002",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0002-0002-0002-000000000002",
+            "to": "a1b2c3d4-0003-0003-0003-000000000003",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0003-0003-0003-000000000003",
+            "to": "a1b2c3d4-0004-0004-0004-000000000004",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0004-0004-0004-000000000004",
+            "to": "a1b2c3d4-0005-0005-0005-000000000005",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0004-0004-0004-000000000004",
+            "to": "a1b2c3d4-0006-0006-0006-000000000006",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0006-0006-0006-000000000006",
+            "to": "a1b2c3d4-0008-0008-0008-000000000008",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0006-0006-0006-000000000006",
+            "to": "a1b2c3d4-0007-0007-0007-000000000007",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0008-0008-0008-000000000008",
+            "to": "a1b2c3d4-0009-0009-0009-000000000009",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0009-0009-0009-000000000009",
+            "to": "a1b2c3d4-0010-0010-0010-000000000010",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0010-0010-0010-000000000010",
+            "to": "a1b2c3d4-0011-0011-0011-000000000011",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0010-0010-0010-000000000010",
+            "to": "a1b2c3d4-0012-0012-0012-000000000012",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0011-0011-0011-000000000011",
+            "to": "a1b2c3d4-0012-0012-0012-000000000012",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0012-0012-0012-000000000012",
+            "to": "a1b2c3d4-0013-0013-0013-000000000013",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0013-0013-0013-000000000013",
+            "to": "a1b2c3d4-0014-0014-0014-000000000014",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0014-0014-0014-000000000014",
+            "to": "a1b2c3d4-0015-0015-0015-000000000015",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0015-0015-0015-000000000015",
+            "to": "a1b2c3d4-0016-0016-0016-000000000016",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": []
+      },
+      "metrics": {
+        "nodeCount": 16,
+        "edgeCount": 16,
+        "cyclomaticComplexity": 2,
+        "maxDepth": 13,
+        "stageDistribution": {
+          "E1": 1,
+          "E2": 8,
+          "E3": 4,
+          "E4": 3,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 0.813,
+        "fanOutTop": [
+          {
+            "nodeId": "a1b2c3d4-0004-0004-0004-000000000004",
+            "nodeName": "Limite Excedido?",
+            "value": 2
+          },
+          {
+            "nodeId": "a1b2c3d4-0006-0006-0006-000000000006",
+            "nodeName": "Token Valido?",
+            "value": 2
+          },
+          {
+            "nodeId": "a1b2c3d4-0010-0010-0010-000000000010",
+            "nodeName": "Detectar Urgencia",
+            "value": 2
+          },
+          {
+            "nodeId": "a1b2c3d4-0001-0001-0001-000000000001",
+            "nodeName": "Webhook Entrada",
+            "value": 1
+          },
+          {
+            "nodeId": "a1b2c3d4-0002-0002-0002-000000000002",
+            "nodeName": "Sanitizar Input",
+            "value": 1
+          }
+        ]
+      },
+      "findings": [
+        {
+          "id": "a1353785",
+          "ruleId": "REG-001",
+          "ruleName": "Sin secretos hardcodeados",
+          "severity": "error",
+          "confidence": "high",
+          "nodeId": "a1b2c3d4-0006-0006-0006-000000000006",
+          "nodeName": "Token Valido?",
+          "position": [
+            1120,
+            480
+          ],
+          "message": "Secreto literal detectado: Comparación literal de token en IF/Switch",
+          "evidence": "\"rightValue\":\"mi-token-secreto-hardcodeado-123\"",
+          "iso25010": [
+            "security",
+            "maintainability"
+          ],
+          "atamScenarios": [
+            "R-BOT-01"
+          ],
+          "adr": [
+            "ADR-MF-001"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "envify-secret",
+            "preview": "Reemplazar literal por credencial n8n o {{$env.VAR_NAME}}"
+          }
+        },
+        {
+          "id": "04e6069d",
+          "ruleId": "REG-001",
+          "ruleName": "Sin secretos hardcodeados",
+          "severity": "error",
+          "confidence": "high",
+          "nodeId": "a1b2c3d4-0008-0008-0008-000000000008",
+          "nodeName": "Consultar Historial Usuario",
+          "position": [
+            1340,
+            400
+          ],
+          "message": "Header HTTP \"x-api-key\" con valor literal",
+          "evidence": "x-api-key: clave-api-externa-hardcodeada-456…",
+          "iso25010": [
+            "security",
+            "maintainability"
+          ],
+          "atamScenarios": [
+            "R-BOT-01"
+          ],
+          "adr": [
+            "ADR-MF-001"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "envify-secret",
+            "preview": "Header debe usar {{$env.X_API_KEY}}"
+          }
+        },
+        {
+          "id": "143bdca4",
+          "ruleId": "REG-001",
+          "ruleName": "Sin secretos hardcodeados",
+          "severity": "error",
+          "confidence": "high",
+          "nodeId": "a1b2c3d4-0012-0012-0012-000000000012",
+          "nodeName": "Crear Ticket",
+          "position": [
+            2220,
+            400
+          ],
+          "message": "Header HTTP \"x-api-key\" con valor literal",
+          "evidence": "x-api-key: clave-api-externa-hardcodeada-456…",
+          "iso25010": [
+            "security",
+            "maintainability"
+          ],
+          "atamScenarios": [
+            "R-BOT-01"
+          ],
+          "adr": [
+            "ADR-MF-001"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "envify-secret",
+            "preview": "Header debe usar {{$env.X_API_KEY}}"
+          }
+        },
+        {
+          "id": "36005a93",
+          "ruleId": "REG-001",
+          "ruleName": "Sin secretos hardcodeados",
+          "severity": "error",
+          "confidence": "high",
+          "nodeId": "a1b2c3d4-0014-0014-0014-000000000014",
+          "nodeName": "Notificar Sistema Externo",
+          "position": [
+            2660,
+            400
+          ],
+          "message": "Header HTTP \"x-api-key\" con valor literal",
+          "evidence": "x-api-key: clave-api-externa-hardcodeada-456…",
+          "iso25010": [
+            "security",
+            "maintainability"
+          ],
+          "atamScenarios": [
+            "R-BOT-01"
+          ],
+          "adr": [
+            "ADR-MF-001"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "envify-secret",
+            "preview": "Header debe usar {{$env.X_API_KEY}}"
+          }
+        },
+        {
+          "id": "8765dae5",
+          "ruleId": "REG-002",
+          "ruleName": "run_id propagado",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": null,
+          "nodeName": null,
+          "position": null,
+          "message": "No se detectó console.log(JSON.stringify(...)) con run_id",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "reliability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-02"
+          ],
+          "adr": [
+            "ADR-MF-003"
+          ],
+          "fixSuggestion": null
+        },
+        {
+          "id": "4273ab55",
+          "ruleId": "REG-004",
+          "ruleName": "Retry en HTTP",
+          "severity": "warning",
+          "confidence": "high",
+          "nodeId": "a1b2c3d4-0008-0008-0008-000000000008",
+          "nodeName": "Consultar Historial Usuario",
+          "position": [
+            1340,
+            400
+          ],
+          "message": "Nodo HTTP sin retry habilitado",
+          "evidence": "options.retry.enabled = false",
+          "iso25010": [
+            "reliability",
+            "performanceEfficiency"
+          ],
+          "atamScenarios": [
+            "TP-IOT-01"
+          ],
+          "adr": [
+            "ADR-MF-002"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "add-http-retry",
+            "preview": "options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"
+          }
+        },
+        {
+          "id": "99e0aaac",
+          "ruleId": "REG-004",
+          "ruleName": "Retry en HTTP",
+          "severity": "warning",
+          "confidence": "high",
+          "nodeId": "a1b2c3d4-0012-0012-0012-000000000012",
+          "nodeName": "Crear Ticket",
+          "position": [
+            2220,
+            400
+          ],
+          "message": "Nodo HTTP sin retry habilitado",
+          "evidence": "options.retry.enabled = false",
+          "iso25010": [
+            "reliability",
+            "performanceEfficiency"
+          ],
+          "atamScenarios": [
+            "TP-IOT-01"
+          ],
+          "adr": [
+            "ADR-MF-002"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "add-http-retry",
+            "preview": "options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"
+          }
+        },
+        {
+          "id": "678bd4e8",
+          "ruleId": "REG-004",
+          "ruleName": "Retry en HTTP",
+          "severity": "warning",
+          "confidence": "high",
+          "nodeId": "a1b2c3d4-0014-0014-0014-000000000014",
+          "nodeName": "Notificar Sistema Externo",
+          "position": [
+            2660,
+            400
+          ],
+          "message": "Nodo HTTP sin retry habilitado",
+          "evidence": "options.retry.enabled = false",
+          "iso25010": [
+            "reliability",
+            "performanceEfficiency"
+          ],
+          "atamScenarios": [
+            "TP-IOT-01"
+          ],
+          "adr": [
+            "ADR-MF-002"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "add-http-retry",
+            "preview": "options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"
+          }
+        },
+        {
+          "id": "3e30e2e5",
+          "ruleId": "REG-005",
+          "ruleName": "Idempotencia en escrituras",
+          "severity": "error",
+          "confidence": "high",
+          "nodeId": "a1b2c3d4-0013-0013-0013-000000000013",
+          "nodeName": "Guardar Interaccion",
+          "position": [
+            2440,
+            400
+          ],
+          "message": "INSERT sin ON CONFLICT ni idempotency_key",
+          "evidence": "INSERT INTO interacciones_bot (user_id, session_id, categoria, prioridad, ticket_id) VALUES ('{{ $('Clasificar y Preparar Ticket').item.json.user_id }}', '{{ $('Clasificar y Preparar Ticket').item.jso",
+          "iso25010": [
+            "reliability",
+            "functionalSuitability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-01",
+            "NR-IOT-02"
+          ],
+          "adr": [],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "add-on-conflict",
+            "preview": "Agregar ON CONFLICT (id) DO NOTHING o columna idempotency_key UNIQUE."
+          }
+        },
+        {
+          "id": "843fc0de",
+          "ruleId": "REG-006",
+          "ruleName": "Log estructurado JSON",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": "a1b2c3d4-0002-0002-0002-000000000002",
+          "nodeName": "Sanitizar Input",
+          "position": [
+            460,
+            400
+          ],
+          "message": "Nodo Code sin console.log(JSON.stringify(...))",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "reliability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-02",
+            "R-GLOBAL-01"
+          ],
+          "adr": [
+            "ADR-MF-003"
+          ],
+          "fixSuggestion": {
+            "kind": "hint",
+            "preview": "console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"
+          }
+        },
+        {
+          "id": "1089e11b",
+          "ruleId": "REG-006",
+          "ruleName": "Log estructurado JSON",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": "a1b2c3d4-0003-0003-0003-000000000003",
+          "nodeName": "Verificar Rate Limit",
+          "position": [
+            680,
+            400
+          ],
+          "message": "Nodo Code sin console.log(JSON.stringify(...))",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "reliability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-02",
+            "R-GLOBAL-01"
+          ],
+          "adr": [
+            "ADR-MF-003"
+          ],
+          "fixSuggestion": {
+            "kind": "hint",
+            "preview": "console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"
+          }
+        },
+        {
+          "id": "937ff492",
+          "ruleId": "REG-006",
+          "ruleName": "Log estructurado JSON",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": "a1b2c3d4-0009-0009-0009-000000000009",
+          "nodeName": "Clasificar y Preparar Ticket",
+          "position": [
+            1560,
+            400
+          ],
+          "message": "Nodo Code sin console.log(JSON.stringify(...))",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "reliability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-02",
+            "R-GLOBAL-01"
+          ],
+          "adr": [
+            "ADR-MF-003"
+          ],
+          "fixSuggestion": {
+            "kind": "hint",
+            "preview": "console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"
+          }
+        },
+        {
+          "id": "5d7b6c91",
+          "ruleId": "REG-008",
+          "ruleName": "Integraciones en E3/E4",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": null,
+          "nodeName": null,
+          "position": null,
+          "message": "Nodos IO en archivo sin convención E3/E4/orquestador: Consultar Historial Usuario, Crear Ticket, Guardar Interaccion, Notificar Sistema Externo",
+          "evidence": null,
+          "iso25010": [
+            "maintainability"
+          ],
+          "atamScenarios": [
+            "TP-GLOBAL-01"
+          ],
+          "adr": [],
+          "fixSuggestion": null
+        }
+      ],
+      "summary": {
+        "errors": 5,
+        "warnings": 8,
+        "infos": 0,
+        "score": 14,
+        "rulesApplicable": 7,
+        "rulesPassed": 1
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-002",
+        "REG-004",
+        "REG-005",
+        "REG-006",
+        "REG-008",
+        "REG-010"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-003",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-007",
+          "reason": "no es subflujo E2 por nombre"
+        },
+        {
+          "id": "REG-009",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-VOC",
+          "reason": "sólo aplica a to-be"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-010"
+      ]
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\casos-de-estudio\\iot\\as-is\\iot-as-is.json",
+      "caso": "iot",
+      "estado": "as-is",
+      "isOrquestador": false,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "b1c2d3e4-0001-0001-0001-000000000001",
+            "name": "Webhook Sensor",
+            "type": "n8n-nodes-base.webhook",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              400
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "b1c2d3e4-0002-0002-0002-000000000002",
+            "name": "Verificar Campos Basicos",
+            "type": "n8n-nodes-base.code",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              460,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "b1c2d3e4-0003-0003-0003-000000000003",
+            "name": "Datos Presentes?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              680,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "b1c2d3e4-0004-0004-0004-000000000004",
+            "name": "Error Datos Invalidos",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              900,
+              220
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "b1c2d3e4-0005-0005-0005-000000000005",
+            "name": "Normalizar Lecturas",
+            "type": "n8n-nodes-base.code",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              900,
+              540
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "b1c2d3e4-0006-0006-0006-000000000006",
+            "name": "Temperatura Critica?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              1120,
+              540
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "b1c2d3e4-0007-0007-0007-000000000007",
+            "name": "Humedad Alta?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              1340,
+              660
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "b1c2d3e4-0008-0008-0008-000000000008",
+            "name": "Determinar Nivel Final",
+            "type": "n8n-nodes-base.code",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              1560,
+              540
+            ],
+            "inDegree": 3,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "b1c2d3e4-0009-0009-0009-000000000009",
+            "name": "Guardar en InfluxDB",
+            "type": "n8n-nodes-base.httpRequest",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              1780,
+              440
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "b1c2d3e4-0010-0010-0010-000000000010",
+            "name": "Persistir en PostgreSQL",
+            "type": "n8n-nodes-base.postgres",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              2000,
+              440
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "b1c2d3e4-0011-0011-0011-000000000011",
+            "name": "Requiere Notificacion?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              2220,
+              440
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "b1c2d3e4-0012-0012-0012-000000000012",
+            "name": "Enviar Notificacion",
+            "type": "n8n-nodes-base.httpRequest",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              2440,
+              320
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "b1c2d3e4-0013-0013-0013-000000000013",
+            "name": "Log Resultado",
+            "type": "n8n-nodes-base.code",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              2660,
+              440
+            ],
+            "inDegree": 2,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "b1c2d3e4-0014-0014-0014-000000000014",
+            "name": "Respuesta OK",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              2880,
+              440
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "b1c2d3e4-0001-0001-0001-000000000001",
+            "to": "b1c2d3e4-0002-0002-0002-000000000002",
+            "branch": "main"
+          },
+          {
+            "from": "b1c2d3e4-0002-0002-0002-000000000002",
+            "to": "b1c2d3e4-0003-0003-0003-000000000003",
+            "branch": "main"
+          },
+          {
+            "from": "b1c2d3e4-0003-0003-0003-000000000003",
+            "to": "b1c2d3e4-0004-0004-0004-000000000004",
+            "branch": "main"
+          },
+          {
+            "from": "b1c2d3e4-0003-0003-0003-000000000003",
+            "to": "b1c2d3e4-0005-0005-0005-000000000005",
+            "branch": "main"
+          },
+          {
+            "from": "b1c2d3e4-0005-0005-0005-000000000005",
+            "to": "b1c2d3e4-0006-0006-0006-000000000006",
+            "branch": "main"
+          },
+          {
+            "from": "b1c2d3e4-0006-0006-0006-000000000006",
+            "to": "b1c2d3e4-0008-0008-0008-000000000008",
+            "branch": "main"
+          },
+          {
+            "from": "b1c2d3e4-0006-0006-0006-000000000006",
+            "to": "b1c2d3e4-0007-0007-0007-000000000007",
+            "branch": "main"
+          },
+          {
+            "from": "b1c2d3e4-0007-0007-0007-000000000007",
+            "to": "b1c2d3e4-0008-0008-0008-000000000008",
+            "branch": "main"
+          },
+          {
+            "from": "b1c2d3e4-0007-0007-0007-000000000007",
+            "to": "b1c2d3e4-0008-0008-0008-000000000008",
+            "branch": "main"
+          },
+          {
+            "from": "b1c2d3e4-0008-0008-0008-000000000008",
+            "to": "b1c2d3e4-0009-0009-0009-000000000009",
+            "branch": "main"
+          },
+          {
+            "from": "b1c2d3e4-0009-0009-0009-000000000009",
+            "to": "b1c2d3e4-0010-0010-0010-000000000010",
+            "branch": "main"
+          },
+          {
+            "from": "b1c2d3e4-0010-0010-0010-000000000010",
+            "to": "b1c2d3e4-0011-0011-0011-000000000011",
+            "branch": "main"
+          },
+          {
+            "from": "b1c2d3e4-0011-0011-0011-000000000011",
+            "to": "b1c2d3e4-0012-0012-0012-000000000012",
+            "branch": "main"
+          },
+          {
+            "from": "b1c2d3e4-0011-0011-0011-000000000011",
+            "to": "b1c2d3e4-0013-0013-0013-000000000013",
+            "branch": "main"
+          },
+          {
+            "from": "b1c2d3e4-0012-0012-0012-000000000012",
+            "to": "b1c2d3e4-0013-0013-0013-000000000013",
+            "branch": "main"
+          },
+          {
+            "from": "b1c2d3e4-0013-0013-0013-000000000013",
+            "to": "b1c2d3e4-0014-0014-0014-000000000014",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": []
+      },
+      "metrics": {
+        "nodeCount": 14,
+        "edgeCount": 16,
+        "cyclomaticComplexity": 4,
+        "maxDepth": 12,
+        "stageDistribution": {
+          "E1": 1,
+          "E2": 8,
+          "E3": 3,
+          "E4": 2,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 0.875,
+        "fanOutTop": [
+          {
+            "nodeId": "b1c2d3e4-0003-0003-0003-000000000003",
+            "nodeName": "Datos Presentes?",
+            "value": 2
+          },
+          {
+            "nodeId": "b1c2d3e4-0006-0006-0006-000000000006",
+            "nodeName": "Temperatura Critica?",
+            "value": 2
+          },
+          {
+            "nodeId": "b1c2d3e4-0007-0007-0007-000000000007",
+            "nodeName": "Humedad Alta?",
+            "value": 2
+          },
+          {
+            "nodeId": "b1c2d3e4-0011-0011-0011-000000000011",
+            "nodeName": "Requiere Notificacion?",
+            "value": 2
+          },
+          {
+            "nodeId": "b1c2d3e4-0001-0001-0001-000000000001",
+            "nodeName": "Webhook Sensor",
+            "value": 1
+          }
+        ]
+      },
+      "findings": [
+        {
+          "id": "275f090e",
+          "ruleId": "REG-004",
+          "ruleName": "Retry en HTTP",
+          "severity": "warning",
+          "confidence": "high",
+          "nodeId": "b1c2d3e4-0009-0009-0009-000000000009",
+          "nodeName": "Guardar en InfluxDB",
+          "position": [
+            1780,
+            440
+          ],
+          "message": "Nodo HTTP sin retry habilitado",
+          "evidence": "options.retry.enabled = false",
+          "iso25010": [
+            "reliability",
+            "performanceEfficiency"
+          ],
+          "atamScenarios": [
+            "TP-IOT-01"
+          ],
+          "adr": [
+            "ADR-MF-002"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "add-http-retry",
+            "preview": "options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"
+          }
+        },
+        {
+          "id": "09e05706",
+          "ruleId": "REG-004",
+          "ruleName": "Retry en HTTP",
+          "severity": "warning",
+          "confidence": "high",
+          "nodeId": "b1c2d3e4-0012-0012-0012-000000000012",
+          "nodeName": "Enviar Notificacion",
+          "position": [
+            2440,
+            320
+          ],
+          "message": "Nodo HTTP sin retry habilitado",
+          "evidence": "options.retry.enabled = false",
+          "iso25010": [
+            "reliability",
+            "performanceEfficiency"
+          ],
+          "atamScenarios": [
+            "TP-IOT-01"
+          ],
+          "adr": [
+            "ADR-MF-002"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "add-http-retry",
+            "preview": "options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"
+          }
+        },
+        {
+          "id": "4d4e5052",
+          "ruleId": "REG-005",
+          "ruleName": "Idempotencia en escrituras",
+          "severity": "error",
+          "confidence": "high",
+          "nodeId": "b1c2d3e4-0010-0010-0010-000000000010",
+          "nodeName": "Persistir en PostgreSQL",
+          "position": [
+            2000,
+            440
+          ],
+          "message": "INSERT sin ON CONFLICT ni idempotency_key",
+          "evidence": "INSERT INTO lecturas_sensor (sensor_id, temperatura, humedad, co2, nivel, location, ts)\nVALUES ('{{ $('Determinar Nivel Final').item.json.sensor_id }}',\n        {{ $('Determinar Nivel Final').item.jso",
+          "iso25010": [
+            "reliability",
+            "functionalSuitability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-01",
+            "NR-IOT-02"
+          ],
+          "adr": [],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "add-on-conflict",
+            "preview": "Agregar ON CONFLICT (id) DO NOTHING o columna idempotency_key UNIQUE."
+          }
+        },
+        {
+          "id": "a470ffee",
+          "ruleId": "REG-006",
+          "ruleName": "Log estructurado JSON",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": "b1c2d3e4-0002-0002-0002-000000000002",
+          "nodeName": "Verificar Campos Basicos",
+          "position": [
+            460,
+            400
+          ],
+          "message": "Nodo Code sin console.log(JSON.stringify(...))",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "reliability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-02",
+            "R-GLOBAL-01"
+          ],
+          "adr": [
+            "ADR-MF-003"
+          ],
+          "fixSuggestion": {
+            "kind": "hint",
+            "preview": "console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"
+          }
+        },
+        {
+          "id": "275d65f3",
+          "ruleId": "REG-006",
+          "ruleName": "Log estructurado JSON",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": "b1c2d3e4-0005-0005-0005-000000000005",
+          "nodeName": "Normalizar Lecturas",
+          "position": [
+            900,
+            540
+          ],
+          "message": "Nodo Code sin console.log(JSON.stringify(...))",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "reliability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-02",
+            "R-GLOBAL-01"
+          ],
+          "adr": [
+            "ADR-MF-003"
+          ],
+          "fixSuggestion": {
+            "kind": "hint",
+            "preview": "console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"
+          }
+        },
+        {
+          "id": "08b1d9f8",
+          "ruleId": "REG-006",
+          "ruleName": "Log estructurado JSON",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": "b1c2d3e4-0008-0008-0008-000000000008",
+          "nodeName": "Determinar Nivel Final",
+          "position": [
+            1560,
+            540
+          ],
+          "message": "Nodo Code sin console.log(JSON.stringify(...))",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "reliability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-02",
+            "R-GLOBAL-01"
+          ],
+          "adr": [
+            "ADR-MF-003"
+          ],
+          "fixSuggestion": {
+            "kind": "hint",
+            "preview": "console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"
+          }
+        },
+        {
+          "id": "c5b8a8c3",
+          "ruleId": "REG-006",
+          "ruleName": "Log estructurado JSON",
+          "severity": "warning",
+          "confidence": "high",
+          "nodeId": "b1c2d3e4-0013-0013-0013-000000000013",
+          "nodeName": "Log Resultado",
+          "position": [
+            2660,
+            440
+          ],
+          "message": "Log JSON sin campos: status",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "reliability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-02",
+            "R-GLOBAL-01"
+          ],
+          "adr": [
+            "ADR-MF-003"
+          ],
+          "fixSuggestion": null
+        },
+        {
+          "id": "0f8f813f",
+          "ruleId": "REG-008",
+          "ruleName": "Integraciones en E3/E4",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": null,
+          "nodeName": null,
+          "position": null,
+          "message": "Nodos IO en archivo sin convención E3/E4/orquestador: Guardar en InfluxDB, Persistir en PostgreSQL, Enviar Notificacion",
+          "evidence": null,
+          "iso25010": [
+            "maintainability"
+          ],
+          "atamScenarios": [
+            "TP-GLOBAL-01"
+          ],
+          "adr": [],
+          "fixSuggestion": null
+        }
+      ],
+      "summary": {
+        "errors": 1,
+        "warnings": 7,
+        "infos": 0,
+        "score": 43,
+        "rulesApplicable": 7,
+        "rulesPassed": 3
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-002",
+        "REG-004",
+        "REG-005",
+        "REG-006",
+        "REG-008",
+        "REG-010"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-003",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-007",
+          "reason": "no es subflujo E2 por nombre"
+        },
+        {
+          "id": "REG-009",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-VOC",
+          "reason": "sólo aplica a to-be"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-001",
+        "REG-002",
+        "REG-010"
+      ]
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\microframework\\plantillas\\bot-as-is.json",
+      "caso": "plantilla",
+      "estado": "as-is",
+      "isOrquestador": false,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "a1b2c3d4-0001-0001-0001-000000000001",
+            "name": "Webhook Entrada",
+            "type": "n8n-nodes-base.webhook",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              300
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0002-0002-0002-000000000002",
+            "name": "Token Valido?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              460,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 3,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0003-0003-0003-000000000003",
+            "name": "Es Saludo?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              680,
+              200
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0004-0004-0004-000000000004",
+            "name": "Es Ayuda?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              680,
+              380
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0005-0005-0005-000000000005",
+            "name": "Respuesta Saludo",
+            "type": "n8n-nodes-base.set",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              900,
+              140
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0006-0006-0006-000000000006",
+            "name": "Respuesta Ayuda",
+            "type": "n8n-nodes-base.set",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              900,
+              340
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0007-0007-0007-000000000007",
+            "name": "Respuesta Default",
+            "type": "n8n-nodes-base.set",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              900,
+              520
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0008-0008-0008-000000000008",
+            "name": "Notificar Sistema Externo",
+            "type": "n8n-nodes-base.httpRequest",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              1120,
+              300
+            ],
+            "inDegree": 3,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0009-0009-0009-000000000009",
+            "name": "Responder al Cliente",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              1340,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "a1b2c3d4-0010-0010-0010-000000000010",
+            "name": "Error Token",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              680,
+              520
+            ],
+            "inDegree": 1,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "a1b2c3d4-0001-0001-0001-000000000001",
+            "to": "a1b2c3d4-0002-0002-0002-000000000002",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0002-0002-0002-000000000002",
+            "to": "a1b2c3d4-0003-0003-0003-000000000003",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0002-0002-0002-000000000002",
+            "to": "a1b2c3d4-0004-0004-0004-000000000004",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0002-0002-0002-000000000002",
+            "to": "a1b2c3d4-0010-0010-0010-000000000010",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0003-0003-0003-000000000003",
+            "to": "a1b2c3d4-0005-0005-0005-000000000005",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0003-0003-0003-000000000003",
+            "to": "a1b2c3d4-0007-0007-0007-000000000007",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0004-0004-0004-000000000004",
+            "to": "a1b2c3d4-0006-0006-0006-000000000006",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0005-0005-0005-000000000005",
+            "to": "a1b2c3d4-0008-0008-0008-000000000008",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0006-0006-0006-000000000006",
+            "to": "a1b2c3d4-0008-0008-0008-000000000008",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0007-0007-0007-000000000007",
+            "to": "a1b2c3d4-0008-0008-0008-000000000008",
+            "branch": "main"
+          },
+          {
+            "from": "a1b2c3d4-0008-0008-0008-000000000008",
+            "to": "a1b2c3d4-0009-0009-0009-000000000009",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": []
+      },
+      "metrics": {
+        "nodeCount": 10,
+        "edgeCount": 11,
+        "cyclomaticComplexity": 3,
+        "maxDepth": 5,
+        "stageDistribution": {
+          "E1": 1,
+          "E2": 6,
+          "E3": 1,
+          "E4": 2,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 0.909,
+        "fanOutTop": [
+          {
+            "nodeId": "a1b2c3d4-0002-0002-0002-000000000002",
+            "nodeName": "Token Valido?",
+            "value": 3
+          },
+          {
+            "nodeId": "a1b2c3d4-0003-0003-0003-000000000003",
+            "nodeName": "Es Saludo?",
+            "value": 2
+          },
+          {
+            "nodeId": "a1b2c3d4-0001-0001-0001-000000000001",
+            "nodeName": "Webhook Entrada",
+            "value": 1
+          },
+          {
+            "nodeId": "a1b2c3d4-0004-0004-0004-000000000004",
+            "nodeName": "Es Ayuda?",
+            "value": 1
+          },
+          {
+            "nodeId": "a1b2c3d4-0005-0005-0005-000000000005",
+            "nodeName": "Respuesta Saludo",
+            "value": 1
+          }
+        ]
+      },
+      "findings": [
+        {
+          "id": "d2c52b8a",
+          "ruleId": "REG-001",
+          "ruleName": "Sin secretos hardcodeados",
+          "severity": "error",
+          "confidence": "high",
+          "nodeId": "a1b2c3d4-0002-0002-0002-000000000002",
+          "nodeName": "Token Valido?",
+          "position": [
+            460,
+            300
+          ],
+          "message": "Secreto literal detectado: Comparación literal de token en IF/Switch",
+          "evidence": "\"rightValue\":\"mi-token-secreto-hardcodeado-123\"",
+          "iso25010": [
+            "security",
+            "maintainability"
+          ],
+          "atamScenarios": [
+            "R-BOT-01"
+          ],
+          "adr": [
+            "ADR-MF-001"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "envify-secret",
+            "preview": "Reemplazar literal por credencial n8n o {{$env.VAR_NAME}}"
+          }
+        },
+        {
+          "id": "d15c7505",
+          "ruleId": "REG-001",
+          "ruleName": "Sin secretos hardcodeados",
+          "severity": "error",
+          "confidence": "high",
+          "nodeId": "a1b2c3d4-0008-0008-0008-000000000008",
+          "nodeName": "Notificar Sistema Externo",
+          "position": [
+            1120,
+            300
+          ],
+          "message": "Header HTTP \"x-api-key\" con valor literal",
+          "evidence": "x-api-key: clave-api-externa-hardcodeada-456…",
+          "iso25010": [
+            "security",
+            "maintainability"
+          ],
+          "atamScenarios": [
+            "R-BOT-01"
+          ],
+          "adr": [
+            "ADR-MF-001"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "envify-secret",
+            "preview": "Header debe usar {{$env.X_API_KEY}}"
+          }
+        },
+        {
+          "id": "254b4947",
+          "ruleId": "REG-004",
+          "ruleName": "Retry en HTTP",
+          "severity": "warning",
+          "confidence": "high",
+          "nodeId": "a1b2c3d4-0008-0008-0008-000000000008",
+          "nodeName": "Notificar Sistema Externo",
+          "position": [
+            1120,
+            300
+          ],
+          "message": "Nodo HTTP sin retry habilitado",
+          "evidence": "options.retry.enabled = false",
+          "iso25010": [
+            "reliability",
+            "performanceEfficiency"
+          ],
+          "atamScenarios": [
+            "TP-IOT-01"
+          ],
+          "adr": [
+            "ADR-MF-002"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "add-http-retry",
+            "preview": "options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"
+          }
+        },
+        {
+          "id": "627603f2",
+          "ruleId": "REG-008",
+          "ruleName": "Integraciones en E3/E4",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": null,
+          "nodeName": null,
+          "position": null,
+          "message": "Nodos IO en archivo sin convención E3/E4/orquestador: Notificar Sistema Externo",
+          "evidence": null,
+          "iso25010": [
+            "maintainability"
+          ],
+          "atamScenarios": [
+            "TP-GLOBAL-01"
+          ],
+          "adr": [],
+          "fixSuggestion": null
+        }
+      ],
+      "summary": {
+        "errors": 2,
+        "warnings": 2,
+        "infos": 0,
+        "score": 0,
+        "rulesApplicable": 3,
+        "rulesPassed": 0
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-004",
+        "REG-008"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-002",
+          "reason": "sin nodos Code"
+        },
+        {
+          "id": "REG-003",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-005",
+          "reason": "sin nodos Postgres"
+        },
+        {
+          "id": "REG-006",
+          "reason": "sin nodos Code"
+        },
+        {
+          "id": "REG-007",
+          "reason": "no es subflujo E2 por nombre"
+        },
+        {
+          "id": "REG-009",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-010",
+          "reason": "plantilla o caso sin convención"
+        },
+        {
+          "id": "REG-VOC",
+          "reason": "plantilla"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": []
+    },
+    {
+      "path": "D:\\Git\\n8n-microframework\\microframework\\plantillas\\iot-as-is.json",
+      "caso": "plantilla",
+      "estado": "as-is",
+      "isOrquestador": false,
+      "isErrorHandler": false,
+      "graph": {
+        "nodes": [
+          {
+            "id": "b1c2d3e4-0001-0001-0001-000000000001",
+            "name": "Webhook Sensor",
+            "type": "n8n-nodes-base.webhook",
+            "stage": "E1",
+            "stageInferred": true,
+            "position": [
+              240,
+              300
+            ],
+            "inDegree": 0,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "b1c2d3e4-0002-0002-0002-000000000002",
+            "name": "Procesar y Detectar Alerta",
+            "type": "n8n-nodes-base.code",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              460,
+              300
+            ],
+            "inDegree": 1,
+            "outDegree": 2,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "b1c2d3e4-0003-0003-0003-000000000003",
+            "name": "Guardar en InfluxDB",
+            "type": "n8n-nodes-base.httpRequest",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              680,
+              200
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "b1c2d3e4-0004-0004-0004-000000000004",
+            "name": "Hay Alerta?",
+            "type": "n8n-nodes-base.if",
+            "stage": "E2",
+            "stageInferred": true,
+            "position": [
+              680,
+              400
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "b1c2d3e4-0005-0005-0005-000000000005",
+            "name": "Enviar Notificacion",
+            "type": "n8n-nodes-base.httpRequest",
+            "stage": "E3",
+            "stageInferred": true,
+            "position": [
+              900,
+              340
+            ],
+            "inDegree": 1,
+            "outDegree": 1,
+            "hasErrorBranch": false
+          },
+          {
+            "id": "b1c2d3e4-0006-0006-0006-000000000006",
+            "name": "Respuesta OK",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "stage": "E4",
+            "stageInferred": true,
+            "position": [
+              1120,
+              300
+            ],
+            "inDegree": 2,
+            "outDegree": 0,
+            "hasErrorBranch": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "b1c2d3e4-0001-0001-0001-000000000001",
+            "to": "b1c2d3e4-0002-0002-0002-000000000002",
+            "branch": "main"
+          },
+          {
+            "from": "b1c2d3e4-0002-0002-0002-000000000002",
+            "to": "b1c2d3e4-0003-0003-0003-000000000003",
+            "branch": "main"
+          },
+          {
+            "from": "b1c2d3e4-0002-0002-0002-000000000002",
+            "to": "b1c2d3e4-0004-0004-0004-000000000004",
+            "branch": "main"
+          },
+          {
+            "from": "b1c2d3e4-0003-0003-0003-000000000003",
+            "to": "b1c2d3e4-0006-0006-0006-000000000006",
+            "branch": "main"
+          },
+          {
+            "from": "b1c2d3e4-0004-0004-0004-000000000004",
+            "to": "b1c2d3e4-0005-0005-0005-000000000005",
+            "branch": "main"
+          },
+          {
+            "from": "b1c2d3e4-0005-0005-0005-000000000005",
+            "to": "b1c2d3e4-0006-0006-0006-000000000006",
+            "branch": "main"
+          }
+        ],
+        "subflowRefs": []
+      },
+      "metrics": {
+        "nodeCount": 6,
+        "edgeCount": 6,
+        "cyclomaticComplexity": 2,
+        "maxDepth": 4,
+        "stageDistribution": {
+          "E1": 1,
+          "E2": 2,
+          "E3": 2,
+          "E4": 1,
+          "UNKNOWN": 0
+        },
+        "cohesionScore": 1,
+        "fanOutTop": [
+          {
+            "nodeId": "b1c2d3e4-0002-0002-0002-000000000002",
+            "nodeName": "Procesar y Detectar Alerta",
+            "value": 2
+          },
+          {
+            "nodeId": "b1c2d3e4-0001-0001-0001-000000000001",
+            "nodeName": "Webhook Sensor",
+            "value": 1
+          },
+          {
+            "nodeId": "b1c2d3e4-0003-0003-0003-000000000003",
+            "nodeName": "Guardar en InfluxDB",
+            "value": 1
+          },
+          {
+            "nodeId": "b1c2d3e4-0004-0004-0004-000000000004",
+            "nodeName": "Hay Alerta?",
+            "value": 1
+          },
+          {
+            "nodeId": "b1c2d3e4-0005-0005-0005-000000000005",
+            "nodeName": "Enviar Notificacion",
+            "value": 1
+          }
+        ]
+      },
+      "findings": [
+        {
+          "id": "83db9b12",
+          "ruleId": "REG-002",
+          "ruleName": "run_id propagado",
+          "severity": "warning",
+          "confidence": "high",
+          "nodeId": null,
+          "nodeName": null,
+          "position": null,
+          "message": "Ningún nodo Code referencia run_id",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "reliability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-02"
+          ],
+          "adr": [
+            "ADR-MF-003"
+          ],
+          "fixSuggestion": {
+            "kind": "hint",
+            "preview": "Generar run_id en E1 con crypto.randomUUID() y propagarlo en el payload."
+          }
+        },
+        {
+          "id": "e906436a",
+          "ruleId": "REG-002",
+          "ruleName": "run_id propagado",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": null,
+          "nodeName": null,
+          "position": null,
+          "message": "No se detectó console.log(JSON.stringify(...)) con run_id",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "reliability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-02"
+          ],
+          "adr": [
+            "ADR-MF-003"
+          ],
+          "fixSuggestion": null
+        },
+        {
+          "id": "09cc2f76",
+          "ruleId": "REG-004",
+          "ruleName": "Retry en HTTP",
+          "severity": "warning",
+          "confidence": "high",
+          "nodeId": "b1c2d3e4-0003-0003-0003-000000000003",
+          "nodeName": "Guardar en InfluxDB",
+          "position": [
+            680,
+            200
+          ],
+          "message": "Nodo HTTP sin retry habilitado",
+          "evidence": "options.retry.enabled = false",
+          "iso25010": [
+            "reliability",
+            "performanceEfficiency"
+          ],
+          "atamScenarios": [
+            "TP-IOT-01"
+          ],
+          "adr": [
+            "ADR-MF-002"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "add-http-retry",
+            "preview": "options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"
+          }
+        },
+        {
+          "id": "409d3816",
+          "ruleId": "REG-004",
+          "ruleName": "Retry en HTTP",
+          "severity": "warning",
+          "confidence": "high",
+          "nodeId": "b1c2d3e4-0005-0005-0005-000000000005",
+          "nodeName": "Enviar Notificacion",
+          "position": [
+            900,
+            340
+          ],
+          "message": "Nodo HTTP sin retry habilitado",
+          "evidence": "options.retry.enabled = false",
+          "iso25010": [
+            "reliability",
+            "performanceEfficiency"
+          ],
+          "atamScenarios": [
+            "TP-IOT-01"
+          ],
+          "adr": [
+            "ADR-MF-002"
+          ],
+          "fixSuggestion": {
+            "kind": "codemod-id",
+            "codemodId": "add-http-retry",
+            "preview": "options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"
+          }
+        },
+        {
+          "id": "2a087907",
+          "ruleId": "REG-006",
+          "ruleName": "Log estructurado JSON",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": "b1c2d3e4-0002-0002-0002-000000000002",
+          "nodeName": "Procesar y Detectar Alerta",
+          "position": [
+            460,
+            300
+          ],
+          "message": "Nodo Code sin console.log(JSON.stringify(...))",
+          "evidence": null,
+          "iso25010": [
+            "maintainability",
+            "reliability"
+          ],
+          "atamScenarios": [
+            "SP-BOT-02",
+            "R-GLOBAL-01"
+          ],
+          "adr": [
+            "ADR-MF-003"
+          ],
+          "fixSuggestion": {
+            "kind": "hint",
+            "preview": "console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"
+          }
+        },
+        {
+          "id": "11af36c1",
+          "ruleId": "REG-008",
+          "ruleName": "Integraciones en E3/E4",
+          "severity": "warning",
+          "confidence": "medium",
+          "nodeId": null,
+          "nodeName": null,
+          "position": null,
+          "message": "Nodos IO en archivo sin convención E3/E4/orquestador: Guardar en InfluxDB, Enviar Notificacion",
+          "evidence": null,
+          "iso25010": [
+            "maintainability"
+          ],
+          "atamScenarios": [
+            "TP-GLOBAL-01"
+          ],
+          "adr": [],
+          "fixSuggestion": null
+        }
+      ],
+      "summary": {
+        "errors": 0,
+        "warnings": 6,
+        "infos": 0,
+        "score": 20,
+        "rulesApplicable": 5,
+        "rulesPassed": 1
+      },
+      "rulesApplicable": [
+        "REG-001",
+        "REG-002",
+        "REG-004",
+        "REG-006",
+        "REG-008"
+      ],
+      "rulesNa": [
+        {
+          "id": "REG-003",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-005",
+          "reason": "sin nodos Postgres"
+        },
+        {
+          "id": "REG-007",
+          "reason": "no es subflujo E2 por nombre"
+        },
+        {
+          "id": "REG-009",
+          "reason": "no es orquestador"
+        },
+        {
+          "id": "REG-010",
+          "reason": "plantilla o caso sin convención"
+        },
+        {
+          "id": "REG-VOC",
+          "reason": "plantilla"
+        },
+        {
+          "id": "AP-001",
+          "reason": "ningún nodo supera grado 6"
+        },
+        {
+          "id": "AP-002",
+          "reason": "sin patrón HTTP-en-loop"
+        },
+        {
+          "id": "AP-003",
+          "reason": "menos de 2 escrituras"
+        },
+        {
+          "id": "AP-004",
+          "reason": "no se detectó swallowing"
+        },
+        {
+          "id": "AP-005",
+          "reason": "workflowIds resueltos"
+        },
+        {
+          "id": "AP-006",
+          "reason": "no se detectó stage leak"
+        }
+      ],
+      "rulesPassed": [
+        "REG-001"
+      ]
+    }
+  ],
+  "coverage": {
+    "rulesDefined": [
+      "REG-001",
+      "REG-002",
+      "REG-003",
+      "REG-004",
+      "REG-005",
+      "REG-006",
+      "REG-007",
+      "REG-008",
+      "REG-009",
+      "REG-010",
+      "REG-VOC",
+      "AP-001",
+      "AP-002",
+      "AP-003",
+      "AP-004",
+      "AP-005",
+      "AP-006"
+    ],
+    "rulesExercised": [
+      "REG-001",
+      "REG-002",
+      "REG-004",
+      "REG-005",
+      "REG-006",
+      "REG-008",
+      "REG-010"
+    ],
+    "rulesDormant": [
+      "REG-003",
+      "REG-007",
+      "REG-009",
+      "REG-VOC",
+      "AP-001",
+      "AP-002",
+      "AP-003",
+      "AP-004",
+      "AP-005",
+      "AP-006"
+    ]
+  },
+  "history": [
+    {
+      "date": "2026-06-01",
+      "score": 70,
+      "errors": 13,
+      "warnings": 51
+    }
+  ]
+}

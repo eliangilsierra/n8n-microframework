@@ -1,0 +1,1102 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<title>Reporte de validación — micro-framework n8n</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<style>
+:root{
+  --bg:#0f172a;--bg2:#1e293b;--panel:#0b1220;--text:#e2e8f0;--mut:#94a3b8;
+  --acc:#38bdf8;--ok:#22c55e;--warn:#fbbf24;--err:#ef4444;--info:#a78bfa;
+  --e1:#3b82f6;--e2:#10b981;--e3:#f59e0b;--e4:#a855f7;--unk:#64748b;
+  --border:#1e293b;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:14px;line-height:1.5}
+.container{max-width:1280px;margin:0 auto;padding:24px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;
+  padding:20px;margin:16px 0;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+h1{font-size:28px;margin:0 0 8px;letter-spacing:-.02em}
+h2{font-size:20px;margin:24px 0 12px;color:var(--acc)}
+h3{font-size:16px;margin:16px 0 8px}
+.muted{color:var(--mut)}
+.cover{background:linear-gradient(135deg,#0f172a,#1e293b);border:1px solid var(--border);
+  border-radius:16px;padding:36px;margin-bottom:20px}
+.cover h1{font-size:34px}
+.cover .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:24px}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.kpi{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px}
+.kpi .label{color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.kpi .value{font-size:28px;font-weight:700;margin-top:4px}
+.kpi.err .value{color:var(--err)} .kpi.warn .value{color:var(--warn)} .kpi.ok .value{color:var(--ok)}
+.badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600;
+  margin-right:6px;border:1px solid currentColor}
+.badge.err{color:var(--err)} .badge.warn{color:var(--warn)} .badge.info{color:var(--info)}
+.badge.e1{color:var(--e1)} .badge.e2{color:var(--e2)} .badge.e3{color:var(--e3)} .badge.e4{color:var(--e4)}
+.badge.unk{color:var(--unk)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:var(--panel);color:var(--mut);font-weight:600;cursor:pointer;user-select:none}
+tr:hover{background:rgba(56,189,248,.04)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.controls input,.controls select{background:var(--panel);color:var(--text);
+  border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:13px}
+.controls button{background:var(--acc);color:#0f172a;border:0;border-radius:6px;
+  padding:6px 12px;font-weight:600;cursor:pointer}
+.finding{background:var(--panel);border-left:3px solid var(--mut);
+  padding:10px 12px;margin:8px 0;border-radius:6px}
+.finding.error{border-left-color:var(--err)}
+.finding.warning{border-left-color:var(--warn)}
+.finding.info{border-left-color:var(--info)}
+.finding h4{margin:0 0 4px;font-size:14px}
+.finding pre{background:#020617;color:#bae6fd;padding:8px;border-radius:6px;
+  font-size:12px;overflow-x:auto;margin:6px 0}
+.flow-svg{background:var(--panel);border-radius:8px;border:1px solid var(--border);
+  display:block;max-width:100%;height:auto}
+.node-e1{fill:var(--e1)} .node-e2{fill:var(--e2)} .node-e3{fill:var(--e3)}
+.node-e4{fill:var(--e4)} .node-unk{fill:var(--unk)}
+.node-hot{stroke:var(--err);stroke-width:3px}
+.node-warn{stroke:var(--warn);stroke-width:2px}
+.edge{stroke:#475569;stroke-width:1.5px;fill:none;marker-end:url(#arrow)}
+.edge.error{stroke:var(--err);stroke-dasharray:4 4}
+.node-label{font-size:10px;fill:var(--text);pointer-events:none}
+details{margin:8px 0} summary{cursor:pointer;font-weight:600;color:var(--acc)}
+.tag{display:inline-block;background:var(--panel);border:1px solid var(--border);
+  border-radius:4px;padding:1px 6px;font-size:11px;margin:2px 4px 2px 0;color:var(--mut)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin:8px 0;font-size:12px;color:var(--mut)}
+.legend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:middle}
+@media print{
+  body{background:#fff;color:#000}
+  .card,.cover,.kpi{background:#fff!important;border:1px solid #ccc!important;color:#000!important;box-shadow:none}
+  h1,h2{color:#000} .muted,.kpi .label{color:#444}
+  .flow-svg{background:#fff;border:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="cover">
+    <h1>Validación estática de flujos n8n</h1>
+    <p class="muted">Micro-framework LC/NC · Pilar 2 DevSecOps · Edición Lite v2.0.0</p>
+    <div class="meta">
+      <div><strong>Autor:</strong><br/>Elian Hernando Gil Sierra</div>
+      <div><strong>Director:</strong><br/>Sebastian Roa Prada, PhD</div>
+      <div><strong>Proyecto:</strong><br/>Micro-framework LC/NC para n8n — MGADS UNAB 2026</div>
+      <div><strong>Generado:</strong><br/>2026-06-17T22:50:25.960Z</div>
+      <div><strong>Commit:</strong><br/><code>202f98542c8d</code></div>
+      <div><strong>Flujos analizados:</strong><br/>5</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Resumen ejecutivo</h2>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="label">Flujos</div><div class="value">5</div></div>
+      <div class="kpi err"><div class="label">Score promedio</div><div class="value">18%</div></div>
+      <div class="kpi err"><div class="label">Errors</div><div class="value">13</div></div>
+      <div class="kpi warn"><div class="label">Warnings</div><div class="value">31</div></div>
+      <div class="kpi"><div class="label">Findings totales</div><div class="value">44</div></div>
+      <div class="kpi"><div class="label">Reglas dormidas</div><div class="value">10</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Radar ISO/IEC 25010</h2>
+    <p class="muted">Findings agregados por atributo de calidad — más cerca del centro indica menos hallazgos (mejor).</p>
+    <svg viewBox="0 0 480 420" style="max-width:480px;width:100%;height:auto;background:var(--panel);border-radius:8px;padding:10px">
+    <polygon points="240,162.5 272.4759526419165,181.25 272.4759526419165,218.75 240,237.5 207.52404735808355,218.75 207.52404735808355,181.25" fill="none" stroke="#334155" stroke-dasharray="2 2"/><polygon points="240,125 304.9519052838329,162.5 304.9519052838329,237.5 240,275 175.0480947161671,237.50000000000003 175.0480947161671,162.5" fill="none" stroke="#334155" stroke-dasharray="2 2"/><polygon points="240,87.5 337.4278579257493,143.75 337.4278579257493,256.25 240,312.5 142.57214207425068,256.25000000000006 142.57214207425065,143.75" fill="none" stroke="#334155" stroke-dasharray="2 2"/><polygon points="240,50 369.9038105676658,125 369.9038105676658,275 240,350 110.09618943233423,275.00000000000006 110.0961894323342,124.99999999999999" fill="none" stroke="#334155" stroke-dasharray="2 2"/><line x1="240" y1="200" x2="240" y2="47" stroke="#334155"/><line x1="240" y1="200" x2="372.5018867790191" y2="123.5" stroke="#334155"/><line x1="240" y1="200" x2="372.5018867790191" y2="276.5" stroke="#334155"/><line x1="240" y1="200" x2="240" y2="353" stroke="#334155"/><line x1="240" y1="200" x2="107.49811322098091" y2="276.50000000000006" stroke="#334155"/><line x1="240" y1="200" x2="107.49811322098088" y2="123.49999999999999" stroke="#334155"/>
+    <polygon points="240,150 365.5736835487436,127.5 369.9038105676658,275 240,255 227.00961894323342,207.5 240,200" fill="#38bdf8" fill-opacity="0.3" stroke="#38bdf8" stroke-width="2"/>
+    <circle cx="240" cy="150" r="3" fill="#38bdf8"/><circle cx="365.5736835487436" cy="127.5" r="3" fill="#38bdf8"/><circle cx="369.9038105676658" cy="275" r="3" fill="#38bdf8"/><circle cx="240" cy="255" r="3" fill="#38bdf8"/><circle cx="227.00961894323342" cy="207.5" r="3" fill="#38bdf8"/><circle cx="240" cy="200" r="3" fill="#38bdf8"/>
+    <text x="240" y="20" text-anchor="middle" fill="#94a3b8" font-size="11">security (10)</text><text x="395.88457268119896" y="110" text-anchor="middle" fill="#94a3b8" font-size="11">reliability (29)</text><text x="395.88457268119896" y="290" text-anchor="middle" fill="#94a3b8" font-size="11">maintainability (30)</text><text x="240" y="380" text-anchor="middle" fill="#94a3b8" font-size="11">performanceEfficiency (11)</text><text x="84.11542731880107" y="290.00000000000006" text-anchor="middle" fill="#94a3b8" font-size="11">functionalSuitability (3)</text><text x="84.11542731880104" y="109.99999999999999" text-anchor="middle" fill="#94a3b8" font-size="11">usability (0)</text>
+  </svg>
+  </div>
+
+  <div class="card">
+    <h2>Cobertura del micro-framework</h2>
+    <p class="muted">Reglas definidas: 17 · ejercitadas: 7 · dormidas: 10</p>
+    <div style="background:var(--panel);border-radius:8px;padding:8px;border:1px solid var(--border)">
+    <div style="background:#020617;border-radius:4px;height:20px;overflow:hidden">
+      <div style="background:linear-gradient(90deg,#22c55e,#38bdf8);height:100%;width:41%"></div>
+    </div>
+    <div style="margin-top:6px;font-size:12px;color:var(--mut)">7/17 reglas ejercitadas (41%)</div>
+  </div>
+    <p>⚠️ Reglas que ningún flujo del corpus activó: <span class="tag">REG-003</span> <span class="tag">REG-007</span> <span class="tag">REG-009</span> <span class="tag">REG-VOC</span> <span class="tag">AP-001</span> <span class="tag">AP-002</span> <span class="tag">AP-003</span> <span class="tag">AP-004</span> <span class="tag">AP-005</span> <span class="tag">AP-006</span></p>
+  </div>
+
+  
+
+  <div class="card">
+    <h2>Tabla de findings</h2>
+    <div class="controls">
+      <input id="tbl-findings-q" placeholder="Buscar texto…" style="flex:1;min-width:200px"/>
+      <select id="tbl-findings-sev">
+        <option value="">Todas las severidades</option>
+        <option value="error">Solo errors</option>
+        <option value="warning">Solo warnings</option>
+        <option value="info">Solo infos</option>
+      </select>
+      <button id="tbl-findings-csv">Export CSV</button>
+    </div>
+    <table id="tbl-findings">
+      <thead><tr>
+        <th>Sev</th><th>Regla</th><th>Nombre</th><th>Archivo</th><th>Nodo</th><th>Mensaje</th><th>ISO 25010</th><th>ATAM</th>
+      </tr></thead>
+      <tbody>
+        <tr data-sev="error">
+      <td><span class="badge err">error</span></td>
+      <td>REG-001</td>
+      <td>Sin secretos hardcodeados</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json</code></td>
+      <td>Token Valido?</td>
+      <td>Secreto literal detectado: Comparación literal de token en IF/Switch</td>
+      <td><span class="tag">security</span><span class="tag">maintainability</span></td>
+      <td><span class="tag">R-BOT-01</span></td>
+    </tr>
+<tr data-sev="error">
+      <td><span class="badge err">error</span></td>
+      <td>REG-001</td>
+      <td>Sin secretos hardcodeados</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json</code></td>
+      <td>Consultar Historial Usuario</td>
+      <td>Header HTTP &quot;x-api-key&quot; con valor literal</td>
+      <td><span class="tag">security</span><span class="tag">maintainability</span></td>
+      <td><span class="tag">R-BOT-01</span></td>
+    </tr>
+<tr data-sev="error">
+      <td><span class="badge err">error</span></td>
+      <td>REG-001</td>
+      <td>Sin secretos hardcodeados</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json</code></td>
+      <td>Crear Ticket</td>
+      <td>Header HTTP &quot;x-api-key&quot; con valor literal</td>
+      <td><span class="tag">security</span><span class="tag">maintainability</span></td>
+      <td><span class="tag">R-BOT-01</span></td>
+    </tr>
+<tr data-sev="error">
+      <td><span class="badge err">error</span></td>
+      <td>REG-001</td>
+      <td>Sin secretos hardcodeados</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json</code></td>
+      <td>Notificar Sistema Externo</td>
+      <td>Header HTTP &quot;x-api-key&quot; con valor literal</td>
+      <td><span class="tag">security</span><span class="tag">maintainability</span></td>
+      <td><span class="tag">R-BOT-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-002</td>
+      <td>run_id propagado</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json</code></td>
+      <td>–</td>
+      <td>No se detectó console.log(JSON.stringify(...)) con run_id</td>
+      <td><span class="tag">maintainability</span><span class="tag">reliability</span></td>
+      <td><span class="tag">SP-BOT-02</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-004</td>
+      <td>Retry en HTTP</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json</code></td>
+      <td>Consultar Historial Usuario</td>
+      <td>Nodo HTTP sin retry habilitado</td>
+      <td><span class="tag">reliability</span><span class="tag">performanceEfficiency</span></td>
+      <td><span class="tag">TP-IOT-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-004</td>
+      <td>Retry en HTTP</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json</code></td>
+      <td>Crear Ticket</td>
+      <td>Nodo HTTP sin retry habilitado</td>
+      <td><span class="tag">reliability</span><span class="tag">performanceEfficiency</span></td>
+      <td><span class="tag">TP-IOT-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-004</td>
+      <td>Retry en HTTP</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json</code></td>
+      <td>Notificar Sistema Externo</td>
+      <td>Nodo HTTP sin retry habilitado</td>
+      <td><span class="tag">reliability</span><span class="tag">performanceEfficiency</span></td>
+      <td><span class="tag">TP-IOT-01</span></td>
+    </tr>
+<tr data-sev="error">
+      <td><span class="badge err">error</span></td>
+      <td>REG-005</td>
+      <td>Idempotencia en escrituras</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json</code></td>
+      <td>Guardar Interaccion</td>
+      <td>INSERT sin ON CONFLICT ni idempotency_key</td>
+      <td><span class="tag">reliability</span><span class="tag">functionalSuitability</span></td>
+      <td><span class="tag">SP-BOT-01</span><span class="tag">NR-IOT-02</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-006</td>
+      <td>Log estructurado JSON</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json</code></td>
+      <td>Sanitizar Input</td>
+      <td>Nodo Code sin console.log(JSON.stringify(...))</td>
+      <td><span class="tag">maintainability</span><span class="tag">reliability</span></td>
+      <td><span class="tag">SP-BOT-02</span><span class="tag">R-GLOBAL-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-006</td>
+      <td>Log estructurado JSON</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json</code></td>
+      <td>Verificar Rate Limit</td>
+      <td>Nodo Code sin console.log(JSON.stringify(...))</td>
+      <td><span class="tag">maintainability</span><span class="tag">reliability</span></td>
+      <td><span class="tag">SP-BOT-02</span><span class="tag">R-GLOBAL-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-006</td>
+      <td>Log estructurado JSON</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json</code></td>
+      <td>Clasificar y Preparar Ticket</td>
+      <td>Nodo Code sin console.log(JSON.stringify(...))</td>
+      <td><span class="tag">maintainability</span><span class="tag">reliability</span></td>
+      <td><span class="tag">SP-BOT-02</span><span class="tag">R-GLOBAL-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-008</td>
+      <td>Integraciones en E3/E4</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json</code></td>
+      <td>–</td>
+      <td>Nodos IO en archivo sin convención E3/E4/orquestador: Consultar Historial Usuario, Crear Ticket, Guardar Interaccion, Notificar Sistema Externo</td>
+      <td><span class="tag">maintainability</span></td>
+      <td><span class="tag">TP-GLOBAL-01</span></td>
+    </tr>
+<tr data-sev="error">
+      <td><span class="badge err">error</span></td>
+      <td>REG-001</td>
+      <td>Sin secretos hardcodeados</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is.json</code></td>
+      <td>Token Valido?</td>
+      <td>Secreto literal detectado: Comparación literal de token en IF/Switch</td>
+      <td><span class="tag">security</span><span class="tag">maintainability</span></td>
+      <td><span class="tag">R-BOT-01</span></td>
+    </tr>
+<tr data-sev="error">
+      <td><span class="badge err">error</span></td>
+      <td>REG-001</td>
+      <td>Sin secretos hardcodeados</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is.json</code></td>
+      <td>Consultar Historial Usuario</td>
+      <td>Header HTTP &quot;x-api-key&quot; con valor literal</td>
+      <td><span class="tag">security</span><span class="tag">maintainability</span></td>
+      <td><span class="tag">R-BOT-01</span></td>
+    </tr>
+<tr data-sev="error">
+      <td><span class="badge err">error</span></td>
+      <td>REG-001</td>
+      <td>Sin secretos hardcodeados</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is.json</code></td>
+      <td>Crear Ticket</td>
+      <td>Header HTTP &quot;x-api-key&quot; con valor literal</td>
+      <td><span class="tag">security</span><span class="tag">maintainability</span></td>
+      <td><span class="tag">R-BOT-01</span></td>
+    </tr>
+<tr data-sev="error">
+      <td><span class="badge err">error</span></td>
+      <td>REG-001</td>
+      <td>Sin secretos hardcodeados</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is.json</code></td>
+      <td>Notificar Sistema Externo</td>
+      <td>Header HTTP &quot;x-api-key&quot; con valor literal</td>
+      <td><span class="tag">security</span><span class="tag">maintainability</span></td>
+      <td><span class="tag">R-BOT-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-002</td>
+      <td>run_id propagado</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is.json</code></td>
+      <td>–</td>
+      <td>No se detectó console.log(JSON.stringify(...)) con run_id</td>
+      <td><span class="tag">maintainability</span><span class="tag">reliability</span></td>
+      <td><span class="tag">SP-BOT-02</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-004</td>
+      <td>Retry en HTTP</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is.json</code></td>
+      <td>Consultar Historial Usuario</td>
+      <td>Nodo HTTP sin retry habilitado</td>
+      <td><span class="tag">reliability</span><span class="tag">performanceEfficiency</span></td>
+      <td><span class="tag">TP-IOT-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-004</td>
+      <td>Retry en HTTP</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is.json</code></td>
+      <td>Crear Ticket</td>
+      <td>Nodo HTTP sin retry habilitado</td>
+      <td><span class="tag">reliability</span><span class="tag">performanceEfficiency</span></td>
+      <td><span class="tag">TP-IOT-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-004</td>
+      <td>Retry en HTTP</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is.json</code></td>
+      <td>Notificar Sistema Externo</td>
+      <td>Nodo HTTP sin retry habilitado</td>
+      <td><span class="tag">reliability</span><span class="tag">performanceEfficiency</span></td>
+      <td><span class="tag">TP-IOT-01</span></td>
+    </tr>
+<tr data-sev="error">
+      <td><span class="badge err">error</span></td>
+      <td>REG-005</td>
+      <td>Idempotencia en escrituras</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is.json</code></td>
+      <td>Guardar Interaccion</td>
+      <td>INSERT sin ON CONFLICT ni idempotency_key</td>
+      <td><span class="tag">reliability</span><span class="tag">functionalSuitability</span></td>
+      <td><span class="tag">SP-BOT-01</span><span class="tag">NR-IOT-02</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-006</td>
+      <td>Log estructurado JSON</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is.json</code></td>
+      <td>Sanitizar Input</td>
+      <td>Nodo Code sin console.log(JSON.stringify(...))</td>
+      <td><span class="tag">maintainability</span><span class="tag">reliability</span></td>
+      <td><span class="tag">SP-BOT-02</span><span class="tag">R-GLOBAL-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-006</td>
+      <td>Log estructurado JSON</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is.json</code></td>
+      <td>Verificar Rate Limit</td>
+      <td>Nodo Code sin console.log(JSON.stringify(...))</td>
+      <td><span class="tag">maintainability</span><span class="tag">reliability</span></td>
+      <td><span class="tag">SP-BOT-02</span><span class="tag">R-GLOBAL-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-006</td>
+      <td>Log estructurado JSON</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is.json</code></td>
+      <td>Clasificar y Preparar Ticket</td>
+      <td>Nodo Code sin console.log(JSON.stringify(...))</td>
+      <td><span class="tag">maintainability</span><span class="tag">reliability</span></td>
+      <td><span class="tag">SP-BOT-02</span><span class="tag">R-GLOBAL-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-008</td>
+      <td>Integraciones en E3/E4</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/as-is/bot-as-is.json</code></td>
+      <td>–</td>
+      <td>Nodos IO en archivo sin convención E3/E4/orquestador: Consultar Historial Usuario, Crear Ticket, Guardar Interaccion, Notificar Sistema Externo</td>
+      <td><span class="tag">maintainability</span></td>
+      <td><span class="tag">TP-GLOBAL-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-004</td>
+      <td>Retry en HTTP</td>
+      <td><code style="font-size:11px">casos-de-estudio/iot/as-is/iot-as-is.json</code></td>
+      <td>Guardar en InfluxDB</td>
+      <td>Nodo HTTP sin retry habilitado</td>
+      <td><span class="tag">reliability</span><span class="tag">performanceEfficiency</span></td>
+      <td><span class="tag">TP-IOT-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-004</td>
+      <td>Retry en HTTP</td>
+      <td><code style="font-size:11px">casos-de-estudio/iot/as-is/iot-as-is.json</code></td>
+      <td>Enviar Notificacion</td>
+      <td>Nodo HTTP sin retry habilitado</td>
+      <td><span class="tag">reliability</span><span class="tag">performanceEfficiency</span></td>
+      <td><span class="tag">TP-IOT-01</span></td>
+    </tr>
+<tr data-sev="error">
+      <td><span class="badge err">error</span></td>
+      <td>REG-005</td>
+      <td>Idempotencia en escrituras</td>
+      <td><code style="font-size:11px">casos-de-estudio/iot/as-is/iot-as-is.json</code></td>
+      <td>Persistir en PostgreSQL</td>
+      <td>INSERT sin ON CONFLICT ni idempotency_key</td>
+      <td><span class="tag">reliability</span><span class="tag">functionalSuitability</span></td>
+      <td><span class="tag">SP-BOT-01</span><span class="tag">NR-IOT-02</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-006</td>
+      <td>Log estructurado JSON</td>
+      <td><code style="font-size:11px">casos-de-estudio/iot/as-is/iot-as-is.json</code></td>
+      <td>Verificar Campos Basicos</td>
+      <td>Nodo Code sin console.log(JSON.stringify(...))</td>
+      <td><span class="tag">maintainability</span><span class="tag">reliability</span></td>
+      <td><span class="tag">SP-BOT-02</span><span class="tag">R-GLOBAL-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-006</td>
+      <td>Log estructurado JSON</td>
+      <td><code style="font-size:11px">casos-de-estudio/iot/as-is/iot-as-is.json</code></td>
+      <td>Normalizar Lecturas</td>
+      <td>Nodo Code sin console.log(JSON.stringify(...))</td>
+      <td><span class="tag">maintainability</span><span class="tag">reliability</span></td>
+      <td><span class="tag">SP-BOT-02</span><span class="tag">R-GLOBAL-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-006</td>
+      <td>Log estructurado JSON</td>
+      <td><code style="font-size:11px">casos-de-estudio/iot/as-is/iot-as-is.json</code></td>
+      <td>Determinar Nivel Final</td>
+      <td>Nodo Code sin console.log(JSON.stringify(...))</td>
+      <td><span class="tag">maintainability</span><span class="tag">reliability</span></td>
+      <td><span class="tag">SP-BOT-02</span><span class="tag">R-GLOBAL-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-006</td>
+      <td>Log estructurado JSON</td>
+      <td><code style="font-size:11px">casos-de-estudio/iot/as-is/iot-as-is.json</code></td>
+      <td>Log Resultado</td>
+      <td>Log JSON sin campos: status</td>
+      <td><span class="tag">maintainability</span><span class="tag">reliability</span></td>
+      <td><span class="tag">SP-BOT-02</span><span class="tag">R-GLOBAL-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-008</td>
+      <td>Integraciones en E3/E4</td>
+      <td><code style="font-size:11px">casos-de-estudio/iot/as-is/iot-as-is.json</code></td>
+      <td>–</td>
+      <td>Nodos IO en archivo sin convención E3/E4/orquestador: Guardar en InfluxDB, Persistir en PostgreSQL, Enviar Notificacion</td>
+      <td><span class="tag">maintainability</span></td>
+      <td><span class="tag">TP-GLOBAL-01</span></td>
+    </tr>
+<tr data-sev="error">
+      <td><span class="badge err">error</span></td>
+      <td>REG-001</td>
+      <td>Sin secretos hardcodeados</td>
+      <td><code style="font-size:11px">microframework/plantillas/bot-as-is.json</code></td>
+      <td>Token Valido?</td>
+      <td>Secreto literal detectado: Comparación literal de token en IF/Switch</td>
+      <td><span class="tag">security</span><span class="tag">maintainability</span></td>
+      <td><span class="tag">R-BOT-01</span></td>
+    </tr>
+<tr data-sev="error">
+      <td><span class="badge err">error</span></td>
+      <td>REG-001</td>
+      <td>Sin secretos hardcodeados</td>
+      <td><code style="font-size:11px">microframework/plantillas/bot-as-is.json</code></td>
+      <td>Notificar Sistema Externo</td>
+      <td>Header HTTP &quot;x-api-key&quot; con valor literal</td>
+      <td><span class="tag">security</span><span class="tag">maintainability</span></td>
+      <td><span class="tag">R-BOT-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-004</td>
+      <td>Retry en HTTP</td>
+      <td><code style="font-size:11px">microframework/plantillas/bot-as-is.json</code></td>
+      <td>Notificar Sistema Externo</td>
+      <td>Nodo HTTP sin retry habilitado</td>
+      <td><span class="tag">reliability</span><span class="tag">performanceEfficiency</span></td>
+      <td><span class="tag">TP-IOT-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-008</td>
+      <td>Integraciones en E3/E4</td>
+      <td><code style="font-size:11px">microframework/plantillas/bot-as-is.json</code></td>
+      <td>–</td>
+      <td>Nodos IO en archivo sin convención E3/E4/orquestador: Notificar Sistema Externo</td>
+      <td><span class="tag">maintainability</span></td>
+      <td><span class="tag">TP-GLOBAL-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-002</td>
+      <td>run_id propagado</td>
+      <td><code style="font-size:11px">microframework/plantillas/iot-as-is.json</code></td>
+      <td>–</td>
+      <td>Ningún nodo Code referencia run_id</td>
+      <td><span class="tag">maintainability</span><span class="tag">reliability</span></td>
+      <td><span class="tag">SP-BOT-02</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-002</td>
+      <td>run_id propagado</td>
+      <td><code style="font-size:11px">microframework/plantillas/iot-as-is.json</code></td>
+      <td>–</td>
+      <td>No se detectó console.log(JSON.stringify(...)) con run_id</td>
+      <td><span class="tag">maintainability</span><span class="tag">reliability</span></td>
+      <td><span class="tag">SP-BOT-02</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-004</td>
+      <td>Retry en HTTP</td>
+      <td><code style="font-size:11px">microframework/plantillas/iot-as-is.json</code></td>
+      <td>Guardar en InfluxDB</td>
+      <td>Nodo HTTP sin retry habilitado</td>
+      <td><span class="tag">reliability</span><span class="tag">performanceEfficiency</span></td>
+      <td><span class="tag">TP-IOT-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-004</td>
+      <td>Retry en HTTP</td>
+      <td><code style="font-size:11px">microframework/plantillas/iot-as-is.json</code></td>
+      <td>Enviar Notificacion</td>
+      <td>Nodo HTTP sin retry habilitado</td>
+      <td><span class="tag">reliability</span><span class="tag">performanceEfficiency</span></td>
+      <td><span class="tag">TP-IOT-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-006</td>
+      <td>Log estructurado JSON</td>
+      <td><code style="font-size:11px">microframework/plantillas/iot-as-is.json</code></td>
+      <td>Procesar y Detectar Alerta</td>
+      <td>Nodo Code sin console.log(JSON.stringify(...))</td>
+      <td><span class="tag">maintainability</span><span class="tag">reliability</span></td>
+      <td><span class="tag">SP-BOT-02</span><span class="tag">R-GLOBAL-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-008</td>
+      <td>Integraciones en E3/E4</td>
+      <td><code style="font-size:11px">microframework/plantillas/iot-as-is.json</code></td>
+      <td>–</td>
+      <td>Nodos IO en archivo sin convención E3/E4/orquestador: Guardar en InfluxDB, Enviar Notificacion</td>
+      <td><span class="tag">maintainability</span></td>
+      <td><span class="tag">TP-GLOBAL-01</span></td>
+    </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Detalle por flujo</h2>
+    <div class="legend">
+      <span><span class="sw" style="background:var(--e1)"></span>E1 Entrada</span>
+      <span><span class="sw" style="background:var(--e2)"></span>E2 Dominio</span>
+      <span><span class="sw" style="background:var(--e3)"></span>E3 IO</span>
+      <span><span class="sw" style="background:var(--e4)"></span>E4 Salida</span>
+      <span><span class="sw" style="background:var(--unk)"></span>UNKNOWN</span>
+      <span style="margin-left:16px">borde rojo = nodo con finding error · borde ámbar = warning</span>
+    </div>
+    <details open>
+    <summary>casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json · <span class="badge err">14%</span>
+      · err=5 warn=8 info=0
+      · nodos=16 ciclomática=2 cohesion=0.813</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·1</span><span class="badge e2">E2·8</span><span class="badge e3">E3·4</span><span class="badge e4">E4·3</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-0" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-0" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <h4>Todos los findings de este flujo</h4>
+      <div class="finding error">
+        <strong>REG-001</strong> — Sin secretos hardcodeados
+        <span class="muted"> @ Token Valido?</span><br/>
+        Secreto literal detectado: Comparación literal de token en IF/Switch
+        <pre>&quot;rightValue&quot;:&quot;mi-token-secreto-hardcodeado-123&quot;</pre>
+        <p><strong>Fix:</strong> Reemplazar literal por credencial n8n o {{$env.VAR_NAME}}</p>
+      </div>
+      <div class="finding error">
+        <strong>REG-001</strong> — Sin secretos hardcodeados
+        <span class="muted"> @ Consultar Historial Usuario</span><br/>
+        Header HTTP &quot;x-api-key&quot; con valor literal
+        <pre>x-api-key: clave-api-externa-hardcodeada-456…</pre>
+        <p><strong>Fix:</strong> Header debe usar {{$env.X_API_KEY}}</p>
+      </div>
+      <div class="finding error">
+        <strong>REG-001</strong> — Sin secretos hardcodeados
+        <span class="muted"> @ Crear Ticket</span><br/>
+        Header HTTP &quot;x-api-key&quot; con valor literal
+        <pre>x-api-key: clave-api-externa-hardcodeada-456…</pre>
+        <p><strong>Fix:</strong> Header debe usar {{$env.X_API_KEY}}</p>
+      </div>
+      <div class="finding error">
+        <strong>REG-001</strong> — Sin secretos hardcodeados
+        <span class="muted"> @ Notificar Sistema Externo</span><br/>
+        Header HTTP &quot;x-api-key&quot; con valor literal
+        <pre>x-api-key: clave-api-externa-hardcodeada-456…</pre>
+        <p><strong>Fix:</strong> Header debe usar {{$env.X_API_KEY}}</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-002</strong> — run_id propagado
+        <br/>
+        No se detectó console.log(JSON.stringify(...)) con run_id
+        
+        
+      </div>
+      <div class="finding warning">
+        <strong>REG-004</strong> — Retry en HTTP
+        <span class="muted"> @ Consultar Historial Usuario</span><br/>
+        Nodo HTTP sin retry habilitado
+        <pre>options.retry.enabled = false</pre>
+        <p><strong>Fix:</strong> options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-004</strong> — Retry en HTTP
+        <span class="muted"> @ Crear Ticket</span><br/>
+        Nodo HTTP sin retry habilitado
+        <pre>options.retry.enabled = false</pre>
+        <p><strong>Fix:</strong> options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-004</strong> — Retry en HTTP
+        <span class="muted"> @ Notificar Sistema Externo</span><br/>
+        Nodo HTTP sin retry habilitado
+        <pre>options.retry.enabled = false</pre>
+        <p><strong>Fix:</strong> options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }</p>
+      </div>
+      <div class="finding error">
+        <strong>REG-005</strong> — Idempotencia en escrituras
+        <span class="muted"> @ Guardar Interaccion</span><br/>
+        INSERT sin ON CONFLICT ni idempotency_key
+        <pre>INSERT INTO interacciones_bot (user_id, session_id, categoria, prioridad, ticket_id) VALUES (&#39;{{ $(&#39;Clasificar y Preparar Ticket&#39;).item.json.user_id }}&#39;, &#39;{{ $(&#39;Clasificar y Preparar Ticket&#39;).item.jso</pre>
+        <p><strong>Fix:</strong> Agregar ON CONFLICT (id) DO NOTHING o columna idempotency_key UNIQUE.</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-006</strong> — Log estructurado JSON
+        <span class="muted"> @ Sanitizar Input</span><br/>
+        Nodo Code sin console.log(JSON.stringify(...))
+        
+        <p><strong>Fix:</strong> console.log(JSON.stringify({ run_id, etapa: &#39;E?&#39;, status: &#39;ok&#39; }));</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-006</strong> — Log estructurado JSON
+        <span class="muted"> @ Verificar Rate Limit</span><br/>
+        Nodo Code sin console.log(JSON.stringify(...))
+        
+        <p><strong>Fix:</strong> console.log(JSON.stringify({ run_id, etapa: &#39;E?&#39;, status: &#39;ok&#39; }));</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-006</strong> — Log estructurado JSON
+        <span class="muted"> @ Clasificar y Preparar Ticket</span><br/>
+        Nodo Code sin console.log(JSON.stringify(...))
+        
+        <p><strong>Fix:</strong> console.log(JSON.stringify({ run_id, etapa: &#39;E?&#39;, status: &#39;ok&#39; }));</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-008</strong> — Integraciones en E3/E4
+        <br/>
+        Nodos IO en archivo sin convención E3/E4/orquestador: Consultar Historial Usuario, Crear Ticket, Guardar Interaccion, Notificar Sistema Externo
+        
+        
+      </div>
+  </details>
+<details open>
+    <summary>casos-de-estudio/bot/as-is/bot-as-is.json · <span class="badge err">14%</span>
+      · err=5 warn=8 info=0
+      · nodos=16 ciclomática=2 cohesion=0.813</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·1</span><span class="badge e2">E2·8</span><span class="badge e3">E3·4</span><span class="badge e4">E4·3</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-1" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-1" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <h4>Todos los findings de este flujo</h4>
+      <div class="finding error">
+        <strong>REG-001</strong> — Sin secretos hardcodeados
+        <span class="muted"> @ Token Valido?</span><br/>
+        Secreto literal detectado: Comparación literal de token en IF/Switch
+        <pre>&quot;rightValue&quot;:&quot;mi-token-secreto-hardcodeado-123&quot;</pre>
+        <p><strong>Fix:</strong> Reemplazar literal por credencial n8n o {{$env.VAR_NAME}}</p>
+      </div>
+      <div class="finding error">
+        <strong>REG-001</strong> — Sin secretos hardcodeados
+        <span class="muted"> @ Consultar Historial Usuario</span><br/>
+        Header HTTP &quot;x-api-key&quot; con valor literal
+        <pre>x-api-key: clave-api-externa-hardcodeada-456…</pre>
+        <p><strong>Fix:</strong> Header debe usar {{$env.X_API_KEY}}</p>
+      </div>
+      <div class="finding error">
+        <strong>REG-001</strong> — Sin secretos hardcodeados
+        <span class="muted"> @ Crear Ticket</span><br/>
+        Header HTTP &quot;x-api-key&quot; con valor literal
+        <pre>x-api-key: clave-api-externa-hardcodeada-456…</pre>
+        <p><strong>Fix:</strong> Header debe usar {{$env.X_API_KEY}}</p>
+      </div>
+      <div class="finding error">
+        <strong>REG-001</strong> — Sin secretos hardcodeados
+        <span class="muted"> @ Notificar Sistema Externo</span><br/>
+        Header HTTP &quot;x-api-key&quot; con valor literal
+        <pre>x-api-key: clave-api-externa-hardcodeada-456…</pre>
+        <p><strong>Fix:</strong> Header debe usar {{$env.X_API_KEY}}</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-002</strong> — run_id propagado
+        <br/>
+        No se detectó console.log(JSON.stringify(...)) con run_id
+        
+        
+      </div>
+      <div class="finding warning">
+        <strong>REG-004</strong> — Retry en HTTP
+        <span class="muted"> @ Consultar Historial Usuario</span><br/>
+        Nodo HTTP sin retry habilitado
+        <pre>options.retry.enabled = false</pre>
+        <p><strong>Fix:</strong> options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-004</strong> — Retry en HTTP
+        <span class="muted"> @ Crear Ticket</span><br/>
+        Nodo HTTP sin retry habilitado
+        <pre>options.retry.enabled = false</pre>
+        <p><strong>Fix:</strong> options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-004</strong> — Retry en HTTP
+        <span class="muted"> @ Notificar Sistema Externo</span><br/>
+        Nodo HTTP sin retry habilitado
+        <pre>options.retry.enabled = false</pre>
+        <p><strong>Fix:</strong> options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }</p>
+      </div>
+      <div class="finding error">
+        <strong>REG-005</strong> — Idempotencia en escrituras
+        <span class="muted"> @ Guardar Interaccion</span><br/>
+        INSERT sin ON CONFLICT ni idempotency_key
+        <pre>INSERT INTO interacciones_bot (user_id, session_id, categoria, prioridad, ticket_id) VALUES (&#39;{{ $(&#39;Clasificar y Preparar Ticket&#39;).item.json.user_id }}&#39;, &#39;{{ $(&#39;Clasificar y Preparar Ticket&#39;).item.jso</pre>
+        <p><strong>Fix:</strong> Agregar ON CONFLICT (id) DO NOTHING o columna idempotency_key UNIQUE.</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-006</strong> — Log estructurado JSON
+        <span class="muted"> @ Sanitizar Input</span><br/>
+        Nodo Code sin console.log(JSON.stringify(...))
+        
+        <p><strong>Fix:</strong> console.log(JSON.stringify({ run_id, etapa: &#39;E?&#39;, status: &#39;ok&#39; }));</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-006</strong> — Log estructurado JSON
+        <span class="muted"> @ Verificar Rate Limit</span><br/>
+        Nodo Code sin console.log(JSON.stringify(...))
+        
+        <p><strong>Fix:</strong> console.log(JSON.stringify({ run_id, etapa: &#39;E?&#39;, status: &#39;ok&#39; }));</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-006</strong> — Log estructurado JSON
+        <span class="muted"> @ Clasificar y Preparar Ticket</span><br/>
+        Nodo Code sin console.log(JSON.stringify(...))
+        
+        <p><strong>Fix:</strong> console.log(JSON.stringify({ run_id, etapa: &#39;E?&#39;, status: &#39;ok&#39; }));</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-008</strong> — Integraciones en E3/E4
+        <br/>
+        Nodos IO en archivo sin convención E3/E4/orquestador: Consultar Historial Usuario, Crear Ticket, Guardar Interaccion, Notificar Sistema Externo
+        
+        
+      </div>
+  </details>
+<details open>
+    <summary>casos-de-estudio/iot/as-is/iot-as-is.json · <span class="badge err">43%</span>
+      · err=1 warn=7 info=0
+      · nodos=14 ciclomática=4 cohesion=0.875</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·1</span><span class="badge e2">E2·8</span><span class="badge e3">E3·3</span><span class="badge e4">E4·2</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-2" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-2" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <h4>Todos los findings de este flujo</h4>
+      <div class="finding warning">
+        <strong>REG-004</strong> — Retry en HTTP
+        <span class="muted"> @ Guardar en InfluxDB</span><br/>
+        Nodo HTTP sin retry habilitado
+        <pre>options.retry.enabled = false</pre>
+        <p><strong>Fix:</strong> options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-004</strong> — Retry en HTTP
+        <span class="muted"> @ Enviar Notificacion</span><br/>
+        Nodo HTTP sin retry habilitado
+        <pre>options.retry.enabled = false</pre>
+        <p><strong>Fix:</strong> options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }</p>
+      </div>
+      <div class="finding error">
+        <strong>REG-005</strong> — Idempotencia en escrituras
+        <span class="muted"> @ Persistir en PostgreSQL</span><br/>
+        INSERT sin ON CONFLICT ni idempotency_key
+        <pre>INSERT INTO lecturas_sensor (sensor_id, temperatura, humedad, co2, nivel, location, ts)
+VALUES (&#39;{{ $(&#39;Determinar Nivel Final&#39;).item.json.sensor_id }}&#39;,
+        {{ $(&#39;Determinar Nivel Final&#39;).item.jso</pre>
+        <p><strong>Fix:</strong> Agregar ON CONFLICT (id) DO NOTHING o columna idempotency_key UNIQUE.</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-006</strong> — Log estructurado JSON
+        <span class="muted"> @ Verificar Campos Basicos</span><br/>
+        Nodo Code sin console.log(JSON.stringify(...))
+        
+        <p><strong>Fix:</strong> console.log(JSON.stringify({ run_id, etapa: &#39;E?&#39;, status: &#39;ok&#39; }));</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-006</strong> — Log estructurado JSON
+        <span class="muted"> @ Normalizar Lecturas</span><br/>
+        Nodo Code sin console.log(JSON.stringify(...))
+        
+        <p><strong>Fix:</strong> console.log(JSON.stringify({ run_id, etapa: &#39;E?&#39;, status: &#39;ok&#39; }));</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-006</strong> — Log estructurado JSON
+        <span class="muted"> @ Determinar Nivel Final</span><br/>
+        Nodo Code sin console.log(JSON.stringify(...))
+        
+        <p><strong>Fix:</strong> console.log(JSON.stringify({ run_id, etapa: &#39;E?&#39;, status: &#39;ok&#39; }));</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-006</strong> — Log estructurado JSON
+        <span class="muted"> @ Log Resultado</span><br/>
+        Log JSON sin campos: status
+        
+        
+      </div>
+      <div class="finding warning">
+        <strong>REG-008</strong> — Integraciones en E3/E4
+        <br/>
+        Nodos IO en archivo sin convención E3/E4/orquestador: Guardar en InfluxDB, Persistir en PostgreSQL, Enviar Notificacion
+        
+        
+      </div>
+  </details>
+<details open>
+    <summary>microframework/plantillas/bot-as-is.json · <span class="badge err">0%</span>
+      · err=2 warn=2 info=0
+      · nodos=10 ciclomática=3 cohesion=0.909</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·1</span><span class="badge e2">E2·6</span><span class="badge e3">E3·1</span><span class="badge e4">E4·2</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-3" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-3" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <h4>Todos los findings de este flujo</h4>
+      <div class="finding error">
+        <strong>REG-001</strong> — Sin secretos hardcodeados
+        <span class="muted"> @ Token Valido?</span><br/>
+        Secreto literal detectado: Comparación literal de token en IF/Switch
+        <pre>&quot;rightValue&quot;:&quot;mi-token-secreto-hardcodeado-123&quot;</pre>
+        <p><strong>Fix:</strong> Reemplazar literal por credencial n8n o {{$env.VAR_NAME}}</p>
+      </div>
+      <div class="finding error">
+        <strong>REG-001</strong> — Sin secretos hardcodeados
+        <span class="muted"> @ Notificar Sistema Externo</span><br/>
+        Header HTTP &quot;x-api-key&quot; con valor literal
+        <pre>x-api-key: clave-api-externa-hardcodeada-456…</pre>
+        <p><strong>Fix:</strong> Header debe usar {{$env.X_API_KEY}}</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-004</strong> — Retry en HTTP
+        <span class="muted"> @ Notificar Sistema Externo</span><br/>
+        Nodo HTTP sin retry habilitado
+        <pre>options.retry.enabled = false</pre>
+        <p><strong>Fix:</strong> options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-008</strong> — Integraciones en E3/E4
+        <br/>
+        Nodos IO en archivo sin convención E3/E4/orquestador: Notificar Sistema Externo
+        
+        
+      </div>
+  </details>
+<details >
+    <summary>microframework/plantillas/iot-as-is.json · <span class="badge err">20%</span>
+      · err=0 warn=6 info=0
+      · nodos=6 ciclomática=2 cohesion=1</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·1</span><span class="badge e2">E2·2</span><span class="badge e3">E3·2</span><span class="badge e4">E4·1</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-4" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-4" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <h4>Todos los findings de este flujo</h4>
+      <div class="finding warning">
+        <strong>REG-002</strong> — run_id propagado
+        <br/>
+        Ningún nodo Code referencia run_id
+        
+        <p><strong>Fix:</strong> Generar run_id en E1 con crypto.randomUUID() y propagarlo en el payload.</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-002</strong> — run_id propagado
+        <br/>
+        No se detectó console.log(JSON.stringify(...)) con run_id
+        
+        
+      </div>
+      <div class="finding warning">
+        <strong>REG-004</strong> — Retry en HTTP
+        <span class="muted"> @ Guardar en InfluxDB</span><br/>
+        Nodo HTTP sin retry habilitado
+        <pre>options.retry.enabled = false</pre>
+        <p><strong>Fix:</strong> options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-004</strong> — Retry en HTTP
+        <span class="muted"> @ Enviar Notificacion</span><br/>
+        Nodo HTTP sin retry habilitado
+        <pre>options.retry.enabled = false</pre>
+        <p><strong>Fix:</strong> options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-006</strong> — Log estructurado JSON
+        <span class="muted"> @ Procesar y Detectar Alerta</span><br/>
+        Nodo Code sin console.log(JSON.stringify(...))
+        
+        <p><strong>Fix:</strong> console.log(JSON.stringify({ run_id, etapa: &#39;E?&#39;, status: &#39;ok&#39; }));</p>
+      </div>
+      <div class="finding warning">
+        <strong>REG-008</strong> — Integraciones en E3/E4
+        <br/>
+        Nodos IO en archivo sin convención E3/E4/orquestador: Guardar en InfluxDB, Enviar Notificacion
+        
+        
+      </div>
+  </details>
+  </div>
+
+  <div class="card">
+    <h2>Acerca de este reporte</h2>
+    <p class="muted">Generado por <code>n8n-microframework-validator v2.0.0</code> (edición Lite) — un único archivo .mjs sin dependencias externas. Este HTML es autocontenido: no requiere red para renderizar.</p>
+    <p class="muted">Comando: <code>node microframework/validacion/validar-flujos.mjs --format html</code></p>
+  </div>
+
+</div>
+<script>window.__DATA__={"tool":"n8n-microframework-validator","version":"2.0.0","edition":"lite","generatedAt":"2026-06-17T22:50:25.960Z","commit":"202f98542c8d9771a3bbe8701f1d3292541bc382","author":"Elian Hernando Gil Sierra","director":"Sebastian Roa Prada, PhD","project":"Micro-framework LC/NC para n8n — MGADS UNAB 2026","files":[{"path":"D:\\Git\\n8n-microframework\\casos-de-estudio\\bot\\as-is\\bot-as-is-ratelimit-demo.json","caso":"bot","estado":"as-is","isOrquestador":false,"isErrorHandler":false,"graph":{"nodes":[{"id":"a1b2c3d4-0001-0001-0001-000000000001","name":"Webhook Entrada","type":"n8n-nodes-base.webhook","stage":"E1","stageInferred":true,"position":[240,400],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0002-0002-0002-000000000002","name":"Sanitizar Input","type":"n8n-nodes-base.code","stage":"E2","stageInferred":true,"position":[460,400],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0003-0003-0003-000000000003","name":"Verificar Rate Limit","type":"n8n-nodes-base.code","stage":"E2","stageInferred":true,"position":[680,400],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0004-0004-0004-000000000004","name":"Limite Excedido?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[900,400],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"a1b2c3d4-0005-0005-0005-000000000005","name":"Error Rate Limit","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[1120,240],"inDegree":1,"outDegree":0,"hasErrorBranch":false},{"id":"a1b2c3d4-0006-0006-0006-000000000006","name":"Token Valido?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[1120,480],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"a1b2c3d4-0007-0007-0007-000000000007","name":"Error Token","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[1340,620],"inDegree":1,"outDegree":0,"hasErrorBranch":false},{"id":"a1b2c3d4-0008-0008-0008-000000000008","name":"Consultar Historial Usuario","type":"n8n-nodes-base.httpRequest","stage":"E3","stageInferred":true,"position":[1340,400],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0009-0009-0009-000000000009","name":"Clasificar y Preparar Ticket","type":"n8n-nodes-base.code","stage":"E2","stageInferred":true,"position":[1560,400],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0010-0010-0010-000000000010","name":"Detectar Urgencia","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[1780,400],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"a1b2c3d4-0011-0011-0011-000000000011","name":"Marcar Escalacion","type":"n8n-nodes-base.set","stage":"E2","stageInferred":true,"position":[2000,280],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0012-0012-0012-000000000012","name":"Crear Ticket","type":"n8n-nodes-base.httpRequest","stage":"E3","stageInferred":true,"position":[2220,400],"inDegree":2,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0013-0013-0013-000000000013","name":"Guardar Interaccion","type":"n8n-nodes-base.postgres","stage":"E3","stageInferred":true,"position":[2440,400],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0014-0014-0014-000000000014","name":"Notificar Sistema Externo","type":"n8n-nodes-base.httpRequest","stage":"E3","stageInferred":true,"position":[2660,400],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0015-0015-0015-000000000015","name":"Preparar Respuesta","type":"n8n-nodes-base.set","stage":"E2","stageInferred":true,"position":[2880,400],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0016-0016-0016-000000000016","name":"Responder al Cliente","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[3100,400],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"a1b2c3d4-0001-0001-0001-000000000001","to":"a1b2c3d4-0002-0002-0002-000000000002","branch":"main"},{"from":"a1b2c3d4-0002-0002-0002-000000000002","to":"a1b2c3d4-0003-0003-0003-000000000003","branch":"main"},{"from":"a1b2c3d4-0003-0003-0003-000000000003","to":"a1b2c3d4-0004-0004-0004-000000000004","branch":"main"},{"from":"a1b2c3d4-0004-0004-0004-000000000004","to":"a1b2c3d4-0005-0005-0005-000000000005","branch":"main"},{"from":"a1b2c3d4-0004-0004-0004-000000000004","to":"a1b2c3d4-0006-0006-0006-000000000006","branch":"main"},{"from":"a1b2c3d4-0006-0006-0006-000000000006","to":"a1b2c3d4-0008-0008-0008-000000000008","branch":"main"},{"from":"a1b2c3d4-0006-0006-0006-000000000006","to":"a1b2c3d4-0007-0007-0007-000000000007","branch":"main"},{"from":"a1b2c3d4-0008-0008-0008-000000000008","to":"a1b2c3d4-0009-0009-0009-000000000009","branch":"main"},{"from":"a1b2c3d4-0009-0009-0009-000000000009","to":"a1b2c3d4-0010-0010-0010-000000000010","branch":"main"},{"from":"a1b2c3d4-0010-0010-0010-000000000010","to":"a1b2c3d4-0011-0011-0011-000000000011","branch":"main"},{"from":"a1b2c3d4-0010-0010-0010-000000000010","to":"a1b2c3d4-0012-0012-0012-000000000012","branch":"main"},{"from":"a1b2c3d4-0011-0011-0011-000000000011","to":"a1b2c3d4-0012-0012-0012-000000000012","branch":"main"},{"from":"a1b2c3d4-0012-0012-0012-000000000012","to":"a1b2c3d4-0013-0013-0013-000000000013","branch":"main"},{"from":"a1b2c3d4-0013-0013-0013-000000000013","to":"a1b2c3d4-0014-0014-0014-000000000014","branch":"main"},{"from":"a1b2c3d4-0014-0014-0014-000000000014","to":"a1b2c3d4-0015-0015-0015-000000000015","branch":"main"},{"from":"a1b2c3d4-0015-0015-0015-000000000015","to":"a1b2c3d4-0016-0016-0016-000000000016","branch":"main"}],"subflowRefs":[]},"metrics":{"nodeCount":16,"edgeCount":16,"cyclomaticComplexity":2,"maxDepth":13,"stageDistribution":{"E1":1,"E2":8,"E3":4,"E4":3,"UNKNOWN":0},"cohesionScore":0.813,"fanOutTop":[{"nodeId":"a1b2c3d4-0004-0004-0004-000000000004","nodeName":"Limite Excedido?","value":2},{"nodeId":"a1b2c3d4-0006-0006-0006-000000000006","nodeName":"Token Valido?","value":2},{"nodeId":"a1b2c3d4-0010-0010-0010-000000000010","nodeName":"Detectar Urgencia","value":2},{"nodeId":"a1b2c3d4-0001-0001-0001-000000000001","nodeName":"Webhook Entrada","value":1},{"nodeId":"a1b2c3d4-0002-0002-0002-000000000002","nodeName":"Sanitizar Input","value":1}]},"findings":[{"id":"8d92a809","ruleId":"REG-001","ruleName":"Sin secretos hardcodeados","severity":"error","confidence":"high","nodeId":"a1b2c3d4-0006-0006-0006-000000000006","nodeName":"Token Valido?","position":[1120,480],"message":"Secreto literal detectado: Comparación literal de token en IF/Switch","evidence":"\"rightValue\":\"mi-token-secreto-hardcodeado-123\"","iso25010":["security","maintainability"],"atamScenarios":["R-BOT-01"],"adr":["ADR-MF-001"],"fixSuggestion":{"kind":"codemod-id","codemodId":"envify-secret","preview":"Reemplazar literal por credencial n8n o {{$env.VAR_NAME}}"}},{"id":"a4f3e0c8","ruleId":"REG-001","ruleName":"Sin secretos hardcodeados","severity":"error","confidence":"high","nodeId":"a1b2c3d4-0008-0008-0008-000000000008","nodeName":"Consultar Historial Usuario","position":[1340,400],"message":"Header HTTP \"x-api-key\" con valor literal","evidence":"x-api-key: clave-api-externa-hardcodeada-456…","iso25010":["security","maintainability"],"atamScenarios":["R-BOT-01"],"adr":["ADR-MF-001"],"fixSuggestion":{"kind":"codemod-id","codemodId":"envify-secret","preview":"Header debe usar {{$env.X_API_KEY}}"}},{"id":"85ec2395","ruleId":"REG-001","ruleName":"Sin secretos hardcodeados","severity":"error","confidence":"high","nodeId":"a1b2c3d4-0012-0012-0012-000000000012","nodeName":"Crear Ticket","position":[2220,400],"message":"Header HTTP \"x-api-key\" con valor literal","evidence":"x-api-key: clave-api-externa-hardcodeada-456…","iso25010":["security","maintainability"],"atamScenarios":["R-BOT-01"],"adr":["ADR-MF-001"],"fixSuggestion":{"kind":"codemod-id","codemodId":"envify-secret","preview":"Header debe usar {{$env.X_API_KEY}}"}},{"id":"eda4f56b","ruleId":"REG-001","ruleName":"Sin secretos hardcodeados","severity":"error","confidence":"high","nodeId":"a1b2c3d4-0014-0014-0014-000000000014","nodeName":"Notificar Sistema Externo","position":[2660,400],"message":"Header HTTP \"x-api-key\" con valor literal","evidence":"x-api-key: clave-api-externa-hardcodeada-456…","iso25010":["security","maintainability"],"atamScenarios":["R-BOT-01"],"adr":["ADR-MF-001"],"fixSuggestion":{"kind":"codemod-id","codemodId":"envify-secret","preview":"Header debe usar {{$env.X_API_KEY}}"}},{"id":"6745d08b","ruleId":"REG-002","ruleName":"run_id propagado","severity":"warning","confidence":"medium","nodeId":null,"nodeName":null,"position":null,"message":"No se detectó console.log(JSON.stringify(...)) con run_id","evidence":null,"iso25010":["maintainability","reliability"],"atamScenarios":["SP-BOT-02"],"adr":["ADR-MF-003"],"fixSuggestion":null},{"id":"c65dbebe","ruleId":"REG-004","ruleName":"Retry en HTTP","severity":"warning","confidence":"high","nodeId":"a1b2c3d4-0008-0008-0008-000000000008","nodeName":"Consultar Historial Usuario","position":[1340,400],"message":"Nodo HTTP sin retry habilitado","evidence":"options.retry.enabled = false","iso25010":["reliability","performanceEfficiency"],"atamScenarios":["TP-IOT-01"],"adr":["ADR-MF-002"],"fixSuggestion":{"kind":"codemod-id","codemodId":"add-http-retry","preview":"options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"}},{"id":"27d94877","ruleId":"REG-004","ruleName":"Retry en HTTP","severity":"warning","confidence":"high","nodeId":"a1b2c3d4-0012-0012-0012-000000000012","nodeName":"Crear Ticket","position":[2220,400],"message":"Nodo HTTP sin retry habilitado","evidence":"options.retry.enabled = false","iso25010":["reliability","performanceEfficiency"],"atamScenarios":["TP-IOT-01"],"adr":["ADR-MF-002"],"fixSuggestion":{"kind":"codemod-id","codemodId":"add-http-retry","preview":"options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"}},{"id":"e2f0311e","ruleId":"REG-004","ruleName":"Retry en HTTP","severity":"warning","confidence":"high","nodeId":"a1b2c3d4-0014-0014-0014-000000000014","nodeName":"Notificar Sistema Externo","position":[2660,400],"message":"Nodo HTTP sin retry habilitado","evidence":"options.retry.enabled = false","iso25010":["reliability","performanceEfficiency"],"atamScenarios":["TP-IOT-01"],"adr":["ADR-MF-002"],"fixSuggestion":{"kind":"codemod-id","codemodId":"add-http-retry","preview":"options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"}},{"id":"a4e677dd","ruleId":"REG-005","ruleName":"Idempotencia en escrituras","severity":"error","confidence":"high","nodeId":"a1b2c3d4-0013-0013-0013-000000000013","nodeName":"Guardar Interaccion","position":[2440,400],"message":"INSERT sin ON CONFLICT ni idempotency_key","evidence":"INSERT INTO interacciones_bot (user_id, session_id, categoria, prioridad, ticket_id) VALUES ('{{ $('Clasificar y Preparar Ticket').item.json.user_id }}', '{{ $('Clasificar y Preparar Ticket').item.jso","iso25010":["reliability","functionalSuitability"],"atamScenarios":["SP-BOT-01","NR-IOT-02"],"adr":[],"fixSuggestion":{"kind":"codemod-id","codemodId":"add-on-conflict","preview":"Agregar ON CONFLICT (id) DO NOTHING o columna idempotency_key UNIQUE."}},{"id":"0a7055e4","ruleId":"REG-006","ruleName":"Log estructurado JSON","severity":"warning","confidence":"medium","nodeId":"a1b2c3d4-0002-0002-0002-000000000002","nodeName":"Sanitizar Input","position":[460,400],"message":"Nodo Code sin console.log(JSON.stringify(...))","evidence":null,"iso25010":["maintainability","reliability"],"atamScenarios":["SP-BOT-02","R-GLOBAL-01"],"adr":["ADR-MF-003"],"fixSuggestion":{"kind":"hint","preview":"console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"}},{"id":"c196f65a","ruleId":"REG-006","ruleName":"Log estructurado JSON","severity":"warning","confidence":"medium","nodeId":"a1b2c3d4-0003-0003-0003-000000000003","nodeName":"Verificar Rate Limit","position":[680,400],"message":"Nodo Code sin console.log(JSON.stringify(...))","evidence":null,"iso25010":["maintainability","reliability"],"atamScenarios":["SP-BOT-02","R-GLOBAL-01"],"adr":["ADR-MF-003"],"fixSuggestion":{"kind":"hint","preview":"console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"}},{"id":"359f06cb","ruleId":"REG-006","ruleName":"Log estructurado JSON","severity":"warning","confidence":"medium","nodeId":"a1b2c3d4-0009-0009-0009-000000000009","nodeName":"Clasificar y Preparar Ticket","position":[1560,400],"message":"Nodo Code sin console.log(JSON.stringify(...))","evidence":null,"iso25010":["maintainability","reliability"],"atamScenarios":["SP-BOT-02","R-GLOBAL-01"],"adr":["ADR-MF-003"],"fixSuggestion":{"kind":"hint","preview":"console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"}},{"id":"c36cf53f","ruleId":"REG-008","ruleName":"Integraciones en E3/E4","severity":"warning","confidence":"medium","nodeId":null,"nodeName":null,"position":null,"message":"Nodos IO en archivo sin convención E3/E4/orquestador: Consultar Historial Usuario, Crear Ticket, Guardar Interaccion, Notificar Sistema Externo","evidence":null,"iso25010":["maintainability"],"atamScenarios":["TP-GLOBAL-01"],"adr":[],"fixSuggestion":null}],"summary":{"errors":5,"warnings":8,"infos":0,"score":14,"rulesApplicable":7,"rulesPassed":1},"rulesApplicable":["REG-001","REG-002","REG-004","REG-005","REG-006","REG-008","REG-010"],"rulesNa":[{"id":"REG-003","reason":"no es orquestador"},{"id":"REG-007","reason":"no es subflujo E2 por nombre"},{"id":"REG-009","reason":"no es orquestador"},{"id":"REG-VOC","reason":"sólo aplica a to-be"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-010"]},{"path":"D:\\Git\\n8n-microframework\\casos-de-estudio\\bot\\as-is\\bot-as-is.json","caso":"bot","estado":"as-is","isOrquestador":false,"isErrorHandler":false,"graph":{"nodes":[{"id":"a1b2c3d4-0001-0001-0001-000000000001","name":"Webhook Entrada","type":"n8n-nodes-base.webhook","stage":"E1","stageInferred":true,"position":[240,400],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0002-0002-0002-000000000002","name":"Sanitizar Input","type":"n8n-nodes-base.code","stage":"E2","stageInferred":true,"position":[460,400],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0003-0003-0003-000000000003","name":"Verificar Rate Limit","type":"n8n-nodes-base.code","stage":"E2","stageInferred":true,"position":[680,400],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0004-0004-0004-000000000004","name":"Limite Excedido?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[900,400],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"a1b2c3d4-0005-0005-0005-000000000005","name":"Error Rate Limit","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[1120,240],"inDegree":1,"outDegree":0,"hasErrorBranch":false},{"id":"a1b2c3d4-0006-0006-0006-000000000006","name":"Token Valido?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[1120,480],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"a1b2c3d4-0007-0007-0007-000000000007","name":"Error Token","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[1340,620],"inDegree":1,"outDegree":0,"hasErrorBranch":false},{"id":"a1b2c3d4-0008-0008-0008-000000000008","name":"Consultar Historial Usuario","type":"n8n-nodes-base.httpRequest","stage":"E3","stageInferred":true,"position":[1340,400],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0009-0009-0009-000000000009","name":"Clasificar y Preparar Ticket","type":"n8n-nodes-base.code","stage":"E2","stageInferred":true,"position":[1560,400],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0010-0010-0010-000000000010","name":"Detectar Urgencia","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[1780,400],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"a1b2c3d4-0011-0011-0011-000000000011","name":"Marcar Escalacion","type":"n8n-nodes-base.set","stage":"E2","stageInferred":true,"position":[2000,280],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0012-0012-0012-000000000012","name":"Crear Ticket","type":"n8n-nodes-base.httpRequest","stage":"E3","stageInferred":true,"position":[2220,400],"inDegree":2,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0013-0013-0013-000000000013","name":"Guardar Interaccion","type":"n8n-nodes-base.postgres","stage":"E3","stageInferred":true,"position":[2440,400],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0014-0014-0014-000000000014","name":"Notificar Sistema Externo","type":"n8n-nodes-base.httpRequest","stage":"E3","stageInferred":true,"position":[2660,400],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0015-0015-0015-000000000015","name":"Preparar Respuesta","type":"n8n-nodes-base.set","stage":"E2","stageInferred":true,"position":[2880,400],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0016-0016-0016-000000000016","name":"Responder al Cliente","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[3100,400],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"a1b2c3d4-0001-0001-0001-000000000001","to":"a1b2c3d4-0002-0002-0002-000000000002","branch":"main"},{"from":"a1b2c3d4-0002-0002-0002-000000000002","to":"a1b2c3d4-0003-0003-0003-000000000003","branch":"main"},{"from":"a1b2c3d4-0003-0003-0003-000000000003","to":"a1b2c3d4-0004-0004-0004-000000000004","branch":"main"},{"from":"a1b2c3d4-0004-0004-0004-000000000004","to":"a1b2c3d4-0005-0005-0005-000000000005","branch":"main"},{"from":"a1b2c3d4-0004-0004-0004-000000000004","to":"a1b2c3d4-0006-0006-0006-000000000006","branch":"main"},{"from":"a1b2c3d4-0006-0006-0006-000000000006","to":"a1b2c3d4-0008-0008-0008-000000000008","branch":"main"},{"from":"a1b2c3d4-0006-0006-0006-000000000006","to":"a1b2c3d4-0007-0007-0007-000000000007","branch":"main"},{"from":"a1b2c3d4-0008-0008-0008-000000000008","to":"a1b2c3d4-0009-0009-0009-000000000009","branch":"main"},{"from":"a1b2c3d4-0009-0009-0009-000000000009","to":"a1b2c3d4-0010-0010-0010-000000000010","branch":"main"},{"from":"a1b2c3d4-0010-0010-0010-000000000010","to":"a1b2c3d4-0011-0011-0011-000000000011","branch":"main"},{"from":"a1b2c3d4-0010-0010-0010-000000000010","to":"a1b2c3d4-0012-0012-0012-000000000012","branch":"main"},{"from":"a1b2c3d4-0011-0011-0011-000000000011","to":"a1b2c3d4-0012-0012-0012-000000000012","branch":"main"},{"from":"a1b2c3d4-0012-0012-0012-000000000012","to":"a1b2c3d4-0013-0013-0013-000000000013","branch":"main"},{"from":"a1b2c3d4-0013-0013-0013-000000000013","to":"a1b2c3d4-0014-0014-0014-000000000014","branch":"main"},{"from":"a1b2c3d4-0014-0014-0014-000000000014","to":"a1b2c3d4-0015-0015-0015-000000000015","branch":"main"},{"from":"a1b2c3d4-0015-0015-0015-000000000015","to":"a1b2c3d4-0016-0016-0016-000000000016","branch":"main"}],"subflowRefs":[]},"metrics":{"nodeCount":16,"edgeCount":16,"cyclomaticComplexity":2,"maxDepth":13,"stageDistribution":{"E1":1,"E2":8,"E3":4,"E4":3,"UNKNOWN":0},"cohesionScore":0.813,"fanOutTop":[{"nodeId":"a1b2c3d4-0004-0004-0004-000000000004","nodeName":"Limite Excedido?","value":2},{"nodeId":"a1b2c3d4-0006-0006-0006-000000000006","nodeName":"Token Valido?","value":2},{"nodeId":"a1b2c3d4-0010-0010-0010-000000000010","nodeName":"Detectar Urgencia","value":2},{"nodeId":"a1b2c3d4-0001-0001-0001-000000000001","nodeName":"Webhook Entrada","value":1},{"nodeId":"a1b2c3d4-0002-0002-0002-000000000002","nodeName":"Sanitizar Input","value":1}]},"findings":[{"id":"ea013d2a","ruleId":"REG-001","ruleName":"Sin secretos hardcodeados","severity":"error","confidence":"high","nodeId":"a1b2c3d4-0006-0006-0006-000000000006","nodeName":"Token Valido?","position":[1120,480],"message":"Secreto literal detectado: Comparación literal de token en IF/Switch","evidence":"\"rightValue\":\"mi-token-secreto-hardcodeado-123\"","iso25010":["security","maintainability"],"atamScenarios":["R-BOT-01"],"adr":["ADR-MF-001"],"fixSuggestion":{"kind":"codemod-id","codemodId":"envify-secret","preview":"Reemplazar literal por credencial n8n o {{$env.VAR_NAME}}"}},{"id":"06dfe565","ruleId":"REG-001","ruleName":"Sin secretos hardcodeados","severity":"error","confidence":"high","nodeId":"a1b2c3d4-0008-0008-0008-000000000008","nodeName":"Consultar Historial Usuario","position":[1340,400],"message":"Header HTTP \"x-api-key\" con valor literal","evidence":"x-api-key: clave-api-externa-hardcodeada-456…","iso25010":["security","maintainability"],"atamScenarios":["R-BOT-01"],"adr":["ADR-MF-001"],"fixSuggestion":{"kind":"codemod-id","codemodId":"envify-secret","preview":"Header debe usar {{$env.X_API_KEY}}"}},{"id":"c179cc73","ruleId":"REG-001","ruleName":"Sin secretos hardcodeados","severity":"error","confidence":"high","nodeId":"a1b2c3d4-0012-0012-0012-000000000012","nodeName":"Crear Ticket","position":[2220,400],"message":"Header HTTP \"x-api-key\" con valor literal","evidence":"x-api-key: clave-api-externa-hardcodeada-456…","iso25010":["security","maintainability"],"atamScenarios":["R-BOT-01"],"adr":["ADR-MF-001"],"fixSuggestion":{"kind":"codemod-id","codemodId":"envify-secret","preview":"Header debe usar {{$env.X_API_KEY}}"}},{"id":"afc095b4","ruleId":"REG-001","ruleName":"Sin secretos hardcodeados","severity":"error","confidence":"high","nodeId":"a1b2c3d4-0014-0014-0014-000000000014","nodeName":"Notificar Sistema Externo","position":[2660,400],"message":"Header HTTP \"x-api-key\" con valor literal","evidence":"x-api-key: clave-api-externa-hardcodeada-456…","iso25010":["security","maintainability"],"atamScenarios":["R-BOT-01"],"adr":["ADR-MF-001"],"fixSuggestion":{"kind":"codemod-id","codemodId":"envify-secret","preview":"Header debe usar {{$env.X_API_KEY}}"}},{"id":"7185177f","ruleId":"REG-002","ruleName":"run_id propagado","severity":"warning","confidence":"medium","nodeId":null,"nodeName":null,"position":null,"message":"No se detectó console.log(JSON.stringify(...)) con run_id","evidence":null,"iso25010":["maintainability","reliability"],"atamScenarios":["SP-BOT-02"],"adr":["ADR-MF-003"],"fixSuggestion":null},{"id":"8111d97a","ruleId":"REG-004","ruleName":"Retry en HTTP","severity":"warning","confidence":"high","nodeId":"a1b2c3d4-0008-0008-0008-000000000008","nodeName":"Consultar Historial Usuario","position":[1340,400],"message":"Nodo HTTP sin retry habilitado","evidence":"options.retry.enabled = false","iso25010":["reliability","performanceEfficiency"],"atamScenarios":["TP-IOT-01"],"adr":["ADR-MF-002"],"fixSuggestion":{"kind":"codemod-id","codemodId":"add-http-retry","preview":"options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"}},{"id":"13bfbc17","ruleId":"REG-004","ruleName":"Retry en HTTP","severity":"warning","confidence":"high","nodeId":"a1b2c3d4-0012-0012-0012-000000000012","nodeName":"Crear Ticket","position":[2220,400],"message":"Nodo HTTP sin retry habilitado","evidence":"options.retry.enabled = false","iso25010":["reliability","performanceEfficiency"],"atamScenarios":["TP-IOT-01"],"adr":["ADR-MF-002"],"fixSuggestion":{"kind":"codemod-id","codemodId":"add-http-retry","preview":"options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"}},{"id":"45cc1d3c","ruleId":"REG-004","ruleName":"Retry en HTTP","severity":"warning","confidence":"high","nodeId":"a1b2c3d4-0014-0014-0014-000000000014","nodeName":"Notificar Sistema Externo","position":[2660,400],"message":"Nodo HTTP sin retry habilitado","evidence":"options.retry.enabled = false","iso25010":["reliability","performanceEfficiency"],"atamScenarios":["TP-IOT-01"],"adr":["ADR-MF-002"],"fixSuggestion":{"kind":"codemod-id","codemodId":"add-http-retry","preview":"options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"}},{"id":"cbfdc6c0","ruleId":"REG-005","ruleName":"Idempotencia en escrituras","severity":"error","confidence":"high","nodeId":"a1b2c3d4-0013-0013-0013-000000000013","nodeName":"Guardar Interaccion","position":[2440,400],"message":"INSERT sin ON CONFLICT ni idempotency_key","evidence":"INSERT INTO interacciones_bot (user_id, session_id, categoria, prioridad, ticket_id) VALUES ('{{ $('Clasificar y Preparar Ticket').item.json.user_id }}', '{{ $('Clasificar y Preparar Ticket').item.jso","iso25010":["reliability","functionalSuitability"],"atamScenarios":["SP-BOT-01","NR-IOT-02"],"adr":[],"fixSuggestion":{"kind":"codemod-id","codemodId":"add-on-conflict","preview":"Agregar ON CONFLICT (id) DO NOTHING o columna idempotency_key UNIQUE."}},{"id":"0421c53e","ruleId":"REG-006","ruleName":"Log estructurado JSON","severity":"warning","confidence":"medium","nodeId":"a1b2c3d4-0002-0002-0002-000000000002","nodeName":"Sanitizar Input","position":[460,400],"message":"Nodo Code sin console.log(JSON.stringify(...))","evidence":null,"iso25010":["maintainability","reliability"],"atamScenarios":["SP-BOT-02","R-GLOBAL-01"],"adr":["ADR-MF-003"],"fixSuggestion":{"kind":"hint","preview":"console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"}},{"id":"a188f2dd","ruleId":"REG-006","ruleName":"Log estructurado JSON","severity":"warning","confidence":"medium","nodeId":"a1b2c3d4-0003-0003-0003-000000000003","nodeName":"Verificar Rate Limit","position":[680,400],"message":"Nodo Code sin console.log(JSON.stringify(...))","evidence":null,"iso25010":["maintainability","reliability"],"atamScenarios":["SP-BOT-02","R-GLOBAL-01"],"adr":["ADR-MF-003"],"fixSuggestion":{"kind":"hint","preview":"console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"}},{"id":"3f5e95bd","ruleId":"REG-006","ruleName":"Log estructurado JSON","severity":"warning","confidence":"medium","nodeId":"a1b2c3d4-0009-0009-0009-000000000009","nodeName":"Clasificar y Preparar Ticket","position":[1560,400],"message":"Nodo Code sin console.log(JSON.stringify(...))","evidence":null,"iso25010":["maintainability","reliability"],"atamScenarios":["SP-BOT-02","R-GLOBAL-01"],"adr":["ADR-MF-003"],"fixSuggestion":{"kind":"hint","preview":"console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"}},{"id":"dda2dacb","ruleId":"REG-008","ruleName":"Integraciones en E3/E4","severity":"warning","confidence":"medium","nodeId":null,"nodeName":null,"position":null,"message":"Nodos IO en archivo sin convención E3/E4/orquestador: Consultar Historial Usuario, Crear Ticket, Guardar Interaccion, Notificar Sistema Externo","evidence":null,"iso25010":["maintainability"],"atamScenarios":["TP-GLOBAL-01"],"adr":[],"fixSuggestion":null}],"summary":{"errors":5,"warnings":8,"infos":0,"score":14,"rulesApplicable":7,"rulesPassed":1},"rulesApplicable":["REG-001","REG-002","REG-004","REG-005","REG-006","REG-008","REG-010"],"rulesNa":[{"id":"REG-003","reason":"no es orquestador"},{"id":"REG-007","reason":"no es subflujo E2 por nombre"},{"id":"REG-009","reason":"no es orquestador"},{"id":"REG-VOC","reason":"sólo aplica a to-be"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-010"]},{"path":"D:\\Git\\n8n-microframework\\casos-de-estudio\\iot\\as-is\\iot-as-is.json","caso":"iot","estado":"as-is","isOrquestador":false,"isErrorHandler":false,"graph":{"nodes":[{"id":"b1c2d3e4-0001-0001-0001-000000000001","name":"Webhook Sensor","type":"n8n-nodes-base.webhook","stage":"E1","stageInferred":true,"position":[240,400],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"b1c2d3e4-0002-0002-0002-000000000002","name":"Verificar Campos Basicos","type":"n8n-nodes-base.code","stage":"E2","stageInferred":true,"position":[460,400],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"b1c2d3e4-0003-0003-0003-000000000003","name":"Datos Presentes?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[680,400],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"b1c2d3e4-0004-0004-0004-000000000004","name":"Error Datos Invalidos","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[900,220],"inDegree":1,"outDegree":0,"hasErrorBranch":false},{"id":"b1c2d3e4-0005-0005-0005-000000000005","name":"Normalizar Lecturas","type":"n8n-nodes-base.code","stage":"E2","stageInferred":true,"position":[900,540],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"b1c2d3e4-0006-0006-0006-000000000006","name":"Temperatura Critica?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[1120,540],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"b1c2d3e4-0007-0007-0007-000000000007","name":"Humedad Alta?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[1340,660],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"b1c2d3e4-0008-0008-0008-000000000008","name":"Determinar Nivel Final","type":"n8n-nodes-base.code","stage":"E2","stageInferred":true,"position":[1560,540],"inDegree":3,"outDegree":1,"hasErrorBranch":false},{"id":"b1c2d3e4-0009-0009-0009-000000000009","name":"Guardar en InfluxDB","type":"n8n-nodes-base.httpRequest","stage":"E3","stageInferred":true,"position":[1780,440],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"b1c2d3e4-0010-0010-0010-000000000010","name":"Persistir en PostgreSQL","type":"n8n-nodes-base.postgres","stage":"E3","stageInferred":true,"position":[2000,440],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"b1c2d3e4-0011-0011-0011-000000000011","name":"Requiere Notificacion?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[2220,440],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"b1c2d3e4-0012-0012-0012-000000000012","name":"Enviar Notificacion","type":"n8n-nodes-base.httpRequest","stage":"E3","stageInferred":true,"position":[2440,320],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"b1c2d3e4-0013-0013-0013-000000000013","name":"Log Resultado","type":"n8n-nodes-base.code","stage":"E2","stageInferred":true,"position":[2660,440],"inDegree":2,"outDegree":1,"hasErrorBranch":false},{"id":"b1c2d3e4-0014-0014-0014-000000000014","name":"Respuesta OK","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[2880,440],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"b1c2d3e4-0001-0001-0001-000000000001","to":"b1c2d3e4-0002-0002-0002-000000000002","branch":"main"},{"from":"b1c2d3e4-0002-0002-0002-000000000002","to":"b1c2d3e4-0003-0003-0003-000000000003","branch":"main"},{"from":"b1c2d3e4-0003-0003-0003-000000000003","to":"b1c2d3e4-0004-0004-0004-000000000004","branch":"main"},{"from":"b1c2d3e4-0003-0003-0003-000000000003","to":"b1c2d3e4-0005-0005-0005-000000000005","branch":"main"},{"from":"b1c2d3e4-0005-0005-0005-000000000005","to":"b1c2d3e4-0006-0006-0006-000000000006","branch":"main"},{"from":"b1c2d3e4-0006-0006-0006-000000000006","to":"b1c2d3e4-0008-0008-0008-000000000008","branch":"main"},{"from":"b1c2d3e4-0006-0006-0006-000000000006","to":"b1c2d3e4-0007-0007-0007-000000000007","branch":"main"},{"from":"b1c2d3e4-0007-0007-0007-000000000007","to":"b1c2d3e4-0008-0008-0008-000000000008","branch":"main"},{"from":"b1c2d3e4-0007-0007-0007-000000000007","to":"b1c2d3e4-0008-0008-0008-000000000008","branch":"main"},{"from":"b1c2d3e4-0008-0008-0008-000000000008","to":"b1c2d3e4-0009-0009-0009-000000000009","branch":"main"},{"from":"b1c2d3e4-0009-0009-0009-000000000009","to":"b1c2d3e4-0010-0010-0010-000000000010","branch":"main"},{"from":"b1c2d3e4-0010-0010-0010-000000000010","to":"b1c2d3e4-0011-0011-0011-000000000011","branch":"main"},{"from":"b1c2d3e4-0011-0011-0011-000000000011","to":"b1c2d3e4-0012-0012-0012-000000000012","branch":"main"},{"from":"b1c2d3e4-0011-0011-0011-000000000011","to":"b1c2d3e4-0013-0013-0013-000000000013","branch":"main"},{"from":"b1c2d3e4-0012-0012-0012-000000000012","to":"b1c2d3e4-0013-0013-0013-000000000013","branch":"main"},{"from":"b1c2d3e4-0013-0013-0013-000000000013","to":"b1c2d3e4-0014-0014-0014-000000000014","branch":"main"}],"subflowRefs":[]},"metrics":{"nodeCount":14,"edgeCount":16,"cyclomaticComplexity":4,"maxDepth":12,"stageDistribution":{"E1":1,"E2":8,"E3":3,"E4":2,"UNKNOWN":0},"cohesionScore":0.875,"fanOutTop":[{"nodeId":"b1c2d3e4-0003-0003-0003-000000000003","nodeName":"Datos Presentes?","value":2},{"nodeId":"b1c2d3e4-0006-0006-0006-000000000006","nodeName":"Temperatura Critica?","value":2},{"nodeId":"b1c2d3e4-0007-0007-0007-000000000007","nodeName":"Humedad Alta?","value":2},{"nodeId":"b1c2d3e4-0011-0011-0011-000000000011","nodeName":"Requiere Notificacion?","value":2},{"nodeId":"b1c2d3e4-0001-0001-0001-000000000001","nodeName":"Webhook Sensor","value":1}]},"findings":[{"id":"5b204a17","ruleId":"REG-004","ruleName":"Retry en HTTP","severity":"warning","confidence":"high","nodeId":"b1c2d3e4-0009-0009-0009-000000000009","nodeName":"Guardar en InfluxDB","position":[1780,440],"message":"Nodo HTTP sin retry habilitado","evidence":"options.retry.enabled = false","iso25010":["reliability","performanceEfficiency"],"atamScenarios":["TP-IOT-01"],"adr":["ADR-MF-002"],"fixSuggestion":{"kind":"codemod-id","codemodId":"add-http-retry","preview":"options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"}},{"id":"88463acc","ruleId":"REG-004","ruleName":"Retry en HTTP","severity":"warning","confidence":"high","nodeId":"b1c2d3e4-0012-0012-0012-000000000012","nodeName":"Enviar Notificacion","position":[2440,320],"message":"Nodo HTTP sin retry habilitado","evidence":"options.retry.enabled = false","iso25010":["reliability","performanceEfficiency"],"atamScenarios":["TP-IOT-01"],"adr":["ADR-MF-002"],"fixSuggestion":{"kind":"codemod-id","codemodId":"add-http-retry","preview":"options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"}},{"id":"329f75d5","ruleId":"REG-005","ruleName":"Idempotencia en escrituras","severity":"error","confidence":"high","nodeId":"b1c2d3e4-0010-0010-0010-000000000010","nodeName":"Persistir en PostgreSQL","position":[2000,440],"message":"INSERT sin ON CONFLICT ni idempotency_key","evidence":"INSERT INTO lecturas_sensor (sensor_id, temperatura, humedad, co2, nivel, location, ts)\nVALUES ('{{ $('Determinar Nivel Final').item.json.sensor_id }}',\n        {{ $('Determinar Nivel Final').item.jso","iso25010":["reliability","functionalSuitability"],"atamScenarios":["SP-BOT-01","NR-IOT-02"],"adr":[],"fixSuggestion":{"kind":"codemod-id","codemodId":"add-on-conflict","preview":"Agregar ON CONFLICT (id) DO NOTHING o columna idempotency_key UNIQUE."}},{"id":"a78d5b66","ruleId":"REG-006","ruleName":"Log estructurado JSON","severity":"warning","confidence":"medium","nodeId":"b1c2d3e4-0002-0002-0002-000000000002","nodeName":"Verificar Campos Basicos","position":[460,400],"message":"Nodo Code sin console.log(JSON.stringify(...))","evidence":null,"iso25010":["maintainability","reliability"],"atamScenarios":["SP-BOT-02","R-GLOBAL-01"],"adr":["ADR-MF-003"],"fixSuggestion":{"kind":"hint","preview":"console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"}},{"id":"304338fe","ruleId":"REG-006","ruleName":"Log estructurado JSON","severity":"warning","confidence":"medium","nodeId":"b1c2d3e4-0005-0005-0005-000000000005","nodeName":"Normalizar Lecturas","position":[900,540],"message":"Nodo Code sin console.log(JSON.stringify(...))","evidence":null,"iso25010":["maintainability","reliability"],"atamScenarios":["SP-BOT-02","R-GLOBAL-01"],"adr":["ADR-MF-003"],"fixSuggestion":{"kind":"hint","preview":"console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"}},{"id":"3ec1325c","ruleId":"REG-006","ruleName":"Log estructurado JSON","severity":"warning","confidence":"medium","nodeId":"b1c2d3e4-0008-0008-0008-000000000008","nodeName":"Determinar Nivel Final","position":[1560,540],"message":"Nodo Code sin console.log(JSON.stringify(...))","evidence":null,"iso25010":["maintainability","reliability"],"atamScenarios":["SP-BOT-02","R-GLOBAL-01"],"adr":["ADR-MF-003"],"fixSuggestion":{"kind":"hint","preview":"console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"}},{"id":"e8ea51a0","ruleId":"REG-006","ruleName":"Log estructurado JSON","severity":"warning","confidence":"high","nodeId":"b1c2d3e4-0013-0013-0013-000000000013","nodeName":"Log Resultado","position":[2660,440],"message":"Log JSON sin campos: status","evidence":null,"iso25010":["maintainability","reliability"],"atamScenarios":["SP-BOT-02","R-GLOBAL-01"],"adr":["ADR-MF-003"],"fixSuggestion":null},{"id":"f0668f2a","ruleId":"REG-008","ruleName":"Integraciones en E3/E4","severity":"warning","confidence":"medium","nodeId":null,"nodeName":null,"position":null,"message":"Nodos IO en archivo sin convención E3/E4/orquestador: Guardar en InfluxDB, Persistir en PostgreSQL, Enviar Notificacion","evidence":null,"iso25010":["maintainability"],"atamScenarios":["TP-GLOBAL-01"],"adr":[],"fixSuggestion":null}],"summary":{"errors":1,"warnings":7,"infos":0,"score":43,"rulesApplicable":7,"rulesPassed":3},"rulesApplicable":["REG-001","REG-002","REG-004","REG-005","REG-006","REG-008","REG-010"],"rulesNa":[{"id":"REG-003","reason":"no es orquestador"},{"id":"REG-007","reason":"no es subflujo E2 por nombre"},{"id":"REG-009","reason":"no es orquestador"},{"id":"REG-VOC","reason":"sólo aplica a to-be"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-001","REG-002","REG-010"]},{"path":"D:\\Git\\n8n-microframework\\microframework\\plantillas\\bot-as-is.json","caso":"plantilla","estado":"as-is","isOrquestador":false,"isErrorHandler":false,"graph":{"nodes":[{"id":"a1b2c3d4-0001-0001-0001-000000000001","name":"Webhook Entrada","type":"n8n-nodes-base.webhook","stage":"E1","stageInferred":true,"position":[240,300],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0002-0002-0002-000000000002","name":"Token Valido?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[460,300],"inDegree":1,"outDegree":3,"hasErrorBranch":false},{"id":"a1b2c3d4-0003-0003-0003-000000000003","name":"Es Saludo?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[680,200],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"a1b2c3d4-0004-0004-0004-000000000004","name":"Es Ayuda?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[680,380],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0005-0005-0005-000000000005","name":"Respuesta Saludo","type":"n8n-nodes-base.set","stage":"E2","stageInferred":true,"position":[900,140],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0006-0006-0006-000000000006","name":"Respuesta Ayuda","type":"n8n-nodes-base.set","stage":"E2","stageInferred":true,"position":[900,340],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0007-0007-0007-000000000007","name":"Respuesta Default","type":"n8n-nodes-base.set","stage":"E2","stageInferred":true,"position":[900,520],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0008-0008-0008-000000000008","name":"Notificar Sistema Externo","type":"n8n-nodes-base.httpRequest","stage":"E3","stageInferred":true,"position":[1120,300],"inDegree":3,"outDegree":1,"hasErrorBranch":false},{"id":"a1b2c3d4-0009-0009-0009-000000000009","name":"Responder al Cliente","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[1340,300],"inDegree":1,"outDegree":0,"hasErrorBranch":false},{"id":"a1b2c3d4-0010-0010-0010-000000000010","name":"Error Token","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[680,520],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"a1b2c3d4-0001-0001-0001-000000000001","to":"a1b2c3d4-0002-0002-0002-000000000002","branch":"main"},{"from":"a1b2c3d4-0002-0002-0002-000000000002","to":"a1b2c3d4-0003-0003-0003-000000000003","branch":"main"},{"from":"a1b2c3d4-0002-0002-0002-000000000002","to":"a1b2c3d4-0004-0004-0004-000000000004","branch":"main"},{"from":"a1b2c3d4-0002-0002-0002-000000000002","to":"a1b2c3d4-0010-0010-0010-000000000010","branch":"main"},{"from":"a1b2c3d4-0003-0003-0003-000000000003","to":"a1b2c3d4-0005-0005-0005-000000000005","branch":"main"},{"from":"a1b2c3d4-0003-0003-0003-000000000003","to":"a1b2c3d4-0007-0007-0007-000000000007","branch":"main"},{"from":"a1b2c3d4-0004-0004-0004-000000000004","to":"a1b2c3d4-0006-0006-0006-000000000006","branch":"main"},{"from":"a1b2c3d4-0005-0005-0005-000000000005","to":"a1b2c3d4-0008-0008-0008-000000000008","branch":"main"},{"from":"a1b2c3d4-0006-0006-0006-000000000006","to":"a1b2c3d4-0008-0008-0008-000000000008","branch":"main"},{"from":"a1b2c3d4-0007-0007-0007-000000000007","to":"a1b2c3d4-0008-0008-0008-000000000008","branch":"main"},{"from":"a1b2c3d4-0008-0008-0008-000000000008","to":"a1b2c3d4-0009-0009-0009-000000000009","branch":"main"}],"subflowRefs":[]},"metrics":{"nodeCount":10,"edgeCount":11,"cyclomaticComplexity":3,"maxDepth":5,"stageDistribution":{"E1":1,"E2":6,"E3":1,"E4":2,"UNKNOWN":0},"cohesionScore":0.909,"fanOutTop":[{"nodeId":"a1b2c3d4-0002-0002-0002-000000000002","nodeName":"Token Valido?","value":3},{"nodeId":"a1b2c3d4-0003-0003-0003-000000000003","nodeName":"Es Saludo?","value":2},{"nodeId":"a1b2c3d4-0001-0001-0001-000000000001","nodeName":"Webhook Entrada","value":1},{"nodeId":"a1b2c3d4-0004-0004-0004-000000000004","nodeName":"Es Ayuda?","value":1},{"nodeId":"a1b2c3d4-0005-0005-0005-000000000005","nodeName":"Respuesta Saludo","value":1}]},"findings":[{"id":"56d98274","ruleId":"REG-001","ruleName":"Sin secretos hardcodeados","severity":"error","confidence":"high","nodeId":"a1b2c3d4-0002-0002-0002-000000000002","nodeName":"Token Valido?","position":[460,300],"message":"Secreto literal detectado: Comparación literal de token en IF/Switch","evidence":"\"rightValue\":\"mi-token-secreto-hardcodeado-123\"","iso25010":["security","maintainability"],"atamScenarios":["R-BOT-01"],"adr":["ADR-MF-001"],"fixSuggestion":{"kind":"codemod-id","codemodId":"envify-secret","preview":"Reemplazar literal por credencial n8n o {{$env.VAR_NAME}}"}},{"id":"db809bfe","ruleId":"REG-001","ruleName":"Sin secretos hardcodeados","severity":"error","confidence":"high","nodeId":"a1b2c3d4-0008-0008-0008-000000000008","nodeName":"Notificar Sistema Externo","position":[1120,300],"message":"Header HTTP \"x-api-key\" con valor literal","evidence":"x-api-key: clave-api-externa-hardcodeada-456…","iso25010":["security","maintainability"],"atamScenarios":["R-BOT-01"],"adr":["ADR-MF-001"],"fixSuggestion":{"kind":"codemod-id","codemodId":"envify-secret","preview":"Header debe usar {{$env.X_API_KEY}}"}},{"id":"2df8b89c","ruleId":"REG-004","ruleName":"Retry en HTTP","severity":"warning","confidence":"high","nodeId":"a1b2c3d4-0008-0008-0008-000000000008","nodeName":"Notificar Sistema Externo","position":[1120,300],"message":"Nodo HTTP sin retry habilitado","evidence":"options.retry.enabled = false","iso25010":["reliability","performanceEfficiency"],"atamScenarios":["TP-IOT-01"],"adr":["ADR-MF-002"],"fixSuggestion":{"kind":"codemod-id","codemodId":"add-http-retry","preview":"options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"}},{"id":"f035df31","ruleId":"REG-008","ruleName":"Integraciones en E3/E4","severity":"warning","confidence":"medium","nodeId":null,"nodeName":null,"position":null,"message":"Nodos IO en archivo sin convención E3/E4/orquestador: Notificar Sistema Externo","evidence":null,"iso25010":["maintainability"],"atamScenarios":["TP-GLOBAL-01"],"adr":[],"fixSuggestion":null}],"summary":{"errors":2,"warnings":2,"infos":0,"score":0,"rulesApplicable":3,"rulesPassed":0},"rulesApplicable":["REG-001","REG-004","REG-008"],"rulesNa":[{"id":"REG-002","reason":"sin nodos Code"},{"id":"REG-003","reason":"no es orquestador"},{"id":"REG-005","reason":"sin nodos Postgres"},{"id":"REG-006","reason":"sin nodos Code"},{"id":"REG-007","reason":"no es subflujo E2 por nombre"},{"id":"REG-009","reason":"no es orquestador"},{"id":"REG-010","reason":"plantilla o caso sin convención"},{"id":"REG-VOC","reason":"plantilla"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":[]},{"path":"D:\\Git\\n8n-microframework\\microframework\\plantillas\\iot-as-is.json","caso":"plantilla","estado":"as-is","isOrquestador":false,"isErrorHandler":false,"graph":{"nodes":[{"id":"b1c2d3e4-0001-0001-0001-000000000001","name":"Webhook Sensor","type":"n8n-nodes-base.webhook","stage":"E1","stageInferred":true,"position":[240,300],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"b1c2d3e4-0002-0002-0002-000000000002","name":"Procesar y Detectar Alerta","type":"n8n-nodes-base.code","stage":"E2","stageInferred":true,"position":[460,300],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"b1c2d3e4-0003-0003-0003-000000000003","name":"Guardar en InfluxDB","type":"n8n-nodes-base.httpRequest","stage":"E3","stageInferred":true,"position":[680,200],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"b1c2d3e4-0004-0004-0004-000000000004","name":"Hay Alerta?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[680,400],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"b1c2d3e4-0005-0005-0005-000000000005","name":"Enviar Notificacion","type":"n8n-nodes-base.httpRequest","stage":"E3","stageInferred":true,"position":[900,340],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"b1c2d3e4-0006-0006-0006-000000000006","name":"Respuesta OK","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[1120,300],"inDegree":2,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"b1c2d3e4-0001-0001-0001-000000000001","to":"b1c2d3e4-0002-0002-0002-000000000002","branch":"main"},{"from":"b1c2d3e4-0002-0002-0002-000000000002","to":"b1c2d3e4-0003-0003-0003-000000000003","branch":"main"},{"from":"b1c2d3e4-0002-0002-0002-000000000002","to":"b1c2d3e4-0004-0004-0004-000000000004","branch":"main"},{"from":"b1c2d3e4-0003-0003-0003-000000000003","to":"b1c2d3e4-0006-0006-0006-000000000006","branch":"main"},{"from":"b1c2d3e4-0004-0004-0004-000000000004","to":"b1c2d3e4-0005-0005-0005-000000000005","branch":"main"},{"from":"b1c2d3e4-0005-0005-0005-000000000005","to":"b1c2d3e4-0006-0006-0006-000000000006","branch":"main"}],"subflowRefs":[]},"metrics":{"nodeCount":6,"edgeCount":6,"cyclomaticComplexity":2,"maxDepth":4,"stageDistribution":{"E1":1,"E2":2,"E3":2,"E4":1,"UNKNOWN":0},"cohesionScore":1,"fanOutTop":[{"nodeId":"b1c2d3e4-0002-0002-0002-000000000002","nodeName":"Procesar y Detectar Alerta","value":2},{"nodeId":"b1c2d3e4-0001-0001-0001-000000000001","nodeName":"Webhook Sensor","value":1},{"nodeId":"b1c2d3e4-0003-0003-0003-000000000003","nodeName":"Guardar en InfluxDB","value":1},{"nodeId":"b1c2d3e4-0004-0004-0004-000000000004","nodeName":"Hay Alerta?","value":1},{"nodeId":"b1c2d3e4-0005-0005-0005-000000000005","nodeName":"Enviar Notificacion","value":1}]},"findings":[{"id":"ae97c9a2","ruleId":"REG-002","ruleName":"run_id propagado","severity":"warning","confidence":"high","nodeId":null,"nodeName":null,"position":null,"message":"Ningún nodo Code referencia run_id","evidence":null,"iso25010":["maintainability","reliability"],"atamScenarios":["SP-BOT-02"],"adr":["ADR-MF-003"],"fixSuggestion":{"kind":"hint","preview":"Generar run_id en E1 con crypto.randomUUID() y propagarlo en el payload."}},{"id":"b58f9063","ruleId":"REG-002","ruleName":"run_id propagado","severity":"warning","confidence":"medium","nodeId":null,"nodeName":null,"position":null,"message":"No se detectó console.log(JSON.stringify(...)) con run_id","evidence":null,"iso25010":["maintainability","reliability"],"atamScenarios":["SP-BOT-02"],"adr":["ADR-MF-003"],"fixSuggestion":null},{"id":"777afc68","ruleId":"REG-004","ruleName":"Retry en HTTP","severity":"warning","confidence":"high","nodeId":"b1c2d3e4-0003-0003-0003-000000000003","nodeName":"Guardar en InfluxDB","position":[680,200],"message":"Nodo HTTP sin retry habilitado","evidence":"options.retry.enabled = false","iso25010":["reliability","performanceEfficiency"],"atamScenarios":["TP-IOT-01"],"adr":["ADR-MF-002"],"fixSuggestion":{"kind":"codemod-id","codemodId":"add-http-retry","preview":"options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"}},{"id":"6a46bb74","ruleId":"REG-004","ruleName":"Retry en HTTP","severity":"warning","confidence":"high","nodeId":"b1c2d3e4-0005-0005-0005-000000000005","nodeName":"Enviar Notificacion","position":[900,340],"message":"Nodo HTTP sin retry habilitado","evidence":"options.retry.enabled = false","iso25010":["reliability","performanceEfficiency"],"atamScenarios":["TP-IOT-01"],"adr":["ADR-MF-002"],"fixSuggestion":{"kind":"codemod-id","codemodId":"add-http-retry","preview":"options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }"}},{"id":"2c309394","ruleId":"REG-006","ruleName":"Log estructurado JSON","severity":"warning","confidence":"medium","nodeId":"b1c2d3e4-0002-0002-0002-000000000002","nodeName":"Procesar y Detectar Alerta","position":[460,300],"message":"Nodo Code sin console.log(JSON.stringify(...))","evidence":null,"iso25010":["maintainability","reliability"],"atamScenarios":["SP-BOT-02","R-GLOBAL-01"],"adr":["ADR-MF-003"],"fixSuggestion":{"kind":"hint","preview":"console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"}},{"id":"76d35151","ruleId":"REG-008","ruleName":"Integraciones en E3/E4","severity":"warning","confidence":"medium","nodeId":null,"nodeName":null,"position":null,"message":"Nodos IO en archivo sin convención E3/E4/orquestador: Guardar en InfluxDB, Enviar Notificacion","evidence":null,"iso25010":["maintainability"],"atamScenarios":["TP-GLOBAL-01"],"adr":[],"fixSuggestion":null}],"summary":{"errors":0,"warnings":6,"infos":0,"score":20,"rulesApplicable":5,"rulesPassed":1},"rulesApplicable":["REG-001","REG-002","REG-004","REG-006","REG-008"],"rulesNa":[{"id":"REG-003","reason":"no es orquestador"},{"id":"REG-005","reason":"sin nodos Postgres"},{"id":"REG-007","reason":"no es subflujo E2 por nombre"},{"id":"REG-009","reason":"no es orquestador"},{"id":"REG-010","reason":"plantilla o caso sin convención"},{"id":"REG-VOC","reason":"plantilla"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-001"]}],"coverage":{"rulesDefined":["REG-001","REG-002","REG-003","REG-004","REG-005","REG-006","REG-007","REG-008","REG-009","REG-010","REG-VOC","AP-001","AP-002","AP-003","AP-004","AP-005","AP-006"],"rulesExercised":["REG-001","REG-002","REG-004","REG-005","REG-006","REG-008","REG-010"],"rulesDormant":["REG-003","REG-007","REG-009","REG-VOC","AP-001","AP-002","AP-003","AP-004","AP-005","AP-006"]},"history":[{"date":"2026-06-01","score":70,"errors":13,"warnings":51}]};</script>
+<script>
+(function(){
+  const D = window.__DATA__;
+  if(!D) return;
+
+  function el(t,a,c){const e=document.createElement(t);if(a)for(const k in a){
+    if(k==='cls')e.className=a[k];else if(k==='html')e.innerHTML=a[k];else e.setAttribute(k,a[k]);}
+    if(c)for(const x of c)e.appendChild(typeof x==='string'?document.createTextNode(x):x);return e;}
+
+  // ---- Render flujo: SVG con posiciones n8n ----
+  window.renderFlow=function(file,svgId){
+    const svg=document.getElementById(svgId); if(!svg)return;
+    const nodes=file.graph.nodes;
+    if(nodes.length===0){svg.innerHTML='<text x="20" y="40" fill="#94a3b8">(sin nodos)</text>';return;}
+    let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
+    for(const n of nodes){const [x,y]=n.position||[0,0];
+      if(x<minX)minX=x;if(y<minY)minY=y;if(x>maxX)maxX=x;if(y>maxY)maxY=y;}
+    const padX=80,padY=60;
+    const w=Math.max(600,maxX-minX+padX*2);
+    const h=Math.max(280,maxY-minY+padY*2);
+    svg.setAttribute('viewBox','0 0 '+w+' '+h);
+    const findingsByNode={};
+    for(const f of file.findings){
+      if(!f.nodeId)continue;
+      (findingsByNode[f.nodeId]=findingsByNode[f.nodeId]||[]).push(f);
+    }
+    const nodeById={};
+    for(const n of nodes)nodeById[n.id]=n;
+    let html='<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker></defs>';
+    for(const e of file.graph.edges){
+      const a=nodeById[e.from],b=nodeById[e.to];if(!a||!b)continue;
+      const ax=(a.position[0]-minX)+padX+50,ay=(a.position[1]-minY)+padY+20;
+      const bx=(b.position[0]-minX)+padX,by=(b.position[1]-minY)+padY+20;
+      const mx=(ax+bx)/2;
+      html+='<path class="edge'+(e.branch==='error'?' error':'')+'" d="M'+ax+','+ay+' C'+mx+','+ay+' '+mx+','+by+' '+bx+','+by+'"/>';
+    }
+    for(const n of nodes){
+      const x=(n.position[0]-minX)+padX,y=(n.position[1]-minY)+padY;
+      const fnds=findingsByNode[n.id]||[];
+      const hot=fnds.some(f=>f.severity==='error');
+      const warn=fnds.some(f=>f.severity==='warning');
+      const cls='node-'+n.stage.toLowerCase()+(hot?' node-hot':warn?' node-warn':'');
+      html+='<g class="node" data-id="'+n.id+'" style="cursor:pointer">';
+      html+='<rect class="'+cls+'" x="'+x+'" y="'+y+'" width="100" height="40" rx="6"/>';
+      html+='<text class="node-label" x="'+(x+50)+'" y="'+(y+18)+'" text-anchor="middle">'+escapeHtml(n.name.slice(0,16))+'</text>';
+      html+='<text class="node-label" x="'+(x+50)+'" y="'+(y+32)+'" text-anchor="middle" opacity="0.7">'+n.stage+(fnds.length?' · '+fnds.length:'')+'</text>';
+      html+='</g>';
+    }
+    svg.innerHTML=html;
+    svg.querySelectorAll('g.node').forEach(g=>{
+      g.addEventListener('click',()=>{
+        const id=g.getAttribute('data-id');
+        const panel=document.getElementById('panel-'+file._idx);
+        if(!panel)return;
+        const fnds=findingsByNode[id]||[];
+        const n=nodeById[id];
+        panel.innerHTML='<h3>'+escapeHtml(n.name)+' <span class="badge '+n.stage.toLowerCase()+'">'+n.stage+'</span></h3>'+
+          '<p class="muted">'+escapeHtml(n.type)+'</p>'+
+          (fnds.length===0?'<p class="muted">Sin findings en este nodo.</p>':
+            fnds.map(renderFindingCard).join(''));
+      });
+    });
+  };
+
+  function renderFindingCard(f){
+    const tags=(arr,cls)=>arr&&arr.length?arr.map(t=>'<span class="tag">'+escapeHtml(t)+'</span>').join(''):'';
+    return '<div class="finding '+f.severity+'"><h4><span class="badge '+severityClass(f.severity)+'">'+f.severity+'</span> '+escapeHtml(f.ruleId)+' — '+escapeHtml(f.ruleName)+'</h4>'+
+      '<p>'+escapeHtml(f.message)+'</p>'+
+      (f.evidence?'<pre>'+escapeHtml(f.evidence)+'</pre>':'')+
+      (f.iso25010&&f.iso25010.length?'<p>ISO 25010: '+tags(f.iso25010)+'</p>':'')+
+      (f.atamScenarios&&f.atamScenarios.length?'<p>ATAM: '+tags(f.atamScenarios)+'</p>':'')+
+      (f.adr&&f.adr.length?'<p>ADR: '+tags(f.adr)+'</p>':'')+
+      (f.fixSuggestion&&f.fixSuggestion.preview?'<p><strong>Fix:</strong> '+escapeHtml(f.fixSuggestion.preview)+'</p>':'')+
+      '</div>';
+  }
+  function severityClass(s){return s==='error'?'err':s==='warning'?'warn':'info';}
+  function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);}
+
+  // ---- Filtro tabla de findings ----
+  window.initTableFilter=function(tableId){
+    const tbl=document.getElementById(tableId); if(!tbl)return;
+    const q=document.getElementById(tableId+'-q');
+    const sev=document.getElementById(tableId+'-sev');
+    function apply(){
+      const text=(q.value||'').toLowerCase();
+      const s=sev.value;
+      tbl.querySelectorAll('tbody tr').forEach(tr=>{
+        const ok=(!text||tr.textContent.toLowerCase().includes(text))&&
+                 (!s||tr.getAttribute('data-sev')===s);
+        tr.style.display=ok?'':'none';
+      });
+    }
+    q.addEventListener('input',apply); sev.addEventListener('change',apply);
+    // export CSV
+    const btn=document.getElementById(tableId+'-csv');
+    if(btn)btn.addEventListener('click',()=>{
+      const rows=[];
+      tbl.querySelectorAll('tr').forEach(tr=>{
+        if(tr.style.display==='none')return;
+        const cells=[];tr.querySelectorAll('th,td').forEach(c=>cells.push('"'+c.textContent.replace(/"/g,'""')+'"'));
+        rows.push(cells.join(','));
+      });
+      const blob=new Blob([rows.join('\n')],{type:'text/csv'});
+      const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+      a.download='findings.csv';a.click();
+    });
+  };
+
+  // ---- Auto-render de cada flujo cargado ----
+  document.addEventListener('DOMContentLoaded',()=>{
+    (D.files||[]).forEach((f,i)=>{f._idx=i;window.renderFlow(f,'svg-'+i);});
+    window.initTableFilter('tbl-findings');
+  });
+})();
+</script>
+</body></html>

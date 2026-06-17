@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<title>Reporte de validación — micro-framework n8n</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<style>
+:root{
+  --bg:#0f172a;--bg2:#1e293b;--panel:#0b1220;--text:#e2e8f0;--mut:#94a3b8;
+  --acc:#38bdf8;--ok:#22c55e;--warn:#fbbf24;--err:#ef4444;--info:#a78bfa;
+  --e1:#3b82f6;--e2:#10b981;--e3:#f59e0b;--e4:#a855f7;--unk:#64748b;
+  --border:#1e293b;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:14px;line-height:1.5}
+.container{max-width:1280px;margin:0 auto;padding:24px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;
+  padding:20px;margin:16px 0;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+h1{font-size:28px;margin:0 0 8px;letter-spacing:-.02em}
+h2{font-size:20px;margin:24px 0 12px;color:var(--acc)}
+h3{font-size:16px;margin:16px 0 8px}
+.muted{color:var(--mut)}
+.cover{background:linear-gradient(135deg,#0f172a,#1e293b);border:1px solid var(--border);
+  border-radius:16px;padding:36px;margin-bottom:20px}
+.cover h1{font-size:34px}
+.cover .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:24px}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.kpi{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px}
+.kpi .label{color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.kpi .value{font-size:28px;font-weight:700;margin-top:4px}
+.kpi.err .value{color:var(--err)} .kpi.warn .value{color:var(--warn)} .kpi.ok .value{color:var(--ok)}
+.badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600;
+  margin-right:6px;border:1px solid currentColor}
+.badge.err{color:var(--err)} .badge.warn{color:var(--warn)} .badge.info{color:var(--info)}
+.badge.e1{color:var(--e1)} .badge.e2{color:var(--e2)} .badge.e3{color:var(--e3)} .badge.e4{color:var(--e4)}
+.badge.unk{color:var(--unk)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:var(--panel);color:var(--mut);font-weight:600;cursor:pointer;user-select:none}
+tr:hover{background:rgba(56,189,248,.04)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.controls input,.controls select{background:var(--panel);color:var(--text);
+  border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:13px}
+.controls button{background:var(--acc);color:#0f172a;border:0;border-radius:6px;
+  padding:6px 12px;font-weight:600;cursor:pointer}
+.finding{background:var(--panel);border-left:3px solid var(--mut);
+  padding:10px 12px;margin:8px 0;border-radius:6px}
+.finding.error{border-left-color:var(--err)}
+.finding.warning{border-left-color:var(--warn)}
+.finding.info{border-left-color:var(--info)}
+.finding h4{margin:0 0 4px;font-size:14px}
+.finding pre{background:#020617;color:#bae6fd;padding:8px;border-radius:6px;
+  font-size:12px;overflow-x:auto;margin:6px 0}
+.flow-svg{background:var(--panel);border-radius:8px;border:1px solid var(--border);
+  display:block;max-width:100%;height:auto}
+.node-e1{fill:var(--e1)} .node-e2{fill:var(--e2)} .node-e3{fill:var(--e3)}
+.node-e4{fill:var(--e4)} .node-unk{fill:var(--unk)}
+.node-hot{stroke:var(--err);stroke-width:3px}
+.node-warn{stroke:var(--warn);stroke-width:2px}
+.edge{stroke:#475569;stroke-width:1.5px;fill:none;marker-end:url(#arrow)}
+.edge.error{stroke:var(--err);stroke-dasharray:4 4}
+.node-label{font-size:10px;fill:var(--text);pointer-events:none}
+details{margin:8px 0} summary{cursor:pointer;font-weight:600;color:var(--acc)}
+.tag{display:inline-block;background:var(--panel);border:1px solid var(--border);
+  border-radius:4px;padding:1px 6px;font-size:11px;margin:2px 4px 2px 0;color:var(--mut)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin:8px 0;font-size:12px;color:var(--mut)}
+.legend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:middle}
+@media print{
+  body{background:#fff;color:#000}
+  .card,.cover,.kpi{background:#fff!important;border:1px solid #ccc!important;color:#000!important;box-shadow:none}
+  h1,h2{color:#000} .muted,.kpi .label{color:#444}
+  .flow-svg{background:#fff;border:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="cover">
+    <h1>Validación estática de flujos n8n</h1>
+    <p class="muted">Micro-framework LC/NC · Pilar 2 DevSecOps · Edición Lite v2.0.0</p>
+    <div class="meta">
+      <div><strong>Autor:</strong><br/>Elian Hernando Gil Sierra</div>
+      <div><strong>Director:</strong><br/>Sebastian Roa Prada, PhD</div>
+      <div><strong>Proyecto:</strong><br/>Micro-framework LC/NC para n8n — MGADS UNAB 2026</div>
+      <div><strong>Generado:</strong><br/>2026-06-17T22:50:27.458Z</div>
+      <div><strong>Commit:</strong><br/><code>202f98542c8d</code></div>
+      <div><strong>Flujos analizados:</strong><br/>18</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Resumen ejecutivo</h2>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="label">Flujos</div><div class="value">18</div></div>
+      <div class="kpi ok"><div class="label">Score promedio</div><div class="value">95%</div></div>
+      <div class="kpi err"><div class="label">Errors</div><div class="value">0</div></div>
+      <div class="kpi warn"><div class="label">Warnings</div><div class="value">8</div></div>
+      <div class="kpi"><div class="label">Findings totales</div><div class="value">8</div></div>
+      <div class="kpi"><div class="label">Reglas dormidas</div><div class="value">5</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Radar ISO/IEC 25010</h2>
+    <p class="muted">Findings agregados por atributo de calidad — más cerca del centro indica menos hallazgos (mejor).</p>
+    <svg viewBox="0 0 480 420" style="max-width:480px;width:100%;height:auto;background:var(--panel);border-radius:8px;padding:10px">
+    <polygon points="240,162.5 272.4759526419165,181.25 272.4759526419165,218.75 240,237.5 207.52404735808355,218.75 207.52404735808355,181.25" fill="none" stroke="#334155" stroke-dasharray="2 2"/><polygon points="240,125 304.9519052838329,162.5 304.9519052838329,237.5 240,275 175.0480947161671,237.50000000000003 175.0480947161671,162.5" fill="none" stroke="#334155" stroke-dasharray="2 2"/><polygon points="240,87.5 337.4278579257493,143.75 337.4278579257493,256.25 240,312.5 142.57214207425068,256.25000000000006 142.57214207425065,143.75" fill="none" stroke="#334155" stroke-dasharray="2 2"/><polygon points="240,50 369.9038105676658,125 369.9038105676658,275 240,350 110.09618943233423,275.00000000000006 110.0961894323342,124.99999999999999" fill="none" stroke="#334155" stroke-dasharray="2 2"/><line x1="240" y1="200" x2="240" y2="47" stroke="#334155"/><line x1="240" y1="200" x2="372.5018867790191" y2="123.5" stroke="#334155"/><line x1="240" y1="200" x2="372.5018867790191" y2="276.5" stroke="#334155"/><line x1="240" y1="200" x2="240" y2="353" stroke="#334155"/><line x1="240" y1="200" x2="107.49811322098091" y2="276.50000000000006" stroke="#334155"/><line x1="240" y1="200" x2="107.49811322098088" y2="123.49999999999999" stroke="#334155"/>
+    <polygon points="240,200 314.23074889580903,157.14285714285714 369.9038105676658,275 240,221.42857142857142 240,200 240,200" fill="#38bdf8" fill-opacity="0.3" stroke="#38bdf8" stroke-width="2"/>
+    <circle cx="240" cy="200" r="3" fill="#38bdf8"/><circle cx="314.23074889580903" cy="157.14285714285714" r="3" fill="#38bdf8"/><circle cx="369.9038105676658" cy="275" r="3" fill="#38bdf8"/><circle cx="240" cy="221.42857142857142" r="3" fill="#38bdf8"/><circle cx="240" cy="200" r="3" fill="#38bdf8"/><circle cx="240" cy="200" r="3" fill="#38bdf8"/>
+    <text x="240" y="20" text-anchor="middle" fill="#94a3b8" font-size="11">security (0)</text><text x="395.88457268119896" y="110" text-anchor="middle" fill="#94a3b8" font-size="11">reliability (4)</text><text x="395.88457268119896" y="290" text-anchor="middle" fill="#94a3b8" font-size="11">maintainability (7)</text><text x="240" y="380" text-anchor="middle" fill="#94a3b8" font-size="11">performanceEfficiency (1)</text><text x="84.11542731880107" y="290.00000000000006" text-anchor="middle" fill="#94a3b8" font-size="11">functionalSuitability (0)</text><text x="84.11542731880104" y="109.99999999999999" text-anchor="middle" fill="#94a3b8" font-size="11">usability (0)</text>
+  </svg>
+  </div>
+
+  <div class="card">
+    <h2>Cobertura del micro-framework</h2>
+    <p class="muted">Reglas definidas: 17 · ejercitadas: 12 · dormidas: 5</p>
+    <div style="background:var(--panel);border-radius:8px;padding:8px;border:1px solid var(--border)">
+    <div style="background:#020617;border-radius:4px;height:20px;overflow:hidden">
+      <div style="background:linear-gradient(90deg,#22c55e,#38bdf8);height:100%;width:71%"></div>
+    </div>
+    <div style="margin-top:6px;font-size:12px;color:var(--mut)">12/17 reglas ejercitadas (71%)</div>
+  </div>
+    <p>⚠️ Reglas que ningún flujo del corpus activó: <span class="tag">AP-001</span> <span class="tag">AP-002</span> <span class="tag">AP-003</span> <span class="tag">AP-004</span> <span class="tag">AP-006</span></p>
+  </div>
+
+  
+
+  <div class="card">
+    <h2>Tabla de findings</h2>
+    <div class="controls">
+      <input id="tbl-findings-q" placeholder="Buscar texto…" style="flex:1;min-width:200px"/>
+      <select id="tbl-findings-sev">
+        <option value="">Todas las severidades</option>
+        <option value="error">Solo errors</option>
+        <option value="warning">Solo warnings</option>
+        <option value="info">Solo infos</option>
+      </select>
+      <button id="tbl-findings-csv">Export CSV</button>
+    </div>
+    <table id="tbl-findings">
+      <thead><tr>
+        <th>Sev</th><th>Regla</th><th>Nombre</th><th>Archivo</th><th>Nodo</th><th>Mensaje</th><th>ISO 25010</th><th>ATAM</th>
+      </tr></thead>
+      <tbody>
+        <tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-006</td>
+      <td>Log estructurado JSON</td>
+      <td><code style="font-size:11px">casos-de-estudio/bot/to-be/bot-to-be-e3-adaptador.json</code></td>
+      <td>E3 - Preparar payload adaptador</td>
+      <td>Nodo Code sin console.log(JSON.stringify(...))</td>
+      <td><span class="tag">maintainability</span><span class="tag">reliability</span></td>
+      <td><span class="tag">SP-BOT-02</span><span class="tag">R-GLOBAL-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-006</td>
+      <td>Log estructurado JSON</td>
+      <td><code style="font-size:11px">casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json</code></td>
+      <td>E4 - Capturar inicio etapa</td>
+      <td>Nodo Code sin console.log(JSON.stringify(...))</td>
+      <td><span class="tag">maintainability</span><span class="tag">reliability</span></td>
+      <td><span class="tag">SP-BOT-02</span><span class="tag">R-GLOBAL-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-004</td>
+      <td>Retry en HTTP</td>
+      <td><code style="font-size:11px">microframework/plantillas/bot-error-handler.json</code></td>
+      <td>HTTP - Notificar error (mock)</td>
+      <td>maxRetries=1 &lt; 2</td>
+      <td><span class="tag">reliability</span><span class="tag">performanceEfficiency</span></td>
+      <td><span class="tag">TP-IOT-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>REG-006</td>
+      <td>Log estructurado JSON</td>
+      <td><code style="font-size:11px">microframework/plantillas/bot-to-be-e3-adaptador.json</code></td>
+      <td>E3 - Preparar payload adaptador</td>
+      <td>Nodo Code sin console.log(JSON.stringify(...))</td>
+      <td><span class="tag">maintainability</span><span class="tag">reliability</span></td>
+      <td><span class="tag">SP-BOT-02</span><span class="tag">R-GLOBAL-01</span></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>AP-005</td>
+      <td>Hardcoded workflow ID en Execute Workflow</td>
+      <td><code style="font-size:11px">microframework/plantillas/iot-to-be-orquestador.json</code></td>
+      <td>Execute - E1 Validacion entrada</td>
+      <td>Execute Workflow con workflowId no resuelto: &quot;REEMPLAZAR_CON_ID_E1&quot;</td>
+      <td><span class="tag">maintainability</span><span class="tag">portability</span></td>
+      <td></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>AP-005</td>
+      <td>Hardcoded workflow ID en Execute Workflow</td>
+      <td><code style="font-size:11px">microframework/plantillas/iot-to-be-orquestador.json</code></td>
+      <td>Execute - E2 Dominio y umbrales</td>
+      <td>Execute Workflow con workflowId no resuelto: &quot;REEMPLAZAR_CON_ID_E2&quot;</td>
+      <td><span class="tag">maintainability</span><span class="tag">portability</span></td>
+      <td></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>AP-005</td>
+      <td>Hardcoded workflow ID en Execute Workflow</td>
+      <td><code style="font-size:11px">microframework/plantillas/iot-to-be-orquestador.json</code></td>
+      <td>Execute - E3 Persistencia</td>
+      <td>Execute Workflow con workflowId no resuelto: &quot;REEMPLAZAR_CON_ID_E3&quot;</td>
+      <td><span class="tag">maintainability</span><span class="tag">portability</span></td>
+      <td></td>
+    </tr>
+<tr data-sev="warning">
+      <td><span class="badge warn">warning</span></td>
+      <td>AP-005</td>
+      <td>Hardcoded workflow ID en Execute Workflow</td>
+      <td><code style="font-size:11px">microframework/plantillas/iot-to-be-orquestador.json</code></td>
+      <td>Execute - E4 Notificacion</td>
+      <td>Execute Workflow con workflowId no resuelto: &quot;REEMPLAZAR_CON_ID_E4&quot;</td>
+      <td><span class="tag">maintainability</span><span class="tag">portability</span></td>
+      <td></td>
+    </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Detalle por flujo</h2>
+    <div class="legend">
+      <span><span class="sw" style="background:var(--e1)"></span>E1 Entrada</span>
+      <span><span class="sw" style="background:var(--e2)"></span>E2 Dominio</span>
+      <span><span class="sw" style="background:var(--e3)"></span>E3 IO</span>
+      <span><span class="sw" style="background:var(--e4)"></span>E4 Salida</span>
+      <span><span class="sw" style="background:var(--unk)"></span>UNKNOWN</span>
+      <span style="margin-left:16px">borde rojo = nodo con finding error · borde ámbar = warning</span>
+    </div>
+    <details >
+    <summary>casos-de-estudio/bot/to-be/bot-to-be-e2-dominio.json · <span class="badge info">100%</span>
+      · err=0 warn=0 info=0
+      · nodos=2 ciclomática=1 cohesion=1</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·1</span><span class="badge e2">E2·1</span><span class="badge e3">E3·0</span><span class="badge e4">E4·0</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-0" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-0" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <p style="color:var(--ok)">✓ Sin findings.</p>
+  </details>
+<details >
+    <summary>casos-de-estudio/bot/to-be/bot-to-be-e3-adaptador.json · <span class="badge warn">86%</span>
+      · err=0 warn=1 info=0
+      · nodos=4 ciclomática=1 cohesion=0.667</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·1</span><span class="badge e2">E2·0</span><span class="badge e3">E3·3</span><span class="badge e4">E4·0</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-1" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-1" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <h4>Todos los findings de este flujo</h4>
+      <div class="finding warning">
+        <strong>REG-006</strong> — Log estructurado JSON
+        <span class="muted"> @ E3 - Preparar payload adaptador</span><br/>
+        Nodo Code sin console.log(JSON.stringify(...))
+        
+        <p><strong>Fix:</strong> console.log(JSON.stringify({ run_id, etapa: &#39;E?&#39;, status: &#39;ok&#39; }));</p>
+      </div>
+  </details>
+<details >
+    <summary>casos-de-estudio/bot/to-be/bot-to-be-orquestador.json · <span class="badge info">100%</span>
+      · err=0 warn=0 info=0
+      · nodos=11 ciclomática=1 cohesion=0.6</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·2</span><span class="badge e2">E2·4</span><span class="badge e3">E3·1</span><span class="badge e4">E4·4</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-2" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-2" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <p style="color:var(--ok)">✓ Sin findings.</p>
+  </details>
+<details >
+    <summary>casos-de-estudio/iot/to-be/iot-error-handler.json · <span class="badge info">100%</span>
+      · err=0 warn=0 info=0
+      · nodos=4 ciclomática=1 cohesion=1</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·1</span><span class="badge e2">E2·1</span><span class="badge e3">E3·2</span><span class="badge e4">E4·0</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-3" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-3" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <p style="color:var(--ok)">✓ Sin findings.</p>
+  </details>
+<details >
+    <summary>casos-de-estudio/iot/to-be/iot-to-be-e1-validacion.json · <span class="badge info">100%</span>
+      · err=0 warn=0 info=0
+      · nodos=2 ciclomática=1 cohesion=1</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·2</span><span class="badge e2">E2·0</span><span class="badge e3">E3·0</span><span class="badge e4">E4·0</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-4" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-4" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <p style="color:var(--ok)">✓ Sin findings.</p>
+  </details>
+<details >
+    <summary>casos-de-estudio/iot/to-be/iot-to-be-e2-dominio.json · <span class="badge info">100%</span>
+      · err=0 warn=0 info=0
+      · nodos=2 ciclomática=1 cohesion=1</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·1</span><span class="badge e2">E2·1</span><span class="badge e3">E3·0</span><span class="badge e4">E4·0</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-5" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-5" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <p style="color:var(--ok)">✓ Sin findings.</p>
+  </details>
+<details >
+    <summary>casos-de-estudio/iot/to-be/iot-to-be-e3-persistencia.json · <span class="badge info">100%</span>
+      · err=0 warn=0 info=0
+      · nodos=4 ciclomática=1 cohesion=0.667</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·1</span><span class="badge e2">E2·0</span><span class="badge e3">E3·3</span><span class="badge e4">E4·0</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-6" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-6" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <p style="color:var(--ok)">✓ Sin findings.</p>
+  </details>
+<details >
+    <summary>casos-de-estudio/iot/to-be/iot-to-be-e4-notificacion.json · <span class="badge warn">86%</span>
+      · err=0 warn=1 info=0
+      · nodos=8 ciclomática=2 cohesion=0.625</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·1</span><span class="badge e2">E2·2</span><span class="badge e3">E3·2</span><span class="badge e4">E4·3</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-7" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-7" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <h4>Todos los findings de este flujo</h4>
+      <div class="finding warning">
+        <strong>REG-006</strong> — Log estructurado JSON
+        <span class="muted"> @ E4 - Capturar inicio etapa</span><br/>
+        Nodo Code sin console.log(JSON.stringify(...))
+        
+        <p><strong>Fix:</strong> console.log(JSON.stringify({ run_id, etapa: &#39;E?&#39;, status: &#39;ok&#39; }));</p>
+      </div>
+  </details>
+<details >
+    <summary>casos-de-estudio/iot/to-be/iot-to-be-orquestador.json · <span class="badge info">100%</span>
+      · err=0 warn=0 info=0
+      · nodos=8 ciclomática=1 cohesion=0.857</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·2</span><span class="badge e2">E2·2</span><span class="badge e3">E3·1</span><span class="badge e4">E4·3</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-8" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-8" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <p style="color:var(--ok)">✓ Sin findings.</p>
+  </details>
+<details >
+    <summary>microframework/plantillas/bot-error-handler.json · <span class="badge warn">80%</span>
+      · err=0 warn=1 info=0
+      · nodos=3 ciclomática=1 cohesion=1</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·1</span><span class="badge e2">E2·1</span><span class="badge e3">E3·1</span><span class="badge e4">E4·0</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-9" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-9" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <h4>Todos los findings de este flujo</h4>
+      <div class="finding warning">
+        <strong>REG-004</strong> — Retry en HTTP
+        <span class="muted"> @ HTTP - Notificar error (mock)</span><br/>
+        maxRetries=1 &lt; 2
+        <pre>options.retry.maxRetries = 1</pre>
+        <p><strong>Fix:</strong> Subir maxRetries a 3 con backoff exponencial.</p>
+      </div>
+  </details>
+<details >
+    <summary>microframework/plantillas/bot-to-be-e2-dominio.json · <span class="badge info">100%</span>
+      · err=0 warn=0 info=0
+      · nodos=2 ciclomática=1 cohesion=1</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·1</span><span class="badge e2">E2·1</span><span class="badge e3">E3·0</span><span class="badge e4">E4·0</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-10" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-10" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <p style="color:var(--ok)">✓ Sin findings.</p>
+  </details>
+<details >
+    <summary>microframework/plantillas/bot-to-be-e3-adaptador.json · <span class="badge warn">80%</span>
+      · err=0 warn=1 info=0
+      · nodos=4 ciclomática=1 cohesion=0.667</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·1</span><span class="badge e2">E2·0</span><span class="badge e3">E3·3</span><span class="badge e4">E4·0</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-11" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-11" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <h4>Todos los findings de este flujo</h4>
+      <div class="finding warning">
+        <strong>REG-006</strong> — Log estructurado JSON
+        <span class="muted"> @ E3 - Preparar payload adaptador</span><br/>
+        Nodo Code sin console.log(JSON.stringify(...))
+        
+        <p><strong>Fix:</strong> console.log(JSON.stringify({ run_id, etapa: &#39;E?&#39;, status: &#39;ok&#39; }));</p>
+      </div>
+  </details>
+<details >
+    <summary>microframework/plantillas/bot-to-be-orquestador.json · <span class="badge info">100%</span>
+      · err=0 warn=0 info=0
+      · nodos=11 ciclomática=1 cohesion=0.6</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·2</span><span class="badge e2">E2·4</span><span class="badge e3">E3·1</span><span class="badge e4">E4·4</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-12" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-12" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <p style="color:var(--ok)">✓ Sin findings.</p>
+  </details>
+<details >
+    <summary>microframework/plantillas/iot-to-be-e1-validacion.json · <span class="badge info">100%</span>
+      · err=0 warn=0 info=0
+      · nodos=2 ciclomática=1 cohesion=1</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·2</span><span class="badge e2">E2·0</span><span class="badge e3">E3·0</span><span class="badge e4">E4·0</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-13" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-13" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <p style="color:var(--ok)">✓ Sin findings.</p>
+  </details>
+<details >
+    <summary>microframework/plantillas/iot-to-be-e2-dominio.json · <span class="badge info">100%</span>
+      · err=0 warn=0 info=0
+      · nodos=2 ciclomática=1 cohesion=1</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·1</span><span class="badge e2">E2·1</span><span class="badge e3">E3·0</span><span class="badge e4">E4·0</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-14" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-14" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <p style="color:var(--ok)">✓ Sin findings.</p>
+  </details>
+<details >
+    <summary>microframework/plantillas/iot-to-be-e3-persistencia.json · <span class="badge info">100%</span>
+      · err=0 warn=0 info=0
+      · nodos=4 ciclomática=1 cohesion=0.667</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·1</span><span class="badge e2">E2·0</span><span class="badge e3">E3·3</span><span class="badge e4">E4·0</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-15" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-15" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <p style="color:var(--ok)">✓ Sin findings.</p>
+  </details>
+<details >
+    <summary>microframework/plantillas/iot-to-be-e4-notificacion.json · <span class="badge info">100%</span>
+      · err=0 warn=0 info=0
+      · nodos=7 ciclomática=2 cohesion=0.857</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·1</span><span class="badge e2">E2·2</span><span class="badge e3">E3·2</span><span class="badge e4">E4·2</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-16" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-16" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <p style="color:var(--ok)">✓ Sin findings.</p>
+  </details>
+<details >
+    <summary>microframework/plantillas/iot-to-be-orquestador.json · <span class="badge warn">75%</span>
+      · err=0 warn=4 info=0
+      · nodos=8 ciclomática=1 cohesion=0.857</summary>
+    <p class="muted">Etapas: <span class="badge e1">E1·2</span><span class="badge e2">E2·2</span><span class="badge e3">E3·1</span><span class="badge e4">E4·3</span><span class="badge unk">UNK·0</span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><svg id="svg-17" class="flow-svg" width="100%" height="360"></svg></div>
+      <div id="panel-17" class="finding info" style="border-left-color:var(--acc)">
+        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+      </div>
+    </div>
+    <h4>Todos los findings de este flujo</h4>
+      <div class="finding warning">
+        <strong>AP-005</strong> — Hardcoded workflow ID en Execute Workflow
+        <span class="muted"> @ Execute - E1 Validacion entrada</span><br/>
+        Execute Workflow con workflowId no resuelto: &quot;REEMPLAZAR_CON_ID_E1&quot;
+        
+        
+      </div>
+      <div class="finding warning">
+        <strong>AP-005</strong> — Hardcoded workflow ID en Execute Workflow
+        <span class="muted"> @ Execute - E2 Dominio y umbrales</span><br/>
+        Execute Workflow con workflowId no resuelto: &quot;REEMPLAZAR_CON_ID_E2&quot;
+        
+        
+      </div>
+      <div class="finding warning">
+        <strong>AP-005</strong> — Hardcoded workflow ID en Execute Workflow
+        <span class="muted"> @ Execute - E3 Persistencia</span><br/>
+        Execute Workflow con workflowId no resuelto: &quot;REEMPLAZAR_CON_ID_E3&quot;
+        
+        
+      </div>
+      <div class="finding warning">
+        <strong>AP-005</strong> — Hardcoded workflow ID en Execute Workflow
+        <span class="muted"> @ Execute - E4 Notificacion</span><br/>
+        Execute Workflow con workflowId no resuelto: &quot;REEMPLAZAR_CON_ID_E4&quot;
+        
+        
+      </div>
+  </details>
+  </div>
+
+  <div class="card">
+    <h2>Acerca de este reporte</h2>
+    <p class="muted">Generado por <code>n8n-microframework-validator v2.0.0</code> (edición Lite) — un único archivo .mjs sin dependencias externas. Este HTML es autocontenido: no requiere red para renderizar.</p>
+    <p class="muted">Comando: <code>node microframework/validacion/validar-flujos.mjs --format html</code></p>
+  </div>
+
+</div>
+<script>window.__DATA__={"tool":"n8n-microframework-validator","version":"2.0.0","edition":"lite","generatedAt":"2026-06-17T22:50:27.458Z","commit":"202f98542c8d9771a3bbe8701f1d3292541bc382","author":"Elian Hernando Gil Sierra","director":"Sebastian Roa Prada, PhD","project":"Micro-framework LC/NC para n8n — MGADS UNAB 2026","files":[{"path":"D:\\Git\\n8n-microframework\\casos-de-estudio\\bot\\to-be\\bot-to-be-e2-dominio.json","caso":"bot","estado":"to-be","isOrquestador":false,"isErrorHandler":false,"graph":{"nodes":[{"id":"input-trigger","name":"Execute Workflow Trigger","type":"n8n-nodes-base.executeWorkflowTrigger","stage":"E1","stageInferred":true,"position":[240,300],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"code-dominio","name":"E2 - Reglas de negocio","type":"n8n-nodes-base.code","stage":"E2","stageInferred":false,"position":[460,300],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"input-trigger","to":"code-dominio","branch":"main"}],"subflowRefs":[]},"metrics":{"nodeCount":2,"edgeCount":1,"cyclomaticComplexity":1,"maxDepth":1,"stageDistribution":{"E1":1,"E2":1,"E3":0,"E4":0,"UNKNOWN":0},"cohesionScore":1,"fanOutTop":[{"nodeId":"input-trigger","nodeName":"Execute Workflow Trigger","value":1},{"nodeId":"code-dominio","nodeName":"E2 - Reglas de negocio","value":0}]},"findings":[],"summary":{"errors":0,"warnings":0,"infos":0,"score":100,"rulesApplicable":6,"rulesPassed":6},"rulesApplicable":["REG-001","REG-002","REG-006","REG-007","REG-010","REG-VOC"],"rulesNa":[{"id":"REG-003","reason":"no es orquestador"},{"id":"REG-004","reason":"sin nodos HTTP"},{"id":"REG-005","reason":"sin nodos Postgres"},{"id":"REG-008","reason":"sin nodos IO"},{"id":"REG-009","reason":"no es orquestador"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-001","REG-002","REG-006","REG-007","REG-010","REG-VOC"]},{"path":"D:\\Git\\n8n-microframework\\casos-de-estudio\\bot\\to-be\\bot-to-be-e3-adaptador.json","caso":"bot","estado":"to-be","isOrquestador":false,"isErrorHandler":false,"graph":{"nodes":[{"id":"input-trigger","name":"Execute Workflow Trigger","type":"n8n-nodes-base.executeWorkflowTrigger","stage":"E1","stageInferred":true,"position":[240,300],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"code-preparar","name":"E3 - Preparar payload adaptador","type":"n8n-nodes-base.code","stage":"E3","stageInferred":false,"position":[460,300],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"http-ticket","name":"HTTP - POST ticket (con retry)","type":"n8n-nodes-base.httpRequest","stage":"E3","stageInferred":true,"position":[680,300],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"code-log-e3","name":"E3 - Log salida adaptador","type":"n8n-nodes-base.code","stage":"E3","stageInferred":false,"position":[900,300],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"input-trigger","to":"code-preparar","branch":"main"},{"from":"code-preparar","to":"http-ticket","branch":"main"},{"from":"http-ticket","to":"code-log-e3","branch":"main"}],"subflowRefs":[]},"metrics":{"nodeCount":4,"edgeCount":3,"cyclomaticComplexity":1,"maxDepth":3,"stageDistribution":{"E1":1,"E2":0,"E3":3,"E4":0,"UNKNOWN":0},"cohesionScore":0.667,"fanOutTop":[{"nodeId":"input-trigger","nodeName":"Execute Workflow Trigger","value":1},{"nodeId":"code-preparar","nodeName":"E3 - Preparar payload adaptador","value":1},{"nodeId":"http-ticket","nodeName":"HTTP - POST ticket (con retry)","value":1},{"nodeId":"code-log-e3","nodeName":"E3 - Log salida adaptador","value":0}]},"findings":[{"id":"c8ee5cea","ruleId":"REG-006","ruleName":"Log estructurado JSON","severity":"warning","confidence":"medium","nodeId":"code-preparar","nodeName":"E3 - Preparar payload adaptador","position":[460,300],"message":"Nodo Code sin console.log(JSON.stringify(...))","evidence":null,"iso25010":["maintainability","reliability"],"atamScenarios":["SP-BOT-02","R-GLOBAL-01"],"adr":["ADR-MF-003"],"fixSuggestion":{"kind":"hint","preview":"console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"}}],"summary":{"errors":0,"warnings":1,"infos":0,"score":86,"rulesApplicable":7,"rulesPassed":6},"rulesApplicable":["REG-001","REG-002","REG-004","REG-006","REG-008","REG-010","REG-VOC"],"rulesNa":[{"id":"REG-003","reason":"no es orquestador"},{"id":"REG-005","reason":"sin nodos Postgres"},{"id":"REG-007","reason":"no es subflujo E2 por nombre"},{"id":"REG-009","reason":"no es orquestador"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-001","REG-002","REG-004","REG-008","REG-010","REG-VOC"]},{"path":"D:\\Git\\n8n-microframework\\casos-de-estudio\\bot\\to-be\\bot-to-be-orquestador.json","caso":"bot","estado":"to-be","isOrquestador":true,"isErrorHandler":false,"graph":{"nodes":[{"id":"webhook-entrada","name":"Webhook - Entrada","type":"n8n-nodes-base.webhook","stage":"E1","stageInferred":true,"position":[240,300],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"etapa1-validacion","name":"E1 - Validacion de entrada","type":"n8n-nodes-base.code","stage":"E1","stageInferred":false,"position":[460,300],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"if-valido","name":"IF - Entrada valida?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[680,300],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"if-unauthorized","name":"IF - Token invalido?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[900,460],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"respond-401","name":"Respond - Token invalido (401)","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[1120,400],"inDegree":1,"outDegree":0,"hasErrorBranch":false},{"id":"respond-400","name":"Respond - Entrada invalida (400)","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[1120,560],"inDegree":1,"outDegree":0,"hasErrorBranch":false},{"id":"exec-e2","name":"Execute - E2 Logica de dominio","type":"n8n-nodes-base.executeWorkflow","stage":"E2","stageInferred":false,"position":[900,200],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"exec-e3","name":"Execute - E3 Adaptador persistencia","type":"n8n-nodes-base.executeWorkflow","stage":"E3","stageInferred":false,"position":[1120,200],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"if-error","name":"IF - Error en pipeline?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[1340,200],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"respond-500","name":"Respond - Error interno (500)","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[1560,380],"inDegree":1,"outDegree":0,"hasErrorBranch":false},{"id":"respond-200","name":"Respond - OK (200)","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[1560,200],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"webhook-entrada","to":"etapa1-validacion","branch":"main"},{"from":"etapa1-validacion","to":"if-valido","branch":"main"},{"from":"if-valido","to":"exec-e2","branch":"main"},{"from":"if-valido","to":"if-unauthorized","branch":"main"},{"from":"if-unauthorized","to":"respond-401","branch":"main"},{"from":"if-unauthorized","to":"respond-400","branch":"main"},{"from":"exec-e2","to":"exec-e3","branch":"main"},{"from":"exec-e3","to":"if-error","branch":"main"},{"from":"if-error","to":"respond-500","branch":"main"},{"from":"if-error","to":"respond-200","branch":"main"}],"subflowRefs":[{"nodeId":"exec-e2","nodeName":"Execute - E2 Logica de dominio","workflowId":"GLCqR9yqvkmE20QY"},{"nodeId":"exec-e3","nodeName":"Execute - E3 Adaptador persistencia","workflowId":"EqMaNbc6Rq60G8u9"}]},"metrics":{"nodeCount":11,"edgeCount":10,"cyclomaticComplexity":1,"maxDepth":6,"stageDistribution":{"E1":2,"E2":4,"E3":1,"E4":4,"UNKNOWN":0},"cohesionScore":0.6,"fanOutTop":[{"nodeId":"if-valido","nodeName":"IF - Entrada valida?","value":2},{"nodeId":"if-unauthorized","nodeName":"IF - Token invalido?","value":2},{"nodeId":"if-error","nodeName":"IF - Error en pipeline?","value":2},{"nodeId":"webhook-entrada","nodeName":"Webhook - Entrada","value":1},{"nodeId":"etapa1-validacion","nodeName":"E1 - Validacion de entrada","value":1}]},"findings":[],"summary":{"errors":0,"warnings":0,"infos":0,"score":100,"rulesApplicable":7,"rulesPassed":7},"rulesApplicable":["REG-001","REG-002","REG-003","REG-006","REG-009","REG-010","REG-VOC"],"rulesNa":[{"id":"REG-004","reason":"sin nodos HTTP"},{"id":"REG-005","reason":"sin nodos Postgres"},{"id":"REG-007","reason":"no es subflujo E2 por nombre"},{"id":"REG-008","reason":"sin nodos IO"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-001","REG-002","REG-003","REG-006","REG-009","REG-010","REG-VOC"]},{"path":"D:\\Git\\n8n-microframework\\casos-de-estudio\\iot\\to-be\\iot-error-handler.json","caso":"iot","estado":"to-be","isOrquestador":false,"isErrorHandler":true,"graph":{"nodes":[{"id":"error-trigger","name":"Error Trigger","type":"n8n-nodes-base.errorTrigger","stage":"E1","stageInferred":true,"position":[240,300],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"code-log-error","name":"Code - Log error y contexto","type":"n8n-nodes-base.code","stage":"E2","stageInferred":true,"position":[460,300],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"http-notify-error","name":"HTTP - Notificar error (mock-iot)","type":"n8n-nodes-base.httpRequest","stage":"E3","stageInferred":true,"position":[680,300],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"postgres-dead-letter","name":"Postgres - Insertar en dead-letter","type":"n8n-nodes-base.postgres","stage":"E3","stageInferred":true,"position":[900,300],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"error-trigger","to":"code-log-error","branch":"main"},{"from":"code-log-error","to":"http-notify-error","branch":"main"},{"from":"http-notify-error","to":"postgres-dead-letter","branch":"main"}],"subflowRefs":[]},"metrics":{"nodeCount":4,"edgeCount":3,"cyclomaticComplexity":1,"maxDepth":3,"stageDistribution":{"E1":1,"E2":1,"E3":2,"E4":0,"UNKNOWN":0},"cohesionScore":1,"fanOutTop":[{"nodeId":"error-trigger","nodeName":"Error Trigger","value":1},{"nodeId":"code-log-error","nodeName":"Code - Log error y contexto","value":1},{"nodeId":"http-notify-error","nodeName":"HTTP - Notificar error (mock-iot)","value":1},{"nodeId":"postgres-dead-letter","nodeName":"Postgres - Insertar en dead-letter","value":0}]},"findings":[],"summary":{"errors":0,"warnings":0,"infos":0,"score":100,"rulesApplicable":7,"rulesPassed":7},"rulesApplicable":["REG-001","REG-002","REG-004","REG-006","REG-008","REG-010","REG-VOC"],"rulesNa":[{"id":"REG-003","reason":"no es orquestador"},{"id":"REG-005","reason":"error handler (cada evento es único)"},{"id":"REG-007","reason":"no es subflujo E2 por nombre"},{"id":"REG-009","reason":"no es orquestador"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-001","REG-002","REG-004","REG-006","REG-008","REG-010","REG-VOC"]},{"path":"D:\\Git\\n8n-microframework\\casos-de-estudio\\iot\\to-be\\iot-to-be-e1-validacion.json","caso":"iot","estado":"to-be","isOrquestador":false,"isErrorHandler":false,"graph":{"nodes":[{"id":"input-trigger","name":"Execute Workflow Trigger","type":"n8n-nodes-base.executeWorkflowTrigger","stage":"E1","stageInferred":true,"position":[240,300],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"code-validacion","name":"E1 - Validar y normalizar lectura","type":"n8n-nodes-base.code","stage":"E1","stageInferred":false,"position":[460,300],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"input-trigger","to":"code-validacion","branch":"main"}],"subflowRefs":[]},"metrics":{"nodeCount":2,"edgeCount":1,"cyclomaticComplexity":1,"maxDepth":1,"stageDistribution":{"E1":2,"E2":0,"E3":0,"E4":0,"UNKNOWN":0},"cohesionScore":1,"fanOutTop":[{"nodeId":"input-trigger","nodeName":"Execute Workflow Trigger","value":1},{"nodeId":"code-validacion","nodeName":"E1 - Validar y normalizar lectura","value":0}]},"findings":[],"summary":{"errors":0,"warnings":0,"infos":0,"score":100,"rulesApplicable":5,"rulesPassed":5},"rulesApplicable":["REG-001","REG-002","REG-006","REG-010","REG-VOC"],"rulesNa":[{"id":"REG-003","reason":"no es orquestador"},{"id":"REG-004","reason":"sin nodos HTTP"},{"id":"REG-005","reason":"sin nodos Postgres"},{"id":"REG-007","reason":"no es subflujo E2 por nombre"},{"id":"REG-008","reason":"sin nodos IO"},{"id":"REG-009","reason":"no es orquestador"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-001","REG-002","REG-006","REG-010","REG-VOC"]},{"path":"D:\\Git\\n8n-microframework\\casos-de-estudio\\iot\\to-be\\iot-to-be-e2-dominio.json","caso":"iot","estado":"to-be","isOrquestador":false,"isErrorHandler":false,"graph":{"nodes":[{"id":"input-trigger","name":"Execute Workflow Trigger","type":"n8n-nodes-base.executeWorkflowTrigger","stage":"E1","stageInferred":true,"position":[240,300],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"code-dominio","name":"E2 - Analisis de umbrales y clasificacion","type":"n8n-nodes-base.code","stage":"E2","stageInferred":false,"position":[460,300],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"input-trigger","to":"code-dominio","branch":"main"}],"subflowRefs":[]},"metrics":{"nodeCount":2,"edgeCount":1,"cyclomaticComplexity":1,"maxDepth":1,"stageDistribution":{"E1":1,"E2":1,"E3":0,"E4":0,"UNKNOWN":0},"cohesionScore":1,"fanOutTop":[{"nodeId":"input-trigger","nodeName":"Execute Workflow Trigger","value":1},{"nodeId":"code-dominio","nodeName":"E2 - Analisis de umbrales y clasificacion","value":0}]},"findings":[],"summary":{"errors":0,"warnings":0,"infos":0,"score":100,"rulesApplicable":6,"rulesPassed":6},"rulesApplicable":["REG-001","REG-002","REG-006","REG-007","REG-010","REG-VOC"],"rulesNa":[{"id":"REG-003","reason":"no es orquestador"},{"id":"REG-004","reason":"sin nodos HTTP"},{"id":"REG-005","reason":"sin nodos Postgres"},{"id":"REG-008","reason":"sin nodos IO"},{"id":"REG-009","reason":"no es orquestador"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-001","REG-002","REG-006","REG-007","REG-010","REG-VOC"]},{"path":"D:\\Git\\n8n-microframework\\casos-de-estudio\\iot\\to-be\\iot-to-be-e3-persistencia.json","caso":"iot","estado":"to-be","isOrquestador":false,"isErrorHandler":false,"graph":{"nodes":[{"id":"input-trigger","name":"Execute Workflow Trigger","type":"n8n-nodes-base.executeWorkflowTrigger","stage":"E1","stageInferred":true,"position":[240,300],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"code-preparar","name":"E3 - Preparar para persistencia","type":"n8n-nodes-base.code","stage":"E3","stageInferred":false,"position":[460,300],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"postgres-upsert","name":"Postgres - Insertar con idempotencia","type":"n8n-nodes-base.postgres","stage":"E3","stageInferred":true,"position":[680,300],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"code-log-e3","name":"E3 - Log salida persistencia","type":"n8n-nodes-base.code","stage":"E3","stageInferred":false,"position":[900,300],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"input-trigger","to":"code-preparar","branch":"main"},{"from":"code-preparar","to":"postgres-upsert","branch":"main"},{"from":"postgres-upsert","to":"code-log-e3","branch":"main"}],"subflowRefs":[]},"metrics":{"nodeCount":4,"edgeCount":3,"cyclomaticComplexity":1,"maxDepth":3,"stageDistribution":{"E1":1,"E2":0,"E3":3,"E4":0,"UNKNOWN":0},"cohesionScore":0.667,"fanOutTop":[{"nodeId":"input-trigger","nodeName":"Execute Workflow Trigger","value":1},{"nodeId":"code-preparar","nodeName":"E3 - Preparar para persistencia","value":1},{"nodeId":"postgres-upsert","nodeName":"Postgres - Insertar con idempotencia","value":1},{"nodeId":"code-log-e3","nodeName":"E3 - Log salida persistencia","value":0}]},"findings":[],"summary":{"errors":0,"warnings":0,"infos":0,"score":100,"rulesApplicable":7,"rulesPassed":7},"rulesApplicable":["REG-001","REG-002","REG-005","REG-006","REG-008","REG-010","REG-VOC"],"rulesNa":[{"id":"REG-003","reason":"no es orquestador"},{"id":"REG-004","reason":"sin nodos HTTP"},{"id":"REG-007","reason":"no es subflujo E2 por nombre"},{"id":"REG-009","reason":"no es orquestador"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-001","REG-002","REG-005","REG-006","REG-008","REG-010","REG-VOC"]},{"path":"D:\\Git\\n8n-microframework\\casos-de-estudio\\iot\\to-be\\iot-to-be-e4-notificacion.json","caso":"iot","estado":"to-be","isOrquestador":false,"isErrorHandler":false,"graph":{"nodes":[{"id":"input-trigger","name":"Execute Workflow Trigger","type":"n8n-nodes-base.executeWorkflowTrigger","stage":"E1","stageInferred":true,"position":[240,300],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"code-e4-start","name":"E4 - Capturar inicio etapa","type":"n8n-nodes-base.code","stage":"E4","stageInferred":false,"position":[460,300],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"if-notificar","name":"IF - Requiere notificacion?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[680,300],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"if-critico","name":"IF - Nivel critico?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[900,200],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"http-critico","name":"HTTP - Notificar canal CRITICO (con retry)","type":"n8n-nodes-base.httpRequest","stage":"E3","stageInferred":true,"position":[1120,120],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"http-advertencia","name":"HTTP - Notificar canal ADVERTENCIA (con retry)","type":"n8n-nodes-base.httpRequest","stage":"E3","stageInferred":true,"position":[1120,300],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"code-log-e4-ok","name":"E4 - Log notificacion enviada","type":"n8n-nodes-base.code","stage":"E4","stageInferred":false,"position":[1340,200],"inDegree":2,"outDegree":0,"hasErrorBranch":false},{"id":"code-log-e4-skip","name":"E4 - Log sin notificacion (normal)","type":"n8n-nodes-base.code","stage":"E4","stageInferred":false,"position":[900,420],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"input-trigger","to":"code-e4-start","branch":"main"},{"from":"code-e4-start","to":"if-notificar","branch":"main"},{"from":"if-notificar","to":"if-critico","branch":"main"},{"from":"if-notificar","to":"code-log-e4-skip","branch":"main"},{"from":"if-critico","to":"http-critico","branch":"main"},{"from":"if-critico","to":"http-advertencia","branch":"main"},{"from":"http-critico","to":"code-log-e4-ok","branch":"main"},{"from":"http-advertencia","to":"code-log-e4-ok","branch":"main"}],"subflowRefs":[]},"metrics":{"nodeCount":8,"edgeCount":8,"cyclomaticComplexity":2,"maxDepth":5,"stageDistribution":{"E1":1,"E2":2,"E3":2,"E4":3,"UNKNOWN":0},"cohesionScore":0.625,"fanOutTop":[{"nodeId":"if-notificar","nodeName":"IF - Requiere notificacion?","value":2},{"nodeId":"if-critico","nodeName":"IF - Nivel critico?","value":2},{"nodeId":"input-trigger","nodeName":"Execute Workflow Trigger","value":1},{"nodeId":"code-e4-start","nodeName":"E4 - Capturar inicio etapa","value":1},{"nodeId":"http-critico","nodeName":"HTTP - Notificar canal CRITICO (con retry)","value":1}]},"findings":[{"id":"f3a0f242","ruleId":"REG-006","ruleName":"Log estructurado JSON","severity":"warning","confidence":"medium","nodeId":"code-e4-start","nodeName":"E4 - Capturar inicio etapa","position":[460,300],"message":"Nodo Code sin console.log(JSON.stringify(...))","evidence":null,"iso25010":["maintainability","reliability"],"atamScenarios":["SP-BOT-02","R-GLOBAL-01"],"adr":["ADR-MF-003"],"fixSuggestion":{"kind":"hint","preview":"console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"}}],"summary":{"errors":0,"warnings":1,"infos":0,"score":86,"rulesApplicable":7,"rulesPassed":6},"rulesApplicable":["REG-001","REG-002","REG-004","REG-006","REG-008","REG-010","REG-VOC"],"rulesNa":[{"id":"REG-003","reason":"no es orquestador"},{"id":"REG-005","reason":"sin nodos Postgres"},{"id":"REG-007","reason":"no es subflujo E2 por nombre"},{"id":"REG-009","reason":"no es orquestador"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-001","REG-002","REG-004","REG-008","REG-010","REG-VOC"]},{"path":"D:\\Git\\n8n-microframework\\casos-de-estudio\\iot\\to-be\\iot-to-be-orquestador.json","caso":"iot","estado":"to-be","isOrquestador":true,"isErrorHandler":false,"graph":{"nodes":[{"id":"4adfb24b-1199-4b5d-bb1f-0a4bf26e62c0","name":"Webhook - Ingesta sensor","type":"n8n-nodes-base.webhook","stage":"E1","stageInferred":true,"position":[-656,112],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"e10dd87a-dfe5-44f0-a953-f4f23413f4c5","name":"Execute - E1 Validacion entrada","type":"n8n-nodes-base.executeWorkflow","stage":"E1","stageInferred":false,"position":[-448,112],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"cd5e733a-eb1e-4651-b1ee-0e040717c6b4","name":"IF - Lectura valida?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[-224,112],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"b41ba74e-f8b9-4502-9668-96edc2f137de","name":"Respond - Datos invalidos (422)","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[0,240],"inDegree":1,"outDegree":0,"hasErrorBranch":false},{"id":"39c5d76c-1738-4635-8f7d-71d0bc82cc69","name":"Execute - E2 Dominio y umbrales","type":"n8n-nodes-base.executeWorkflow","stage":"E2","stageInferred":false,"position":[0,0],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"dc9a1684-7c05-4987-8bf8-1aae82f9cfca","name":"Execute - E3 Persistencia","type":"n8n-nodes-base.executeWorkflow","stage":"E3","stageInferred":false,"position":[224,0],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"8c3a2b1c-d39d-465d-867c-980fc57bc100","name":"Execute - E4 Notificacion","type":"n8n-nodes-base.executeWorkflow","stage":"E4","stageInferred":false,"position":[448,0],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"8bc32a4d-1704-4858-bfb6-a74ec6249467","name":"Respond - OK (200)","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[672,0],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"4adfb24b-1199-4b5d-bb1f-0a4bf26e62c0","to":"e10dd87a-dfe5-44f0-a953-f4f23413f4c5","branch":"main"},{"from":"e10dd87a-dfe5-44f0-a953-f4f23413f4c5","to":"cd5e733a-eb1e-4651-b1ee-0e040717c6b4","branch":"main"},{"from":"cd5e733a-eb1e-4651-b1ee-0e040717c6b4","to":"39c5d76c-1738-4635-8f7d-71d0bc82cc69","branch":"main"},{"from":"cd5e733a-eb1e-4651-b1ee-0e040717c6b4","to":"b41ba74e-f8b9-4502-9668-96edc2f137de","branch":"main"},{"from":"39c5d76c-1738-4635-8f7d-71d0bc82cc69","to":"dc9a1684-7c05-4987-8bf8-1aae82f9cfca","branch":"main"},{"from":"dc9a1684-7c05-4987-8bf8-1aae82f9cfca","to":"8c3a2b1c-d39d-465d-867c-980fc57bc100","branch":"main"},{"from":"8c3a2b1c-d39d-465d-867c-980fc57bc100","to":"8bc32a4d-1704-4858-bfb6-a74ec6249467","branch":"main"}],"subflowRefs":[{"nodeId":"e10dd87a-dfe5-44f0-a953-f4f23413f4c5","nodeName":"Execute - E1 Validacion entrada","workflowId":"ZV8ZvHeupkqKD0u6"},{"nodeId":"39c5d76c-1738-4635-8f7d-71d0bc82cc69","nodeName":"Execute - E2 Dominio y umbrales","workflowId":"stOkVjwANm9n6CSQ"},{"nodeId":"dc9a1684-7c05-4987-8bf8-1aae82f9cfca","nodeName":"Execute - E3 Persistencia","workflowId":"HqIO8HSWGr7SkcEs"},{"nodeId":"8c3a2b1c-d39d-465d-867c-980fc57bc100","nodeName":"Execute - E4 Notificacion","workflowId":"JAjlBYfOsuzbzQmR"}]},"metrics":{"nodeCount":8,"edgeCount":7,"cyclomaticComplexity":1,"maxDepth":6,"stageDistribution":{"E1":2,"E2":2,"E3":1,"E4":3,"UNKNOWN":0},"cohesionScore":0.857,"fanOutTop":[{"nodeId":"cd5e733a-eb1e-4651-b1ee-0e040717c6b4","nodeName":"IF - Lectura valida?","value":2},{"nodeId":"4adfb24b-1199-4b5d-bb1f-0a4bf26e62c0","nodeName":"Webhook - Ingesta sensor","value":1},{"nodeId":"e10dd87a-dfe5-44f0-a953-f4f23413f4c5","nodeName":"Execute - E1 Validacion entrada","value":1},{"nodeId":"39c5d76c-1738-4635-8f7d-71d0bc82cc69","nodeName":"Execute - E2 Dominio y umbrales","value":1},{"nodeId":"dc9a1684-7c05-4987-8bf8-1aae82f9cfca","nodeName":"Execute - E3 Persistencia","value":1}]},"findings":[],"summary":{"errors":0,"warnings":0,"infos":0,"score":100,"rulesApplicable":5,"rulesPassed":5},"rulesApplicable":["REG-001","REG-003","REG-009","REG-010","REG-VOC"],"rulesNa":[{"id":"REG-002","reason":"orquestador puro (run_id delegado a subflujo E1)"},{"id":"REG-004","reason":"sin nodos HTTP"},{"id":"REG-005","reason":"sin nodos Postgres"},{"id":"REG-006","reason":"sin nodos Code"},{"id":"REG-007","reason":"no es subflujo E2 por nombre"},{"id":"REG-008","reason":"sin nodos IO"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-001","REG-003","REG-009","REG-010","REG-VOC"]},{"path":"D:\\Git\\n8n-microframework\\microframework\\plantillas\\bot-error-handler.json","caso":"plantilla","estado":"to-be","isOrquestador":false,"isErrorHandler":true,"graph":{"nodes":[{"id":"error-trigger","name":"Error Trigger","type":"n8n-nodes-base.errorTrigger","stage":"E1","stageInferred":true,"position":[240,300],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"code-log-error","name":"Code - Log error estructurado","type":"n8n-nodes-base.code","stage":"E2","stageInferred":true,"position":[460,300],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"http-notify-error","name":"HTTP - Notificar error (mock)","type":"n8n-nodes-base.httpRequest","stage":"E3","stageInferred":true,"position":[680,300],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"error-trigger","to":"code-log-error","branch":"main"},{"from":"code-log-error","to":"http-notify-error","branch":"main"}],"subflowRefs":[]},"metrics":{"nodeCount":3,"edgeCount":2,"cyclomaticComplexity":1,"maxDepth":2,"stageDistribution":{"E1":1,"E2":1,"E3":1,"E4":0,"UNKNOWN":0},"cohesionScore":1,"fanOutTop":[{"nodeId":"error-trigger","nodeName":"Error Trigger","value":1},{"nodeId":"code-log-error","nodeName":"Code - Log error estructurado","value":1},{"nodeId":"http-notify-error","nodeName":"HTTP - Notificar error (mock)","value":0}]},"findings":[{"id":"4493f5e9","ruleId":"REG-004","ruleName":"Retry en HTTP","severity":"warning","confidence":"high","nodeId":"http-notify-error","nodeName":"HTTP - Notificar error (mock)","position":[680,300],"message":"maxRetries=1 < 2","evidence":"options.retry.maxRetries = 1","iso25010":["reliability","performanceEfficiency"],"atamScenarios":["TP-IOT-01"],"adr":["ADR-MF-002"],"fixSuggestion":{"kind":"codemod-id","codemodId":"add-http-retry","preview":"Subir maxRetries a 3 con backoff exponencial."}}],"summary":{"errors":0,"warnings":1,"infos":0,"score":80,"rulesApplicable":5,"rulesPassed":4},"rulesApplicable":["REG-001","REG-002","REG-004","REG-006","REG-008"],"rulesNa":[{"id":"REG-003","reason":"no es orquestador"},{"id":"REG-005","reason":"error handler (cada evento es único)"},{"id":"REG-007","reason":"no es subflujo E2 por nombre"},{"id":"REG-009","reason":"no es orquestador"},{"id":"REG-010","reason":"plantilla o caso sin convención"},{"id":"REG-VOC","reason":"plantilla"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-001","REG-002","REG-006","REG-008"]},{"path":"D:\\Git\\n8n-microframework\\microframework\\plantillas\\bot-to-be-e2-dominio.json","caso":"plantilla","estado":"to-be","isOrquestador":false,"isErrorHandler":false,"graph":{"nodes":[{"id":"input-trigger","name":"Execute Workflow Trigger","type":"n8n-nodes-base.executeWorkflowTrigger","stage":"E1","stageInferred":true,"position":[240,300],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"code-dominio","name":"E2 - Reglas de negocio","type":"n8n-nodes-base.code","stage":"E2","stageInferred":false,"position":[460,300],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"input-trigger","to":"code-dominio","branch":"main"}],"subflowRefs":[]},"metrics":{"nodeCount":2,"edgeCount":1,"cyclomaticComplexity":1,"maxDepth":1,"stageDistribution":{"E1":1,"E2":1,"E3":0,"E4":0,"UNKNOWN":0},"cohesionScore":1,"fanOutTop":[{"nodeId":"input-trigger","nodeName":"Execute Workflow Trigger","value":1},{"nodeId":"code-dominio","nodeName":"E2 - Reglas de negocio","value":0}]},"findings":[],"summary":{"errors":0,"warnings":0,"infos":0,"score":100,"rulesApplicable":4,"rulesPassed":4},"rulesApplicable":["REG-001","REG-002","REG-006","REG-007"],"rulesNa":[{"id":"REG-003","reason":"no es orquestador"},{"id":"REG-004","reason":"sin nodos HTTP"},{"id":"REG-005","reason":"sin nodos Postgres"},{"id":"REG-008","reason":"sin nodos IO"},{"id":"REG-009","reason":"no es orquestador"},{"id":"REG-010","reason":"plantilla o caso sin convención"},{"id":"REG-VOC","reason":"plantilla"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-001","REG-002","REG-006","REG-007"]},{"path":"D:\\Git\\n8n-microframework\\microframework\\plantillas\\bot-to-be-e3-adaptador.json","caso":"plantilla","estado":"to-be","isOrquestador":false,"isErrorHandler":false,"graph":{"nodes":[{"id":"input-trigger","name":"Execute Workflow Trigger","type":"n8n-nodes-base.executeWorkflowTrigger","stage":"E1","stageInferred":true,"position":[240,300],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"code-preparar","name":"E3 - Preparar payload adaptador","type":"n8n-nodes-base.code","stage":"E3","stageInferred":false,"position":[460,300],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"http-ticket","name":"HTTP - POST ticket (con retry)","type":"n8n-nodes-base.httpRequest","stage":"E3","stageInferred":true,"position":[680,300],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"code-log-e3","name":"E3 - Log salida adaptador","type":"n8n-nodes-base.code","stage":"E3","stageInferred":false,"position":[900,300],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"input-trigger","to":"code-preparar","branch":"main"},{"from":"code-preparar","to":"http-ticket","branch":"main"},{"from":"http-ticket","to":"code-log-e3","branch":"main"}],"subflowRefs":[]},"metrics":{"nodeCount":4,"edgeCount":3,"cyclomaticComplexity":1,"maxDepth":3,"stageDistribution":{"E1":1,"E2":0,"E3":3,"E4":0,"UNKNOWN":0},"cohesionScore":0.667,"fanOutTop":[{"nodeId":"input-trigger","nodeName":"Execute Workflow Trigger","value":1},{"nodeId":"code-preparar","nodeName":"E3 - Preparar payload adaptador","value":1},{"nodeId":"http-ticket","nodeName":"HTTP - POST ticket (con retry)","value":1},{"nodeId":"code-log-e3","nodeName":"E3 - Log salida adaptador","value":0}]},"findings":[{"id":"779c7e35","ruleId":"REG-006","ruleName":"Log estructurado JSON","severity":"warning","confidence":"medium","nodeId":"code-preparar","nodeName":"E3 - Preparar payload adaptador","position":[460,300],"message":"Nodo Code sin console.log(JSON.stringify(...))","evidence":null,"iso25010":["maintainability","reliability"],"atamScenarios":["SP-BOT-02","R-GLOBAL-01"],"adr":["ADR-MF-003"],"fixSuggestion":{"kind":"hint","preview":"console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));"}}],"summary":{"errors":0,"warnings":1,"infos":0,"score":80,"rulesApplicable":5,"rulesPassed":4},"rulesApplicable":["REG-001","REG-002","REG-004","REG-006","REG-008"],"rulesNa":[{"id":"REG-003","reason":"no es orquestador"},{"id":"REG-005","reason":"sin nodos Postgres"},{"id":"REG-007","reason":"no es subflujo E2 por nombre"},{"id":"REG-009","reason":"no es orquestador"},{"id":"REG-010","reason":"plantilla o caso sin convención"},{"id":"REG-VOC","reason":"plantilla"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-001","REG-002","REG-004","REG-008"]},{"path":"D:\\Git\\n8n-microframework\\microframework\\plantillas\\bot-to-be-orquestador.json","caso":"plantilla","estado":"to-be","isOrquestador":true,"isErrorHandler":false,"graph":{"nodes":[{"id":"webhook-entrada","name":"Webhook - Entrada","type":"n8n-nodes-base.webhook","stage":"E1","stageInferred":true,"position":[240,300],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"etapa1-validacion","name":"E1 - Validacion de entrada","type":"n8n-nodes-base.code","stage":"E1","stageInferred":false,"position":[460,300],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"if-valido","name":"IF - Entrada valida?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[680,300],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"if-unauthorized","name":"IF - Token invalido?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[900,460],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"respond-401","name":"Respond - Token invalido (401)","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[1120,400],"inDegree":1,"outDegree":0,"hasErrorBranch":false},{"id":"respond-400","name":"Respond - Entrada invalida (400)","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[1120,560],"inDegree":1,"outDegree":0,"hasErrorBranch":false},{"id":"exec-e2","name":"Execute - E2 Logica de dominio","type":"n8n-nodes-base.executeWorkflow","stage":"E2","stageInferred":false,"position":[900,200],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"exec-e3","name":"Execute - E3 Adaptador persistencia","type":"n8n-nodes-base.executeWorkflow","stage":"E3","stageInferred":false,"position":[1120,200],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"if-error","name":"IF - Error en pipeline?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[1340,200],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"respond-500","name":"Respond - Error interno (500)","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[1560,380],"inDegree":1,"outDegree":0,"hasErrorBranch":false},{"id":"respond-200","name":"Respond - OK (200)","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[1560,200],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"webhook-entrada","to":"etapa1-validacion","branch":"main"},{"from":"etapa1-validacion","to":"if-valido","branch":"main"},{"from":"if-valido","to":"exec-e2","branch":"main"},{"from":"if-valido","to":"if-unauthorized","branch":"main"},{"from":"if-unauthorized","to":"respond-401","branch":"main"},{"from":"if-unauthorized","to":"respond-400","branch":"main"},{"from":"exec-e2","to":"exec-e3","branch":"main"},{"from":"exec-e3","to":"if-error","branch":"main"},{"from":"if-error","to":"respond-500","branch":"main"},{"from":"if-error","to":"respond-200","branch":"main"}],"subflowRefs":[{"nodeId":"exec-e2","nodeName":"Execute - E2 Logica de dominio","workflowId":"GLCqR9yqvkmE20QY"},{"nodeId":"exec-e3","nodeName":"Execute - E3 Adaptador persistencia","workflowId":"EqMaNbc6Rq60G8u9"}]},"metrics":{"nodeCount":11,"edgeCount":10,"cyclomaticComplexity":1,"maxDepth":6,"stageDistribution":{"E1":2,"E2":4,"E3":1,"E4":4,"UNKNOWN":0},"cohesionScore":0.6,"fanOutTop":[{"nodeId":"if-valido","nodeName":"IF - Entrada valida?","value":2},{"nodeId":"if-unauthorized","nodeName":"IF - Token invalido?","value":2},{"nodeId":"if-error","nodeName":"IF - Error en pipeline?","value":2},{"nodeId":"webhook-entrada","nodeName":"Webhook - Entrada","value":1},{"nodeId":"etapa1-validacion","nodeName":"E1 - Validacion de entrada","value":1}]},"findings":[],"summary":{"errors":0,"warnings":0,"infos":0,"score":100,"rulesApplicable":5,"rulesPassed":5},"rulesApplicable":["REG-001","REG-002","REG-003","REG-006","REG-009"],"rulesNa":[{"id":"REG-004","reason":"sin nodos HTTP"},{"id":"REG-005","reason":"sin nodos Postgres"},{"id":"REG-007","reason":"no es subflujo E2 por nombre"},{"id":"REG-008","reason":"sin nodos IO"},{"id":"REG-010","reason":"plantilla o caso sin convención"},{"id":"REG-VOC","reason":"plantilla"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-001","REG-002","REG-003","REG-006","REG-009"]},{"path":"D:\\Git\\n8n-microframework\\microframework\\plantillas\\iot-to-be-e1-validacion.json","caso":"plantilla","estado":"to-be","isOrquestador":false,"isErrorHandler":false,"graph":{"nodes":[{"id":"input-trigger","name":"Execute Workflow Trigger","type":"n8n-nodes-base.executeWorkflowTrigger","stage":"E1","stageInferred":true,"position":[240,300],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"code-validacion","name":"E1 - Validar y normalizar lectura","type":"n8n-nodes-base.code","stage":"E1","stageInferred":false,"position":[460,300],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"input-trigger","to":"code-validacion","branch":"main"}],"subflowRefs":[]},"metrics":{"nodeCount":2,"edgeCount":1,"cyclomaticComplexity":1,"maxDepth":1,"stageDistribution":{"E1":2,"E2":0,"E3":0,"E4":0,"UNKNOWN":0},"cohesionScore":1,"fanOutTop":[{"nodeId":"input-trigger","nodeName":"Execute Workflow Trigger","value":1},{"nodeId":"code-validacion","nodeName":"E1 - Validar y normalizar lectura","value":0}]},"findings":[],"summary":{"errors":0,"warnings":0,"infos":0,"score":100,"rulesApplicable":3,"rulesPassed":3},"rulesApplicable":["REG-001","REG-002","REG-006"],"rulesNa":[{"id":"REG-003","reason":"no es orquestador"},{"id":"REG-004","reason":"sin nodos HTTP"},{"id":"REG-005","reason":"sin nodos Postgres"},{"id":"REG-007","reason":"no es subflujo E2 por nombre"},{"id":"REG-008","reason":"sin nodos IO"},{"id":"REG-009","reason":"no es orquestador"},{"id":"REG-010","reason":"plantilla o caso sin convención"},{"id":"REG-VOC","reason":"plantilla"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-001","REG-002","REG-006"]},{"path":"D:\\Git\\n8n-microframework\\microframework\\plantillas\\iot-to-be-e2-dominio.json","caso":"plantilla","estado":"to-be","isOrquestador":false,"isErrorHandler":false,"graph":{"nodes":[{"id":"input-trigger","name":"Execute Workflow Trigger","type":"n8n-nodes-base.executeWorkflowTrigger","stage":"E1","stageInferred":true,"position":[240,300],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"code-dominio","name":"E2 - Analisis de umbrales y clasificacion","type":"n8n-nodes-base.code","stage":"E2","stageInferred":false,"position":[460,300],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"input-trigger","to":"code-dominio","branch":"main"}],"subflowRefs":[]},"metrics":{"nodeCount":2,"edgeCount":1,"cyclomaticComplexity":1,"maxDepth":1,"stageDistribution":{"E1":1,"E2":1,"E3":0,"E4":0,"UNKNOWN":0},"cohesionScore":1,"fanOutTop":[{"nodeId":"input-trigger","nodeName":"Execute Workflow Trigger","value":1},{"nodeId":"code-dominio","nodeName":"E2 - Analisis de umbrales y clasificacion","value":0}]},"findings":[],"summary":{"errors":0,"warnings":0,"infos":0,"score":100,"rulesApplicable":4,"rulesPassed":4},"rulesApplicable":["REG-001","REG-002","REG-006","REG-007"],"rulesNa":[{"id":"REG-003","reason":"no es orquestador"},{"id":"REG-004","reason":"sin nodos HTTP"},{"id":"REG-005","reason":"sin nodos Postgres"},{"id":"REG-008","reason":"sin nodos IO"},{"id":"REG-009","reason":"no es orquestador"},{"id":"REG-010","reason":"plantilla o caso sin convención"},{"id":"REG-VOC","reason":"plantilla"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-001","REG-002","REG-006","REG-007"]},{"path":"D:\\Git\\n8n-microframework\\microframework\\plantillas\\iot-to-be-e3-persistencia.json","caso":"plantilla","estado":"to-be","isOrquestador":false,"isErrorHandler":false,"graph":{"nodes":[{"id":"input-trigger","name":"Execute Workflow Trigger","type":"n8n-nodes-base.executeWorkflowTrigger","stage":"E1","stageInferred":true,"position":[240,300],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"code-preparar","name":"E3 - Preparar para persistencia","type":"n8n-nodes-base.code","stage":"E3","stageInferred":false,"position":[460,300],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"postgres-upsert","name":"Postgres - Insertar con idempotencia","type":"n8n-nodes-base.postgres","stage":"E3","stageInferred":true,"position":[680,300],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"code-log-e3","name":"E3 - Log salida persistencia","type":"n8n-nodes-base.code","stage":"E3","stageInferred":false,"position":[900,300],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"input-trigger","to":"code-preparar","branch":"main"},{"from":"code-preparar","to":"postgres-upsert","branch":"main"},{"from":"postgres-upsert","to":"code-log-e3","branch":"main"}],"subflowRefs":[]},"metrics":{"nodeCount":4,"edgeCount":3,"cyclomaticComplexity":1,"maxDepth":3,"stageDistribution":{"E1":1,"E2":0,"E3":3,"E4":0,"UNKNOWN":0},"cohesionScore":0.667,"fanOutTop":[{"nodeId":"input-trigger","nodeName":"Execute Workflow Trigger","value":1},{"nodeId":"code-preparar","nodeName":"E3 - Preparar para persistencia","value":1},{"nodeId":"postgres-upsert","nodeName":"Postgres - Insertar con idempotencia","value":1},{"nodeId":"code-log-e3","nodeName":"E3 - Log salida persistencia","value":0}]},"findings":[],"summary":{"errors":0,"warnings":0,"infos":0,"score":100,"rulesApplicable":5,"rulesPassed":5},"rulesApplicable":["REG-001","REG-002","REG-005","REG-006","REG-008"],"rulesNa":[{"id":"REG-003","reason":"no es orquestador"},{"id":"REG-004","reason":"sin nodos HTTP"},{"id":"REG-007","reason":"no es subflujo E2 por nombre"},{"id":"REG-009","reason":"no es orquestador"},{"id":"REG-010","reason":"plantilla o caso sin convención"},{"id":"REG-VOC","reason":"plantilla"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-001","REG-002","REG-005","REG-006","REG-008"]},{"path":"D:\\Git\\n8n-microframework\\microframework\\plantillas\\iot-to-be-e4-notificacion.json","caso":"plantilla","estado":"to-be","isOrquestador":false,"isErrorHandler":false,"graph":{"nodes":[{"id":"input-trigger","name":"Execute Workflow Trigger","type":"n8n-nodes-base.executeWorkflowTrigger","stage":"E1","stageInferred":true,"position":[240,300],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"if-notificar","name":"IF - Requiere notificacion?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[460,300],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"if-critico","name":"IF - Nivel critico?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[680,200],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"http-critico","name":"HTTP - Notificar canal CRITICO (con retry)","type":"n8n-nodes-base.httpRequest","stage":"E3","stageInferred":true,"position":[900,120],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"http-warning","name":"HTTP - Notificar canal WARNING (con retry)","type":"n8n-nodes-base.httpRequest","stage":"E3","stageInferred":true,"position":[900,300],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"code-log-e4-ok","name":"E4 - Log notificacion enviada","type":"n8n-nodes-base.code","stage":"E4","stageInferred":false,"position":[1120,200],"inDegree":2,"outDegree":0,"hasErrorBranch":false},{"id":"code-log-e4-skip","name":"E4 - Log sin notificacion (normal)","type":"n8n-nodes-base.code","stage":"E4","stageInferred":false,"position":[680,420],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"input-trigger","to":"if-notificar","branch":"main"},{"from":"if-notificar","to":"if-critico","branch":"main"},{"from":"if-notificar","to":"code-log-e4-skip","branch":"main"},{"from":"if-critico","to":"http-critico","branch":"main"},{"from":"if-critico","to":"http-warning","branch":"main"},{"from":"http-critico","to":"code-log-e4-ok","branch":"main"},{"from":"http-warning","to":"code-log-e4-ok","branch":"main"}],"subflowRefs":[]},"metrics":{"nodeCount":7,"edgeCount":7,"cyclomaticComplexity":2,"maxDepth":4,"stageDistribution":{"E1":1,"E2":2,"E3":2,"E4":2,"UNKNOWN":0},"cohesionScore":0.857,"fanOutTop":[{"nodeId":"if-notificar","nodeName":"IF - Requiere notificacion?","value":2},{"nodeId":"if-critico","nodeName":"IF - Nivel critico?","value":2},{"nodeId":"input-trigger","nodeName":"Execute Workflow Trigger","value":1},{"nodeId":"http-critico","nodeName":"HTTP - Notificar canal CRITICO (con retry)","value":1},{"nodeId":"http-warning","nodeName":"HTTP - Notificar canal WARNING (con retry)","value":1}]},"findings":[],"summary":{"errors":0,"warnings":0,"infos":0,"score":100,"rulesApplicable":5,"rulesPassed":5},"rulesApplicable":["REG-001","REG-002","REG-004","REG-006","REG-008"],"rulesNa":[{"id":"REG-003","reason":"no es orquestador"},{"id":"REG-005","reason":"sin nodos Postgres"},{"id":"REG-007","reason":"no es subflujo E2 por nombre"},{"id":"REG-009","reason":"no es orquestador"},{"id":"REG-010","reason":"plantilla o caso sin convención"},{"id":"REG-VOC","reason":"plantilla"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-005","reason":"workflowIds resueltos"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-001","REG-002","REG-004","REG-006","REG-008"]},{"path":"D:\\Git\\n8n-microframework\\microframework\\plantillas\\iot-to-be-orquestador.json","caso":"plantilla","estado":"to-be","isOrquestador":true,"isErrorHandler":false,"graph":{"nodes":[{"id":"webhook-sensor","name":"Webhook - Ingesta sensor","type":"n8n-nodes-base.webhook","stage":"E1","stageInferred":true,"position":[240,300],"inDegree":0,"outDegree":1,"hasErrorBranch":false},{"id":"exec-e1","name":"Execute - E1 Validacion entrada","type":"n8n-nodes-base.executeWorkflow","stage":"E1","stageInferred":false,"position":[460,300],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"if-valido","name":"IF - Lectura valida?","type":"n8n-nodes-base.if","stage":"E2","stageInferred":true,"position":[680,300],"inDegree":1,"outDegree":2,"hasErrorBranch":false},{"id":"respond-422","name":"Respond - Datos invalidos (422)","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[900,440],"inDegree":1,"outDegree":0,"hasErrorBranch":false},{"id":"exec-e2","name":"Execute - E2 Dominio y umbrales","type":"n8n-nodes-base.executeWorkflow","stage":"E2","stageInferred":false,"position":[900,200],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"exec-e3","name":"Execute - E3 Persistencia","type":"n8n-nodes-base.executeWorkflow","stage":"E3","stageInferred":false,"position":[1120,200],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"exec-e4","name":"Execute - E4 Notificacion","type":"n8n-nodes-base.executeWorkflow","stage":"E4","stageInferred":false,"position":[1340,200],"inDegree":1,"outDegree":1,"hasErrorBranch":false},{"id":"respond-200","name":"Respond - OK (200)","type":"n8n-nodes-base.respondToWebhook","stage":"E4","stageInferred":true,"position":[1560,200],"inDegree":1,"outDegree":0,"hasErrorBranch":false}],"edges":[{"from":"webhook-sensor","to":"exec-e1","branch":"main"},{"from":"exec-e1","to":"if-valido","branch":"main"},{"from":"if-valido","to":"exec-e2","branch":"main"},{"from":"if-valido","to":"respond-422","branch":"main"},{"from":"exec-e2","to":"exec-e3","branch":"main"},{"from":"exec-e3","to":"exec-e4","branch":"main"},{"from":"exec-e4","to":"respond-200","branch":"main"}],"subflowRefs":[{"nodeId":"exec-e1","nodeName":"Execute - E1 Validacion entrada","workflowId":"REEMPLAZAR_CON_ID_E1"},{"nodeId":"exec-e2","nodeName":"Execute - E2 Dominio y umbrales","workflowId":"REEMPLAZAR_CON_ID_E2"},{"nodeId":"exec-e3","nodeName":"Execute - E3 Persistencia","workflowId":"REEMPLAZAR_CON_ID_E3"},{"nodeId":"exec-e4","nodeName":"Execute - E4 Notificacion","workflowId":"REEMPLAZAR_CON_ID_E4"}]},"metrics":{"nodeCount":8,"edgeCount":7,"cyclomaticComplexity":1,"maxDepth":6,"stageDistribution":{"E1":2,"E2":2,"E3":1,"E4":3,"UNKNOWN":0},"cohesionScore":0.857,"fanOutTop":[{"nodeId":"if-valido","nodeName":"IF - Lectura valida?","value":2},{"nodeId":"webhook-sensor","nodeName":"Webhook - Ingesta sensor","value":1},{"nodeId":"exec-e1","nodeName":"Execute - E1 Validacion entrada","value":1},{"nodeId":"exec-e2","nodeName":"Execute - E2 Dominio y umbrales","value":1},{"nodeId":"exec-e3","nodeName":"Execute - E3 Persistencia","value":1}]},"findings":[{"id":"da83654a","ruleId":"AP-005","ruleName":"Hardcoded workflow ID en Execute Workflow","severity":"warning","confidence":"high","nodeId":"exec-e1","nodeName":"Execute - E1 Validacion entrada","position":null,"message":"Execute Workflow con workflowId no resuelto: \"REEMPLAZAR_CON_ID_E1\"","evidence":null,"iso25010":["maintainability","portability"],"atamScenarios":[],"adr":[],"fixSuggestion":null},{"id":"257fd897","ruleId":"AP-005","ruleName":"Hardcoded workflow ID en Execute Workflow","severity":"warning","confidence":"high","nodeId":"exec-e2","nodeName":"Execute - E2 Dominio y umbrales","position":null,"message":"Execute Workflow con workflowId no resuelto: \"REEMPLAZAR_CON_ID_E2\"","evidence":null,"iso25010":["maintainability","portability"],"atamScenarios":[],"adr":[],"fixSuggestion":null},{"id":"735d01c3","ruleId":"AP-005","ruleName":"Hardcoded workflow ID en Execute Workflow","severity":"warning","confidence":"high","nodeId":"exec-e3","nodeName":"Execute - E3 Persistencia","position":null,"message":"Execute Workflow con workflowId no resuelto: \"REEMPLAZAR_CON_ID_E3\"","evidence":null,"iso25010":["maintainability","portability"],"atamScenarios":[],"adr":[],"fixSuggestion":null},{"id":"abaec05a","ruleId":"AP-005","ruleName":"Hardcoded workflow ID en Execute Workflow","severity":"warning","confidence":"high","nodeId":"exec-e4","nodeName":"Execute - E4 Notificacion","position":null,"message":"Execute Workflow con workflowId no resuelto: \"REEMPLAZAR_CON_ID_E4\"","evidence":null,"iso25010":["maintainability","portability"],"atamScenarios":[],"adr":[],"fixSuggestion":null}],"summary":{"errors":0,"warnings":4,"infos":0,"score":75,"rulesApplicable":4,"rulesPassed":3},"rulesApplicable":["REG-001","REG-003","REG-009","AP-005"],"rulesNa":[{"id":"REG-002","reason":"orquestador puro (run_id delegado a subflujo E1)"},{"id":"REG-004","reason":"sin nodos HTTP"},{"id":"REG-005","reason":"sin nodos Postgres"},{"id":"REG-006","reason":"sin nodos Code"},{"id":"REG-007","reason":"no es subflujo E2 por nombre"},{"id":"REG-008","reason":"sin nodos IO"},{"id":"REG-010","reason":"plantilla o caso sin convención"},{"id":"REG-VOC","reason":"plantilla"},{"id":"AP-001","reason":"ningún nodo supera grado 6"},{"id":"AP-002","reason":"sin patrón HTTP-en-loop"},{"id":"AP-003","reason":"menos de 2 escrituras"},{"id":"AP-004","reason":"no se detectó swallowing"},{"id":"AP-006","reason":"no se detectó stage leak"}],"rulesPassed":["REG-001","REG-003","REG-009"]}],"coverage":{"rulesDefined":["REG-001","REG-002","REG-003","REG-004","REG-005","REG-006","REG-007","REG-008","REG-009","REG-010","REG-VOC","AP-001","AP-002","AP-003","AP-004","AP-005","AP-006"],"rulesExercised":["REG-001","REG-002","REG-006","REG-007","REG-010","REG-VOC","REG-004","REG-008","REG-003","REG-009","REG-005","AP-005"],"rulesDormant":["AP-001","AP-002","AP-003","AP-004","AP-006"]},"history":[{"date":"2026-06-01","score":70,"errors":13,"warnings":51}]};</script>
+<script>
+(function(){
+  const D = window.__DATA__;
+  if(!D) return;
+
+  function el(t,a,c){const e=document.createElement(t);if(a)for(const k in a){
+    if(k==='cls')e.className=a[k];else if(k==='html')e.innerHTML=a[k];else e.setAttribute(k,a[k]);}
+    if(c)for(const x of c)e.appendChild(typeof x==='string'?document.createTextNode(x):x);return e;}
+
+  // ---- Render flujo: SVG con posiciones n8n ----
+  window.renderFlow=function(file,svgId){
+    const svg=document.getElementById(svgId); if(!svg)return;
+    const nodes=file.graph.nodes;
+    if(nodes.length===0){svg.innerHTML='<text x="20" y="40" fill="#94a3b8">(sin nodos)</text>';return;}
+    let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
+    for(const n of nodes){const [x,y]=n.position||[0,0];
+      if(x<minX)minX=x;if(y<minY)minY=y;if(x>maxX)maxX=x;if(y>maxY)maxY=y;}
+    const padX=80,padY=60;
+    const w=Math.max(600,maxX-minX+padX*2);
+    const h=Math.max(280,maxY-minY+padY*2);
+    svg.setAttribute('viewBox','0 0 '+w+' '+h);
+    const findingsByNode={};
+    for(const f of file.findings){
+      if(!f.nodeId)continue;
+      (findingsByNode[f.nodeId]=findingsByNode[f.nodeId]||[]).push(f);
+    }
+    const nodeById={};
+    for(const n of nodes)nodeById[n.id]=n;
+    let html='<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker></defs>';
+    for(const e of file.graph.edges){
+      const a=nodeById[e.from],b=nodeById[e.to];if(!a||!b)continue;
+      const ax=(a.position[0]-minX)+padX+50,ay=(a.position[1]-minY)+padY+20;
+      const bx=(b.position[0]-minX)+padX,by=(b.position[1]-minY)+padY+20;
+      const mx=(ax+bx)/2;
+      html+='<path class="edge'+(e.branch==='error'?' error':'')+'" d="M'+ax+','+ay+' C'+mx+','+ay+' '+mx+','+by+' '+bx+','+by+'"/>';
+    }
+    for(const n of nodes){
+      const x=(n.position[0]-minX)+padX,y=(n.position[1]-minY)+padY;
+      const fnds=findingsByNode[n.id]||[];
+      const hot=fnds.some(f=>f.severity==='error');
+      const warn=fnds.some(f=>f.severity==='warning');
+      const cls='node-'+n.stage.toLowerCase()+(hot?' node-hot':warn?' node-warn':'');
+      html+='<g class="node" data-id="'+n.id+'" style="cursor:pointer">';
+      html+='<rect class="'+cls+'" x="'+x+'" y="'+y+'" width="100" height="40" rx="6"/>';
+      html+='<text class="node-label" x="'+(x+50)+'" y="'+(y+18)+'" text-anchor="middle">'+escapeHtml(n.name.slice(0,16))+'</text>';
+      html+='<text class="node-label" x="'+(x+50)+'" y="'+(y+32)+'" text-anchor="middle" opacity="0.7">'+n.stage+(fnds.length?' · '+fnds.length:'')+'</text>';
+      html+='</g>';
+    }
+    svg.innerHTML=html;
+    svg.querySelectorAll('g.node').forEach(g=>{
+      g.addEventListener('click',()=>{
+        const id=g.getAttribute('data-id');
+        const panel=document.getElementById('panel-'+file._idx);
+        if(!panel)return;
+        const fnds=findingsByNode[id]||[];
+        const n=nodeById[id];
+        panel.innerHTML='<h3>'+escapeHtml(n.name)+' <span class="badge '+n.stage.toLowerCase()+'">'+n.stage+'</span></h3>'+
+          '<p class="muted">'+escapeHtml(n.type)+'</p>'+
+          (fnds.length===0?'<p class="muted">Sin findings en este nodo.</p>':
+            fnds.map(renderFindingCard).join(''));
+      });
+    });
+  };
+
+  function renderFindingCard(f){
+    const tags=(arr,cls)=>arr&&arr.length?arr.map(t=>'<span class="tag">'+escapeHtml(t)+'</span>').join(''):'';
+    return '<div class="finding '+f.severity+'"><h4><span class="badge '+severityClass(f.severity)+'">'+f.severity+'</span> '+escapeHtml(f.ruleId)+' — '+escapeHtml(f.ruleName)+'</h4>'+
+      '<p>'+escapeHtml(f.message)+'</p>'+
+      (f.evidence?'<pre>'+escapeHtml(f.evidence)+'</pre>':'')+
+      (f.iso25010&&f.iso25010.length?'<p>ISO 25010: '+tags(f.iso25010)+'</p>':'')+
+      (f.atamScenarios&&f.atamScenarios.length?'<p>ATAM: '+tags(f.atamScenarios)+'</p>':'')+
+      (f.adr&&f.adr.length?'<p>ADR: '+tags(f.adr)+'</p>':'')+
+      (f.fixSuggestion&&f.fixSuggestion.preview?'<p><strong>Fix:</strong> '+escapeHtml(f.fixSuggestion.preview)+'</p>':'')+
+      '</div>';
+  }
+  function severityClass(s){return s==='error'?'err':s==='warning'?'warn':'info';}
+  function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);}
+
+  // ---- Filtro tabla de findings ----
+  window.initTableFilter=function(tableId){
+    const tbl=document.getElementById(tableId); if(!tbl)return;
+    const q=document.getElementById(tableId+'-q');
+    const sev=document.getElementById(tableId+'-sev');
+    function apply(){
+      const text=(q.value||'').toLowerCase();
+      const s=sev.value;
+      tbl.querySelectorAll('tbody tr').forEach(tr=>{
+        const ok=(!text||tr.textContent.toLowerCase().includes(text))&&
+                 (!s||tr.getAttribute('data-sev')===s);
+        tr.style.display=ok?'':'none';
+      });
+    }
+    q.addEventListener('input',apply); sev.addEventListener('change',apply);
+    // export CSV
+    const btn=document.getElementById(tableId+'-csv');
+    if(btn)btn.addEventListener('click',()=>{
+      const rows=[];
+      tbl.querySelectorAll('tr').forEach(tr=>{
+        if(tr.style.display==='none')return;
+        const cells=[];tr.querySelectorAll('th,td').forEach(c=>cells.push('"'+c.textContent.replace(/"/g,'""')+'"'));
+        rows.push(cells.join(','));
+      });
+      const blob=new Blob([rows.join('\n')],{type:'text/csv'});
+      const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+      a.download='findings.csv';a.click();
+    });
+  };
+
+  // ---- Auto-render de cada flujo cargado ----
+  document.addEventListener('DOMContentLoaded',()=>{
+    (D.files||[]).forEach((f,i)=>{f._idx=i;window.renderFlow(f,'svg-'+i);});
+    window.initTableFilter('tbl-findings');
+  });
+})();
+</script>
+</body></html>

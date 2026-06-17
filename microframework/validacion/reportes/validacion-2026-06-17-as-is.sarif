@@ -1,0 +1,2040 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "n8n-microframework-validator",
+          "version": "2.0.0",
+          "informationUri": "https://github.com/elianhgs/n8n-microframework",
+          "rules": [
+            {
+              "id": "REG-001",
+              "name": "Sin secretos hardcodeados",
+              "shortDescription": {
+                "text": "Sin secretos hardcodeados"
+              },
+              "fullDescription": {
+                "text": "Sin secretos hardcodeados — micro-framework LC/NC n8n"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "iso25010": [
+                  "security",
+                  "maintainability"
+                ],
+                "atam": [
+                  "R-BOT-01"
+                ],
+                "adr": [
+                  "ADR-MF-001"
+                ]
+              }
+            },
+            {
+              "id": "REG-002",
+              "name": "run_id propagado",
+              "shortDescription": {
+                "text": "run_id propagado"
+              },
+              "fullDescription": {
+                "text": "run_id propagado — micro-framework LC/NC n8n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "iso25010": [
+                  "maintainability",
+                  "reliability"
+                ],
+                "atam": [
+                  "SP-BOT-02"
+                ],
+                "adr": [
+                  "ADR-MF-003"
+                ]
+              }
+            },
+            {
+              "id": "REG-003",
+              "name": "errorWorkflow configurado",
+              "shortDescription": {
+                "text": "errorWorkflow configurado"
+              },
+              "fullDescription": {
+                "text": "errorWorkflow configurado — micro-framework LC/NC n8n"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "iso25010": [
+                  "reliability"
+                ],
+                "atam": [
+                  "SP-IOT-01",
+                  "R-IOT-01"
+                ],
+                "adr": [
+                  "ADR-MF-002"
+                ]
+              }
+            },
+            {
+              "id": "REG-004",
+              "name": "Retry en HTTP",
+              "shortDescription": {
+                "text": "Retry en HTTP"
+              },
+              "fullDescription": {
+                "text": "Retry en HTTP — micro-framework LC/NC n8n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "iso25010": [
+                  "reliability",
+                  "performanceEfficiency"
+                ],
+                "atam": [
+                  "TP-IOT-01"
+                ],
+                "adr": [
+                  "ADR-MF-002"
+                ]
+              }
+            },
+            {
+              "id": "REG-005",
+              "name": "Idempotencia en escrituras",
+              "shortDescription": {
+                "text": "Idempotencia en escrituras"
+              },
+              "fullDescription": {
+                "text": "Idempotencia en escrituras — micro-framework LC/NC n8n"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "iso25010": [
+                  "reliability",
+                  "functionalSuitability"
+                ],
+                "atam": [
+                  "SP-BOT-01",
+                  "NR-IOT-02"
+                ],
+                "adr": []
+              }
+            },
+            {
+              "id": "REG-006",
+              "name": "Log estructurado JSON",
+              "shortDescription": {
+                "text": "Log estructurado JSON"
+              },
+              "fullDescription": {
+                "text": "Log estructurado JSON — micro-framework LC/NC n8n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "iso25010": [
+                  "maintainability",
+                  "reliability"
+                ],
+                "atam": [
+                  "SP-BOT-02",
+                  "R-GLOBAL-01"
+                ],
+                "adr": [
+                  "ADR-MF-003"
+                ]
+              }
+            },
+            {
+              "id": "REG-007",
+              "name": "Dominio aislado (E2 sin IO)",
+              "shortDescription": {
+                "text": "Dominio aislado (E2 sin IO)"
+              },
+              "fullDescription": {
+                "text": "Dominio aislado (E2 sin IO) — micro-framework LC/NC n8n"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "iso25010": [
+                  "maintainability"
+                ],
+                "atam": [
+                  "TP-GLOBAL-01"
+                ],
+                "adr": []
+              }
+            },
+            {
+              "id": "REG-008",
+              "name": "Integraciones en E3/E4",
+              "shortDescription": {
+                "text": "Integraciones en E3/E4"
+              },
+              "fullDescription": {
+                "text": "Integraciones en E3/E4 — micro-framework LC/NC n8n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "iso25010": [
+                  "maintainability"
+                ],
+                "atam": [
+                  "TP-GLOBAL-01"
+                ],
+                "adr": []
+              }
+            },
+            {
+              "id": "REG-009",
+              "name": "HTTP status codes apropiados",
+              "shortDescription": {
+                "text": "HTTP status codes apropiados"
+              },
+              "fullDescription": {
+                "text": "HTTP status codes apropiados — micro-framework LC/NC n8n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "iso25010": [
+                  "functionalSuitability",
+                  "usability"
+                ],
+                "atam": [
+                  "NR-BOT-02"
+                ],
+                "adr": []
+              }
+            },
+            {
+              "id": "REG-010",
+              "name": "ADR presente",
+              "shortDescription": {
+                "text": "ADR presente"
+              },
+              "fullDescription": {
+                "text": "ADR presente — micro-framework LC/NC n8n"
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "iso25010": [
+                  "maintainability"
+                ],
+                "atam": [],
+                "adr": []
+              }
+            },
+            {
+              "id": "REG-VOC",
+              "name": "Vocabulario enum nivel (español)",
+              "shortDescription": {
+                "text": "Vocabulario enum nivel (español)"
+              },
+              "fullDescription": {
+                "text": "Vocabulario enum nivel (español) — micro-framework LC/NC n8n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "iso25010": [
+                  "maintainability",
+                  "usability"
+                ],
+                "atam": [],
+                "adr": []
+              }
+            },
+            {
+              "id": "AP-001",
+              "name": "God-node (fan-in + fan-out > 6)",
+              "shortDescription": {
+                "text": "God-node (fan-in + fan-out > 6)"
+              },
+              "fullDescription": {
+                "text": "God-node (fan-in + fan-out > 6) — micro-framework LC/NC n8n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "iso25010": [
+                  "maintainability"
+                ],
+                "atam": [
+                  "TP-GLOBAL-01"
+                ],
+                "adr": []
+              }
+            },
+            {
+              "id": "AP-002",
+              "name": "Chatty (HTTP en loop)",
+              "shortDescription": {
+                "text": "Chatty (HTTP en loop)"
+              },
+              "fullDescription": {
+                "text": "Chatty (HTTP en loop) — micro-framework LC/NC n8n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "iso25010": [
+                  "performanceEfficiency"
+                ],
+                "atam": [
+                  "TP-IOT-01"
+                ],
+                "adr": []
+              }
+            },
+            {
+              "id": "AP-003",
+              "name": "Dual-write sin saga ni transacción",
+              "shortDescription": {
+                "text": "Dual-write sin saga ni transacción"
+              },
+              "fullDescription": {
+                "text": "Dual-write sin saga ni transacción — micro-framework LC/NC n8n"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "iso25010": [
+                  "reliability"
+                ],
+                "atam": [
+                  "SP-BOT-01"
+                ],
+                "adr": []
+              }
+            },
+            {
+              "id": "AP-004",
+              "name": "Exception swallowing (rama error sin log)",
+              "shortDescription": {
+                "text": "Exception swallowing (rama error sin log)"
+              },
+              "fullDescription": {
+                "text": "Exception swallowing (rama error sin log) — micro-framework LC/NC n8n"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "iso25010": [
+                  "reliability",
+                  "maintainability"
+                ],
+                "atam": [
+                  "R-GLOBAL-01"
+                ],
+                "adr": [
+                  "ADR-MF-002",
+                  "ADR-MF-003"
+                ]
+              }
+            },
+            {
+              "id": "AP-005",
+              "name": "Hardcoded workflow ID en Execute Workflow",
+              "shortDescription": {
+                "text": "Hardcoded workflow ID en Execute Workflow"
+              },
+              "fullDescription": {
+                "text": "Hardcoded workflow ID en Execute Workflow — micro-framework LC/NC n8n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "iso25010": [
+                  "maintainability",
+                  "portability"
+                ],
+                "atam": [],
+                "adr": []
+              }
+            },
+            {
+              "id": "AP-006",
+              "name": "Stage leak (IO inferido fuera de E3/E4)",
+              "shortDescription": {
+                "text": "Stage leak (IO inferido fuera de E3/E4)"
+              },
+              "fullDescription": {
+                "text": "Stage leak (IO inferido fuera de E3/E4) — micro-framework LC/NC n8n"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "iso25010": [
+                  "maintainability"
+                ],
+                "atam": [
+                  "TP-GLOBAL-01"
+                ],
+                "adr": []
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "REG-001",
+          "level": "error",
+          "message": {
+            "text": "Secreto literal detectado: Comparación literal de token en IF/Switch"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Token Valido?",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "security",
+              "maintainability"
+            ],
+            "atam": [
+              "R-BOT-01"
+            ],
+            "adr": [
+              "ADR-MF-001"
+            ],
+            "evidence": "\"rightValue\":\"mi-token-secreto-hardcodeado-123\""
+          }
+        },
+        {
+          "ruleId": "REG-001",
+          "level": "error",
+          "message": {
+            "text": "Header HTTP \"x-api-key\" con valor literal"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Consultar Historial Usuario",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "security",
+              "maintainability"
+            ],
+            "atam": [
+              "R-BOT-01"
+            ],
+            "adr": [
+              "ADR-MF-001"
+            ],
+            "evidence": "x-api-key: clave-api-externa-hardcodeada-456…"
+          }
+        },
+        {
+          "ruleId": "REG-001",
+          "level": "error",
+          "message": {
+            "text": "Header HTTP \"x-api-key\" con valor literal"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Crear Ticket",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "security",
+              "maintainability"
+            ],
+            "atam": [
+              "R-BOT-01"
+            ],
+            "adr": [
+              "ADR-MF-001"
+            ],
+            "evidence": "x-api-key: clave-api-externa-hardcodeada-456…"
+          }
+        },
+        {
+          "ruleId": "REG-001",
+          "level": "error",
+          "message": {
+            "text": "Header HTTP \"x-api-key\" con valor literal"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Notificar Sistema Externo",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "security",
+              "maintainability"
+            ],
+            "atam": [
+              "R-BOT-01"
+            ],
+            "adr": [
+              "ADR-MF-001"
+            ],
+            "evidence": "x-api-key: clave-api-externa-hardcodeada-456…"
+          }
+        },
+        {
+          "ruleId": "REG-002",
+          "level": "warning",
+          "message": {
+            "text": "No se detectó console.log(JSON.stringify(...)) con run_id"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "confidence": "medium",
+            "iso25010": [
+              "maintainability",
+              "reliability"
+            ],
+            "atam": [
+              "SP-BOT-02"
+            ],
+            "adr": [
+              "ADR-MF-003"
+            ],
+            "evidence": null
+          }
+        },
+        {
+          "ruleId": "REG-004",
+          "level": "warning",
+          "message": {
+            "text": "Nodo HTTP sin retry habilitado"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Consultar Historial Usuario",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "reliability",
+              "performanceEfficiency"
+            ],
+            "atam": [
+              "TP-IOT-01"
+            ],
+            "adr": [
+              "ADR-MF-002"
+            ],
+            "evidence": "options.retry.enabled = false"
+          }
+        },
+        {
+          "ruleId": "REG-004",
+          "level": "warning",
+          "message": {
+            "text": "Nodo HTTP sin retry habilitado"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Crear Ticket",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "reliability",
+              "performanceEfficiency"
+            ],
+            "atam": [
+              "TP-IOT-01"
+            ],
+            "adr": [
+              "ADR-MF-002"
+            ],
+            "evidence": "options.retry.enabled = false"
+          }
+        },
+        {
+          "ruleId": "REG-004",
+          "level": "warning",
+          "message": {
+            "text": "Nodo HTTP sin retry habilitado"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Notificar Sistema Externo",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "reliability",
+              "performanceEfficiency"
+            ],
+            "atam": [
+              "TP-IOT-01"
+            ],
+            "adr": [
+              "ADR-MF-002"
+            ],
+            "evidence": "options.retry.enabled = false"
+          }
+        },
+        {
+          "ruleId": "REG-005",
+          "level": "error",
+          "message": {
+            "text": "INSERT sin ON CONFLICT ni idempotency_key"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Guardar Interaccion",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "reliability",
+              "functionalSuitability"
+            ],
+            "atam": [
+              "SP-BOT-01",
+              "NR-IOT-02"
+            ],
+            "adr": [],
+            "evidence": "INSERT INTO interacciones_bot (user_id, session_id, categoria, prioridad, ticket_id) VALUES ('{{ $('Clasificar y Preparar Ticket').item.json.user_id }}', '{{ $('Clasificar y Preparar Ticket').item.jso"
+          }
+        },
+        {
+          "ruleId": "REG-006",
+          "level": "warning",
+          "message": {
+            "text": "Nodo Code sin console.log(JSON.stringify(...))"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Sanitizar Input",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "medium",
+            "iso25010": [
+              "maintainability",
+              "reliability"
+            ],
+            "atam": [
+              "SP-BOT-02",
+              "R-GLOBAL-01"
+            ],
+            "adr": [
+              "ADR-MF-003"
+            ],
+            "evidence": null
+          }
+        },
+        {
+          "ruleId": "REG-006",
+          "level": "warning",
+          "message": {
+            "text": "Nodo Code sin console.log(JSON.stringify(...))"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Verificar Rate Limit",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "medium",
+            "iso25010": [
+              "maintainability",
+              "reliability"
+            ],
+            "atam": [
+              "SP-BOT-02",
+              "R-GLOBAL-01"
+            ],
+            "adr": [
+              "ADR-MF-003"
+            ],
+            "evidence": null
+          }
+        },
+        {
+          "ruleId": "REG-006",
+          "level": "warning",
+          "message": {
+            "text": "Nodo Code sin console.log(JSON.stringify(...))"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Clasificar y Preparar Ticket",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "medium",
+            "iso25010": [
+              "maintainability",
+              "reliability"
+            ],
+            "atam": [
+              "SP-BOT-02",
+              "R-GLOBAL-01"
+            ],
+            "adr": [
+              "ADR-MF-003"
+            ],
+            "evidence": null
+          }
+        },
+        {
+          "ruleId": "REG-008",
+          "level": "warning",
+          "message": {
+            "text": "Nodos IO en archivo sin convención E3/E4/orquestador: Consultar Historial Usuario, Crear Ticket, Guardar Interaccion, Notificar Sistema Externo"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is-ratelimit-demo.json"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "confidence": "medium",
+            "iso25010": [
+              "maintainability"
+            ],
+            "atam": [
+              "TP-GLOBAL-01"
+            ],
+            "adr": [],
+            "evidence": null
+          }
+        },
+        {
+          "ruleId": "REG-001",
+          "level": "error",
+          "message": {
+            "text": "Secreto literal detectado: Comparación literal de token en IF/Switch"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Token Valido?",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "security",
+              "maintainability"
+            ],
+            "atam": [
+              "R-BOT-01"
+            ],
+            "adr": [
+              "ADR-MF-001"
+            ],
+            "evidence": "\"rightValue\":\"mi-token-secreto-hardcodeado-123\""
+          }
+        },
+        {
+          "ruleId": "REG-001",
+          "level": "error",
+          "message": {
+            "text": "Header HTTP \"x-api-key\" con valor literal"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Consultar Historial Usuario",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "security",
+              "maintainability"
+            ],
+            "atam": [
+              "R-BOT-01"
+            ],
+            "adr": [
+              "ADR-MF-001"
+            ],
+            "evidence": "x-api-key: clave-api-externa-hardcodeada-456…"
+          }
+        },
+        {
+          "ruleId": "REG-001",
+          "level": "error",
+          "message": {
+            "text": "Header HTTP \"x-api-key\" con valor literal"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Crear Ticket",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "security",
+              "maintainability"
+            ],
+            "atam": [
+              "R-BOT-01"
+            ],
+            "adr": [
+              "ADR-MF-001"
+            ],
+            "evidence": "x-api-key: clave-api-externa-hardcodeada-456…"
+          }
+        },
+        {
+          "ruleId": "REG-001",
+          "level": "error",
+          "message": {
+            "text": "Header HTTP \"x-api-key\" con valor literal"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Notificar Sistema Externo",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "security",
+              "maintainability"
+            ],
+            "atam": [
+              "R-BOT-01"
+            ],
+            "adr": [
+              "ADR-MF-001"
+            ],
+            "evidence": "x-api-key: clave-api-externa-hardcodeada-456…"
+          }
+        },
+        {
+          "ruleId": "REG-002",
+          "level": "warning",
+          "message": {
+            "text": "No se detectó console.log(JSON.stringify(...)) con run_id"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is.json"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "confidence": "medium",
+            "iso25010": [
+              "maintainability",
+              "reliability"
+            ],
+            "atam": [
+              "SP-BOT-02"
+            ],
+            "adr": [
+              "ADR-MF-003"
+            ],
+            "evidence": null
+          }
+        },
+        {
+          "ruleId": "REG-004",
+          "level": "warning",
+          "message": {
+            "text": "Nodo HTTP sin retry habilitado"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Consultar Historial Usuario",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "reliability",
+              "performanceEfficiency"
+            ],
+            "atam": [
+              "TP-IOT-01"
+            ],
+            "adr": [
+              "ADR-MF-002"
+            ],
+            "evidence": "options.retry.enabled = false"
+          }
+        },
+        {
+          "ruleId": "REG-004",
+          "level": "warning",
+          "message": {
+            "text": "Nodo HTTP sin retry habilitado"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Crear Ticket",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "reliability",
+              "performanceEfficiency"
+            ],
+            "atam": [
+              "TP-IOT-01"
+            ],
+            "adr": [
+              "ADR-MF-002"
+            ],
+            "evidence": "options.retry.enabled = false"
+          }
+        },
+        {
+          "ruleId": "REG-004",
+          "level": "warning",
+          "message": {
+            "text": "Nodo HTTP sin retry habilitado"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Notificar Sistema Externo",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "reliability",
+              "performanceEfficiency"
+            ],
+            "atam": [
+              "TP-IOT-01"
+            ],
+            "adr": [
+              "ADR-MF-002"
+            ],
+            "evidence": "options.retry.enabled = false"
+          }
+        },
+        {
+          "ruleId": "REG-005",
+          "level": "error",
+          "message": {
+            "text": "INSERT sin ON CONFLICT ni idempotency_key"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Guardar Interaccion",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "reliability",
+              "functionalSuitability"
+            ],
+            "atam": [
+              "SP-BOT-01",
+              "NR-IOT-02"
+            ],
+            "adr": [],
+            "evidence": "INSERT INTO interacciones_bot (user_id, session_id, categoria, prioridad, ticket_id) VALUES ('{{ $('Clasificar y Preparar Ticket').item.json.user_id }}', '{{ $('Clasificar y Preparar Ticket').item.jso"
+          }
+        },
+        {
+          "ruleId": "REG-006",
+          "level": "warning",
+          "message": {
+            "text": "Nodo Code sin console.log(JSON.stringify(...))"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Sanitizar Input",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "medium",
+            "iso25010": [
+              "maintainability",
+              "reliability"
+            ],
+            "atam": [
+              "SP-BOT-02",
+              "R-GLOBAL-01"
+            ],
+            "adr": [
+              "ADR-MF-003"
+            ],
+            "evidence": null
+          }
+        },
+        {
+          "ruleId": "REG-006",
+          "level": "warning",
+          "message": {
+            "text": "Nodo Code sin console.log(JSON.stringify(...))"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Verificar Rate Limit",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "medium",
+            "iso25010": [
+              "maintainability",
+              "reliability"
+            ],
+            "atam": [
+              "SP-BOT-02",
+              "R-GLOBAL-01"
+            ],
+            "adr": [
+              "ADR-MF-003"
+            ],
+            "evidence": null
+          }
+        },
+        {
+          "ruleId": "REG-006",
+          "level": "warning",
+          "message": {
+            "text": "Nodo Code sin console.log(JSON.stringify(...))"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Clasificar y Preparar Ticket",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "medium",
+            "iso25010": [
+              "maintainability",
+              "reliability"
+            ],
+            "atam": [
+              "SP-BOT-02",
+              "R-GLOBAL-01"
+            ],
+            "adr": [
+              "ADR-MF-003"
+            ],
+            "evidence": null
+          }
+        },
+        {
+          "ruleId": "REG-008",
+          "level": "warning",
+          "message": {
+            "text": "Nodos IO en archivo sin convención E3/E4/orquestador: Consultar Historial Usuario, Crear Ticket, Guardar Interaccion, Notificar Sistema Externo"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/bot/as-is/bot-as-is.json"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "confidence": "medium",
+            "iso25010": [
+              "maintainability"
+            ],
+            "atam": [
+              "TP-GLOBAL-01"
+            ],
+            "adr": [],
+            "evidence": null
+          }
+        },
+        {
+          "ruleId": "REG-004",
+          "level": "warning",
+          "message": {
+            "text": "Nodo HTTP sin retry habilitado"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/iot/as-is/iot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Guardar en InfluxDB",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "reliability",
+              "performanceEfficiency"
+            ],
+            "atam": [
+              "TP-IOT-01"
+            ],
+            "adr": [
+              "ADR-MF-002"
+            ],
+            "evidence": "options.retry.enabled = false"
+          }
+        },
+        {
+          "ruleId": "REG-004",
+          "level": "warning",
+          "message": {
+            "text": "Nodo HTTP sin retry habilitado"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/iot/as-is/iot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Enviar Notificacion",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "reliability",
+              "performanceEfficiency"
+            ],
+            "atam": [
+              "TP-IOT-01"
+            ],
+            "adr": [
+              "ADR-MF-002"
+            ],
+            "evidence": "options.retry.enabled = false"
+          }
+        },
+        {
+          "ruleId": "REG-005",
+          "level": "error",
+          "message": {
+            "text": "INSERT sin ON CONFLICT ni idempotency_key"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/iot/as-is/iot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Persistir en PostgreSQL",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "reliability",
+              "functionalSuitability"
+            ],
+            "atam": [
+              "SP-BOT-01",
+              "NR-IOT-02"
+            ],
+            "adr": [],
+            "evidence": "INSERT INTO lecturas_sensor (sensor_id, temperatura, humedad, co2, nivel, location, ts)\nVALUES ('{{ $('Determinar Nivel Final').item.json.sensor_id }}',\n        {{ $('Determinar Nivel Final').item.jso"
+          }
+        },
+        {
+          "ruleId": "REG-006",
+          "level": "warning",
+          "message": {
+            "text": "Nodo Code sin console.log(JSON.stringify(...))"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/iot/as-is/iot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Verificar Campos Basicos",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "medium",
+            "iso25010": [
+              "maintainability",
+              "reliability"
+            ],
+            "atam": [
+              "SP-BOT-02",
+              "R-GLOBAL-01"
+            ],
+            "adr": [
+              "ADR-MF-003"
+            ],
+            "evidence": null
+          }
+        },
+        {
+          "ruleId": "REG-006",
+          "level": "warning",
+          "message": {
+            "text": "Nodo Code sin console.log(JSON.stringify(...))"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/iot/as-is/iot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Normalizar Lecturas",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "medium",
+            "iso25010": [
+              "maintainability",
+              "reliability"
+            ],
+            "atam": [
+              "SP-BOT-02",
+              "R-GLOBAL-01"
+            ],
+            "adr": [
+              "ADR-MF-003"
+            ],
+            "evidence": null
+          }
+        },
+        {
+          "ruleId": "REG-006",
+          "level": "warning",
+          "message": {
+            "text": "Nodo Code sin console.log(JSON.stringify(...))"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/iot/as-is/iot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Determinar Nivel Final",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "medium",
+            "iso25010": [
+              "maintainability",
+              "reliability"
+            ],
+            "atam": [
+              "SP-BOT-02",
+              "R-GLOBAL-01"
+            ],
+            "adr": [
+              "ADR-MF-003"
+            ],
+            "evidence": null
+          }
+        },
+        {
+          "ruleId": "REG-006",
+          "level": "warning",
+          "message": {
+            "text": "Log JSON sin campos: status"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/iot/as-is/iot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Log Resultado",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "maintainability",
+              "reliability"
+            ],
+            "atam": [
+              "SP-BOT-02",
+              "R-GLOBAL-01"
+            ],
+            "adr": [
+              "ADR-MF-003"
+            ],
+            "evidence": null
+          }
+        },
+        {
+          "ruleId": "REG-008",
+          "level": "warning",
+          "message": {
+            "text": "Nodos IO en archivo sin convención E3/E4/orquestador: Guardar en InfluxDB, Persistir en PostgreSQL, Enviar Notificacion"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "casos-de-estudio/iot/as-is/iot-as-is.json"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "confidence": "medium",
+            "iso25010": [
+              "maintainability"
+            ],
+            "atam": [
+              "TP-GLOBAL-01"
+            ],
+            "adr": [],
+            "evidence": null
+          }
+        },
+        {
+          "ruleId": "REG-001",
+          "level": "error",
+          "message": {
+            "text": "Secreto literal detectado: Comparación literal de token en IF/Switch"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "microframework/plantillas/bot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Token Valido?",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "security",
+              "maintainability"
+            ],
+            "atam": [
+              "R-BOT-01"
+            ],
+            "adr": [
+              "ADR-MF-001"
+            ],
+            "evidence": "\"rightValue\":\"mi-token-secreto-hardcodeado-123\""
+          }
+        },
+        {
+          "ruleId": "REG-001",
+          "level": "error",
+          "message": {
+            "text": "Header HTTP \"x-api-key\" con valor literal"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "microframework/plantillas/bot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Notificar Sistema Externo",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "security",
+              "maintainability"
+            ],
+            "atam": [
+              "R-BOT-01"
+            ],
+            "adr": [
+              "ADR-MF-001"
+            ],
+            "evidence": "x-api-key: clave-api-externa-hardcodeada-456…"
+          }
+        },
+        {
+          "ruleId": "REG-004",
+          "level": "warning",
+          "message": {
+            "text": "Nodo HTTP sin retry habilitado"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "microframework/plantillas/bot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Notificar Sistema Externo",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "reliability",
+              "performanceEfficiency"
+            ],
+            "atam": [
+              "TP-IOT-01"
+            ],
+            "adr": [
+              "ADR-MF-002"
+            ],
+            "evidence": "options.retry.enabled = false"
+          }
+        },
+        {
+          "ruleId": "REG-008",
+          "level": "warning",
+          "message": {
+            "text": "Nodos IO en archivo sin convención E3/E4/orquestador: Notificar Sistema Externo"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "microframework/plantillas/bot-as-is.json"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "confidence": "medium",
+            "iso25010": [
+              "maintainability"
+            ],
+            "atam": [
+              "TP-GLOBAL-01"
+            ],
+            "adr": [],
+            "evidence": null
+          }
+        },
+        {
+          "ruleId": "REG-002",
+          "level": "warning",
+          "message": {
+            "text": "Ningún nodo Code referencia run_id"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "microframework/plantillas/iot-as-is.json"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "maintainability",
+              "reliability"
+            ],
+            "atam": [
+              "SP-BOT-02"
+            ],
+            "adr": [
+              "ADR-MF-003"
+            ],
+            "evidence": null
+          }
+        },
+        {
+          "ruleId": "REG-002",
+          "level": "warning",
+          "message": {
+            "text": "No se detectó console.log(JSON.stringify(...)) con run_id"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "microframework/plantillas/iot-as-is.json"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "confidence": "medium",
+            "iso25010": [
+              "maintainability",
+              "reliability"
+            ],
+            "atam": [
+              "SP-BOT-02"
+            ],
+            "adr": [
+              "ADR-MF-003"
+            ],
+            "evidence": null
+          }
+        },
+        {
+          "ruleId": "REG-004",
+          "level": "warning",
+          "message": {
+            "text": "Nodo HTTP sin retry habilitado"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "microframework/plantillas/iot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Guardar en InfluxDB",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "reliability",
+              "performanceEfficiency"
+            ],
+            "atam": [
+              "TP-IOT-01"
+            ],
+            "adr": [
+              "ADR-MF-002"
+            ],
+            "evidence": "options.retry.enabled = false"
+          }
+        },
+        {
+          "ruleId": "REG-004",
+          "level": "warning",
+          "message": {
+            "text": "Nodo HTTP sin retry habilitado"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "microframework/plantillas/iot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Enviar Notificacion",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "high",
+            "iso25010": [
+              "reliability",
+              "performanceEfficiency"
+            ],
+            "atam": [
+              "TP-IOT-01"
+            ],
+            "adr": [
+              "ADR-MF-002"
+            ],
+            "evidence": "options.retry.enabled = false"
+          }
+        },
+        {
+          "ruleId": "REG-006",
+          "level": "warning",
+          "message": {
+            "text": "Nodo Code sin console.log(JSON.stringify(...))"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "microframework/plantillas/iot-as-is.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "Procesar y Detectar Alerta",
+                  "kind": "object"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "confidence": "medium",
+            "iso25010": [
+              "maintainability",
+              "reliability"
+            ],
+            "atam": [
+              "SP-BOT-02",
+              "R-GLOBAL-01"
+            ],
+            "adr": [
+              "ADR-MF-003"
+            ],
+            "evidence": null
+          }
+        },
+        {
+          "ruleId": "REG-008",
+          "level": "warning",
+          "message": {
+            "text": "Nodos IO en archivo sin convención E3/E4/orquestador: Guardar en InfluxDB, Enviar Notificacion"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "microframework/plantillas/iot-as-is.json"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "confidence": "medium",
+            "iso25010": [
+              "maintainability"
+            ],
+            "atam": [
+              "TP-GLOBAL-01"
+            ],
+            "adr": [],
+            "evidence": null
+          }
+        }
+      ]
+    }
+  ]
+}
