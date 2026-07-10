@@ -1,0 +1,237 @@
+{
+  "$comment": "Locale es — idioma por defecto del validador Pro. Fuente de verdad para fallback si falta una clave en en.json.",
+  "cli": {
+    "help": {
+      "text": "n8nmf v{version} — validador estático n8n (edición Pro)\n\nSubcomandos:\n  analyze [path...]                Analiza y muestra resumen + exit code\n  report  [path...] --format X     Genera reporte (md|json|html|sarif|junit)\n  diff    --current J --baseline J Compara dos reportes JSON\n  fix     [path...] --rule REG-X   Aplica codemods (use --dry-run para previsualizar)\n  watch   [path...]                Re-analiza al detectar cambios (mtime polling 1s)\n\nFlags comunes:\n  --caso bot|iot                  Filtra por caso\n  --estado as-is|to-be            Filtra por estado\n  --rules-dir <dir>               Carga reglas YAML del usuario adicionales\n  --out <dir>                     Carpeta para artefactos\n  --strict                        Exit 1 también en warnings\n  --lang es|en                    Idioma de mensajes y reportes (default: es)\n  --help, -h                      Esta ayuda\n"
+    },
+    "error": {
+      "noFilesFound": "No se encontraron archivos JSON.",
+      "nothingToFix": "Nada que arreglar.",
+      "diffUsage": "Uso: n8nmf diff --current <a.json> --baseline <b.json>",
+      "unknownSubcommand": "Subcomando desconocido: {sub}"
+    },
+    "analyze": {
+      "header": "\nn8nmf analyze — {count} archivos\n",
+      "colFile": "Archivo",
+      "colScoreErrWarn": "Score  Err  Warn",
+      "coverage": "Cobertura: {exercised}/{defined} reglas ejercitadas.",
+      "dslLoaded": "Reglas DSL cargadas: {count}"
+    },
+    "report": {
+      "written": "✓ Reporte escrito: {path}"
+    },
+    "diff": {
+      "header": "\nDiff:",
+      "new": "  🆕 Nuevos:     {n}",
+      "resolved": "  ✅ Resueltos:  {n}",
+      "sectionNew": "🆕 Nuevos",
+      "sectionResolved": "✅ Resueltos"
+    },
+    "fix": {
+      "patchesHeader": "\n📝 {file} — {count} patches:",
+      "saved": "   ✓ guardado",
+      "dryRun": "   (dry-run — no se escribió)",
+      "summary": "\nResumen: {files} archivo(s), {patches} patch(es)."
+    },
+    "watch": {
+      "starting": "👁  Modo watch (Ctrl+C para salir)",
+      "changesDetected": "\n🔄 Cambios detectados — re-analizando..."
+    },
+    "dsl": {
+      "parseError": "⚠️  Error parseando regla DSL {path}: {error}"
+    }
+  },
+  "na": {
+    "common": {
+      "noCodeNodes": "sin nodos Code",
+      "notOrchestrator": "no es orquestador"
+    },
+    "reg002": { "pureOrchestrator": "orquestador puro (run_id delegado a subflujo E1)" },
+    "reg004": { "noHttpNodes": "sin nodos HTTP" },
+    "reg005": {
+      "errorHandler": "error handler (cada evento es único)",
+      "noPostgresNodes": "sin nodos Postgres"
+    },
+    "reg007": { "notE2File": "no es subflujo E2 por nombre" },
+    "reg008": { "noIoNodes": "sin nodos IO" },
+    "reg009": { "notOrchestrator": "no es orquestador" },
+    "reg010": { "templateOrNoCase": "plantilla o caso sin convención" },
+    "regvoc": {
+      "template": "plantilla",
+      "onlyToBe": "sólo aplica a to-be"
+    },
+    "ap001": { "noneOverThreshold": "ningún nodo supera grado 6" },
+    "ap002": { "noPattern": "sin patrón HTTP-en-loop" },
+    "ap003": {
+      "lessThanTwoWrites": "menos de 2 escrituras",
+      "sagaDetected": "detectada compensación/transacción"
+    },
+    "ap004": { "noSwallowing": "no se detectó swallowing" },
+    "ap005": { "resolved": "workflowIds resueltos" },
+    "ap006": { "none": "no se detectó stage leak" }
+  },
+  "rule": {
+    "reg001": {
+      "secretLiteral": "Secreto literal detectado: {label}",
+      "fixSecret": "Reemplazar literal por credencial n8n o {{$env.VAR_NAME}}",
+      "headerLiteral": "Header HTTP \"{name}\" con valor literal",
+      "fixHeader": "Header debe usar {{$env.{envVar}}}",
+      "label": {
+        "bearerToken": "Bearer token literal",
+        "openaiKey": "API key estilo OpenAI",
+        "githubPat": "GitHub PAT literal",
+        "codeSecretAssignment": "Asignación literal a variable de secreto en Code",
+        "ifSwitchTokenCompare": "Comparación literal de token en IF/Switch"
+      }
+    },
+    "reg002": {
+      "noRunId": "Ningún nodo Code referencia run_id",
+      "noStructuredLogRunId": "No se detectó console.log(JSON.stringify(...)) con run_id"
+    },
+    "reg003": {
+      "missingErrorWorkflow": "settings.errorWorkflow ausente o vacío en orquestador",
+      "fixErrorWorkflow": "Configurar Settings → Error Workflow apuntando al error handler del caso."
+    },
+    "reg004": {
+      "noRetry": "Nodo HTTP sin retry habilitado",
+      "lowMaxRetries": "maxRetries={max} < 2"
+    },
+    "reg005": {
+      "noIdempotency": "INSERT sin ON CONFLICT ni idempotency_key",
+      "fixIdempotency": "Agregar ON CONFLICT (id) DO NOTHING"
+    },
+    "reg006": {
+      "noStructuredLog": "Nodo Code sin console.log(JSON.stringify(...))",
+      "missingFields": "Log JSON sin campos: {fields}"
+    },
+    "reg007": {
+      "ioInE2": "Nodo IO \"{type}\" presente en subflujo E2 (dominio)"
+    },
+    "reg008": {
+      "ioMisplaced": "Nodos IO en archivo sin convención: {nodes}"
+    },
+    "reg009": {
+      "noRespondNode": "Orquestador sin Respond to Webhook",
+      "singleResponseCode": "Único responseCode: [{codes}]"
+    },
+    "reg010": {
+      "noAdrFolder": "Carpeta casos-de-estudio/{caso}/adr/ no existe",
+      "noAdrFiles": "Carpeta adr/ sin archivos ADR-*.md"
+    },
+    "regvoc": {
+      "englishVocab": "Vocabulario en inglés — usar {correct}"
+    },
+    "ap001": {
+      "godNode": "God-node: in={inDegree}, out={outDegree} (umbral 6)"
+    },
+    "ap002": {
+      "chatty": "Posible chatty IO: HTTP \"{httpName}\" dentro de loop \"{loopName}\""
+    },
+    "ap003": {
+      "dualWrite": "Dual-write detectado: {writers} sin compensación visible"
+    },
+    "ap004": {
+      "errorBranchNoLog": "Rama error no termina en log estructurado ni re-throw",
+      "continueOnFailNoHandler": "continueOnFail=true sin rama error y sin errorWorkflow global"
+    },
+    "ap005": {
+      "unresolvedWorkflowId": "Execute Workflow con workflowId no resuelto: \"{id}\""
+    },
+    "ap006": {
+      "stageLeak": "Stage leak: nodo clasificado E2 con IO ({type})"
+    }
+  },
+  "report": {
+    "md": {
+      "title": "# Reporte de validación — Pro v{version}",
+      "generated": "- Generado: {date}",
+      "commit": "- Commit: `{commit}`",
+      "files": "- Archivos: {count}",
+      "tableHeader": "| Archivo | Estado | Score | Err | Warn | Nodos | Ciclomática |",
+      "coverage": "Cobertura: {exercised}/{defined} reglas ejercitadas.",
+      "dormantRules": "Reglas dormidas: {list}",
+      "parseError": "❌ Error: {error}",
+      "noFindings": "✓ Sin findings.",
+      "evidence": "    - evidencia: `{evidence}`",
+      "iso25010": "    - ISO 25010: {list}",
+      "atam": "    - ATAM: {list}"
+    },
+    "html": {
+      "title": "Validación estática n8n — Edición Pro",
+      "h1": "Validación estática de flujos n8n",
+      "subtitle": "Micro-framework LC/NC · Pilar 2 DevSecOps · Edición Pro v{version}",
+      "author": "Autor",
+      "director": "Director",
+      "project": "Proyecto",
+      "generated": "Generado",
+      "commit": "Commit",
+      "filesAnalyzed": "Flujos analizados",
+      "summaryHeading": "Resumen ejecutivo",
+      "kpiFiles": "Flujos",
+      "kpiAvgScore": "Score promedio",
+      "kpiErrors": "Errors",
+      "kpiWarnings": "Warnings",
+      "kpiTotalFindings": "Findings totales",
+      "kpiDormantRules": "Reglas dormidas",
+      "radarHeading": "Radar ISO/IEC 25010",
+      "radarDesc": "Findings por atributo de calidad.",
+      "historyHeading": "Evolución histórica",
+      "historyDesc": "Score promedio por fecha de reporte.",
+      "noHistory": "Sin datos históricos previos.",
+      "coverageHeading": "Cobertura del micro-framework",
+      "coverageDesc": "Reglas definidas: {defined} · ejercitadas: {exercised} · dormidas: {dormant}",
+      "coverageExercised": "{exercised}/{defined} reglas ejercitadas ({pct}%)",
+      "dormantWarning": "⚠ Reglas sin evidencia en el corpus:",
+      "allRulesExercised": "✓ Todas las reglas fueron ejercitadas por al menos un flujo.",
+      "findingsTableHeading": "Tabla de findings",
+      "searchPlaceholder": "Buscar texto…",
+      "allSeverities": "Todas las severidades",
+      "onlyErrors": "Solo errors",
+      "onlyWarnings": "Solo warnings",
+      "onlyInfos": "Solo info",
+      "exportCsv": "Export CSV",
+      "thSev": "Sev",
+      "thRule": "Regla",
+      "thName": "Nombre",
+      "thFile": "Archivo",
+      "thNode": "Nodo",
+      "thMessage": "Mensaje",
+      "thIso": "ISO 25010",
+      "thAtam": "ATAM",
+      "noFindingsRow": "Sin findings.",
+      "detailHeading": "Detalle por flujo",
+      "legendE1": "E1 Entrada",
+      "legendE2": "E2 Dominio",
+      "legendE3": "E3 IO",
+      "legendE4": "E4 Salida",
+      "legendBorderNote": "borde rojo = error · borde ámbar = warning",
+      "graphHint": "Grafo — clic en un nodo para ver sus findings",
+      "clickHint": "Clic en un nodo del diagrama para ver sus findings, ISO 25010, ATAM y fix sugerido.",
+      "noFindingsInFlow": "✓ Sin findings en este flujo.",
+      "allFindingsHeading": "Todos los findings ({count})",
+      "confidenceLabel": "confianza: {value}",
+      "aboutHeading": "Acerca de este reporte",
+      "aboutDesc": "Generado por <code>{tool} v{version}</code> (edición Pro). Requiere red para Tailwind y Chart.js CDN.",
+      "aboutOffline": "Para un reporte 100% offline usar: <code>node microframework/validacion/validar-flujos.mjs --format html</code> (Edición Lite)",
+      "aboutCommand": "Comando: <code>node microframework/validacion-pro/bin/n8nmf.mjs report --format html --out reportes/</code>",
+      "csvHeaders": ["Severidad", "Regla", "Nombre", "Archivo", "Nodo", "Mensaje", "ISO 25010", "ATAM"],
+      "resultsCountSingular": "{n} resultado",
+      "resultsCountPlural": "{n} resultados",
+      "radarLabels": {
+        "security": "Seguridad",
+        "reliability": "Fiabilidad",
+        "maintainability": "Mantenibilidad",
+        "performanceEfficiency": "Rendimiento",
+        "functionalSuitability": "Funcionalidad",
+        "usability": "Usabilidad"
+      },
+      "radarDatasetLabel": "Findings por atributo",
+      "sparklineScoreLabel": "Score promedio (%)",
+      "sparklineErrorsLabel": "Errors",
+      "js": {
+        "noNodes": "(sin nodos)",
+        "noFindingsInNode": "Sin findings en este nodo."
+      }
+    }
+  }
+}

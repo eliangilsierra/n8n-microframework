@@ -1,0 +1,221 @@
+{
+  "$comment": "Locale en — activated with --lang en. Every key here must also exist in es.json.",
+  "cli": {
+    "help": {
+      "text": "validar-flujos.mjs v{version} — n8n static validator (Lite)\n\nUsage:\n  node validar-flujos.mjs [options]\n\nOptions:\n  --input <path>        JSON file or directory to analyze (repeatable).\n                        Without --input: walks casos-de-estudio/ and microframework/plantillas/.\n  --caso bot|iot        Filter by case (v1 compatibility).\n  --estado as-is|to-be  Filter by state (v1 compatibility).\n  --format md|json|html|sarif|junit\n                        Report format (default: md). Md and html are always\n                        saved to disk; json/sarif/junit go to stdout unless\n                        --out is passed.\n  --out <dir>           Folder for generated files.\n                        Default: microframework/validacion/reportes/\n  --baseline <json>     Compares against a previous JSON report. Prints a\n                        \"diff\" section with new / resolved / regressed findings.\n  --strict              Exit 1 also on warnings (default: errors only).\n  --quiet               Don't print the report to stdout (write it only).\n  --lang es|en          Language for messages and reports (default: es).\n  -h, --help            This help.\n\nExit code:\n  0  → no to-be flow has findings of severity 'error'\n  1  → at least one to-be flow has an 'error' finding (or 'warning' if --strict)\n"
+    },
+    "error": {
+      "noFilesFound": "No JSON files found to analyze.",
+      "baselineNotFound": "Baseline does not exist: {path}",
+      "baselineReadError": "Error reading baseline: {error}"
+    },
+    "output": {
+      "htmlWritten": "HTML report written to: {path}"
+    }
+  },
+  "na": {
+    "common": {
+      "noCodeNodes": "no Code nodes",
+      "notOrchestrator": "not an orchestrator"
+    },
+    "reg002": { "pureOrchestrator": "pure orchestrator (run_id delegated to E1 subflow)" },
+    "reg004": { "noHttpNodes": "no HTTP nodes" },
+    "reg005": {
+      "errorHandler": "error handler (every event is unique)",
+      "noPostgresNodes": "no Postgres nodes"
+    },
+    "reg007": { "notE2File": "not an E2 subflow by name" },
+    "reg008": { "noIoNodes": "no I/O nodes" },
+    "reg010": { "templateOrNoCase": "template or case without convention" },
+    "regvoc": {
+      "template": "template",
+      "onlyToBe": "only applies to to-be"
+    },
+    "ap001": { "noneOverThreshold": "no node exceeds degree 6" },
+    "ap002": { "noPattern": "no HTTP-in-loop pattern" },
+    "ap003": {
+      "lessThanTwoWrites": "fewer than 2 writes",
+      "sagaDetected": "compensation/transaction detected"
+    },
+    "ap004": { "noSwallowing": "no swallowing detected" },
+    "ap005": { "resolved": "workflowIds resolved" },
+    "ap006": { "none": "no stage leak detected" }
+  },
+  "rule": {
+    "reg001": {
+      "secretLiteral": "Literal secret detected: {label}",
+      "fixSecret": "Replace the literal with an n8n credential or {{$env.VAR_NAME}}",
+      "headerLiteral": "HTTP header \"{name}\" with a literal value",
+      "fixHeader": "Header should use {{$env.{envVar}}}",
+      "label": {
+        "bearerToken": "Literal bearer token",
+        "openaiKey": "OpenAI-style API key",
+        "githubPat": "Literal GitHub PAT",
+        "codeSecretAssignment": "Literal assignment to a secret variable in Code",
+        "ifSwitchTokenCompare": "Literal token comparison in IF/Switch"
+      }
+    },
+    "reg002": {
+      "noRunId": "No Code node references run_id",
+      "fixRunId": "Generate run_id in E1 with crypto.randomUUID() and propagate it through the payload.",
+      "noStructuredLogRunId": "No console.log(JSON.stringify(...)) with run_id detected"
+    },
+    "reg003": {
+      "missingErrorWorkflow": "settings.errorWorkflow missing or empty on the orchestrator",
+      "fixErrorWorkflow": "Configure Settings → Error Workflow pointing to the case's error handler."
+    },
+    "reg004": {
+      "noRetry": "HTTP node without retry enabled",
+      "lowMaxRetries": "maxRetries={max} < 2",
+      "fixLowRetry": "Raise maxRetries to 3 with exponential backoff."
+    },
+    "reg005": {
+      "noIdempotency": "INSERT without ON CONFLICT or idempotency_key",
+      "fixIdempotency": "Add ON CONFLICT (id) DO NOTHING or a unique idempotency_key column."
+    },
+    "reg006": {
+      "noStructuredLog": "Code node without console.log(JSON.stringify(...))",
+      "missingFields": "JSON log missing fields: {fields}"
+    },
+    "reg007": {
+      "ioInE2": "I/O node \"{type}\" present in E2 subflow (domain)",
+      "fixExtractIo": "Extract this I/O to an E3 subflow invoked via Execute Workflow."
+    },
+    "reg008": {
+      "ioMisplaced": "I/O nodes in a file without the E3/E4/orchestrator convention: {nodes}"
+    },
+    "reg009": {
+      "noRespondNode": "Orchestrator without a Respond to Webhook node",
+      "singleResponseCode": "Orchestrator with a single responseCode: [{codes}]",
+      "fixResponseCodes": "Differentiate success (200/201) from client error (4xx) and server error (5xx)."
+    },
+    "reg010": {
+      "noAdrFolder": "Folder casos-de-estudio/{caso}/adr/ does not exist",
+      "noAdrFiles": "Folder adr/ has no ADR-*.md files"
+    },
+    "regvoc": {
+      "englishVocab": "English vocabulary — use {correct}"
+    },
+    "ap001": {
+      "godNode": "God-node: in={inDegree}, out={outDegree} (threshold 6)",
+      "fixGodNode": "Break this node's responsibility into 2–3 cohesive subflows."
+    },
+    "ap002": {
+      "chatty": "Possible chatty I/O: HTTP \"{httpName}\" inside loop \"{loopName}\"",
+      "fixChatty": "Consider a batch endpoint or cache to avoid N HTTP calls."
+    },
+    "ap003": {
+      "dualWrite": "Dual-write detected: {writers} without visible compensation",
+      "fixDualWrite": "Implement a saga/compensation pattern or use an explicit BEGIN..COMMIT."
+    },
+    "ap004": {
+      "errorBranchNoLog": "Error branch does not end in a structured log or re-throw",
+      "continueOnFailNoHandler": "continueOnFail=true without an explicit error branch and without a global errorWorkflow"
+    },
+    "ap005": {
+      "unresolvedWorkflowId": "Execute Workflow with unresolved workflowId: \"{id}\""
+    },
+    "ap006": {
+      "stageLeak": "Stage leak: node classified as E2 with I/O ({type})"
+    }
+  },
+  "report": {
+    "md": {
+      "title": "# Static validation report — Lite v{version}",
+      "generated": "- Generated: {date}",
+      "commit": "- Commit: `{commit}`",
+      "filesAnalyzed": "- Files analyzed: {count}",
+      "stateHeading": "## State: {estado}",
+      "noState": "no state",
+      "tableHeader": "| File | Case | Score | Err | Warn | Info | Nodes | Cyclomatic |",
+      "coverageHeading": "## Micro-framework coverage",
+      "rulesDefined": "- Rules defined: {n}",
+      "rulesExercised": "- Rules exercised: {n}",
+      "dormantRules": "- ⚠️ Dormant rules (not exercised by any flow): {list}",
+      "detailHeading": "## Detail per file",
+      "parseError": "- ❌ PARSE ERROR: {error}",
+      "metrics": "- Metrics: nodes={nodes}, edges={edges}, cyclomatic={cyclomatic}, depth={depth}, cohesion={cohesion}",
+      "stages": "- Stages: E1={e1} E2={e2} E3={e3} E4={e4} UNK={unk}",
+      "noFindings": "- ✓ No findings",
+      "evidence": "    - evidence: `{evidence}`",
+      "iso25010": "    - ISO 25010: {list}",
+      "atam": "    - ATAM: {list}",
+      "fix": "    - fix: {preview}"
+    },
+    "html": {
+      "title": "Validation report — n8n micro-framework",
+      "h1": "n8n flow static validation",
+      "subtitle": "LC/NC micro-framework · DevSecOps Pillar 2 · Lite Edition v{version}",
+      "author": "Author:",
+      "director": "Director:",
+      "project": "Project:",
+      "generated": "Generated:",
+      "commit": "Commit:",
+      "filesAnalyzed": "Flows analyzed:",
+      "summaryHeading": "Executive summary",
+      "kpiFiles": "Flows",
+      "kpiAvgScore": "Average score",
+      "kpiErrors": "Errors",
+      "kpiWarnings": "Warnings",
+      "kpiTotalFindings": "Total findings",
+      "kpiDormantRules": "Dormant rules",
+      "radarHeading": "ISO/IEC 25010 radar",
+      "radarDesc": "Findings aggregated by quality attribute — closer to the center means fewer findings (better).",
+      "coverageHeading": "Micro-framework coverage",
+      "coverageDesc": "Rules defined: {defined} · exercised: {exercised} · dormant: {dormant}",
+      "dormantWarning": "⚠️ Rules that no flow in the corpus triggered:",
+      "allRulesExercised": "✓ All rules were exercised by at least one flow.",
+      "historyHeading": "Historical evolution",
+      "historyDesc": "Average score by date — read from previous JSON reports in <code>reportes/</code>.",
+      "findingsTableHeading": "Findings table",
+      "searchPlaceholder": "Search text…",
+      "allSeverities": "All severities",
+      "onlyErrors": "Errors only",
+      "onlyWarnings": "Warnings only",
+      "onlyInfos": "Infos only",
+      "exportCsv": "Export CSV",
+      "thSev": "Sev",
+      "thRule": "Rule",
+      "thName": "Name",
+      "thFile": "File",
+      "thNode": "Node",
+      "thMessage": "Message",
+      "thIso": "ISO 25010",
+      "thAtam": "ATAM",
+      "noFindingsRow": "No findings.",
+      "detailHeading": "Detail per flow",
+      "legendE1": "E1 Input",
+      "legendE2": "E2 Domain",
+      "legendE3": "E3 I/O",
+      "legendE4": "E4 Output",
+      "legendBorderNote": "red border = node with an error finding · amber border = warning",
+      "aboutHeading": "About this report",
+      "aboutDesc": "Generated by <code>{tool} v{version}</code> (Lite edition) — a single .mjs file with no external dependencies. This HTML is self-contained: no network is required to render it.",
+      "aboutCommand": "Command: <code>node microframework/validacion/validar-flujos.mjs --format html</code>",
+      "stagesLabel": "Stages:",
+      "clickHint": "Click a node in the diagram to see its findings, ISO 25010, and ATAM.",
+      "noFindingsInFlow": "✓ No findings.",
+      "allFindingsHeading": "All findings for this flow",
+      "fixLabel": "Fix:",
+      "noHistory": "No previous reports.",
+      "noRulesRow": "No findings.",
+      "js": {
+        "noNodes": "(no nodes)",
+        "noFindingsInNode": "No findings for this node.",
+        "isoPrefix": "ISO 25010: ",
+        "atamPrefix": "ATAM: ",
+        "adrPrefix": "ADR: ",
+        "fixLabel": "Fix:"
+      }
+    },
+    "diff": {
+      "heading": "## Diff against baseline",
+      "new": "- 🆕 New: {n}",
+      "resolved": "- ✅ Resolved: {n}",
+      "regressions": "- 🔴 Regressions: {n}",
+      "sectionNew": "🆕 New",
+      "sectionResolved": "✅ Resolved",
+      "sectionRegressions": "🔴 Regressions"
+    }
+  }
+}

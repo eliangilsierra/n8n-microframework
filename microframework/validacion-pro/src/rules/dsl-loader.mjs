@@ -4,6 +4,7 @@
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join, extname } from 'node:path';
 import { parseMiniYaml } from './yaml-mini.mjs';
+import { t } from '../shared/i18n.mjs';
 
 let _parse = null;
 async function getParser() {
@@ -29,7 +30,7 @@ export async function loadDslRules(dir) {
       if (Array.isArray(doc)) for (const r of doc) rules.push(compileDsl(r, path));
       else if (doc) rules.push(compileDsl(doc, path));
     } catch (e) {
-      console.error(`⚠️  Error parseando regla DSL ${path}: ${e.message}`);
+      console.error(t('cli.dsl.parseError', { path, error: e.message }));
     }
   }
   return rules;

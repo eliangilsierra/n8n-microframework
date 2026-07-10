@@ -2,9 +2,10 @@
 import { statSync } from 'node:fs';
 import { discover } from './discover.mjs';
 import { analyze } from './analyze.mjs';
+import { t } from '../shared/i18n.mjs';
 
 export async function watch(args) {
-  console.log('👁  Modo watch (Ctrl+C para salir)');
+  console.log(t('cli.watch.starting'));
   const mtimes = new Map();
   const files = discover(args);
   for (const f of files) mtimes.set(f.path, statSync(f.path).mtimeMs);
@@ -16,7 +17,7 @@ export async function watch(args) {
       if (mtimes.get(f.path) !== m) { mtimes.set(f.path, m); changed = true; }
     }
     if (changed) {
-      console.log('\n🔄 Cambios detectados — re-analizando...');
+      console.log(t('cli.watch.changesDetected'));
       try { await analyze({ ...args, strict: false }); } catch {}
     }
   }

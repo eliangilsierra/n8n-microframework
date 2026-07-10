@@ -1,6 +1,7 @@
 // Antipatrones AP-001..AP-006 como queries sobre el grafo.
 import { makeFinding } from '../helpers.mjs';
 import { nodeHasIoSignal } from '../../parser/classify-stage.mjs';
+import { t } from '../../shared/i18n.mjs';
 
 export const AP_001 = {
   id: 'AP-001',
@@ -10,10 +11,10 @@ export const AP_001 = {
       const d = n.inDegree + n.outDegree;
       if (d > 6) out.push(makeFinding('AP-001', {
         nodeId: n.id, nodeName: n.name, position: n.position,
-        message: `God-node: in=${n.inDegree}, out=${n.outDegree} (umbral 6)`,
+        message: t('rule.ap001.godNode', { inDegree: n.inDegree, outDegree: n.outDegree }),
         confidence: 'medium' }));
     }
-    return out.length ? out : { na: 'ningún nodo supera grado 6' };
+    return out.length ? out : { na: t('na.ap001.noneOverThreshold') };
   }
 };
 
@@ -26,17 +27,17 @@ export const AP_002 = {
       const preds = graph.edges.filter(e => e.to === n.id).map(e => graph.byId.get(e.from));
       for (const p of preds) {
         if (!p) continue;
-        const t = (p.type || '').toLowerCase();
-        if (t.includes('splitinbatches') || t.includes('itemlists') ||
-            t.includes('loop') || t.includes('foreach')) {
+        const pt = (p.type || '').toLowerCase();
+        if (pt.includes('splitinbatches') || pt.includes('itemlists') ||
+            pt.includes('loop') || pt.includes('foreach')) {
           out.push(makeFinding('AP-002', {
             nodeId: n.id, nodeName: n.name, position: n.position,
-            message: `Posible chatty IO: HTTP "${n.name}" dentro de loop "${p.name}"`,
+            message: t('rule.ap002.chatty', { httpName: n.name, loopName: p.name }),
             confidence: 'medium' }));
         }
       }
     }
-    return out.length ? out : { na: 'sin patrón HTTP-en-loop' };
+    return out.length ? out : { na: t('na.ap002.noPattern') };
   }
 };
 
@@ -46,12 +47,12 @@ export const AP_003 = {
     const writers = graph.nodes.filter(n =>
       /postgres|mysql|mongodb/i.test(n.type) &&
       /insert|update/i.test(JSON.stringify(n.parameters || {})));
-    if (writers.length < 2) return { na: 'menos de 2 escrituras' };
+    if (writers.length < 2) return { na: t('na.ap003.lessThanTwoWrites') };
     const txt = JSON.stringify(graph.nodes.map(n => n.parameters || {}));
     if (/saga|compensat|rollback|begin\s+transaction|commit\s*;/i.test(txt))
-      return { na: 'detectada compensación/transacción' };
+      return { na: t('na.ap003.sagaDetected') };
     return [makeFinding('AP-003', {
-      message: `Dual-write detectado: ${writers.map(w => w.name).join(' + ')} sin compensación visible`,
+      message: t('rule.ap003.dualWrite', { writers: writers.map(w => w.name).join(' + ') }),
       confidence: 'medium' })];
   }
 };
@@ -72,15 +73,15 @@ export const AP_004 = {
         });
         if (errEdges.length > 0 && !hasLog) out.push(makeFinding('AP-004', {
           nodeId: n.id, nodeName: n.name, position: n.position,
-          message: 'Rama error no termina en log estructurado ni re-throw',
+          message: t('rule.ap004.errorBranchNoLog'),
           confidence: 'medium' }));
         else if (errEdges.length === 0 && n.continueOnFail && !hasGlobalHandler)
           out.push(makeFinding('AP-004', {
             nodeId: n.id, nodeName: n.name, position: n.position,
-            message: 'continueOnFail=true sin rama error y sin errorWorkflow global' }));
+            message: t('rule.ap004.continueOnFailNoHandler') }));
       }
     }
-    return out.length ? out : { na: 'no se detectó swallowing' };
+    return out.length ? out : { na: t('na.ap004.noSwallowing') };
   }
 };
 
@@ -93,10 +94,10 @@ export const AP_005 = {
       if (!id || /placeholder|REEMPLAZAR|TODO|\{\{.+\}\}/i.test(String(id))) {
         out.push(makeFinding('AP-005', {
           nodeId: ref.nodeId, nodeName: ref.nodeName,
-          message: `Execute Workflow con workflowId no resuelto: "${id}"` }));
+          message: t('rule.ap005.unresolvedWorkflowId', { id }) }));
       }
     }
-    return out.length ? out : { na: 'workflowIds resueltos' };
+    return out.length ? out : { na: t('na.ap005.resolved') };
   }
 };
 
@@ -107,8 +108,8 @@ export const AP_006 = {
     for (const n of graph.nodes) {
       if (n.stage === 'E2' && nodeHasIoSignal(n)) out.push(makeFinding('AP-006', {
         nodeId: n.id, nodeName: n.name, position: n.position,
-        message: `Stage leak: nodo clasificado E2 con IO (${n.type})` }));
+        message: t('rule.ap006.stageLeak', { type: n.type }) }));
     }
-    return out.length ? out : { na: 'no se detectó stage leak' };
+    return out.length ? out : { na: t('na.ap006.none') };
   }
 };

@@ -2,12 +2,13 @@
 import { basename } from 'node:path';
 import { makeFinding, isOrquestadorFile, isErrorHandlerFile } from '../helpers.mjs';
 import { isIoType } from '../../parser/classify-stage.mjs';
+import { t } from '../../shared/i18n.mjs';
 
 export const REG_004 = {
   id: 'REG-004',
   run({ graph }) {
     const https = graph.nodes.filter(n => /httprequest/i.test(n.type));
-    if (https.length === 0) return { na: 'sin nodos HTTP' };
+    if (https.length === 0) return { na: t('na.reg004.noHttpNodes') };
     const out = [];
     for (const n of https) {
       const r = n.parameters?.options?.retry;
@@ -15,13 +16,13 @@ export const REG_004 = {
       const max = Number(r?.maxRetries ?? r?.maxTries ?? 0);
       if (!enabled) out.push(makeFinding('REG-004', {
         nodeId: n.id, nodeName: n.name, position: n.position,
-        message: 'Nodo HTTP sin retry habilitado',
+        message: t('rule.reg004.noRetry'),
         fixSuggestion: { kind: 'codemod-id', codemodId: 'add-http-retry',
           preview: 'options.retry = { enabled: true, maxRetries: 3 }' }
       }));
       else if (max < 2) out.push(makeFinding('REG-004', {
         nodeId: n.id, nodeName: n.name, position: n.position,
-        message: `maxRetries=${max} < 2`,
+        message: t('rule.reg004.lowMaxRetries', { max }),
         fixSuggestion: { kind: 'codemod-id', codemodId: 'add-http-retry' } }));
     }
     return out;
@@ -31,9 +32,9 @@ export const REG_004 = {
 export const REG_005 = {
   id: 'REG-005',
   run({ graph, file }) {
-    if (isErrorHandlerFile(file)) return { na: 'error handler (cada evento es único)' };
+    if (isErrorHandlerFile(file)) return { na: t('na.reg005.errorHandler') };
     const pgs = graph.nodes.filter(n => /postgres/i.test(n.type));
-    if (pgs.length === 0) return { na: 'sin nodos Postgres' };
+    if (pgs.length === 0) return { na: t('na.reg005.noPostgresNodes') };
     const out = [];
     for (const n of pgs) {
       const q = JSON.stringify(n.parameters || {}).toLowerCase();
@@ -43,10 +44,10 @@ export const REG_005 = {
       const ok = /on\s+conflict/.test(q) || /idempotency_key/.test(q);
       if (!ok) out.push(makeFinding('REG-005', {
         nodeId: n.id, nodeName: n.name, position: n.position,
-        message: 'INSERT sin ON CONFLICT ni idempotency_key',
+        message: t('rule.reg005.noIdempotency'),
         evidence: String(n.parameters?.query || '').slice(0, 200),
         fixSuggestion: { kind: 'codemod-id', codemodId: 'add-on-conflict',
-          preview: 'Agregar ON CONFLICT (id) DO NOTHING' }
+          preview: t('rule.reg005.fixIdempotency') }
       }));
     }
     return out;
@@ -57,12 +58,12 @@ export const REG_007 = {
   id: 'REG-007',
   run({ graph, file }) {
     const isE2File = /-e2-dominio/i.test(basename(file.path));
-    if (!isE2File) return { na: 'no es subflujo E2 por nombre' };
+    if (!isE2File) return { na: t('na.reg007.notE2File') };
     const ios = graph.nodes.filter(n => isIoType(n.type));
     if (ios.length === 0) return [];
     return ios.map(n => makeFinding('REG-007', {
       nodeId: n.id, nodeName: n.name, position: n.position,
-      message: `Nodo IO "${n.type}" presente en subflujo E2 (dominio)`
+      message: t('rule.reg007.ioInE2', { type: n.type })
     }));
   }
 };
@@ -73,10 +74,10 @@ export const REG_008 = {
     const name = basename(file.path);
     const allowed = /-e3-|-e4-|orquestador|error.handler/i.test(name);
     const ios = graph.nodes.filter(n => isIoType(n.type));
-    if (ios.length === 0) return { na: 'sin nodos IO' };
+    if (ios.length === 0) return { na: t('na.reg008.noIoNodes') };
     if (allowed) return [];
     return [makeFinding('REG-008', {
-      message: `Nodos IO en archivo sin convención: ${ios.map(n => n.name).join(', ')}`,
+      message: t('rule.reg008.ioMisplaced', { nodes: ios.map(n => n.name).join(', ') }),
       confidence: 'medium' })];
   }
 };
@@ -84,16 +85,16 @@ export const REG_008 = {
 export const REG_009 = {
   id: 'REG-009',
   run({ graph, file }) {
-    if (!isOrquestadorFile(file, graph)) return { na: 'no es orquestador' };
+    if (!isOrquestadorFile(file, graph)) return { na: t('na.reg009.notOrchestrator') };
     const responders = graph.nodes.filter(n => /respondtowebhook/i.test(n.type));
-    if (responders.length === 0) return [makeFinding('REG-009', { message: 'Orquestador sin Respond to Webhook' })];
+    if (responders.length === 0) return [makeFinding('REG-009', { message: t('rule.reg009.noRespondNode') })];
     const codes = new Set();
     for (const n of responders) {
       const c = n.parameters?.responseCode ?? n.parameters?.options?.responseCode;
       if (c !== undefined && c !== null) codes.add(String(c));
     }
     if (codes.size < 2) return [makeFinding('REG-009', {
-      message: `Único responseCode: [${[...codes].join(', ')}]` })];
+      message: t('rule.reg009.singleResponseCode', { codes: [...codes].join(', ') }) })];
     return [];
   }
 };

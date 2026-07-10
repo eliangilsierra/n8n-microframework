@@ -7,10 +7,11 @@ import { renderSarif } from '../report/render-sarif.mjs';
 import { renderJunit } from '../report/render-junit.mjs';
 import { renderHtml } from '../report/render-html.mjs';
 import { loadDslRules } from '../rules/dsl-loader.mjs';
+import { t } from '../shared/i18n.mjs';
 
 export async function report(args) {
   const files = discover(args);
-  if (files.length === 0) { console.error('No se encontraron archivos JSON.'); process.exit(0); }
+  if (files.length === 0) { console.error(t('cli.error.noFilesFound')); process.exit(0); }
   const rep = await buildReport(files, args);
   const customRules = args.rulesDir ? await loadDslRules(args.rulesDir) : [];
 
@@ -33,7 +34,7 @@ export async function report(args) {
   // Siempre guardar JSON canónico
   writeFileSync(join(outDir, `validacion-${stamp}.json`), JSON.stringify(rep, null, 2), 'utf8');
 
-  console.log(`✓ Reporte escrito: ${target}`);
+  console.log(t('cli.report.written', { path: target }));
   const tobeErr = rep.files.filter(f => f.estado === 'to-be' && f.summary.errors > 0).length;
   process.exit(tobeErr > 0 ? 1 : 0);
 }

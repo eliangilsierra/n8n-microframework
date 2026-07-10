@@ -1,5 +1,5 @@
 import { TOOL, VERSION } from '../shared/paths.mjs';
-import { metaForRule } from '../shared/quality-map.mjs';
+import { metaForRule, ruleDisplayName } from '../shared/quality-map.mjs';
 import { getAllRules } from '../rules/index.mjs';
 import { relFromRoot } from '../shared/fs-util.mjs';
 
@@ -7,9 +7,10 @@ export function renderSarif(report, customRules = []) {
   const allRules = getAllRules(customRules);
   const rules = allRules.map(r => {
     const m = metaForRule(r.id);
+    const name = ruleDisplayName(r.id);
     return {
-      id: r.id, name: m.nombre || r.id,
-      shortDescription: { text: m.nombre || r.id },
+      id: r.id, name,
+      shortDescription: { text: name },
       defaultConfiguration: { level: toSarif(m.severityDefault || 'warning') },
       properties: { iso25010: m.iso25010 || [], atam: m.atam || [], adr: m.adr || [] }
     };

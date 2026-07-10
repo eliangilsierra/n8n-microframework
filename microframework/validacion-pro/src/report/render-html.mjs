@@ -3,6 +3,7 @@
 // Para offline usar la Edición Lite (validar-flujos.mjs --format html).
 import { relFromRoot } from '../shared/fs-util.mjs';
 import { TOOL, VERSION } from '../shared/paths.mjs';
+import { t, getLang } from '../shared/i18n.mjs';
 
 function esc(s) {
   return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({
@@ -78,16 +79,16 @@ export function renderHtml(report) {
   </div>
   <div class="flow-grid">
     <div>
-      <p class="xs muted" style="margin:0 0 6px">Grafo — clic en un nodo para ver sus findings</p>
+      <p class="xs muted" style="margin:0 0 6px">${t('report.html.graphHint')}</p>
       <svg id="svg-${i}" class="flow-svg" width="100%" height="360"></svg>
     </div>
     <div id="panel-${i}" class="finding finding-info">
-      <p class="muted">Clic en un nodo del diagrama para ver sus findings, ISO 25010, ATAM y fix sugerido.</p>
+      <p class="muted">${t('report.html.clickHint')}</p>
     </div>
   </div>
   ${f.findings.length === 0
-    ? '<p style="color:var(--ok);margin-top:8px">✓ Sin findings en este flujo.</p>'
-    : `<h4 style="margin:16px 0 8px">Todos los findings (${f.findings.length})</h4>
+    ? `<p style="color:var(--ok);margin-top:8px">${t('report.html.noFindingsInFlow')}</p>`
+    : `<h4 style="margin:16px 0 8px">${t('report.html.allFindingsHeading', { count: f.findings.length })}</h4>
        ${f.findings.map(fd => `
        <div class="finding finding-${fd.severity}">
          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px">
@@ -95,14 +96,14 @@ export function renderHtml(report) {
            <strong class="mono">${esc(fd.ruleId)}</strong>
            <span>${esc(fd.ruleName||'')}</span>
            ${fd.nodeName ? `<span class="muted xs">@ ${esc(fd.nodeName)}</span>` : ''}
-           ${fd.confidence ? `<span class="muted xs">confianza: ${esc(fd.confidence)}</span>` : ''}
+           ${fd.confidence ? `<span class="muted xs">${t('report.html.confidenceLabel', { value: fd.confidence })}</span>` : ''}
          </div>
          <p style="margin:0 0 4px">${esc(fd.message)}</p>
          ${fd.evidence ? `<pre>${esc(fd.evidence)}</pre>` : ''}
          <div class="tags" style="margin-top:6px">
-           ${fd.iso25010?.length ? `<span class="muted xs">ISO 25010: ${fd.iso25010.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</span>` : ''}
-           ${fd.atamScenarios?.length ? `<span class="muted xs" style="margin-left:10px">ATAM: ${fd.atamScenarios.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</span>` : ''}
-           ${fd.adr?.length ? `<span class="muted xs" style="margin-left:10px">ADR: ${fd.adr.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</span>` : ''}
+           ${fd.iso25010?.length ? `<span class="muted xs">${t('report.html.thIso')}: ${fd.iso25010.map(x=>`<span class="tag">${esc(x)}</span>`).join('')}</span>` : ''}
+           ${fd.atamScenarios?.length ? `<span class="muted xs" style="margin-left:10px">${t('report.html.thAtam')}: ${fd.atamScenarios.map(x=>`<span class="tag">${esc(x)}</span>`).join('')}</span>` : ''}
+           ${fd.adr?.length ? `<span class="muted xs" style="margin-left:10px">ADR: ${fd.adr.map(x=>`<span class="tag">${esc(x)}</span>`).join('')}</span>` : ''}
          </div>
          ${fd.fixSuggestion?.preview ? `<p style="color:var(--ok);font-size:12px;margin:4px 0 0">💡 ${esc(fd.fixSuggestion.preview)}</p>` : ''}
        </div>`).join('')}`}
@@ -124,6 +125,9 @@ export function renderHtml(report) {
   for (const f of report.files) for (const fd of f.findings) for (const a of (fd.iso25010||[]))
     if (counts[a] !== undefined) counts[a]++;
 
+  const radarLabelsMap = {};
+  for (const a of attrs) radarLabelsMap[a] = t(`report.html.radarLabels.${a}`);
+
   const dataJson = JSON.stringify({
     files: report.files.map(f => ({
       ...f,
@@ -132,14 +136,28 @@ export function renderHtml(report) {
     history: report.history || [],
     radarAttrs: attrs,
     radarCounts: counts,
-    allFindings
+    radarLabelsMap,
+    allFindings,
+    labels: {
+      radarDatasetLabel: t('report.html.radarDatasetLabel'),
+      sparklineScoreLabel: t('report.html.sparklineScoreLabel'),
+      sparklineErrorsLabel: t('report.html.sparklineErrorsLabel'),
+      noHistory: t('report.html.noHistory'),
+      resultsCountSingular: t('report.html.resultsCountSingular'),
+      resultsCountPlural: t('report.html.resultsCountPlural'),
+      csvHeaders: t('report.html.csvHeaders'),
+      noNodes: t('report.html.js.noNodes'),
+      noFindingsInNode: t('report.html.js.noFindingsInNode'),
+      thIso: t('report.html.thIso'),
+      thAtam: t('report.html.thAtam')
+    }
   }).replace(/<\/script>/g, '<\\/script>');
 
   return `<!doctype html>
-<html lang="es">
+<html lang="${getLang()}">
 <head>
 <meta charset="utf-8"/>
-<title>Validación estática n8n — Edición Pro</title>
+<title>${t('report.html.title')}</title>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
@@ -265,28 +283,28 @@ tr:hover{background:rgba(56,189,248,.04)}
 
   <!-- PORTADA -->
   <div class="cover">
-    <h1>Validación estática de flujos n8n</h1>
-    <p class="muted">Micro-framework LC/NC · Pilar 2 DevSecOps · Edición Pro v${VERSION}</p>
+    <h1>${t('report.html.h1')}</h1>
+    <p class="muted">${t('report.html.subtitle', { version: VERSION })}</p>
     <div class="meta-grid">
-      <div class="meta-cell"><div class="label">Autor</div><div class="value">${esc(report.author)}</div></div>
-      <div class="meta-cell"><div class="label">Director</div><div class="value">${esc(report.director)}</div></div>
-      <div class="meta-cell"><div class="label">Proyecto</div><div class="value" style="font-size:12px">${esc(report.project)}</div></div>
-      <div class="meta-cell"><div class="label">Generado</div><div class="value">${esc(report.generatedAt)}</div></div>
-      ${report.commit ? `<div class="meta-cell"><div class="label">Commit</div><div class="value mono" style="font-size:13px;color:var(--acc)">${esc(report.commit.slice(0,12))}</div></div>` : ''}
-      <div class="meta-cell"><div class="label">Flujos analizados</div><div class="value">${report.files.length}</div></div>
+      <div class="meta-cell"><div class="label">${t('report.html.author')}</div><div class="value">${esc(report.author)}</div></div>
+      <div class="meta-cell"><div class="label">${t('report.html.director')}</div><div class="value">${esc(report.director)}</div></div>
+      <div class="meta-cell"><div class="label">${t('report.html.project')}</div><div class="value" style="font-size:12px">${esc(report.project)}</div></div>
+      <div class="meta-cell"><div class="label">${t('report.html.generated')}</div><div class="value">${esc(report.generatedAt)}</div></div>
+      ${report.commit ? `<div class="meta-cell"><div class="label">${t('report.html.commit')}</div><div class="value mono" style="font-size:13px;color:var(--acc)">${esc(report.commit.slice(0,12))}</div></div>` : ''}
+      <div class="meta-cell"><div class="label">${t('report.html.filesAnalyzed')}</div><div class="value">${report.files.length}</div></div>
     </div>
   </div>
 
   <!-- KPIs -->
   <div class="card">
-    <h2>Resumen ejecutivo</h2>
+    <h2>${t('report.html.summaryHeading')}</h2>
     <div class="kpi-grid">
-      <div class="kpi"><div class="kv">${report.files.length}</div><div class="kl">Flujos</div></div>
-      <div class="kpi"><div class="kv" style="${scoreColor(avgScore)}">${avgScore}%</div><div class="kl">Score promedio</div></div>
-      <div class="kpi"><div class="kv" style="color:var(--err)">${totalErr}</div><div class="kl">Errors</div></div>
-      <div class="kpi"><div class="kv" style="color:var(--warn)">${totalWarn}</div><div class="kl">Warnings</div></div>
-      <div class="kpi"><div class="kv">${totalFindings}</div><div class="kl">Findings totales</div></div>
-      <div class="kpi"><div class="kv" style="${cov.rulesDormant.length > 0 ? 'color:var(--warn)' : 'color:var(--ok)'}">${cov.rulesDormant.length}</div><div class="kl">Reglas dormidas</div></div>
+      <div class="kpi"><div class="kv">${report.files.length}</div><div class="kl">${t('report.html.kpiFiles')}</div></div>
+      <div class="kpi"><div class="kv" style="${scoreColor(avgScore)}">${avgScore}%</div><div class="kl">${t('report.html.kpiAvgScore')}</div></div>
+      <div class="kpi"><div class="kv" style="color:var(--err)">${totalErr}</div><div class="kl">${t('report.html.kpiErrors')}</div></div>
+      <div class="kpi"><div class="kv" style="color:var(--warn)">${totalWarn}</div><div class="kl">${t('report.html.kpiWarnings')}</div></div>
+      <div class="kpi"><div class="kv">${totalFindings}</div><div class="kl">${t('report.html.kpiTotalFindings')}</div></div>
+      <div class="kpi"><div class="kv" style="${cov.rulesDormant.length > 0 ? 'color:var(--warn)' : 'color:var(--ok)'}">${cov.rulesDormant.length}</div><div class="kl">${t('report.html.kpiDormantRules')}</div></div>
     </div>
   </div>
 
@@ -294,13 +312,13 @@ tr:hover{background:rgba(56,189,248,.04)}
   <div class="card">
     <div class="chart-pair">
       <div class="chart-box">
-        <h3>Radar ISO/IEC 25010</h3>
-        <p class="muted xs" style="align-self:flex-start;margin:0 0 10px">Findings por atributo de calidad.</p>
+        <h3>${t('report.html.radarHeading')}</h3>
+        <p class="muted xs" style="align-self:flex-start;margin:0 0 10px">${t('report.html.radarDesc')}</p>
         <canvas id="radar" width="320" height="320"></canvas>
       </div>
       <div class="chart-box">
-        <h3>Evolución histórica</h3>
-        <p class="muted xs" style="align-self:flex-start;margin:0 0 10px">Score promedio por fecha de reporte.</p>
+        <h3>${t('report.html.historyHeading')}</h3>
+        <p class="muted xs" style="align-self:flex-start;margin:0 0 10px">${t('report.html.historyDesc')}</p>
         <canvas id="sparkline" style="max-height:280px;width:100%"></canvas>
       </div>
     </div>
@@ -308,44 +326,44 @@ tr:hover{background:rgba(56,189,248,.04)}
 
   <!-- COBERTURA -->
   <div class="card">
-    <h2>Cobertura del micro-framework</h2>
-    <p class="muted">Reglas definidas: ${cov.rulesDefined.length} · ejercitadas: ${cov.rulesExercised.length} · dormidas: ${cov.rulesDormant.length}</p>
+    <h2>${t('report.html.coverageHeading')}</h2>
+    <p class="muted">${t('report.html.coverageDesc', { defined: cov.rulesDefined.length, exercised: cov.rulesExercised.length, dormant: cov.rulesDormant.length })}</p>
     <div class="progress-track"><div class="progress-fill" style="width:${covPct}%"></div></div>
-    <div style="font-size:12px;color:var(--mut);margin-bottom:10px">${cov.rulesExercised.length}/${cov.rulesDefined.length} reglas ejercitadas (${covPct}%)</div>
+    <div style="font-size:12px;color:var(--mut);margin-bottom:10px">${t('report.html.coverageExercised', { exercised: cov.rulesExercised.length, defined: cov.rulesDefined.length, pct: covPct })}</div>
     <div class="tags">${covChips}</div>
     ${cov.rulesDormant.length > 0
-      ? `<p class="xs" style="color:var(--warn);margin-top:10px">⚠ Reglas sin evidencia en el corpus: ${cov.rulesDormant.map(r=>`<span class="tag">${esc(r)}</span>`).join('')}</p>`
-      : '<p class="xs" style="color:var(--ok);margin-top:10px">✓ Todas las reglas fueron ejercitadas por al menos un flujo.</p>'}
+      ? `<p class="xs" style="color:var(--warn);margin-top:10px">${t('report.html.dormantWarning')} ${cov.rulesDormant.map(r=>`<span class="tag">${esc(r)}</span>`).join('')}</p>`
+      : `<p class="xs" style="color:var(--ok);margin-top:10px">${t('report.html.allRulesExercised')}</p>`}
   </div>
 
   <!-- TABLA DE FINDINGS -->
   <div class="card">
-    <h2>Tabla de findings</h2>
+    <h2>${t('report.html.findingsTableHeading')}</h2>
     <div class="controls">
-      <input id="tbl-findings-q" placeholder="Buscar texto…" style="flex:1;min-width:200px"/>
+      <input id="tbl-findings-q" placeholder="${t('report.html.searchPlaceholder')}" style="flex:1;min-width:200px"/>
       <select id="tbl-findings-sev">
-        <option value="">Todas las severidades</option>
-        <option value="error">Solo errors</option>
-        <option value="warning">Solo warnings</option>
-        <option value="info">Solo info</option>
+        <option value="">${t('report.html.allSeverities')}</option>
+        <option value="error">${t('report.html.onlyErrors')}</option>
+        <option value="warning">${t('report.html.onlyWarnings')}</option>
+        <option value="info">${t('report.html.onlyInfos')}</option>
       </select>
-      <button id="tbl-findings-csv">Export CSV</button>
+      <button id="tbl-findings-csv">${t('report.html.exportCsv')}</button>
       <span id="tbl-count" class="muted xs"></span>
     </div>
     <div style="overflow-x:auto;border-radius:8px;border:1px solid var(--border)">
       <table id="tbl-findings">
         <thead><tr>
-          <th data-col="0">Sev</th>
-          <th data-col="1">Regla</th>
-          <th data-col="2">Nombre</th>
-          <th data-col="3">Archivo</th>
-          <th data-col="4">Nodo</th>
-          <th data-col="5">Mensaje</th>
-          <th data-col="6">ISO 25010</th>
-          <th data-col="7">ATAM</th>
+          <th data-col="0">${t('report.html.thSev')}</th>
+          <th data-col="1">${t('report.html.thRule')}</th>
+          <th data-col="2">${t('report.html.thName')}</th>
+          <th data-col="3">${t('report.html.thFile')}</th>
+          <th data-col="4">${t('report.html.thNode')}</th>
+          <th data-col="5">${t('report.html.thMessage')}</th>
+          <th data-col="6">${t('report.html.thIso')}</th>
+          <th data-col="7">${t('report.html.thAtam')}</th>
         </tr></thead>
         <tbody>
-          ${tableRows || '<tr><td colspan="8" class="muted" style="text-align:center;padding:20px">Sin findings.</td></tr>'}
+          ${tableRows || `<tr><td colspan="8" class="muted" style="text-align:center;padding:20px">${t('report.html.noFindingsRow')}</td></tr>`}
         </tbody>
       </table>
     </div>
@@ -353,24 +371,24 @@ tr:hover{background:rgba(56,189,248,.04)}
 
   <!-- DETALLE POR FLUJO -->
   <div class="card">
-    <h2>Detalle por flujo</h2>
+    <h2>${t('report.html.detailHeading')}</h2>
     <div class="legend">
-      <span><span class="sw" style="background:var(--e1)"></span>E1 Entrada</span>
-      <span><span class="sw" style="background:var(--e2)"></span>E2 Dominio</span>
-      <span><span class="sw" style="background:var(--e3)"></span>E3 IO</span>
-      <span><span class="sw" style="background:var(--e4)"></span>E4 Salida</span>
+      <span><span class="sw" style="background:var(--e1)"></span>${t('report.html.legendE1')}</span>
+      <span><span class="sw" style="background:var(--e2)"></span>${t('report.html.legendE2')}</span>
+      <span><span class="sw" style="background:var(--e3)"></span>${t('report.html.legendE3')}</span>
+      <span><span class="sw" style="background:var(--e4)"></span>${t('report.html.legendE4')}</span>
       <span><span class="sw" style="background:var(--unk)"></span>UNKNOWN</span>
-      <span style="margin-left:10px">borde rojo = error · borde ámbar = warning</span>
+      <span style="margin-left:10px">${t('report.html.legendBorderNote')}</span>
     </div>
     ${fileSections}
   </div>
 
   <!-- ACERCA DE -->
   <div class="card" style="font-size:13px">
-    <h2>Acerca de este reporte</h2>
-    <p class="muted">Generado por <code>${TOOL} v${VERSION}</code> (edición Pro). Requiere red para Tailwind y Chart.js CDN.</p>
-    <p class="muted">Para un reporte 100% offline usar: <code>node microframework/validacion/validar-flujos.mjs --format html</code> (Edición Lite)</p>
-    <p class="muted">Comando: <code>node microframework/validacion-pro/bin/n8nmf.mjs report --format html --out reportes/</code></p>
+    <h2>${t('report.html.aboutHeading')}</h2>
+    <p class="muted">${t('report.html.aboutDesc', { tool: TOOL, version: VERSION })}</p>
+    <p class="muted">${t('report.html.aboutOffline')}</p>
+    <p class="muted">${t('report.html.aboutCommand')}</p>
   </div>
 
 </div><!-- /container -->
@@ -387,17 +405,13 @@ tr:hover{background:rgba(56,189,248,.04)}
   (function(){
     const ctx = document.getElementById('radar');
     if(!ctx) return;
-    const labels = D.radarAttrs.map(a=>({
-      security:'Seguridad', reliability:'Fiabilidad',
-      maintainability:'Mantenibilidad', performanceEfficiency:'Rendimiento',
-      functionalSuitability:'Funcionalidad', usability:'Usabilidad'
-    }[a]||a));
+    const labels = D.radarAttrs.map(a=>(D.radarLabelsMap||{})[a]||a);
     new Chart(ctx.getContext('2d'), {
       type:'radar',
       data:{
         labels,
         datasets:[{
-          label:'Findings por atributo',
+          label: D.labels.radarDatasetLabel,
           data: D.radarAttrs.map(a=>D.radarCounts[a]||0),
           backgroundColor:'rgba(56,189,248,0.25)',
           borderColor:'#38bdf8', borderWidth:2,
@@ -424,7 +438,7 @@ tr:hover{background:rgba(56,189,248,.04)}
     if(!ctx) return;
     const h = D.history || [];
     if(h.length === 0){
-      ctx.parentElement.innerHTML += '<p class="muted xs" style="margin-top:12px;text-align:center">Sin datos históricos previos.</p>';
+      ctx.parentElement.innerHTML += '<p class="muted xs" style="margin-top:12px;text-align:center">'+D.labels.noHistory+'</p>';
       ctx.remove(); return;
     }
     new Chart(ctx.getContext('2d'), {
@@ -433,14 +447,14 @@ tr:hover{background:rgba(56,189,248,.04)}
         labels: h.map(x=>x.date),
         datasets:[
           {
-            label:'Score promedio (%)',
+            label: D.labels.sparklineScoreLabel,
             data: h.map(x=>x.score),
             borderColor:'#38bdf8', backgroundColor:'rgba(56,189,248,0.1)',
             tension:0.3, fill:true, pointRadius:4,
             pointBackgroundColor:'#38bdf8', yAxisID:'y'
           },
           {
-            label:'Errors',
+            label: D.labels.sparklineErrorsLabel,
             data: h.map(x=>x.errors),
             borderColor:'#f87171', backgroundColor:'transparent',
             tension:0.3, borderDash:[4,3], pointRadius:3,
@@ -481,7 +495,7 @@ tr:hover{background:rgba(56,189,248,.04)}
         tr.style.display = show ? '' : 'none';
         if(show) n++;
       }
-      if(countEl) countEl.textContent = n + ' resultado' + (n!==1?'s':'');
+      if(countEl) countEl.textContent = (n===1 ? D.labels.resultsCountSingular : D.labels.resultsCountPlural).replace('{n}', n);
     }
 
     function applySort(col){
@@ -509,7 +523,7 @@ tr:hover{background:rgba(56,189,248,.04)}
     applyFilter();
 
     document.getElementById('tbl-findings-csv')?.addEventListener('click',()=>{
-      const rows=[['Severidad','Regla','Nombre','Archivo','Nodo','Mensaje','ISO 25010','ATAM']];
+      const rows=[D.labels.csvHeaders];
       for(const fd of (D.allFindings||[])){
         rows.push([fd.severity,fd.ruleId,fd.ruleName||'',fd._file,fd.nodeName||'',
           fd.message,(fd.iso25010||[]).join(';'),(fd.atamScenarios||[]).join(';')]);
@@ -539,8 +553,8 @@ tr:hover{background:rgba(56,189,248,.04)}
       '</div>'+
       '<p>'+escHtml(f.message)+'</p>'+
       (f.evidence?'<pre>'+escHtml(f.evidence)+'</pre>':'')+
-      (f.iso25010&&f.iso25010.length?'<p class="xs muted">ISO 25010: '+tags(f.iso25010)+'</p>':'')+
-      (f.atamScenarios&&f.atamScenarios.length?'<p class="xs muted">ATAM: '+tags(f.atamScenarios)+'</p>':'')+
+      (f.iso25010&&f.iso25010.length?'<p class="xs muted">'+D.labels.thIso+': '+tags(f.iso25010)+'</p>':'')+
+      (f.atamScenarios&&f.atamScenarios.length?'<p class="xs muted">'+D.labels.thAtam+': '+tags(f.atamScenarios)+'</p>':'')+
       (f.adr&&f.adr.length?'<p class="xs muted">ADR: '+tags(f.adr)+'</p>':'')+
       (f.fixSuggestion&&f.fixSuggestion.preview?'<p style="color:var(--ok);font-size:12px;margin-top:4px">💡 '+escHtml(f.fixSuggestion.preview)+'</p>':'')+
       '</div>';
@@ -551,7 +565,7 @@ tr:hover{background:rgba(56,189,248,.04)}
     const panel = document.getElementById(panelId); if(!panel) return;
     const nodes = file.graph.nodes;
     if(!nodes||nodes.length===0){
-      svg.innerHTML='<text x="20" y="40" fill="#94a3b8">(sin nodos)</text>'; return;
+      svg.innerHTML='<text x="20" y="40" fill="#94a3b8">'+D.labels.noNodes+'</text>'; return;
     }
     let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
     for(const n of nodes){
@@ -618,7 +632,7 @@ tr:hover{background:rgba(56,189,248,.04)}
             ' <span class="badge badge-'+stageCls+'">'+n.stage+'</span></h3>'+
           '<p class="muted xs" style="margin:0 0 8px">'+escHtml(n.type||'')+'</p>'+
           (fnds.length===0
-            ? '<p class="muted">Sin findings en este nodo.</p>'
+            ? '<p class="muted">'+D.labels.noFindingsInNode+'</p>'
             : fnds.map(renderFindingCard).join(''));
       });
     });

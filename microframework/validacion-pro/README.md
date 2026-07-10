@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](README.en.md)
+
 # Edición Pro — Validador estático n8n
 
 Versión modular del validador (`microframework/validacion-pro/`). Convive con la
@@ -36,6 +38,9 @@ node ./bin/n8nmf.mjs report --format html --out ./reportes
 
 # Reporte SARIF para GitHub Code Scanning
 node ./bin/n8nmf.mjs report --format sarif --out ./reportes
+
+# Reportes en inglés (default: es)
+node ./bin/n8nmf.mjs report --format html --lang en
 
 # Diff contra baseline JSON
 node ./bin/n8nmf.mjs diff --current reportes/hoy.json --baseline reportes/ayer.json
@@ -86,3 +91,10 @@ npm test
 ```
 
 Cobertura objetivo ≥ 85% en `src/rules/` y `src/parser/`.
+
+## Idioma / i18n
+
+Flag `--lang es|en` (default `es`) en todos los subcomandos. Mensajes de reglas, ayuda
+de CLI y los 5 formatos de reporte son bilingües. Módulo `src/shared/i18n.mjs` +
+`src/shared/locales/{es,en}.json`; `mapeo-calidad.json` (compartido con Lite) declara
+el nombre de cada regla como `{ es, en }` inline.

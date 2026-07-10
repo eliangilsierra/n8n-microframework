@@ -33,6 +33,7 @@ import { join, basename, dirname, relative, resolve, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { randomUUID, createHash } from 'node:crypto';
 import { execSync } from 'node:child_process';
+import { setLang, getLang, t } from './i18n.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const HERE = dirname(__filename);
@@ -49,7 +50,7 @@ function parseArgs(argv) {
     caso: null, estado: null,
     input: [], format: 'md', out: null,
     baseline: null, strict: false, help: false,
-    quiet: false
+    quiet: false, lang: 'es'
   };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -61,37 +62,15 @@ function parseArgs(argv) {
     else if (a === '--baseline') out.baseline = argv[++i];
     else if (a === '--strict') out.strict = true;
     else if (a === '--quiet') out.quiet = true;
+    else if (a === '--lang') out.lang = argv[++i];
     else if (a === '--help' || a === '-h') out.help = true;
   }
   return out;
 }
 
-const HELP = `validar-flujos.mjs v${VERSION} — validador estático n8n (Lite)
-
-Uso:
-  node validar-flujos.mjs [opciones]
-
-Opciones:
-  --input <path>        Archivo o directorio JSON a analizar (repetible).
-                        Sin --input: recorre casos-de-estudio/ y microframework/plantillas/.
-  --caso bot|iot        Filtra por caso (compatibilidad con v1).
-  --estado as-is|to-be  Filtra por estado (compatibilidad con v1).
-  --format md|json|html|sarif|junit
-                        Formato del reporte (default: md). Md y html siempre se
-                        guardan en disco; json/sarif/junit van a stdout salvo
-                        que se pase --out.
-  --out <dir>           Carpeta para los archivos generados.
-                        Default: microframework/validacion/reportes/
-  --baseline <json>     Compara contra un reporte JSON previo. Imprime sección
-                        "diff" con findings nuevos / resueltos / regresiones.
-  --strict              Exit 1 también ante warnings (default: solo errors).
-  --quiet               No imprime el reporte en stdout (solo lo escribe).
-  -h, --help            Esta ayuda.
-
-Exit code:
-  0  → ningún flujo to-be tiene findings de severidad 'error'
-  1  → al menos un flujo to-be tiene un finding 'error' (o 'warning' si --strict)
-`;
+function buildHelp() {
+  return t('cli.help.text', { version: VERSION });
+}
 
 /* ============================================================================
  *  SECCIÓN 2 — Carga del mapeo de calidad (ISO 25010 / ATAM / ADR)
@@ -108,6 +87,17 @@ function meta(ruleId) {
   return MAPEO_CALIDAD.reglas[ruleId] || {
     severityDefault: 'warning', iso25010: [], atam: [], adr: []
   };
+}
+
+/**
+ * Resuelve `nombre` (bilingüe inline {es, en} en mapeo-calidad.json) al
+ * idioma activo. Compatible hacia atrás si `nombre` fuera un string plano.
+ */
+function ruleDisplayName(ruleId) {
+  const nombre = meta(ruleId).nombre;
+  if (!nombre) return ruleId;
+  if (typeof nombre === 'string') return nombre;
+  return nombre[getLang()] || nombre.es || ruleId;
 }
 
 /* ============================================================================
@@ -408,7 +398,7 @@ function makeFinding(ruleId, opts = {}) {
   return {
     id: randomUUID().slice(0, 8),
     ruleId,
-    ruleName: m.nombre || opts.ruleName || ruleId,
+    ruleName: opts.ruleName || ruleDisplayName(ruleId),
     severity: opts.severity || m.severityDefault || 'warning',
     confidence: opts.confidence || 'high',
     nodeId: opts.nodeId || null,
@@ -425,12 +415,12 @@ function makeFinding(ruleId, opts = {}) {
 
 /* --- Patrones de detección de secretos en literales --- */
 const SECRET_PATTERNS = [
-  { re: /Bearer\s+[A-Za-z0-9._\-]{8,}/i, label: 'Bearer token literal' },
-  { re: /sk-[A-Za-z0-9]{16,}/, label: 'API key estilo OpenAI' },
-  { re: /ghp_[A-Za-z0-9]{16,}/, label: 'GitHub PAT literal' },
+  { re: /Bearer\s+[A-Za-z0-9._\-]{8,}/i, labelKey: 'rule.reg001.label.bearerToken' },
+  { re: /sk-[A-Za-z0-9]{16,}/, labelKey: 'rule.reg001.label.openaiKey' },
+  { re: /ghp_[A-Za-z0-9]{16,}/, labelKey: 'rule.reg001.label.githubPat' },
   { re: /\b(const|let|var)\s+\w*(token|api[_-]?key|secret|password)\w*\s*=\s*["'][^"'{}$\s][^"'{}$]{6,}["']/i,
-    label: 'Asignación literal a variable de secreto en Code' },
-  { re: /"rightValue"\s*:\s*"[A-Za-z0-9._\-]{12,}"/, label: 'Comparación literal de token en IF/Switch' }
+    labelKey: 'rule.reg001.label.codeSecretAssignment' },
+  { re: /"rightValue"\s*:\s*"[A-Za-z0-9._\-]{12,}"/, labelKey: 'rule.reg001.label.ifSwitchTokenCompare' }
 ];
 
 function ruleSecretos({ graph, file }) {
@@ -442,11 +432,11 @@ function ruleSecretos({ graph, file }) {
       if (m) {
         findings.push(makeFinding('REG-001', {
           nodeId: n.id, nodeName: n.name, position: n.position,
-          message: `Secreto literal detectado: ${pat.label}`,
+          message: t('rule.reg001.secretLiteral', { label: t(pat.labelKey) }),
           evidence: m[0].slice(0, 120),
           fixSuggestion: {
             kind: 'codemod-id', codemodId: 'envify-secret',
-            preview: 'Reemplazar literal por credencial n8n o {{$env.VAR_NAME}}'
+            preview: t('rule.reg001.fixSecret')
           }
         }));
       }
@@ -462,11 +452,11 @@ function ruleSecretos({ graph, file }) {
             && value.length > 6 && !/\{\{.*\}\}/.test(value) && !/^\$\{/.test(value)) {
           findings.push(makeFinding('REG-001', {
             nodeId: n.id, nodeName: n.name, position: n.position,
-            message: `Header HTTP "${h.name}" con valor literal`,
+            message: t('rule.reg001.headerLiteral', { name: h.name }),
             evidence: `${h.name}: ${value.slice(0, 40)}…`,
             fixSuggestion: {
               kind: 'codemod-id', codemodId: 'envify-secret',
-              preview: `Header debe usar {{$env.${name.toUpperCase().replace(/-/g, '_')}}}`
+              preview: t('rule.reg001.fixHeader', { envVar: name.toUpperCase().replace(/-/g, '_') })
             }
           }));
         }
@@ -481,8 +471,8 @@ function ruleRunId({ graph, file }) {
     /code|function/i.test(n.type));
   if (codes.length === 0) {
     // Orquestador puro con Execute Workflow → N/A
-    if (graph.subflowRefs.length > 0) return { na: 'orquestador puro (run_id delegado a subflujo E1)' };
-    return { na: 'sin nodos Code' };
+    if (graph.subflowRefs.length > 0) return { na: t('na.reg002.pureOrchestrator') };
+    return { na: t('na.common.noCodeNodes') };
   }
   const findings = [];
   let foundRunId = false, foundLog = false;
@@ -493,15 +483,15 @@ function ruleRunId({ graph, file }) {
   }
   if (!foundRunId) {
     findings.push(makeFinding('REG-002', {
-      message: 'Ningún nodo Code referencia run_id',
+      message: t('rule.reg002.noRunId'),
       confidence: 'high',
       fixSuggestion: { kind: 'hint',
-        preview: 'Generar run_id en E1 con crypto.randomUUID() y propagarlo en el payload.' }
+        preview: t('rule.reg002.fixRunId') }
     }));
   }
   if (!foundLog) {
     findings.push(makeFinding('REG-002', {
-      message: 'No se detectó console.log(JSON.stringify(...)) con run_id',
+      message: t('rule.reg002.noStructuredLogRunId'),
       confidence: 'medium'
     }));
   }
@@ -510,19 +500,19 @@ function ruleRunId({ graph, file }) {
 
 function ruleErrorWorkflow({ flow, file, graph }) {
   const isOrq = isOrquestadorFile(file, graph);
-  if (!isOrq) return { na: 'no es orquestador' };
+  if (!isOrq) return { na: t('na.common.notOrchestrator') };
   const s = flow?.settings?.errorWorkflow;
   if (s && String(s).trim().length > 0) return [];
   return [makeFinding('REG-003', {
-    message: 'settings.errorWorkflow ausente o vacío en orquestador',
+    message: t('rule.reg003.missingErrorWorkflow'),
     fixSuggestion: { kind: 'hint',
-      preview: 'Configurar Settings → Error Workflow apuntando al error handler del caso.' }
+      preview: t('rule.reg003.fixErrorWorkflow') }
   })];
 }
 
 function ruleRetry({ graph }) {
   const https = graph.nodes.filter(n => /httprequest/i.test(n.type));
-  if (https.length === 0) return { na: 'sin nodos HTTP' };
+  if (https.length === 0) return { na: t('na.reg004.noHttpNodes') };
   const findings = [];
   for (const n of https) {
     const retry = n.parameters?.options?.retry;
@@ -531,7 +521,7 @@ function ruleRetry({ graph }) {
     if (!enabled) {
       findings.push(makeFinding('REG-004', {
         nodeId: n.id, nodeName: n.name, position: n.position,
-        message: 'Nodo HTTP sin retry habilitado',
+        message: t('rule.reg004.noRetry'),
         evidence: `options.retry.enabled = ${enabled}`,
         fixSuggestion: { kind: 'codemod-id', codemodId: 'add-http-retry',
           preview: 'options.retry = { enabled: true, maxRetries: 3, waitBetweenTries: 1000 }' }
@@ -540,10 +530,10 @@ function ruleRetry({ graph }) {
       findings.push(makeFinding('REG-004', {
         nodeId: n.id, nodeName: n.name, position: n.position,
         severity: 'warning',
-        message: `maxRetries=${max} < 2`,
+        message: t('rule.reg004.lowMaxRetries', { max }),
         evidence: `options.retry.maxRetries = ${max}`,
         fixSuggestion: { kind: 'codemod-id', codemodId: 'add-http-retry',
-          preview: 'Subir maxRetries a 3 con backoff exponencial.' }
+          preview: t('rule.reg004.fixLowRetry') }
       }));
     }
   }
@@ -551,9 +541,9 @@ function ruleRetry({ graph }) {
 }
 
 function ruleIdempotencia({ graph, file }) {
-  if (isErrorHandlerFile(file)) return { na: 'error handler (cada evento es único)' };
+  if (isErrorHandlerFile(file)) return { na: t('na.reg005.errorHandler') };
   const pgs = graph.nodes.filter(n => /postgres/i.test(n.type));
-  if (pgs.length === 0) return { na: 'sin nodos Postgres' };
+  if (pgs.length === 0) return { na: t('na.reg005.noPostgresNodes') };
   const findings = [];
   for (const n of pgs) {
     const q = JSON.stringify(n.parameters || {}).toLowerCase();
@@ -565,10 +555,10 @@ function ruleIdempotencia({ graph, file }) {
     if (!hasOnConflict && !hasIdemKey) {
       findings.push(makeFinding('REG-005', {
         nodeId: n.id, nodeName: n.name, position: n.position,
-        message: 'INSERT sin ON CONFLICT ni idempotency_key',
+        message: t('rule.reg005.noIdempotency'),
         evidence: extractQuery(n.parameters || {}),
         fixSuggestion: { kind: 'codemod-id', codemodId: 'add-on-conflict',
-          preview: 'Agregar ON CONFLICT (id) DO NOTHING o columna idempotency_key UNIQUE.' }
+          preview: t('rule.reg005.fixIdempotency') }
       }));
     }
   }
@@ -581,14 +571,14 @@ function extractQuery(params) {
 
 function ruleLogEstructurado({ graph }) {
   const codes = graph.nodes.filter(n => /code|function/i.test(n.type));
-  if (codes.length === 0) return { na: 'sin nodos Code' };
+  if (codes.length === 0) return { na: t('na.common.noCodeNodes') };
   const findings = [];
   for (const n of codes) {
     const src = String(n.parameters?.jsCode || n.parameters?.functionCode || '');
     if (!/console\.log\s*\(\s*JSON\.stringify/.test(src)) {
       findings.push(makeFinding('REG-006', {
         nodeId: n.id, nodeName: n.name, position: n.position,
-        message: 'Nodo Code sin console.log(JSON.stringify(...))',
+        message: t('rule.reg006.noStructuredLog'),
         confidence: 'medium',
         fixSuggestion: { kind: 'hint',
           preview: "console.log(JSON.stringify({ run_id, etapa: 'E?', status: 'ok' }));" }
@@ -599,7 +589,7 @@ function ruleLogEstructurado({ graph }) {
     if (missing.length) {
       findings.push(makeFinding('REG-006', {
         nodeId: n.id, nodeName: n.name, position: n.position,
-        message: `Log JSON sin campos: ${missing.join(', ')}`,
+        message: t('rule.reg006.missingFields', { fields: missing.join(', ') }),
         confidence: 'high'
       }));
     }
@@ -617,34 +607,34 @@ function ruleDominioAislado({ graph, file }) {
     if (ios.length === 0) return [];
     return ios.map(n => makeFinding('REG-007', {
       nodeId: n.id, nodeName: n.name, position: n.position,
-      message: `Nodo IO "${n.type}" presente en subflujo E2 (dominio)`,
+      message: t('rule.reg007.ioInE2', { type: n.type }),
       fixSuggestion: { kind: 'hint',
-        preview: 'Extraer este IO a un subflujo E3 invocado vía Execute Workflow.' }
+        preview: t('rule.reg007.fixExtractIo') }
     }));
   }
   // Cuando no es archivo E2, sólo reportamos si un nodo individual quedó clasificado
   // como E2 y contiene IO (esto es el "Stage leak" — pero se cubre con AP-006).
-  return { na: 'no es subflujo E2 por nombre' };
+  return { na: t('na.reg007.notE2File') };
 }
 
 function ruleIntegracionesLugar({ graph, file }) {
   const name = basename(file.path);
   const isAllowedFile = /-e3-|-e4-|orquestador|error.handler/i.test(name);
   const ios = graph.nodes.filter(n => isIoType(n.type));
-  if (ios.length === 0) return { na: 'sin nodos IO' };
+  if (ios.length === 0) return { na: t('na.reg008.noIoNodes') };
   if (isAllowedFile) return [];
   return [makeFinding('REG-008', {
-    message: `Nodos IO en archivo sin convención E3/E4/orquestador: ${ios.map(n => n.name).join(', ')}`,
+    message: t('rule.reg008.ioMisplaced', { nodes: ios.map(n => n.name).join(', ') }),
     confidence: 'medium'
   })];
 }
 
 function ruleStatusCodes({ graph, file }) {
-  if (!isOrquestadorFile(file, graph)) return { na: 'no es orquestador' };
+  if (!isOrquestadorFile(file, graph)) return { na: t('na.common.notOrchestrator') };
   const responders = graph.nodes.filter(n => /respondtowebhook/i.test(n.type));
   if (responders.length === 0) {
     return [makeFinding('REG-009', {
-      message: 'Orquestador sin nodo Respond to Webhook'
+      message: t('rule.reg009.noRespondNode')
     })];
   }
   const codes = new Set();
@@ -654,23 +644,23 @@ function ruleStatusCodes({ graph, file }) {
   }
   if (codes.size < 2) {
     return [makeFinding('REG-009', {
-      message: `Orquestador con un único responseCode: [${[...codes].join(', ')}]`,
+      message: t('rule.reg009.singleResponseCode', { codes: [...codes].join(', ') }),
       fixSuggestion: { kind: 'hint',
-        preview: 'Diferenciar éxito (200/201) de error de cliente (4xx) y de servidor (5xx).' }
+        preview: t('rule.reg009.fixResponseCodes') }
     })];
   }
   return [];
 }
 
 function ruleAdrPresente({ file }) {
-  if (file.caso === 'plantilla' || !file.caso) return { na: 'plantilla o caso sin convención' };
+  if (file.caso === 'plantilla' || !file.caso) return { na: t('na.reg010.templateOrNoCase') };
   const adrDir = join(ROOT, 'casos-de-estudio', file.caso, 'adr');
   if (!existsSync(adrDir)) {
-    return [makeFinding('REG-010', { message: `Carpeta casos-de-estudio/${file.caso}/adr/ no existe` })];
+    return [makeFinding('REG-010', { message: t('rule.reg010.noAdrFolder', { caso: file.caso }) })];
   }
   const adrs = readdirSync(adrDir).filter(f => /^ADR-.*\.md$/.test(f));
   if (adrs.length === 0) {
-    return [makeFinding('REG-010', { message: 'Carpeta adr/ sin archivos ADR-*.md' })];
+    return [makeFinding('REG-010', { message: t('rule.reg010.noAdrFiles') })];
   }
   return [];
 }
@@ -683,8 +673,8 @@ const VOCAB_PROHIBIDO = [
 ];
 
 function ruleVocabulario({ graph, file }) {
-  if (file.caso === 'plantilla') return { na: 'plantilla' };
-  if (file.estado && file.estado !== 'to-be') return { na: 'sólo aplica a to-be' };
+  if (file.caso === 'plantilla') return { na: t('na.regvoc.template') };
+  if (file.estado && file.estado !== 'to-be') return { na: t('na.regvoc.onlyToBe') };
   const findings = [];
   for (const n of graph.nodes.filter(n => /code|function/i.test(n.type))) {
     const src = String(n.parameters?.jsCode || n.parameters?.functionCode || '');
@@ -693,7 +683,7 @@ function ruleVocabulario({ graph, file }) {
       const m = src.match(v.re);
       if (m) findings.push(makeFinding('REG-VOC', {
         nodeId: n.id, nodeName: n.name, position: n.position,
-        message: `Vocabulario en inglés — usar ${v.correcto}`,
+        message: t('rule.regvoc.englishVocab', { correct: v.correcto }),
         evidence: m[0]
       }));
     }
@@ -710,14 +700,14 @@ function antiGodNode({ graph }) {
     if (degree > 6) {
       findings.push(makeFinding('AP-001', {
         nodeId: n.id, nodeName: n.name, position: n.position,
-        message: `God-node: in=${n.inDegree}, out=${n.outDegree} (umbral 6)`,
+        message: t('rule.ap001.godNode', { inDegree: n.inDegree, outDegree: n.outDegree }),
         confidence: 'medium',
         fixSuggestion: { kind: 'hint',
-          preview: 'Descomponer la responsabilidad de este nodo en 2–3 subflujos cohesivos.' }
+          preview: t('rule.ap001.fixGodNode') }
       }));
     }
   }
-  return findings.length ? findings : { na: 'ningún nodo supera grado 6' };
+  return findings.length ? findings : { na: t('na.ap001.noneOverThreshold') };
 }
 
 function antiChatty({ graph }) {
@@ -728,36 +718,36 @@ function antiChatty({ graph }) {
     const pred = graph.edges.filter(e => e.to === n.id).map(e => graph.byId.get(e.from));
     for (const p of pred) {
       if (!p) continue;
-      const t = (p.type || '').toLowerCase();
-      if (t.includes('splitinbatches') || t.includes('itemlists') ||
-          t.includes('loop') || t.includes('foreach')) {
+      const pt = (p.type || '').toLowerCase();
+      if (pt.includes('splitinbatches') || pt.includes('itemlists') ||
+          pt.includes('loop') || pt.includes('foreach')) {
         findings.push(makeFinding('AP-002', {
           nodeId: n.id, nodeName: n.name, position: n.position,
-          message: `Posible chatty IO: HTTP "${n.name}" dentro de loop "${p.name}"`,
+          message: t('rule.ap002.chatty', { httpName: n.name, loopName: p.name }),
           confidence: 'medium',
           fixSuggestion: { kind: 'hint',
-            preview: 'Considerar batch endpoint o cache para evitar N llamadas HTTP.' }
+            preview: t('rule.ap002.fixChatty') }
         }));
       }
     }
   }
-  return findings.length ? findings : { na: 'sin patrón HTTP-en-loop' };
+  return findings.length ? findings : { na: t('na.ap002.noPattern') };
 }
 
 function antiDualWrite({ graph }) {
   const writers = graph.nodes.filter(n =>
     /postgres|mysql|mongodb/i.test(n.type) &&
     /insert|update/i.test(JSON.stringify(n.parameters || {})));
-  if (writers.length < 2) return { na: 'menos de 2 escrituras' };
+  if (writers.length < 2) return { na: t('na.ap003.lessThanTwoWrites') };
   // Detectar pares de escritores en distinto subgrafo de etapa y sin saga
   const txt = JSON.stringify(graph.nodes.map(n => n.parameters || {}));
   const hasSaga = /saga|compensat|rollback|begin\s+transaction|commit\s*;/i.test(txt);
-  if (hasSaga) return { na: 'detectada compensación/transacción' };
+  if (hasSaga) return { na: t('na.ap003.sagaDetected') };
   return [makeFinding('AP-003', {
-    message: `Dual-write detectado: ${writers.map(w => w.name).join(' + ')} sin compensación visible`,
+    message: t('rule.ap003.dualWrite', { writers: writers.map(w => w.name).join(' + ') }),
     confidence: 'medium',
     fixSuggestion: { kind: 'hint',
-      preview: 'Implementar patrón saga / compensación o usar BEGIN..COMMIT explícito.' }
+      preview: t('rule.ap003.fixDualWrite') }
   })];
 }
 
@@ -779,18 +769,18 @@ function antiExceptionSwallowing({ graph, flow }) {
       if (errEdges.length > 0 && !hasLogDownstream) {
         findings.push(makeFinding('AP-004', {
           nodeId: n.id, nodeName: n.name, position: n.position,
-          message: 'Rama error no termina en log estructurado ni re-throw',
+          message: t('rule.ap004.errorBranchNoLog'),
           confidence: 'medium'
         }));
       } else if (errEdges.length === 0 && n.continueOnFail && !hasGlobalHandler) {
         findings.push(makeFinding('AP-004', {
           nodeId: n.id, nodeName: n.name, position: n.position,
-          message: 'continueOnFail=true sin rama error explícita y sin errorWorkflow global'
+          message: t('rule.ap004.continueOnFailNoHandler')
         }));
       }
     }
   }
-  return findings.length ? findings : { na: 'no se detectó swallowing' };
+  return findings.length ? findings : { na: t('na.ap004.noSwallowing') };
 }
 
 function antiHardcodedSubflowId({ graph }) {
@@ -801,12 +791,12 @@ function antiHardcodedSubflowId({ graph }) {
     if (!id || /placeholder|REEMPLAZAR|TODO|\{\{.+\}\}/i.test(String(id))) {
       findings.push(makeFinding('AP-005', {
         nodeId: ref.nodeId, nodeName: ref.nodeName,
-        message: `Execute Workflow con workflowId no resuelto: "${id}"`,
+        message: t('rule.ap005.unresolvedWorkflowId', { id }),
         confidence: 'high'
       }));
     }
   }
-  return findings.length ? findings : { na: 'workflowIds resueltos' };
+  return findings.length ? findings : { na: t('na.ap005.resolved') };
 }
 
 function antiStageLeak({ graph }) {
@@ -816,12 +806,12 @@ function antiStageLeak({ graph }) {
     if (n.stage === 'E2' && nodeHasIoSignal(n)) {
       findings.push(makeFinding('AP-006', {
         nodeId: n.id, nodeName: n.name, position: n.position,
-        message: `Stage leak: nodo clasificado E2 con IO (${n.type})`,
+        message: t('rule.ap006.stageLeak', { type: n.type }),
         confidence: 'high'
       }));
     }
   }
-  return findings.length ? findings : { na: 'no se detectó stage leak' };
+  return findings.length ? findings : { na: t('na.ap006.none') };
 }
 
 /* --- Helpers para reglas --- */
@@ -1011,19 +1001,19 @@ function loadHistory() {
 
 function renderMd(report) {
   const lines = [];
-  lines.push(`# Reporte de validación estática — Lite v${VERSION}`);
+  lines.push(t('report.md.title', { version: VERSION }));
   lines.push('');
-  lines.push(`- Generado: ${report.generatedAt}`);
-  if (report.commit) lines.push(`- Commit: \`${report.commit.slice(0,12)}\``);
-  lines.push(`- Archivos analizados: ${report.files.length}`);
+  lines.push(t('report.md.generated', { date: report.generatedAt }));
+  if (report.commit) lines.push(t('report.md.commit', { commit: report.commit.slice(0,12) }));
+  lines.push(t('report.md.filesAnalyzed', { count: report.files.length }));
   lines.push('');
 
   // Resumen por estado
-  const groups = groupBy(report.files, f => f.estado || 'sin estado');
+  const groups = groupBy(report.files, f => f.estado || t('report.md.noState'));
   for (const [estado, files] of Object.entries(groups)) {
-    lines.push(`## Estado: ${estado}`);
+    lines.push(t('report.md.stateHeading', { estado }));
     lines.push('');
-    lines.push('| Archivo | Caso | Score | Err | Warn | Info | Nodos | Ciclomática |');
+    lines.push(t('report.md.tableHeader'));
     lines.push('|---|---|---|---|---|---|---|---|');
     for (const f of files) {
       const s = f.summary;
@@ -1034,40 +1024,44 @@ function renderMd(report) {
   }
 
   // Cobertura del micro-framework
-  lines.push('## Cobertura del micro-framework');
+  lines.push(t('report.md.coverageHeading'));
   lines.push('');
-  lines.push(`- Reglas definidas: ${report.coverage.rulesDefined.length}`);
-  lines.push(`- Reglas ejercitadas: ${report.coverage.rulesExercised.length}`);
+  lines.push(t('report.md.rulesDefined', { n: report.coverage.rulesDefined.length }));
+  lines.push(t('report.md.rulesExercised', { n: report.coverage.rulesExercised.length }));
   if (report.coverage.rulesDormant.length) {
-    lines.push(`- ⚠️ Reglas dormidas (no ejercitadas por ningún flujo): ${report.coverage.rulesDormant.join(', ')}`);
+    lines.push(t('report.md.dormantRules', { list: report.coverage.rulesDormant.join(', ') }));
   }
   lines.push('');
 
   // Detalle
-  lines.push('## Detalle por archivo');
+  lines.push(t('report.md.detailHeading'));
   lines.push('');
   for (const f of report.files) {
     const rel = relative(ROOT, f.path).replace(/\\/g, '/');
     lines.push(`### ${rel}`);
     if (f.parseError) {
-      lines.push(`- ❌ ERROR parseo: ${f.parseError}`);
+      lines.push(t('report.md.parseError', { error: f.parseError }));
       lines.push('');
       continue;
     }
-    lines.push(`- Métricas: nodos=${f.metrics.nodeCount}, aristas=${f.metrics.edgeCount}, ciclomática=${f.metrics.cyclomaticComplexity}, profundidad=${f.metrics.maxDepth}, cohesion=${f.metrics.cohesionScore}`);
+    lines.push(t('report.md.metrics', {
+      nodes: f.metrics.nodeCount, edges: f.metrics.edgeCount,
+      cyclomatic: f.metrics.cyclomaticComplexity, depth: f.metrics.maxDepth,
+      cohesion: f.metrics.cohesionScore
+    }));
     const sd = f.metrics.stageDistribution;
-    lines.push(`- Etapas: E1=${sd.E1} E2=${sd.E2} E3=${sd.E3} E4=${sd.E4} UNK=${sd.UNKNOWN}`);
+    lines.push(t('report.md.stages', { e1: sd.E1, e2: sd.E2, e3: sd.E3, e4: sd.E4, unk: sd.UNKNOWN }));
     if (f.findings.length === 0) {
-      lines.push('- ✓ Sin findings');
+      lines.push(t('report.md.noFindings'));
     } else {
       for (const fd of f.findings) {
         const icon = fd.severity === 'error' ? '🛑' : fd.severity === 'warning' ? '⚠️' : 'ℹ️';
         const at = fd.nodeName ? ` @ "${fd.nodeName}"` : '';
         lines.push(`- ${icon} **${fd.ruleId}** ${fd.ruleName}${at}: ${fd.message}`);
-        if (fd.evidence) lines.push(`    - evidencia: \`${fd.evidence}\``);
-        if (fd.iso25010?.length) lines.push(`    - ISO 25010: ${fd.iso25010.join(', ')}`);
-        if (fd.atamScenarios?.length) lines.push(`    - ATAM: ${fd.atamScenarios.join(', ')}`);
-        if (fd.fixSuggestion?.preview) lines.push(`    - fix: ${fd.fixSuggestion.preview}`);
+        if (fd.evidence) lines.push(t('report.md.evidence', { evidence: fd.evidence }));
+        if (fd.iso25010?.length) lines.push(t('report.md.iso25010', { list: fd.iso25010.join(', ') }));
+        if (fd.atamScenarios?.length) lines.push(t('report.md.atam', { list: fd.atamScenarios.join(', ') }));
+        if (fd.fixSuggestion?.preview) lines.push(t('report.md.fix', { preview: fd.fixSuggestion.preview }));
       }
     }
     lines.push('');
@@ -1091,10 +1085,11 @@ function groupBy(arr, keyFn) {
 function renderSarif(report) {
   const rules = REGLAS.map(r => {
     const m = meta(r.id);
+    const name = ruleDisplayName(r.id);
     return {
-      id: r.id, name: m.nombre || r.id,
-      shortDescription: { text: m.nombre || r.id },
-      fullDescription: { text: `${m.nombre || r.id} — micro-framework LC/NC n8n` },
+      id: r.id, name,
+      shortDescription: { text: name },
+      fullDescription: { text: `${name} — micro-framework LC/NC n8n` },
       defaultConfiguration: { level: severityToSarif(m.severityDefault || 'warning') },
       properties: { iso25010: m.iso25010 || [], atam: m.atam || [], adr: m.adr || [] }
     };
@@ -1266,7 +1261,7 @@ const INLINE_JS = `
   window.renderFlow=function(file,svgId){
     const svg=document.getElementById(svgId); if(!svg)return;
     const nodes=file.graph.nodes;
-    if(nodes.length===0){svg.innerHTML='<text x="20" y="40" fill="#94a3b8">(sin nodos)</text>';return;}
+    if(nodes.length===0){svg.innerHTML='<text x="20" y="40" fill="#94a3b8">'+((window.__LABELS__||{}).noNodes||'(no nodes)')+'</text>';return;}
     let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
     for(const n of nodes){const [x,y]=n.position||[0,0];
       if(x<minX)minX=x;if(y<minY)minY=y;if(x>maxX)maxX=x;if(y>maxY)maxY=y;}
@@ -1311,21 +1306,22 @@ const INLINE_JS = `
         const n=nodeById[id];
         panel.innerHTML='<h3>'+escapeHtml(n.name)+' <span class="badge '+n.stage.toLowerCase()+'">'+n.stage+'</span></h3>'+
           '<p class="muted">'+escapeHtml(n.type)+'</p>'+
-          (fnds.length===0?'<p class="muted">Sin findings en este nodo.</p>':
+          (fnds.length===0?'<p class="muted">'+((window.__LABELS__||{}).noFindingsInNode||'No findings for this node.')+'</p>':
             fnds.map(renderFindingCard).join(''));
       });
     });
   };
 
   function renderFindingCard(f){
-    const tags=(arr,cls)=>arr&&arr.length?arr.map(t=>'<span class="tag">'+escapeHtml(t)+'</span>').join(''):'';
+    const L=window.__LABELS__||{};
+    const tags=(arr,cls)=>arr&&arr.length?arr.map(x=>'<span class="tag">'+escapeHtml(x)+'</span>').join(''):'';
     return '<div class="finding '+f.severity+'"><h4><span class="badge '+severityClass(f.severity)+'">'+f.severity+'</span> '+escapeHtml(f.ruleId)+' — '+escapeHtml(f.ruleName)+'</h4>'+
       '<p>'+escapeHtml(f.message)+'</p>'+
       (f.evidence?'<pre>'+escapeHtml(f.evidence)+'</pre>':'')+
-      (f.iso25010&&f.iso25010.length?'<p>ISO 25010: '+tags(f.iso25010)+'</p>':'')+
-      (f.atamScenarios&&f.atamScenarios.length?'<p>ATAM: '+tags(f.atamScenarios)+'</p>':'')+
-      (f.adr&&f.adr.length?'<p>ADR: '+tags(f.adr)+'</p>':'')+
-      (f.fixSuggestion&&f.fixSuggestion.preview?'<p><strong>Fix:</strong> '+escapeHtml(f.fixSuggestion.preview)+'</p>':'')+
+      (f.iso25010&&f.iso25010.length?'<p>'+(L.isoPrefix||'ISO 25010: ')+tags(f.iso25010)+'</p>':'')+
+      (f.atamScenarios&&f.atamScenarios.length?'<p>'+(L.atamPrefix||'ATAM: ')+tags(f.atamScenarios)+'</p>':'')+
+      (f.adr&&f.adr.length?'<p>'+(L.adrPrefix||'ADR: ')+tags(f.adr)+'</p>':'')+
+      (f.fixSuggestion&&f.fixSuggestion.preview?'<p><strong>'+(L.fixLabel||'Fix:')+'</strong> '+escapeHtml(f.fixSuggestion.preview)+'</p>':'')+
       '</div>';
   }
   function severityClass(s){return s==='error'?'err':s==='warning'?'warn':'info';}
@@ -1404,12 +1400,20 @@ function renderHtml(report) {
   }).join('\n');
 
   const dataJson = JSON.stringify(report).replace(/<\/script>/g, '<\\/script>');
+  const labelsJson = JSON.stringify({
+    noNodes: t('report.html.js.noNodes'),
+    noFindingsInNode: t('report.html.js.noFindingsInNode'),
+    isoPrefix: t('report.html.js.isoPrefix'),
+    atamPrefix: t('report.html.js.atamPrefix'),
+    adrPrefix: t('report.html.js.adrPrefix'),
+    fixLabel: t('report.html.js.fixLabel')
+  }).replace(/<\/script>/g, '<\\/script>');
 
   return `<!doctype html>
-<html lang="es">
+<html lang="${getLang()}">
 <head>
 <meta charset="utf-8"/>
-<title>Reporte de validación — micro-framework n8n</title>
+<title>${t('report.html.title')}</title>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <style>${INLINE_CSS}</style>
 </head>
@@ -1417,94 +1421,94 @@ function renderHtml(report) {
 <div class="container">
 
   <div class="cover">
-    <h1>Validación estática de flujos n8n</h1>
-    <p class="muted">Micro-framework LC/NC · Pilar 2 DevSecOps · Edición Lite v${VERSION}</p>
+    <h1>${t('report.html.h1')}</h1>
+    <p class="muted">${t('report.html.subtitle', { version: VERSION })}</p>
     <div class="meta">
-      <div><strong>Autor:</strong><br/>${escHtml(report.author)}</div>
-      <div><strong>Director:</strong><br/>${escHtml(report.director)}</div>
-      <div><strong>Proyecto:</strong><br/>${escHtml(report.project)}</div>
-      <div><strong>Generado:</strong><br/>${escHtml(report.generatedAt)}</div>
-      ${report.commit ? `<div><strong>Commit:</strong><br/><code>${escHtml(report.commit.slice(0,12))}</code></div>` : ''}
-      <div><strong>Flujos analizados:</strong><br/>${report.files.length}</div>
+      <div><strong>${t('report.html.author')}</strong><br/>${escHtml(report.author)}</div>
+      <div><strong>${t('report.html.director')}</strong><br/>${escHtml(report.director)}</div>
+      <div><strong>${t('report.html.project')}</strong><br/>${escHtml(report.project)}</div>
+      <div><strong>${t('report.html.generated')}</strong><br/>${escHtml(report.generatedAt)}</div>
+      ${report.commit ? `<div><strong>${t('report.html.commit')}</strong><br/><code>${escHtml(report.commit.slice(0,12))}</code></div>` : ''}
+      <div><strong>${t('report.html.filesAnalyzed')}</strong><br/>${report.files.length}</div>
     </div>
   </div>
 
   <div class="card">
-    <h2>Resumen ejecutivo</h2>
+    <h2>${t('report.html.summaryHeading')}</h2>
     <div class="kpi-grid">
-      <div class="kpi"><div class="label">Flujos</div><div class="value">${report.files.length}</div></div>
-      <div class="kpi ${avgScore >= 90 ? 'ok' : avgScore >= 70 ? 'warn' : 'err'}"><div class="label">Score promedio</div><div class="value">${avgScore}%</div></div>
-      <div class="kpi err"><div class="label">Errors</div><div class="value">${totalErr}</div></div>
-      <div class="kpi warn"><div class="label">Warnings</div><div class="value">${totalWarn}</div></div>
-      <div class="kpi"><div class="label">Findings totales</div><div class="value">${totalFindings}</div></div>
-      <div class="kpi"><div class="label">Reglas dormidas</div><div class="value">${report.coverage.rulesDormant.length}</div></div>
+      <div class="kpi"><div class="label">${t('report.html.kpiFiles')}</div><div class="value">${report.files.length}</div></div>
+      <div class="kpi ${avgScore >= 90 ? 'ok' : avgScore >= 70 ? 'warn' : 'err'}"><div class="label">${t('report.html.kpiAvgScore')}</div><div class="value">${avgScore}%</div></div>
+      <div class="kpi err"><div class="label">${t('report.html.kpiErrors')}</div><div class="value">${totalErr}</div></div>
+      <div class="kpi warn"><div class="label">${t('report.html.kpiWarnings')}</div><div class="value">${totalWarn}</div></div>
+      <div class="kpi"><div class="label">${t('report.html.kpiTotalFindings')}</div><div class="value">${totalFindings}</div></div>
+      <div class="kpi"><div class="label">${t('report.html.kpiDormantRules')}</div><div class="value">${report.coverage.rulesDormant.length}</div></div>
     </div>
   </div>
 
   <div class="card">
-    <h2>Radar ISO/IEC 25010</h2>
-    <p class="muted">Findings agregados por atributo de calidad — más cerca del centro indica menos hallazgos (mejor).</p>
+    <h2>${t('report.html.radarHeading')}</h2>
+    <p class="muted">${t('report.html.radarDesc')}</p>
     ${radarSvg}
   </div>
 
   <div class="card">
-    <h2>Cobertura del micro-framework</h2>
-    <p class="muted">Reglas definidas: ${report.coverage.rulesDefined.length} · ejercitadas: ${report.coverage.rulesExercised.length} · dormidas: ${report.coverage.rulesDormant.length}</p>
+    <h2>${t('report.html.coverageHeading')}</h2>
+    <p class="muted">${t('report.html.coverageDesc', { defined: report.coverage.rulesDefined.length, exercised: report.coverage.rulesExercised.length, dormant: report.coverage.rulesDormant.length })}</p>
     ${coverageSvg}
     ${report.coverage.rulesDormant.length > 0
-      ? `<p>⚠️ Reglas que ningún flujo del corpus activó: ${report.coverage.rulesDormant.map(r => `<span class="tag">${r}</span>`).join(' ')}</p>`
-      : '<p style="color:var(--ok)">✓ Todas las reglas fueron ejercitadas por al menos un flujo.</p>'}
+      ? `<p>${t('report.html.dormantWarning')} ${report.coverage.rulesDormant.map(r => `<span class="tag">${r}</span>`).join(' ')}</p>`
+      : `<p style="color:var(--ok)">${t('report.html.allRulesExercised')}</p>`}
   </div>
 
   ${report.history.length > 1 ? `<div class="card">
-    <h2>Evolución histórica</h2>
-    <p class="muted">Score promedio por fecha — leído desde reportes JSON previos en <code>reportes/</code>.</p>
+    <h2>${t('report.html.historyHeading')}</h2>
+    <p class="muted">${t('report.html.historyDesc')}</p>
     ${sparkSvg}
   </div>` : ''}
 
   <div class="card">
-    <h2>Tabla de findings</h2>
+    <h2>${t('report.html.findingsTableHeading')}</h2>
     <div class="controls">
-      <input id="tbl-findings-q" placeholder="Buscar texto…" style="flex:1;min-width:200px"/>
+      <input id="tbl-findings-q" placeholder="${t('report.html.searchPlaceholder')}" style="flex:1;min-width:200px"/>
       <select id="tbl-findings-sev">
-        <option value="">Todas las severidades</option>
-        <option value="error">Solo errors</option>
-        <option value="warning">Solo warnings</option>
-        <option value="info">Solo infos</option>
+        <option value="">${t('report.html.allSeverities')}</option>
+        <option value="error">${t('report.html.onlyErrors')}</option>
+        <option value="warning">${t('report.html.onlyWarnings')}</option>
+        <option value="info">${t('report.html.onlyInfos')}</option>
       </select>
-      <button id="tbl-findings-csv">Export CSV</button>
+      <button id="tbl-findings-csv">${t('report.html.exportCsv')}</button>
     </div>
     <table id="tbl-findings">
       <thead><tr>
-        <th>Sev</th><th>Regla</th><th>Nombre</th><th>Archivo</th><th>Nodo</th><th>Mensaje</th><th>ISO 25010</th><th>ATAM</th>
+        <th>${t('report.html.thSev')}</th><th>${t('report.html.thRule')}</th><th>${t('report.html.thName')}</th><th>${t('report.html.thFile')}</th><th>${t('report.html.thNode')}</th><th>${t('report.html.thMessage')}</th><th>${t('report.html.thIso')}</th><th>${t('report.html.thAtam')}</th>
       </tr></thead>
       <tbody>
-        ${findingsRows || '<tr><td colspan="8" class="muted">Sin findings.</td></tr>'}
+        ${findingsRows || `<tr><td colspan="8" class="muted">${t('report.html.noFindingsRow')}</td></tr>`}
       </tbody>
     </table>
   </div>
 
   <div class="card">
-    <h2>Detalle por flujo</h2>
+    <h2>${t('report.html.detailHeading')}</h2>
     <div class="legend">
-      <span><span class="sw" style="background:var(--e1)"></span>E1 Entrada</span>
-      <span><span class="sw" style="background:var(--e2)"></span>E2 Dominio</span>
-      <span><span class="sw" style="background:var(--e3)"></span>E3 IO</span>
-      <span><span class="sw" style="background:var(--e4)"></span>E4 Salida</span>
+      <span><span class="sw" style="background:var(--e1)"></span>${t('report.html.legendE1')}</span>
+      <span><span class="sw" style="background:var(--e2)"></span>${t('report.html.legendE2')}</span>
+      <span><span class="sw" style="background:var(--e3)"></span>${t('report.html.legendE3')}</span>
+      <span><span class="sw" style="background:var(--e4)"></span>${t('report.html.legendE4')}</span>
       <span><span class="sw" style="background:var(--unk)"></span>UNKNOWN</span>
-      <span style="margin-left:16px">borde rojo = nodo con finding error · borde ámbar = warning</span>
+      <span style="margin-left:16px">${t('report.html.legendBorderNote')}</span>
     </div>
     ${fileSections}
   </div>
 
   <div class="card">
-    <h2>Acerca de este reporte</h2>
-    <p class="muted">Generado por <code>${TOOL} v${VERSION}</code> (edición Lite) — un único archivo .mjs sin dependencias externas. Este HTML es autocontenido: no requiere red para renderizar.</p>
-    <p class="muted">Comando: <code>node microframework/validacion/validar-flujos.mjs --format html</code></p>
+    <h2>${t('report.html.aboutHeading')}</h2>
+    <p class="muted">${t('report.html.aboutDesc', { tool: TOOL, version: VERSION })}</p>
+    <p class="muted">${t('report.html.aboutCommand')}</p>
   </div>
 
 </div>
-<script>window.__DATA__=${dataJson};</script>
+<script>window.__DATA__=${dataJson};window.__LABELS__=${labelsJson};</script>
 <script>${INLINE_JS}</script>
 </body></html>`;
 }
@@ -1516,21 +1520,21 @@ function fileSection(f, idx) {
     <summary>${escHtml(rel)} · <span class="badge ${f.summary.score >= 90 ? 'info' : f.summary.score >= 70 ? 'warn' : 'err'}">${f.summary.score}%</span>
       · err=${f.summary.errors} warn=${f.summary.warnings} info=${f.summary.infos}
       · nodos=${f.metrics.nodeCount} ciclomática=${f.metrics.cyclomaticComplexity} cohesion=${f.metrics.cohesionScore}</summary>
-    <p class="muted">Etapas: <span class="badge e1">E1·${sd.E1}</span><span class="badge e2">E2·${sd.E2}</span><span class="badge e3">E3·${sd.E3}</span><span class="badge e4">E4·${sd.E4}</span><span class="badge unk">UNK·${sd.UNKNOWN}</span></p>
+    <p class="muted">${t('report.html.stagesLabel')} <span class="badge e1">E1·${sd.E1}</span><span class="badge e2">E2·${sd.E2}</span><span class="badge e3">E3·${sd.E3}</span><span class="badge e4">E4·${sd.E4}</span><span class="badge unk">UNK·${sd.UNKNOWN}</span></p>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
       <div><svg id="svg-${idx}" class="flow-svg" width="100%" height="360"></svg></div>
       <div id="panel-${idx}" class="finding info" style="border-left-color:var(--acc)">
-        <p class="muted">Click en un nodo del diagrama para ver sus findings, ISO 25010 y ATAM.</p>
+        <p class="muted">${t('report.html.clickHint')}</p>
       </div>
     </div>
-    ${f.findings.length === 0 ? '<p style="color:var(--ok)">✓ Sin findings.</p>' :
-      `<h4>Todos los findings de este flujo</h4>${f.findings.map(fd => `
+    ${f.findings.length === 0 ? `<p style="color:var(--ok)">${t('report.html.noFindingsInFlow')}</p>` :
+      `<h4>${t('report.html.allFindingsHeading')}</h4>${f.findings.map(fd => `
       <div class="finding ${fd.severity}">
         <strong>${escHtml(fd.ruleId)}</strong> — ${escHtml(fd.ruleName || '')}
         ${fd.nodeName ? `<span class="muted"> @ ${escHtml(fd.nodeName)}</span>` : ''}<br/>
         ${escHtml(fd.message)}
         ${fd.evidence ? `<pre>${escHtml(fd.evidence)}</pre>` : ''}
-        ${fd.fixSuggestion?.preview ? `<p><strong>Fix:</strong> ${escHtml(fd.fixSuggestion.preview)}</p>` : ''}
+        ${fd.fixSuggestion?.preview ? `<p><strong>${t('report.html.fixLabel')}</strong> ${escHtml(fd.fixSuggestion.preview)}</p>` : ''}
       </div>`).join('')}`}
   </details>`;
 }
@@ -1571,7 +1575,7 @@ function renderRadarSvg(allFindings, files) {
 }
 
 function renderSparkSvg(history) {
-  if (!history || history.length === 0) return '<p class="muted">Sin reportes previos.</p>';
+  if (!history || history.length === 0) return `<p class="muted">${t('report.html.noHistory')}</p>`;
   const W = 800, H = 160, pad = 30;
   const minS = 0, maxS = 100;
   const step = (W - pad * 2) / Math.max(1, history.length - 1);
@@ -1643,13 +1647,13 @@ function flatten(report) {
 
 function renderDiffMd(diff) {
   const L = [];
-  L.push('## Diff contra baseline');
+  L.push(t('report.diff.heading'));
   L.push('');
-  L.push(`- 🆕 Nuevos: ${diff.nuevos.length}`);
-  L.push(`- ✅ Resueltos: ${diff.resueltos.length}`);
-  L.push(`- 🔴 Regresiones: ${diff.regresiones.length}`);
+  L.push(t('report.diff.new', { n: diff.nuevos.length }));
+  L.push(t('report.diff.resolved', { n: diff.resueltos.length }));
+  L.push(t('report.diff.regressions', { n: diff.regresiones.length }));
   L.push('');
-  for (const tag of [['🆕 Nuevos', 'nuevos'], ['✅ Resueltos', 'resueltos'], ['🔴 Regresiones', 'regresiones']]) {
+  for (const tag of [[t('report.diff.sectionNew'), 'nuevos'], [t('report.diff.sectionResolved'), 'resueltos'], [t('report.diff.sectionRegressions'), 'regresiones']]) {
     if (diff[tag[1]].length === 0) continue;
     L.push(`### ${tag[0]}`);
     for (const f of diff[tag[1]]) {
@@ -1666,11 +1670,12 @@ function renderDiffMd(diff) {
 
 function main() {
   const args = parseArgs(process.argv.slice(2));
-  if (args.help) { console.log(HELP); process.exit(0); }
+  setLang(args.lang);
+  if (args.help) { console.log(buildHelp()); process.exit(0); }
 
   const files = discoverFiles(args);
   if (files.length === 0) {
-    console.error('No se encontraron archivos JSON para analizar.');
+    console.error(t('cli.error.noFilesFound'));
     process.exit(0);
   }
   const report = buildReport(files, 'lite');
@@ -1679,7 +1684,7 @@ function main() {
   let diffText = '';
   if (args.baseline) {
     if (!existsSync(args.baseline)) {
-      console.error(`Baseline no existe: ${args.baseline}`);
+      console.error(t('cli.error.baselineNotFound', { path: args.baseline }));
     } else {
       try {
         const base = JSON.parse(readFileSync(args.baseline, 'utf8'));
@@ -1687,7 +1692,7 @@ function main() {
         diffText = '\n\n' + renderDiffMd(diff);
         report.diff = diff;
       } catch (e) {
-        console.error(`Error leyendo baseline: ${e.message}`);
+        console.error(t('cli.error.baselineReadError', { error: e.message }));
       }
     }
   }
@@ -1723,7 +1728,7 @@ function main() {
       writeFileSync(target, html, 'utf8');
       // Además, escribir el JSON canónico para alimentar histórico
       writeFileSync(join(outDir, `validacion-${stamp}.json`), JSON.stringify(report, null, 2), 'utf8');
-      stdoutPayload = `Reporte HTML escrito en: ${relative(ROOT, target).replace(/\\/g,'/')}`;
+      stdoutPayload = t('cli.output.htmlWritten', { path: relative(ROOT, target).replace(/\\/g,'/') });
       break;
     }
     case 'md':

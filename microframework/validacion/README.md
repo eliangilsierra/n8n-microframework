@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](README.en.md)
+
 # Validador estático de flujos n8n — v2.0
 
 **Componente:** Pilar 2 DevSecOps — Validaciones Automatizadas (§4.3 del anteproyecto)
@@ -24,6 +26,7 @@
 12. [Tests del validador](#12-tests-del-validador)
 13. [Limitaciones conocidas](#13-limitaciones-conocidas)
 14. [Evidencia de ejecución y trazabilidad académica](#14-evidencia-de-ejecución-y-trazabilidad-académica)
+15. [Resumen ejecutivo — features y ventajas frente a v1](#15-resumen-ejecutivo--features-y-ventajas-frente-a-v1)
 
 ---
 
@@ -186,12 +189,20 @@ node microframework/validacion/validar-flujos.mjs --baseline reportes/validacion
 # Sólo json a stdout (sin escribir archivos)
 node microframework/validacion/validar-flujos.mjs --format json --quiet
 
+# Reportes en inglés (default: es)
+node microframework/validacion/validar-flujos.mjs --format html --lang en
+
 # Tests del validador
 node microframework/validacion/tests/run-tests.mjs
 ```
 
 Flags disponibles: `--input`, `--caso`, `--estado`, `--format`, `--out`, `--baseline`,
-`--strict` (exit 1 también ante warnings), `--quiet`, `--help`.
+`--strict` (exit 1 también ante warnings), `--quiet`, `--lang es|en` (idioma de mensajes
+y reportes, default `es`), `--help`.
+
+Los mensajes de reglas, ayuda de CLI y los 5 formatos de reporte (md/json/html/sarif/junit)
+son bilingües. El módulo `i18n.mjs` carga `locales/{es,en}.json`; `mapeo-calidad.json`
+declara el nombre de cada regla como `{ es, en }` inline (fuente única para Lite y Pro).
 
 ### Pro (módulo con subcomandos)
 
@@ -493,3 +504,105 @@ de medición, portabilidad para evaluadores externos. Justificación completa en
 [ADR-MF-008 §3](../adr/ADR-MF-008-validador-dos-ediciones.md) y, para la decisión original
 Node vs Python en cinco subsecciones, en la versión v1 de este README (conservada en
 [`legacy/README-v1.md §2`](legacy/README-v1.md)).
+
+---
+
+## 15. Resumen ejecutivo — features y ventajas frente a v1
+
+> Apéndice de referencia rápida para la defensa, el capítulo de evaluación y la difusión
+> externa. Complementa el detalle técnico de las secciones 1–14 con una vista ejecutiva:
+> qué cambió frente a v1, cuándo usar cada edición, y evidencia concreta de la última
+> corrida contra el corpus completo.
+
+### 15.1 TL;DR — qué cambió frente a v1
+
+> Un *linter* booleano de 11 reglas con salida Markdown plana se convirtió en un
+> **analizador estático de grafos de flujo n8n**, multi-formato, con DSL YAML extensible,
+> codemods automáticos, integración SARIF + GitHub Code Scanning, suite de tests y un
+> reporte HTML offline interactivo de calidad de tesis.
+
+| | **v1 (legacy)** | **v2 (Lite + Pro)** |
+|---|---|---|
+| Análisis | Regex sobre texto JSON serializado | **Grafo dirigido tipado** a partir de `nodes` + `connections` |
+| Etapas E1–E4 | Por nombre de archivo (acoplado al repo) | **Por tipo de nodo** (heurística — analiza cualquier JSON) |
+| Reglas | 11 REG-* booleanas | **17**: 11 REG-* + 6 antipatrones AP-* |
+| Resultado | `cumple: true \| false \| null` | **Severidad** (error/warning/info) × **confianza** (high/medium/low) |
+| Métricas | — | Ciclomática · profundidad · cohesion score · fan-out · distribución E1–E4 |
+| Mapeo ISO/ATAM/ADR | En PDFs externos | **Inyectado en cada finding** (matriz de trazabilidad viva) |
+| Salidas | md, json | md · json canónico · **html offline interactivo** · **sarif v2.1.0** · junit |
+| Diff | — | Contra baseline JSON: nuevos / resueltos / regresiones |
+| Reglas de usuario | — | **DSL YAML** (Pro) — Semgrep/OPA aplicado a n8n |
+| Remediación automática | — | **3 codemods `--fix`** idempotentes (Pro) |
+| CI/CD | Exit code | Exit code + **SARIF inline en PRs de GitHub** |
+| Tests del propio validador | — | Runner artesanal (Lite) + **vitest** (Pro) |
+
+### 15.2 Comparativa Lite vs Pro — cuándo usar cada una
+
+| Caso de uso | Edición recomendada |
+|---|---|
+| **Defensa MGADS en sala** (posiblemente sin internet) | **Lite** — un comando, HTML offline |
+| **Evaluador externo reproduciendo** en su máquina | **Lite** — `node validar-flujos.mjs` sin `npm install` |
+| **CI/CD del repositorio de tesis** | Lite (gate simple con exit code) o Pro (SARIF) |
+| **Equipo externo adoptando el micro-framework** | **Pro** — DSL YAML para reglas internas |
+| **GitHub Code Scanning + PRs con findings inline** | **Pro** — SARIF v2.1.0 |
+| **Aplicar fixes automáticos con `--fix`** | **Pro** — codemods |
+| **Demos públicas / página del proyecto** | **Pro** — HTML CDN más vistoso |
+| **Bug fix del rule engine** | Ambas (los algoritmos son paralelos) |
+
+Decisión arquitectónica completa: [`ADR-MF-008`](../adr/ADR-MF-008-validador-dos-ediciones.md).
+
+### 15.3 Resultados de la corrida final contra el repo
+
+Última ejecución de Lite contra todo el corpus (`casos-de-estudio/` +
+`microframework/plantillas/`):
+
+| Métrica | Valor |
+|---|---|
+| Archivos analizados | 23 (5 as-is + 18 to-be) |
+| Score promedio to-be | **84 %** |
+| Errors en to-be | **0** |
+| Warnings en to-be | 20 |
+| Reglas ejercitadas | 13/17 (4 dormidas: AP-001/002/003/006) |
+| As-is — score | 18 % (línea base con violaciones intencionales — esperado) |
+| Exit code | **0** |
+| Tamaño del HTML offline | ~200 KB |
+| Tiempo de ejecución | < 2 s para 23 archivos |
+
+Lite sobre el corpus completo en menos de dos segundos, exit 0, HTML autocontenido listo
+para imprimir. El reporte está versionado en
+`microframework/validacion/reportes/validacion-2026-06-01.html`.
+
+### 15.4 Resumen de ventajas — una línea cada una
+
+- **Analiza cualquier JSON de n8n**, no solo los del repo (clasificación por tipo de nodo, no por nombre).
+- **17 reglas** vs 11 — incluye 6 antipatrones de grafo no detectables por regex.
+- **Severidad + confianza** por finding — adiós al booleano monolítico.
+- **Mapeo ISO 25010 + ATAM + ADR inyectado** — matriz de trazabilidad viva.
+- **Métricas cuantitativas** (ciclomática, cohesion, fan-out) para discutir en defensa.
+- **HTML offline 100 % autocontenido** (Lite) — abre sin red en la sala de defensa.
+- **HTML CDN visualmente rico** (Pro) con Mermaid + Chart.js para demos públicas.
+- **DSL YAML de reglas custom** (Pro) — Semgrep/OPA aplicado a n8n.
+- **3 codemods idempotentes `--fix`** (Pro) — el micro-framework es operable.
+- **SARIF v2.1.0** — findings inline en PRs vía GitHub Code Scanning.
+- **5 formatos de salida** desde un único modelo canónico.
+- **Diff contra baseline** — evita regresiones silenciosas.
+- **Cobertura honesta** del micro-framework — señala reglas dormidas.
+- **Suite de tests con fixtures** — Lite (runner artesanal) y Pro (vitest).
+- **Cero dependencias runtime** (Lite mantiene el espíritu del v1).
+- **Compatibilidad CLI con v1** — `--caso` y `--estado` siguen funcionando.
+- **v1 conservada en `legacy/`** — trazabilidad histórica para el documento de tesis.
+- **Documentación completa**: este README, ADR-MF-008, DSL spec, codemods doc, SARIF-GitHub doc.
+
+### 15.5 Referencias rápidas
+
+| Quiero… | Voy a… |
+|---|---|
+| Ver el reporte HTML | Abrir `microframework/validacion/reportes/validacion-YYYY-MM-DD.html` |
+| Entender qué se evalúa y por qué | [`microframework/validacion-estatica-flujos.md`](../validacion-estatica-flujos.md) |
+| Escribir una regla custom YAML | [`microframework/validacion-pro/docs/dsl-spec.md`](../validacion-pro/docs/dsl-spec.md) |
+| Conocer los codemods disponibles | [`microframework/validacion-pro/docs/codemods.md`](../validacion-pro/docs/codemods.md) |
+| Configurar GitHub Code Scanning | [`microframework/validacion-pro/docs/sarif-github.md`](../validacion-pro/docs/sarif-github.md) |
+| Ver el catálogo de reglas | [`microframework/reglas/reglas-obligatorias.md`](../reglas/reglas-obligatorias.md) + [`microframework/antipatrones.md`](../antipatrones.md) |
+| Ver el mapeo regla → calidad | [`mapeo-calidad.json`](mapeo-calidad.json) |
+| Ver el esquema canónico del reporte | [`report.schema.json`](report.schema.json) |
+| Ver la guía de adopción | [`docs/guia-buenas-practicas.md §7.4`](../../docs/guia-buenas-practicas.md) |

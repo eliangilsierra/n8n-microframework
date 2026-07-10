@@ -1,12 +1,13 @@
 import { makeFinding } from '../helpers.mjs';
+import { t } from '../../shared/i18n.mjs';
 
 const SECRET_PATTERNS = [
-  { re: /Bearer\s+[A-Za-z0-9._\-]{8,}/i, label: 'Bearer token literal' },
-  { re: /sk-[A-Za-z0-9]{16,}/, label: 'API key estilo OpenAI' },
-  { re: /ghp_[A-Za-z0-9]{16,}/, label: 'GitHub PAT literal' },
+  { re: /Bearer\s+[A-Za-z0-9._\-]{8,}/i, labelKey: 'rule.reg001.label.bearerToken' },
+  { re: /sk-[A-Za-z0-9]{16,}/, labelKey: 'rule.reg001.label.openaiKey' },
+  { re: /ghp_[A-Za-z0-9]{16,}/, labelKey: 'rule.reg001.label.githubPat' },
   { re: /\b(const|let|var)\s+\w*(token|api[_-]?key|secret|password)\w*\s*=\s*["'][^"'{}$\s][^"'{}$]{6,}["']/i,
-    label: 'Asignación literal a variable de secreto en Code' },
-  { re: /"rightValue"\s*:\s*"[A-Za-z0-9._\-]{12,}"/, label: 'Comparación literal de token en IF/Switch' }
+    labelKey: 'rule.reg001.label.codeSecretAssignment' },
+  { re: /"rightValue"\s*:\s*"[A-Za-z0-9._\-]{12,}"/, labelKey: 'rule.reg001.label.ifSwitchTokenCompare' }
 ];
 
 export const id = 'REG-001';
@@ -19,10 +20,10 @@ export function run({ graph }) {
       const m = paramsStr.match(pat.re);
       if (m) findings.push(makeFinding('REG-001', {
         nodeId: n.id, nodeName: n.name, position: n.position,
-        message: `Secreto literal detectado: ${pat.label}`,
+        message: t('rule.reg001.secretLiteral', { label: t(pat.labelKey) }),
         evidence: m[0].slice(0, 120),
         fixSuggestion: { kind: 'codemod-id', codemodId: 'envify-secret',
-          preview: 'Reemplazar literal por credencial n8n o {{$env.VAR_NAME}}' }
+          preview: t('rule.reg001.fixSecret') }
       }));
     }
     const headers = n.parameters?.headerParameters?.parameters
@@ -35,10 +36,10 @@ export function run({ graph }) {
             && value.length > 6 && !/\{\{.*\}\}/.test(value) && !/^\$\{/.test(value)) {
           findings.push(makeFinding('REG-001', {
             nodeId: n.id, nodeName: n.name, position: n.position,
-            message: `Header HTTP "${h.name}" con valor literal`,
+            message: t('rule.reg001.headerLiteral', { name: h.name }),
             evidence: `${h.name}: ${value.slice(0, 40)}…`,
             fixSuggestion: { kind: 'codemod-id', codemodId: 'envify-secret',
-              preview: `Header debe usar {{$env.${name.toUpperCase().replace(/-/g, '_')}}}` }
+              preview: t('rule.reg001.fixHeader', { envVar: name.toUpperCase().replace(/-/g, '_') }) }
           }));
         }
       }

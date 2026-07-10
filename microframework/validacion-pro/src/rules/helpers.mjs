@@ -1,13 +1,13 @@
 import { randomUUID } from 'node:crypto';
 import { basename } from 'node:path';
-import { metaForRule } from '../shared/quality-map.mjs';
+import { metaForRule, ruleDisplayName } from '../shared/quality-map.mjs';
 
 export function makeFinding(ruleId, opts = {}) {
   const m = metaForRule(ruleId);
   return {
     id: randomUUID().slice(0, 8),
     ruleId,
-    ruleName: m.nombre || opts.ruleName || ruleId,
+    ruleName: opts.ruleName || ruleDisplayName(ruleId),
     severity: opts.severity || m.severityDefault || 'warning',
     confidence: opts.confidence || 'high',
     nodeId: opts.nodeId || null,
