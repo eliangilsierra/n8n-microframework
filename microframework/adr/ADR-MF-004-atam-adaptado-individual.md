@@ -74,5 +74,5 @@ Esta decisión es **metodológica del proyecto**, no normativa para los flujos n
   - `docs/atam/metodologia-atam-adaptada.md` — desarrollo completo de la adaptación
   - `docs/atam/informe-atam-final.md` — aplicación de la metodología
   - `docs/atam/protocolo-encuesta.md` — procedimiento del componente de validación externa
-  - `docs/context/atam-utility-tree.md` — utility tree preservado del ATAM-original
+  - `docs/atam/atam-utility-tree.md` — utility tree preservado del ATAM-original
   - `medicion/consolidado/atam-evidencia.md` — matriz de evidencia cuantitativa
