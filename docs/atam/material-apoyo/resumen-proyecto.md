@@ -4,6 +4,8 @@ Diseñado para ocupar 4 páginas A4 al exportar a PDF.
 Estilo: sobrio, técnico, sin emojis decorativos, máxima densidad informativa.
 -->
 
+> 🌐 **Idioma / Language:** Español · [English](resumen-proyecto.en.md)
+
 # Micro-framework Arquitectónico LC/NC para n8n
 ## Resumen ejecutivo para validación externa por panel de expertos
 

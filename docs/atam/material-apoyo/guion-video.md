@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](guion-video.en.md)
+
 # Guion del Video de Presentación — Encuesta de Validación Externa
 
 **Versión:** 1.0

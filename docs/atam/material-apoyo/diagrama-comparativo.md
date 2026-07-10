@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](diagrama-comparativo.en.md)
+
 # Diagramas Comparativos as-is vs to-be — Fuente Mermaid
 
 **Versión:** 1.0

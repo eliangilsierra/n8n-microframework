@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](registro-riesgos-tradeoffs.en.md)
+
 # Registro Consolidado de Riesgos y Trade-offs Arquitectónicos
 
 **Versión:** 1.0

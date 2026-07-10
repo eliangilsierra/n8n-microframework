@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](metodologia-atam-adaptada.en.md)
+
 # Metodología — ATAM Modificado Asincrónico con Validación Externa por Panel de Expertos
 
 **Versión:** 1.0
@@ -117,7 +119,7 @@ Fase IV — Síntesis del informe             Paso 9 (parcial)
 | **2. Presentar los drivers de negocio** | Sección de drivers en el informe basada en `docs/context/proyecto-overview.md` (objetivos, atributos ISO 25010 priorizados) | Los drivers ya están explícitos en el anteproyecto y operacionalizados como métricas |
 | **3. Presentar la arquitectura** | Sección de arquitectura del informe basada en `docs/context/arquitectura-flujos.md`, diagramas Mermaid as-is/to-be, contratos JSON Schema | Documentación arquitectónica completa sustituye la sesión presencial |
 | **4. Identificar los approaches** | `docs/atam/analisis-approaches.md` §1 — 12 approaches arquitectónicos inventariados con sus ADRs y atributos afectados | Inventario sistemático del autor cubre lo que en taller se haría colectivamente |
-| **5. Generar el utility tree** | `docs/context/atam-utility-tree.md` ya producido — 12 escenarios top-K, 6 por caso, con estímulo/respuesta/medida y prioridad (I × D) | Utility tree producido por el autor con sustento en literatura (Bass et al. 2012) y validado contra los atributos del anteproyecto |
+| **5. Generar el utility tree** | `docs/atam/atam-utility-tree.md` ya producido — 12 escenarios top-K, 6 por caso, con estímulo/respuesta/medida y prioridad (I × D) | Utility tree producido por el autor con sustento en literatura (Bass et al. 2012) y validado contra los atributos del anteproyecto |
 | **6. Analizar los approaches (1ra pasada)** | `docs/atam/analisis-approaches.md` §2 — clasificación SP/TP/R/NR por escenario derivada de evidencia documental | Análisis sistemático individual reemplaza brainstorming grupal; se compensa con el componente de validación externa |
 | **7. Brainstorming y priorización** | Priorización ya incluida en el utility tree (escala H/M/L de importancia × dificultad). No hay brainstorming abierto; los escenarios provienen del anteproyecto y de los objetivos de calidad declarados | El alcance del proyecto define los escenarios; el brainstorming abierto no agregaría valor con un único autor |
 | **8. Re-analizar los approaches (2da pasada)** | Refinamiento de la clasificación SP/TP/R/NR usando **evidencia cuantitativa empírica**: 8 000 corridas, 12 CRs medidos, IOT-Q4/Q5 runtime, MTTD, validador estático. Cada hallazgo se contrasta con métricas reales | La evidencia empírica masiva sustituye la discusión grupal: lo que en taller se debate, aquí se mide |

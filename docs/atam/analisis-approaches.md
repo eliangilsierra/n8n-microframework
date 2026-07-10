@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](analisis-approaches.en.md)
+
 # Análisis de Approaches Arquitectónicos — Pasos 4 y 6 de ATAM
 
 **Versión:** 1.0
