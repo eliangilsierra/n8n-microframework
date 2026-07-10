@@ -21,6 +21,9 @@ build/
 # El HTML se regenera con: python medicion/analizar_runlogs.py
 medicion/consolidado/*.html
 
+# Salida de prueba regenerada por microframework/validacion/tests/run-tests.mjs en cada corrida
+microframework/validacion/tests/tmp/
+
 # --- Herramientas de desarrollo local ----------------------------------------
 .claude/
 
