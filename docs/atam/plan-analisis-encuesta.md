@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](plan-analisis-encuesta.en.md)
+
 # Plan de Análisis Estadístico de la Encuesta de Validación Externa
 
 **Versión:** 1.0
@@ -377,18 +379,21 @@ krippendorff >= 0.6.1
 
 ---
 
-## 7. Checklist pre-análisis
+## 7. Checklist pre-análisis — completado ✓ (con una excepción documentada)
 
-Verificar antes de empezar el análisis (al cierre de la recolección):
+Verificado al cierre de la recolección (24 de junio de 2026):
 
-- [ ] Archivo CSV exportado y commiteado en `medicion/encuesta-validacion/`
-- [ ] Anonimización ejecutada y verificada
-- [ ] N total ≥ umbral del protocolo (≥ 15 ideal, ≥ 10 mínimo aceptable con limitación reportada)
-- [ ] Heterogeneidad de roles verificada (≥ 3 roles)
-- [ ] Tiempo mediano de respuesta ≥ 7 min
-- [ ] Mini-ATAM: ≥ 3 respondentes completaron Sección E
-- [ ] Notebook Python configurado con dependencias instaladas
-- [ ] Plan de análisis (este documento) revisado para confirmar que no se han añadido pruebas no pre-registradas
+- [x] Archivo CSV exportado y commiteado en `medicion/encuesta-validacion/`
+- [x] Anonimización ejecutada y verificada
+- [x] N total ≥ umbral del protocolo (N=17 válidas ≥ 15 ideal)
+- [x] Heterogeneidad de roles verificada (5 roles ≥ 3)
+- [ ] **Tiempo mediano de respuesta ≥ 7 min — no medible.** Google Forms solo registra la marca
+      temporal de envío, no la de inicio ni la duración por respondiente; el instrumento
+      desplegado no capturó ese dato. Se documenta como limitación abierta (ver `informe-atam-final.md`
+      §11) en lugar de marcarse como verificado sin evidencia.
+- [x] Mini-ATAM: 17/17 respondentes válidos completaron la Sección E (≥ 3 requerido)
+- [x] Notebook Python configurado con dependencias instaladas (`requirements.txt`, ejecutado end-to-end)
+- [x] Plan de análisis (este documento) revisado para confirmar que no se añadieron pruebas no pre-registradas
 
 ---
 

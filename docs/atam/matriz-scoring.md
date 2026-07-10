@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](matriz-scoring.en.md)
+
 # Matriz de Scoring 1–5 — as-is vs to-be por Escenario ATAM
 
 **Versión:** 1.0
@@ -107,7 +109,7 @@ La asignación de score se justifica para cada celda con (a) la evidencia operac
 
 4. **Cero regresiones** — ningún escenario tiene score to-be inferior al as-is. Los trade-offs documentados (TP-GLOBAL-01 latencia +119 % en IoT, TP-IOT-01 +10.8 ms crítico vs advertencia) no impactan los escenarios top-K porque ninguno tiene eficiencia como atributo principal evaluado en el utility tree — la eficiencia se reporta como trade-off contextual en el informe, no como métrica de scoring.
 
-5. **Validación externa pendiente.** El scoring anterior es analítico del autor con base en evidencia cuantitativa. La encuesta de validación externa (Sección E del instrumento, mini-ATAM) permitirá comparar este scoring con el de 3–5 expertos independientes y calcular acuerdo inter-evaluador (Cohen's κ o Krippendorff's α). Las divergencias significativas se reportan en el informe.
+5. **Validación externa completada.** El scoring anterior es analítico del autor con base en evidencia cuantitativa. La encuesta de validación externa (Sección E del instrumento, mini-ATAM, N=17) comparó este scoring con el de un panel de 17 expertos y calculó el acuerdo inter-evaluador mediante Krippendorff's α. Resultado: convergencia exacta en 12/12 escenarios to-be y 11/12 as-is; las divergencias se documentan en `informe-atam-final.md` §8.4.
 
 ---
 

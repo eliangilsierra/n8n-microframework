@@ -1,9 +1,18 @@
+> 🌐 **Idioma / Language:** Español · [English](plan-trabajo-fase7.en.md)
+
 # Plan de Trabajo — Fase 7 (Evaluación ATAM) — Cierre Completo
 
 **Versión:** 1.0
 **Fecha:** 2026-05-07
 **Autor:** Elian Hernando Gil Sierra
 **Propósito:** Llevar OE3 (implementación del protocolo ATAM) del 45 % al máximo alcanzable antes de la ejecución de la encuesta, dejando únicamente pendiente la recolección de respuestas y su análisis posterior.
+
+> ✅ **Nota de cierre (2026-07-08).** Este documento es el plan de trabajo tal como se concibió
+> antes de ejecutar la Fase 7 — se conserva íntegro como registro histórico de planeación. Los
+> checklists y referencias a "placeholder §8" que aparecen abajo describen el estado *planeado*,
+> no el actual. La Fase 7 ya se ejecutó por completo: la encuesta se recolectó (17–24 de junio de
+> 2026), se analizó y el capítulo §8 de `informe-atam-final.md` está redactado con resultados
+> reales. Ver `docs/atam/INDEX.md` y `estado-actual.md` para el estado vigente.
 
 ---
 
@@ -26,7 +35,7 @@
 ## 1. Estado de partida y objetivo
 
 ### Estado actual de OE3 (cierre 2026-05-07)
-- ✅ Utility Tree con 12 escenarios top-K (`docs/context/atam-utility-tree.md`)
+- ✅ Utility Tree con 12 escenarios top-K (`docs/atam/atam-utility-tree.md`)
 - ✅ Matriz escenario × evidencia (11/12 = 92 % cobertura) (`medicion/consolidado/atam-evidencia.md`)
 - ✅ IOT-Q4 runtime ejecutado → SP-IOT-01, R-IOT-01, NR-IOT-01 documentados
 - ✅ IOT-Q5 análisis ejecutado → TP-IOT-01 documentado

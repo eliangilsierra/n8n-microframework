@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](plan-difusion.en.md)
+
 # Plan de Difusión de la Encuesta — Validación Externa
 
 **Versión:** 1.0
@@ -344,17 +346,17 @@ Actualizar semanalmente (lunes) durante la campaña:
 
 ---
 
-## 10. Checklist pre-lanzamiento
+## 10. Checklist pre-lanzamiento — completado ✓
 
-Verificar todos los siguientes puntos **antes** del día 1 de la campaña:
+Verificado antes del día 1 de la campaña (17 de junio de 2026):
 
-- [ ] Google Form publicado con todas las preguntas según `instrumento-encuesta.md`
-- [ ] Lógica condicional probada (A2 < 3 años descalifica, D2 muestra D2-bis, E0 = "No" salta a final)
-- [ ] PDF resumen ejecutivo subido a Google Drive con enlace público
-- [ ] Video subido a Loom o YouTube no listado con enlace funcional
-- [ ] Pilotaje completado con 2-3 personas y ajustes aplicados
-- [ ] Lista de invitados prioritarios (al menos 20 nombres) completa
-- [ ] Plantillas A, B, C, D, E adaptadas con URLs reales
-- [ ] Google Sheets vinculado al Form para recibir respuestas en tiempo real
-- [ ] Sistema de tracking semanal preparado (hoja de seguimiento)
-- [ ] Mensaje de agradecimiento final configurado en el Form
+- [x] Google Form publicado con todas las preguntas según `instrumento-encuesta.md`
+- [x] Lógica condicional probada (A2 < 3 años descalifica, D2 muestra D2-bis, E0 = "No" salta a final)
+- [x] PDF resumen ejecutivo subido a Google Drive con enlace público
+- [x] Video subido a Loom o YouTube no listado con enlace funcional
+- [x] Pilotaje completado con 2-3 personas y ajustes aplicados (ver "Ajustes post-pilotaje" en `protocolo-encuesta.md` §8)
+- [x] Lista de invitados prioritarios (al menos 20 nombres) completa
+- [x] Plantillas A, B, C, D, E adaptadas con URLs reales
+- [x] Google Sheets vinculado al Form para recibir respuestas en tiempo real
+- [x] Sistema de tracking semanal preparado (hoja de seguimiento)
+- [x] Mensaje de agradecimiento final configurado en el Form

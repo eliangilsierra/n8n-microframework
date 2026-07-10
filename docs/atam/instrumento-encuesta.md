@@ -1,7 +1,9 @@
+> 🌐 **Idioma / Language:** Español · [English](instrumento-encuesta.en.md)
+
 # Instrumento de Encuesta — Validación Externa del Micro-framework LC/NC
 
-**Versión:** 1.0 — listo para pilotaje
-**Fecha:** 2026-05-07
+**Versión:** 2.0 — versión refactorizada, ejecutada en campo
+**Fecha:** 2026-06-17 (apertura de recolección; ver §Evolución del instrumento)
 **Plataforma sugerida:** Google Forms (o Microsoft Forms equivalente)
 **Duración estimada:** 10–12 min (encuesta principal) · +15 min (mini-ATAM opcional)
 **Protocolo:** [`protocolo-encuesta.md`](protocolo-encuesta.md)
@@ -9,350 +11,318 @@
 
 ---
 
+## Evolución del instrumento: del piloto a la versión refactorizada
+
+El instrumento atravesó una refactorización documentada, motivada por la baja tasa de respuesta observada en la versión inicial (v1.0): con aproximadamente 75 ítems visibles y una duración de 25 a 35 minutos, esa versión inducía abandono y fatiga en los respondentes piloto.
+
+La refactorización se guio por un único principio — reducir la fricción cognitiva del respondiente sin sacrificar la validez de los datos — y se materializó en tres decisiones concretas:
+
+1. **Consolidación de ítems en cuadrículas** por constructo y atributo ISO/IEC 25010 (en lugar de una pregunta independiente por afirmación).
+2. **Externalización de las cifras del estudio** a un resumen ejecutivo en PDF de lectura previa (ver [`material-apoyo/guia-referencia-tecnica.md`](material-apoyo/guia-referencia-tecnica.md)), lo que además atenúa el sesgo de anclaje al separar la exposición a los datos de la respuesta a cada ítem.
+3. **Tabla de referencia visual** para los doce escenarios del mini-ATAM, en lugar de exigir que el respondente reconstruya el contexto de cada escenario a partir de texto corrido.
+
+El resultado fue una reducción a aproximadamente 25 ítems y 16 a 20 minutos de duración, sin pérdida de información relevante para el análisis posterior. Esta es la versión especificada en el resto de este documento.
+
+En coherencia con el mismo principio de reducir la fricción, la clasificación arquitectónica de la Sección E (pregunta `.c` por escenario) se capturó con la **misma escala de soporte de cinco puntos** usada en `.a`/`.b`, en lugar de exigir que el respondente domine y aplique directamente las cuatro categorías ATAM (Non-risk / Sensitivity Point / Tradeoff Point / Risk), cuya distinción no es trivial para quien no tiene formación previa en ATAM. La categoría se recupera mediante una equivalencia definida *a priori*, antes de la recolección:
+
+| Nivel de soporte marcado | Categoría ATAM recuperada |
+|:---:|---|
+| 1 — No soportado / antipatrón activo | R (Riesgo) |
+| 2 — Soporte débil / comportamiento inconsistente | R (Riesgo) |
+| 3 — Soporte moderado / sin garantías formales | SP (Sensitivity Point) |
+| 4 — Buen soporte / evidencia operacional | TP (Tradeoff Point) |
+| 5 — Excelente / medida del escenario cumplida | NR (No-riesgo) |
+
+Esta operacionalización reduce la barrera de entrada del respondiente a costa de imponer una lectura ordinal sobre categorías que en ATAM son cualitativas; sus implicaciones de validez se discuten en el informe ATAM final (§8 y §11 de limitaciones).
+
+> ⚠️ Este documento especifica la versión 2.0, ya refactorizada y ejecutada. Los resultados de la recolección (perfil del panel, valoraciones por ítem, triangulación del scoring y clasificación) se documentan en `informe-atam-final.md` §8, ya completado con los datos de la encuesta.
+
+---
+
 ## Configuración global del formulario
 
 | Parámetro | Valor |
 |---|---|
-| Título del formulario | Validación externa — Micro-framework LC/NC para n8n (MGADS-UNAB) |
-| Descripción visible | Su opinión experta apoya un trabajo de grado de Maestría. Toma 10–12 minutos. Anónimo y voluntario. |
-| Recolección de correos | DESACTIVADA (anonimato) |
-| Limitar a 1 respuesta por persona | DESACTIVADA (no requiere login para reducir fricción) |
-| Mostrar barra de progreso | ACTIVADA |
-| Orden de las preguntas dentro de cada sección | ALEATORIZADO **NO** (preservar orden lógico) |
-| Mensaje de confirmación al enviar | "Muchas gracias por su tiempo y experticia. Su aporte contribuye directamente al rigor académico del trabajo. — Elian Hernando Gil Sierra" |
+| Título del formulario | Validación externa — Micro-framework LC/NC para n8n · MGADS-UNAB 2026 |
+| Recolección de correos | DESACTIVADA (preserva el anonimato del respondente) |
+| Barra de progreso | ACTIVADA (reduce la tasa de abandono al mostrar el avance) |
+| Permitir editar respuestas | ACTIVADA (permite correcciones antes del envío definitivo) |
+| Orden de las preguntas dentro de cada sección | NO aleatorizar (el orden lógico de las secciones es parte del diseño) |
+| Color del tema | Azul oscuro o gris sobrio (evitar colores llamativos que sugieran sesgo positivo) |
+| Mensaje de confirmación al enviar | Texto de agradecimiento + nombre del autor (ver "Pantalla final" más abajo) |
 
 ---
 
 ## Pantalla 0 — Consentimiento informado
 
-**Tipo:** Sección de portada con texto largo + 1 pregunta obligatoria.
+**Tipo:** Portada con texto informativo + 1 pregunta obligatoria.
 
-**Texto:** ver `protocolo-encuesta.md` §3 (texto completo del consentimiento).
+**Texto de la sección:**
+
+> Usted está siendo invitado(a) a participar en la validación externa de un micro-framework
+> arquitectónico para flujos Low-Code/No-Code (LC/NC) en n8n, como parte de un trabajo de
+> grado de la Maestría en Gestión, Aplicación y Desarrollo de Software (MGADS) — UNAB · 2026.
+>
+> **¿Para qué sirve su participación?**
+> Su criterio complementa el análisis arquitectónico del autor siguiendo el método ATAM
+> (Architecture Tradeoff Analysis Method) adaptado al contexto individual.
+>
+> **Confidencialidad:** No se solicitan datos de identificación. Solo información demográfica
+> agregada. Los resultados se publican únicamente como estadísticas agrupadas.
+>
+> **Voluntariedad:** Puede cerrar el formulario en cualquier momento sin consecuencias.
+>
+> Contacto: Elian Hernando Gil Sierra · [correo del autor]
+> Director: Sebastian Roa Prada, PhD — UNAB
+
+Texto legal completo (consentimiento informado extendido): ver [`protocolo-encuesta.md`](protocolo-encuesta.md) §3.
 
 **Pregunta única de esta pantalla:**
 
-> **P0.** ¿Acepta participar en esta encuesta bajo las condiciones descritas?
+> **P0.** ¿Acepta participar bajo las condiciones descritas?
 >
 > Tipo: opción única (obligatoria)
 > Opciones:
-> - Sí, acepto y deseo continuar
-> - No, prefiero salir
+> - Sí, he leído las condiciones y acepto participar
+> - No, prefiero no participar en este momento
 >
-> Lógica: si "No" → ir a pantalla final de agradecimiento; si "Sí" → continuar a Sección A.
+> Lógica: "No" → ir a pantalla final · "Sí" → continuar a Sección 1.
 
 ---
 
-## SECCIÓN A — Caracterización del respondente (5 preguntas, ~1.5 min)
+## Sección 1 — Material de apoyo
 
-> Texto introductorio de la sección:
-> *"Las siguientes preguntas permiten caracterizar el perfil de los respondentes y se reportarán únicamente de forma agregada (sin posibilidad de identificarle individualmente)."*
+**Tipo:** Solo texto informativo — sin preguntas.
+**Título:** Material de apoyo — léalo antes de continuar.
+
+> 📄 **Resumen ejecutivo** (guía de referencia técnica, PDF · 4 páginas): [ENLACE AL PDF]
+> Descripción del problema, framework E1–E4, comparativa as-is vs to-be, métricas y hallazgos ATAM.
+> Ver [`material-apoyo/guia-referencia-tecnica.md`](material-apoyo/guia-referencia-tecnica.md) para una versión legible sin necesidad de PDF.
+>
+> 🎥 **Video de presentación** (5 minutos): [ENLACE AL VIDEO]
+> Resumen visual del framework, casos de estudio y métricas principales. Guion en [`material-apoyo/guion-video.md`](material-apoyo/guion-video.md).
+
+Sin preguntas en esta sección. El formulario refactorizado asume explícitamente que el
+respondente revisó este material antes de continuar — las Secciones B y E ya no repiten
+las cifras del estudio dentro del formulario (ver "Evolución del instrumento" más arriba).
+
+---
+
+## SECCIÓN A — Perfil profesional (4 preguntas · ~2 min)
+
+> Sus datos se reportan únicamente como distribuciones agregadas.
 
 ---
 
 **A1. ¿Cuál es su rol principal actual en el desarrollo o gestión de software?**
 
 Tipo: opción única (obligatoria)
-Opciones:
-- Desarrollador / Ingeniero de software
-- Tech Lead / Líder técnico
-- Arquitecto de software
-- Ingeniero DevOps / SRE
-- Ingeniero de seguridad de software
-- Ingeniero de aseguramiento de calidad (QA / Testing)
-- Gerente o director de tecnología
-- Estudiante con experiencia laboral en software
-- Otro: [campo de texto corto]
+Opciones: Desarrollador / Ingeniero de software · Tech Lead · Arquitecto de software ·
+DevOps / SRE · Seguridad · QA / Testing · Gerente TI · Estudiante con experiencia · Otro (campo libre)
 
 ---
 
-**A2. ¿Cuántos años de experiencia profesional tiene en desarrollo, arquitectura u operaciones de software?**
+**A2. ¿Cuántos años de experiencia profesional acumulada tiene en roles de desarrollo, arquitectura u operaciones de software?**
 
 Tipo: opción única (obligatoria)
 Opciones:
-- Menos de 3 años *(si selecciona esta opción se muestra mensaje: "Esta encuesta requiere al menos 3 años de experiencia. Agradecemos su interés pero su perfil queda fuera del alcance del estudio." y se termina la encuesta)*
+- Menos de 3 años *(descalifica: cierra la encuesta con mensaje de exclusión, o se aplica como filtro post-hoc si no es técnicamente posible cerrarla en el momento — ver `protocolo-encuesta.md` §2.3)*
 - Entre 3 y 5 años
 - Entre 5 y 10 años
 - Más de 10 años
 
 ---
 
-**A3. ¿Qué tan familiarizado(a) está con plataformas Low-Code / No-Code para automatización o integración? (n8n, Zapier, Make, Power Automate, Workato, etc.)**
+**A3-A4-A5 — Nivel de familiaridad (cuadrícula)**
 
-Tipo: escala Likert 1-5 (obligatoria)
-Etiquetas:
-- 1 = Ninguna familiaridad
-- 2 = Baja (he oído de ellas)
-- 3 = Media (he revisado o probado alguna)
-- 4 = Alta (las uso en proyectos personales o laborales)
-- 5 = Muy alta (las uso intensivamente o lidero proyectos basados en ellas)
+Tipo: cuadrícula de varias opciones (obligatoria — requerir una respuesta por fila)
+Filas: Plataformas LC/NC (n8n, Zapier, Make, Power Automate) · Clean Architecture y separación de responsabilidades · Evaluación arquitectónica (ATAM, ISO 25010, ADRs, TOGAF)
+Columnas: Ninguna · Baja · Media · Alta · Muy alta
 
 ---
 
-**A4. ¿Qué tan familiarizado(a) está con principios de Clean Architecture y separación de responsabilidades en software?**
+## SECCIÓN B — Valoración del micro-framework (4 cuadrículas / 8 ítems · ~4 min)
 
-Tipo: escala Likert 1-5 (obligatoria)
-Etiquetas:
-- 1 = Ninguna
-- 2 = Baja
-- 3 = Media
-- 4 = Alta
-- 5 = Muy alta (los aplico y enseño)
-
----
-
-**A5. ¿Qué tan familiarizado(a) está con métodos de evaluación arquitectónica o atributos de calidad de software? (ATAM, SAAM, ADRs, ISO 25010)**
-
-Tipo: escala Likert 1-5 (obligatoria)
-Etiquetas:
-- 1 = Ninguna
-- 2 = Baja
-- 3 = Media
-- 4 = Alta
-- 5 = Muy alta
-
----
-
-## SECCIÓN B — Validación percibida del framework (8 preguntas, ~5 min)
-
-> Texto introductorio de la sección (importante):
-> *"**Antes de continuar, le solicitamos revisar el material de apoyo** (5–7 minutos en total):*
-> - *📄 [PDF resumen ejecutivo de 4 páginas](URL_PDF)*
-> - *🎥 [Video de presentación de 5 minutos](URL_VIDEO)*
+> Escala común a las 4 cuadrículas: 1 = Totalmente en desacuerdo · 2 = En desacuerdo · 3 = Neutral · 4 = De acuerdo · 5 = Totalmente de acuerdo. Cada cuadrícula exige una respuesta por fila.
 >
-> *Las siguientes 8 afirmaciones evalúan distintos aspectos del micro-framework propuesto. Indique su nivel de acuerdo en una escala de 1 (totalmente en desacuerdo) a 5 (totalmente de acuerdo). No hay respuestas correctas o incorrectas — buscamos su criterio profesional honesto."*
+> Los textos de fila se acortaron a un máximo de 70 caracteres (regla de diseño de Google Forms: filas más largas se apilan verticalmente y degradan la lectura). Los contextos de ayuda con cifras específicas del estudio que existían en la versión inicial del instrumento se eliminaron — el respondente ya revisó esas cifras en el material de apoyo de la Sección 1, y repetirlas en el formulario introduce sesgo de anclaje (ver "Evolución del instrumento").
 
-**Configuración común para B1–B8:**
-- Tipo: escala Likert 1-5 (obligatoria)
-- Etiquetas: 1 = Totalmente en desacuerdo · 2 = En desacuerdo · 3 = Neutral · 4 = De acuerdo · 5 = Totalmente de acuerdo
+**Cuadrícula B1–B2 · Mantenibilidad**
+- B1 — Las cuatro etapas (E1→E2→E3→E4) mejoran la modularidad del flujo
+- B2 — Pasar de ~5 nodos por cambio (as-is) a 1 nodo (to-be) es una mejora verificable
 
----
+**Cuadrícula B3–B4 · Fiabilidad**
+- B3 — Retry con backoff e idempotencia con clave única previenen duplicación de datos
+- B4 — Guardar el payload completo en dead-letter es correcto para lecturas IoT irrecuperables
 
-### Bloque Mantenibilidad
+**Cuadrícula B5–B6 · Seguridad y Operabilidad**
+- B5 — Gestionar secretos solo vía credenciales nativas de n8n es práctica mínima aceptable
+- B6 — El log JSON por etapa permite diagnosticar fallos sin abrir la interfaz de n8n
 
-**B1.** La separación del flujo en cuatro etapas funcionales (E1 Validación, E2 Dominio, E3 Adaptadores, E4 Salida) mejora claramente la modularidad respecto al diseño as-is mostrado.
-
-**B2.** La reducción del impacto de Change Requests (de 5–8 nodos modificados en as-is a 1 nodo en to-be) es una mejora arquitectónica significativa y verificable.
-
----
-
-### Bloque Fiabilidad
-
-**B3.** Los patrones de retry con backoff e idempotencia con clave única propuestos en el framework son adecuados para prevenir pérdida o duplicidad de datos en escenarios reales.
-
-**B4.** El error workflow con dead-letter (preservación del payload original ante fallos) es una decisión arquitectónica acertada para el dominio IoT donde las lecturas de sensor son datos irrecuperables.
+**Cuadrícula B7–B8 · Aplicabilidad**
+- B7 — Las 10 reglas obligatorias (REG-001 a REG-010) son aplicables en proyectos LC/NC reales
+- B8 — El framework aporta valor arquitectónico sin imponer complejidad excesiva al desarrollador
 
 ---
 
-### Bloque Seguridad
+## SECCIÓN C — Perspectiva crítica (1 pregunta · ~2 min)
 
-**B5.** La gestión de secretos exclusivamente mediante credenciales nativas de n8n (sin tokens ni API keys literales en el JSON exportado) es apropiada para entornos productivos.
-
----
-
-### Bloque Operabilidad
-
-**B6.** El log estructurado JSON por etapa, consultable desde stdout del contenedor (`docker logs | grep`), facilita el diagnóstico de fallos sin requerir acceso a la interfaz gráfica de n8n.
-
----
-
-### Bloque Aplicabilidad
-
-**B7.** Las 10 reglas obligatorias del framework (REG-001 a REG-010) son aplicables a proyectos LC/NC reales en mi contexto laboral.
-
-**B8.** El framework aporta valor arquitectónico tangible sin imponer una carga excesiva de complejidad sobre el desarrollador.
+> Se buscan perspectivas críticas, no validación. La planeación de la refactorización
+> (Decisión 5) contemplaba tres preguntas independientes (C1 riesgo, C2 trade-off, C3
+> refinamiento) con textos de ayuda acortados a 50–80 palabras. **La versión efectivamente
+> publicada en Google Forms consolidó las tres en una sola pregunta abierta** (confirmado en
+> los datos crudos de respuesta), llevando la simplificación un paso más allá de lo
+> documentado en la planeación.
 
 ---
 
-## SECCIÓN C — Identificación de riesgos y trade-offs (3 preguntas, ~3 min)
+**C1. ¿Qué observación técnica considera más importante sobre el framework presentado?**
 
-> Texto introductorio:
-> *"En esta sección le pedimos su criterio experto sobre riesgos y compromisos que el framework presenta. Sus respuestas se analizan cualitativamente y enriquecen directamente el informe ATAM. Sea conciso pero específico."*
-
----
-
-**C1. ¿Cuál considera que es el riesgo arquitectónico más relevante en el diseño to-be presentado?**
-
-Tipo: respuesta abierta (obligatoria)
-Longitud: máximo 500 caracteres
-Texto de ayuda: *"Piense en aspectos como latencia adicional, dependencias circulares, complejidad operacional, costo de cambio o riesgos de adopción. Si identifica más de uno, mencione el principal."*
+Tipo: párrafo obligatorio · máximo 500 caracteres
+Texto de ayuda: *"Puede referirse a riesgos arquitectónicos, trade-offs que le parezcan críticos, reglas que cuestionaría, o aspectos que refinaría. Sea conciso."*
 
 ---
 
-**C2. ¿Qué trade-off (compromiso entre atributos de calidad) identifica como más crítico entre los presentados?**
+## SECCIÓN D — Valoración global (2 preguntas obligatorias + 1 condicional opcional · ~1 min)
 
-Tipo: respuesta abierta (obligatoria)
-Longitud: máximo 500 caracteres
-Texto de ayuda: *"Por ejemplo: en el caso IoT, la modularización mejora la mantenibilidad en −84% nodos por cambio, pero aumenta la latencia entre +119% y +192%. ¿Cuál trade-off le parece más significativo y por qué?"*
-
----
-
-**C3. ¿Qué regla, patrón o componente del framework cuestionaría, refinaría o agregaría?**
-
-Tipo: respuesta abierta (obligatoria, mínimo 1 carácter — puede ser "ninguno")
-Longitud: máximo 500 caracteres
-Texto de ayuda: *"Sugerencia de mejora libre. Si no tiene observaciones puede escribir 'ninguno'."*
-
----
-
-## SECCIÓN D — Percepción global (2 preguntas, ~1 min)
+> Última sección obligatoria.
 
 ---
 
 **D1. En una escala de 1 a 10, ¿cómo califica globalmente el micro-framework propuesto?**
 
 Tipo: escala lineal 1-10 (obligatoria)
-Etiqueta extremo izquierdo: 1 — Pobre, no lo recomendaría
-Etiqueta extremo derecho: 10 — Excelente, lo adoptaría sin dudar
+Etiqueta 1: Pobre — no lo recomendaría
+Etiqueta 10: Excelente — lo adoptaría sin cambios mayores
 
 ---
 
-**D2. ¿Adoptaría este framework (o sus principios) en un proyecto LC/NC actual o futuro de su organización?**
+**D2. ¿Adoptaría este framework —o sus principios nucleares— en un proyecto LC/NC actual o futuro de su organización?**
 
 Tipo: opción única (obligatoria)
 Opciones:
 - Sí, sin modificaciones mayores
-- Sí, con adaptaciones a mi contexto específico
-- Tal vez, requeriría más evidencia o contexto adicional
+- Sí, con adaptaciones a mi contexto
+- Tal vez, necesitaría más evidencia
 - No lo adoptaría
 
-**Lógica condicional:**
-Si responde "Tal vez" o "No" → mostrar pregunta D2-bis (opcional):
+**Lógica:** ③ "Tal vez" o ④ "No" → mostrar D2-bis (condicional).
 
-**D2-bis.** ¿Por qué? (opcional)
-Tipo: respuesta abierta opcional
-Longitud: máximo 300 caracteres
+**D2-bis. ¿Cuál es la razón principal por la que no lo adoptaría o necesitaría más evidencia?** (opcional)
+Tipo: respuesta corta opcional, máximo 300 caracteres
 
 ---
 
-## SECCIÓN E — Mini-ATAM (OPCIONAL, solo para expertos invitados, ~15 min)
+## SECCIÓN E — Mini-ATAM (opcional, ~8 min adicionales)
 
-> Texto introductorio:
-> *"**Esta sección es opcional.** Si su rol y experiencia se lo permiten, le invitamos a participar en un mini-ATAM: evaluar cada uno de los 12 escenarios de calidad con scoring 1–5 as-is/to-be y clasificación arquitectónica (sensitivity point, tradeoff point, risk o non-risk).*
->
-> *Su tiempo adicional es muy valorado y permite triangular su criterio con el análisis del autor mediante medidas formales de acuerdo inter-evaluador.*
->
-> *Si prefiere terminar aquí, marque la opción 'No, terminar aquí' en la pregunta E0 y será dirigido a la pantalla final."*
+> Completamente opcional. Para profesionales con experiencia en arquitectura de software.
 
 ---
 
-**E0. ¿Desea participar en la sección mini-ATAM opcional?**
+**E0. ¿Desea participar?**
 
 Tipo: opción única (obligatoria)
 Opciones:
-- Sí, continuar al mini-ATAM
-- No, terminar la encuesta aquí
+- Sí, deseo participar (~8 minutos adicionales)
+- No, prefiero terminar aquí
 
-Lógica: si "No" → saltar a pantalla final.
-
----
-
-### Estructura repetida para los 12 escenarios
-
-Para cada uno de los 12 escenarios (BOT-Q1, BOT-Q2, …, IOT-Q6), se presenta:
-
-**1.** Breve descripción del escenario (1–2 líneas con stimulus y response).
-**2.** Cuatro preguntas estructuradas (todas obligatorias dentro de la sección):
+Lógica: "No" → pantalla final.
 
 ---
 
-#### Plantilla por escenario (ejemplo BOT-Q1):
+**Tabla de referencia de escenarios (imagen).** En lugar de un bloque de ~600 palabras describiendo cada escenario en prosa, esta sección incluye una **imagen PNG insertada directamente** (generada en HTML con estilos inline y exportada como imagen, sin dependencias externas) con:
+- Tabla 1: los 12 escenarios × 5 columnas (ID · Qué se evalúa · Atributo · AS-IS · TO-BE), codificada por color (rojo as-is, verde to-be).
+- Tabla 2: la escala de scoring 1–5 y las definiciones de clasificación NR/SP/TP/R (ver tabla de equivalencia en "Evolución del instrumento").
 
-> **Escenario BOT-Q1 — Modificabilidad de reglas (Mantenibilidad)**
-> *Estímulo: cambio en la lógica de prioridad de mensajes (CR1).*
-> *Respuesta esperada en to-be: solo el subflujo E2 se modifica; medida `nodes_touched ≤ 1`.*
+El texto de instrucciones en el formulario se reduce a 3 líneas + enlace al material de apoyo (Sección 1).
 
-**BOT-Q1.a — ¿Cómo califica el soporte del diseño as-is para este escenario?**
-Tipo: escala 1–5
-1 = No soportado / antipatrón · 5 = Excelente con evidencia
+**E1 — Scoring del diseño AS-IS**
+Tipo: cuadrícula de varias opciones (obligatoria — 12 filas × 5 columnas)
+Columnas: 1 No soportado · 2 · 3 · 4 · 5 Excelente soporte
 
-**BOT-Q1.b — ¿Cómo califica el soporte del diseño to-be para este escenario?**
-Tipo: escala 1–5
+**E2 — Scoring del diseño TO-BE**
+Tipo: cuadrícula de varias opciones (obligatoria — 12 filas idénticas × 5 columnas)
+Mismas columnas que E1.
 
-**BOT-Q1.c — ¿Cómo clasificaría arquitectónicamente la decisión principal que afecta este escenario?**
-Tipo: opción única
-- Non-risk (la decisión preserva claramente el atributo)
-- Sensitivity point (afecta principalmente un atributo)
-- Tradeoff point (afecta múltiples atributos en direcciones opuestas)
-- Risk (la decisión podría comprometer el atributo en algún caso)
+**E3 — Clasificación arquitectónica**
+Tipo: cuadrícula de varias opciones (obligatoria — 12 filas × 5 columnas)
+Mismas columnas y escala que E1/E2 (no una lista con los nombres de las 4 categorías ATAM — ver la tabla de equivalencia en "Evolución del instrumento" para la conversión score→categoría).
 
-**BOT-Q1.d — Comentario breve (opcional)**
-Tipo: respuesta abierta opcional, máximo 200 caracteres
+> ⚠️ **Nota de implementación.** El documento de planeación de la refactorización había propuesto originalmente para E3 una cuadrícula de 4 columnas con los nombres de categoría directamente (NR · SP · TP · R). La versión finalmente publicada en Google Forms usó, en cambio, la misma escala de soporte de 5 columnas que E1/E2 (confirmado en los datos crudos de respuesta: los valores registrados son literalmente "Buen soporte" y "Excelente soporte", no siglas de categoría), consistente con el principio de no exigir el dominio directo de las cuatro categorías ATAM. Este documento describe la versión efectivamente publicada.
 
----
+**E4 — Comentario libre** (opcional, máximo 500 caracteres)
+Texto: *"¿Tiene alguna observación sobre los escenarios o el ejercicio de scoring?"*
 
-### Listado completo de 12 escenarios para la Sección E
+**Filas de las cuadrículas E1, E2 y E3** (idénticas en las tres):
 
-**Bot — 6 escenarios:**
-
-| ID | Descripción breve para el respondente |
-|---|---|
-| **BOT-Q1** | Modificabilidad de reglas (Mantenibilidad) — Cambio en lógica de prioridad de mensajes. Esperado: 1 nodo modificado en E2. |
-| **BOT-Q2** | Cambio de proveedor de tickets (Mantenibilidad) — Cambio de endpoint del servicio de tickets. Esperado: 1 nodo modificado en E3. |
-| **BOT-Q3** | Confidencialidad de credenciales (Seguridad) — Auditar el JSON exportado del flujo. Esperado: 0 tokens literales. |
-| **BOT-Q4** | Integridad ante reintentos (Fiabilidad) — Enviar el mismo ticket dos veces. Esperado: 0 duplicados en el servicio externo. |
-| **BOT-Q5** | Diagnóstico de fallos en producción (Operabilidad) — Fallo de autenticación. Esperado: causa identificada en logs en ≤ 60 segundos. |
-| **BOT-Q6** | Corrección de contratos HTTP (Adecuación funcional) — Token inválido o payload malformado. Esperado: HTTP 401 / 400 correctos. |
-
-**IoT — 6 escenarios:**
-
-| ID | Descripción breve para el respondente |
-|---|---|
-| **IOT-Q1** | Ajuste de umbrales (Mantenibilidad) — Reducir el umbral de temperatura crítica. Esperado: 1 nodo modificado en E2. |
-| **IOT-Q2** | Cambio de canal de alerta (Mantenibilidad) — Cambiar endpoint de notificación. Esperado: 1 nodo modificado en E4. |
-| **IOT-Q3** | Integridad de lecturas ante reintentos (Fiabilidad) — Enviar la misma lectura dos veces. Esperado: 1 fila por idempotency_key. |
-| **IOT-Q4** | Tolerancia a fallos de red (Fiabilidad) — Caída transitoria del canal de notificación. Esperado: retry exitoso o dead-letter. |
-| **IOT-Q5** | Urgencia diferenciada de alertas (Confiabilidad) — Mezcla de lecturas críticas y de advertencia. Esperado: routing diferenciado. |
-| **IOT-Q6** | Confidencialidad de credenciales BD (Seguridad) — Auditar el JSON exportado del flujo. Esperado: 0 contraseñas literales. |
-
-Cada uno se presenta como bloque independiente con las 4 preguntas (a-d) descritas en la plantilla.
+| ID | Descripción de fila (≤ 70 caracteres) | Atributo |
+|---|---|---|
+| BOT-Q1 | Cambio de reglas de prioridad | Mantenibilidad |
+| BOT-Q2 | Cambio de proveedor de tickets | Mantenibilidad |
+| BOT-Q3 | Credenciales expuestas en JSON exportado | Seguridad |
+| BOT-Q4 | Ticket duplicado por reintento | Fiabilidad |
+| BOT-Q5 | Diagnóstico de fallo silencioso en producción | Operabilidad |
+| BOT-Q6 | Códigos HTTP incorrectos ante errores de entrada | Adec. funcional |
+| IOT-Q1 | Ajuste de umbral de temperatura | Mantenibilidad |
+| IOT-Q2 | Cambio de canal de notificación | Mantenibilidad |
+| IOT-Q3 | Lectura duplicada por reenvío del sensor | Fiabilidad |
+| IOT-Q4 | Canal de notificación caído 30 s | Fiabilidad |
+| IOT-Q5 | Routing crítico vs advertencia | Confiabilidad |
+| IOT-Q6 | Credenciales de BD en JSON exportado | Seguridad |
 
 ---
 
-### Pregunta final de Sección E
+## Pantalla final — Agradecimiento
 
-**E13. Comentario libre sobre el mini-ATAM (opcional)**
-Tipo: respuesta abierta opcional, máximo 500 caracteres
-Texto de ayuda: *"¿Identificó algún sensitivity point, tradeoff point o risk no incluido en los 12 escenarios? ¿Tiene alguna observación general sobre el ejercicio de scoring?"*
-
----
-
-## Pantalla final — Agradecimiento y opción de seguimiento
-
-> **¡Muchas gracias!**
+> **¡Muchas gracias por su participación!**
 >
-> Su aporte contribuye directamente al rigor metodológico de este trabajo de grado. Una vez completado el análisis se publicará un resumen ejecutivo de los resultados.
+> Su criterio profesional contribuye directamente al rigor metodológico de este trabajo
+> de grado. Los resultados del panel de expertos se integrarán al informe ATAM final.
 >
-> Si desea recibir ese resumen por correo, por favor escriba su dirección a continuación. (Este dato se almacena de forma separada del cuestionario y se elimina máximo 60 días después del cierre del estudio.)
+> Una vez finalizado el análisis se publicará un resumen ejecutivo con los hallazgos del panel.
 
-**F1. (Opcional) Correo para recibir el resumen de resultados:**
-Tipo: campo de correo (opcional, validación de formato)
+**F1. (Opcional) Correo electrónico para recibir el resumen de resultados.**
+Tipo: respuesta corta con validación de formato de correo.
+Nota: este dato se almacena separado de las respuestas y se elimina a los 60 días del cierre.
 
 ---
 
 ## Resumen del instrumento — para verificación
 
-| Sección | # Preguntas obligatorias | # Preguntas opcionales | Tiempo estimado |
-|---|:---:|:---:|:---:|
-| 0 — Consentimiento | 1 | 0 | 1 min (lectura) |
-| A — Caracterización | 5 | 0 | 1.5 min |
-| B — Validación percibida | 8 | 0 | 5 min |
-| C — Riesgos y trade-offs | 3 | 0 | 3 min |
-| D — Percepción global | 2 | 1 (D2-bis condicional) | 1 min |
-| **Subtotal encuesta principal** | **19** | **1** | **~12 min** |
-| E — Mini-ATAM (opcional) | 1 + (12 × 3) = 37 | 12 (comentarios c/escenario) + 1 (E13) = 13 | +15 min |
-| F — Seguimiento (opcional) | 0 | 1 | 30 s |
-| **TOTAL si participa en mini-ATAM** | **56** | **15** | **~28 min** |
+| Sección | Ítems visibles | Tiempo estimado |
+|---|:---:|:---:|
+| 0 — Consentimiento | 1 | 1 min |
+| 1 — Material de apoyo | 0 (informativa) | 5–7 min (lectura previa) |
+| A — Perfil profesional | 4 (1 cuadrícula de 3 filas) | 2 min |
+| B — Valoración del framework | 8 (4 cuadrículas de 2 filas) | 4 min |
+| C — Perspectiva crítica | 1 | 2 min |
+| D — Valoración global | 2 + 1 condicional | 1 min |
+| **Subtotal encuesta principal (A–D)** | **~23** | **~9 min** |
+| E — Mini-ATAM (opcional) | 1 (E0) + 3 cuadrículas de 12 filas + 1 comentario | 6–8 min |
+| F — Seguimiento (opcional) | 1 | 30 s |
+| **TOTAL con Sección E** | **~27** | **15–19 min** |
+
+Comparado con la versión inicial (v1.0, ~75 ítems, 25–35 min), la refactorización redujo
+los ítems visibles en ~67 % y el tiempo total en ~40 %, sin pérdida de información
+recolectada (ver "Evolución del instrumento").
 
 ---
 
-## Notas para quien configure el formulario
+## Notas de configuración para Google Forms
 
-1. **Color del tema:** sobrio (azul oscuro o gris). Evitar colores llamativos que sugieran sesgo.
-2. **Logo del proyecto:** opcional, si se incluye usar el logo UNAB.
-3. **Vista previa antes de publicar:** verificar que las lógicas condicionales funcionan (A2 < 3 años descalifica; D2 muestra D2-bis si "Tal vez" o "No"; E0 = "No" salta a final).
-4. **Test de envío con respuestas dummy:** llenar el formulario 2 veces con datos de prueba antes de difundir; eliminar las respuestas dummy del Sheets antes del lanzamiento real.
-5. **URL pública vs restringida:** mantener URL pública pero con un mensaje en el consentimiento que clarifica que no se permite responder más de una vez por persona (honor system).
-6. **Material de apoyo:** asegurarse de que las URLs del PDF y video estén activas **antes** de enviar la primera invitación.
+| Parámetro | Valor | Nota |
+|---|---|---|
+| Recolección de correos | DESACTIVADA | Preserva el anonimato del respondente |
+| Barra de progreso | ACTIVADA | Reduce la tasa de abandono al mostrar el avance |
+| Permitir editar respuestas | ACTIVADA | Permite correcciones antes del envío definitivo |
+| Orden de preguntas | NO aleatorizar | El orden lógico de las secciones es parte del diseño |
+| Lógica P0 = "No" | Ir a pantalla final | Sección de cierre con agradecimiento |
+| Lógica A2 = "< 3 años" | Ir a pantalla final con mensaje de exclusión | O aplicar exclusión post-hoc si no es posible técnicamente (ver `protocolo-encuesta.md` §2.3) |
+| Lógica D2 = "Tal vez" / "No" | Ir a sección D2-bis antes de continuar | Sección separada en Google Forms |
+| Lógica E0 = "No" | Ir a pantalla final de agradecimiento | Saltar toda la Sección E |
+| Color del tema | Azul oscuro o gris sobrio | Evitar colores llamativos que sugieran sesgo positivo |
+| Requerir una respuesta por fila | SÍ en todas las cuadrículas | A3-A4-A5, B1–B8, E1, E2, E3 |
+| Test de envío con respuestas dummy | Llenar el formulario 2 veces antes de difundir | Eliminar las respuestas dummy del Sheets antes del lanzamiento real |
 
 ---
 
@@ -362,18 +332,18 @@ Para la sección de análisis del informe, este es el mapa de cada pregunta a la
 
 | Pregunta | Hipótesis / Aspecto evaluado |
 |---|---|
-| A1-A5 | Perfil del panel (caracterización demográfica) |
+| A1, A2 | Perfil del panel (rol, experiencia) |
+| A3-A4-A5 (cuadrícula) | Familiaridad del panel con LC/NC, Clean Architecture y evaluación arquitectónica |
 | B1, B2 | Validación de la modularidad y reducción de impacto CR |
 | B3 | Validación de los patrones de retry e idempotencia |
 | B4 | Validación del error workflow IoT |
 | B5 | Validación de gestión de secretos |
 | B6 | Validación del log estructurado |
 | B7, B8 | Validación de aplicabilidad y costo cognitivo |
-| C1 | Identificación independiente de riesgos (puede revelar nuevos R-* no anticipados) |
-| C2 | Identificación independiente de trade-offs (puede revelar nuevos TP-* no anticipados) |
-| C3 | Sugerencias de refinamiento al framework |
+| C1 | Identificación independiente de riesgos, trade-offs y sugerencias de refinamiento (pregunta consolidada; puede revelar nuevos R-*/TP-* no anticipados) |
 | D1 | Aceptabilidad global (score) |
 | D2 | Intención de adopción |
-| E.a/b por escenario | Triangulación del scoring del autor (`matriz-scoring.md`) |
-| E.c por escenario | Triangulación de la clasificación SP/TP/R/NR del autor (`analisis-approaches.md`) |
-| E13 | Hallazgos emergentes no anticipados |
+| E1 por escenario | Triangulación del scoring as-is del autor (`matriz-scoring.md`) |
+| E2 por escenario | Triangulación del scoring to-be del autor (`matriz-scoring.md`) |
+| E3 por escenario | Triangulación de la clasificación SP/TP/R/NR del autor (`analisis-approaches.md`) — recuperada del nivel 1–5 vía la tabla de equivalencia (ver "Evolución del instrumento") |
+| E4 | Hallazgos emergentes no anticipados |

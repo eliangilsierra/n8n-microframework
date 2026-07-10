@@ -1,0 +1,13 @@
+escenario,asis_autor,asis_panel_mediana,asis_rango,asis_delta,asis_converge,tobe_autor,tobe_panel_mediana,tobe_rango,tobe_delta,tobe_converge,clase_autor,clase_panel_moda,clase_coincide
+BOT-Q1,2,2,2-5,0,True,5,5,4-5,0,True,TP,TP,True
+BOT-Q2,2,2,1-4,0,True,5,5,4-5,0,True,TP,NR,False
+BOT-Q3,1,1,1-5,0,True,5,5,4-5,0,True,NR,TP,False
+BOT-Q4,2,2,1-5,0,True,4,4,4-5,0,True,SP,NR,False
+BOT-Q5,1,1,1-5,0,True,5,5,3-5,0,True,SP,NR,False
+BOT-Q6,2,2,1-4,0,True,5,5,4-5,0,True,NR,NR,True
+IOT-Q1,2,2,1-4,0,True,5,5,3-5,0,True,TP,NR,False
+IOT-Q2,2,2,1-4,0,True,5,5,4-5,0,True,TP,TP,True
+IOT-Q3,1,1,1-5,0,True,5,5,4-5,0,True,NR,NR,True
+IOT-Q4,1,1,1-5,0,True,4,4,3-5,0,True,SP,R,False
+IOT-Q5,1,2,1-4,1,True,4,4,4-5,0,True,TP,TP,True
+IOT-Q6,1,1,1-4,0,True,5,5,4-5,0,True,NR,NR,True

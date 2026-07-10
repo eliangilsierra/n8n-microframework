@@ -1,8 +1,16 @@
+> 🌐 **Idioma / Language:** Español · [English](README.en.md)
+
 # Material de Apoyo de la Encuesta — Índice de URLs y Estado
 
-**Versión:** 1.0
-**Fecha:** 2026-05-07
+**Versión:** 1.1
+**Fecha:** 2026-05-07 (actualizado 2026-07-08)
 **Propósito:** Centralizar las URLs públicas del material que los respondentes deben revisar antes de responder la encuesta. Este archivo se actualiza cuando el material se hospeda.
+
+> ✅ **Estado:** el material se generó, hospedó y usó en la campaña real (17–24 de junio de
+> 2026; ver `informe-atam-final.md` §8.1). Las URLs públicas específicas (Google Drive, Loom/
+> YouTube, Google Form) no se versionan en este repositorio por no ser necesarias para la
+> reproducibilidad del análisis — el contenido íntegro del material está en las fuentes
+> Markdown/PDF de esta carpeta y los datos recolectados en `medicion/encuesta-validacion/`.
 
 ---
 
@@ -10,12 +18,19 @@
 
 | Archivo | Tipo | Tiempo del respondente | Hosting sugerido | URL pública |
 |---|---|:---:|---|---|
-| `resumen-proyecto.md` | Fuente Markdown del PDF de 4 páginas | — | (no se publica) | — |
-| `resumen-proyecto.pdf` | PDF derivado para el respondente | 5 min | Google Drive público | [PENDIENTE] |
+| `resumen-proyecto.md` | Fuente Markdown del borrador inicial de 4 páginas | — | (no se publica) | — |
+| `guia-referencia-tecnica.md` | Transcripción legible del PDF efectivamente usado en la encuesta | — | (no se publica) | — |
+| `guia-referencia-tecnica.pdf` | **PDF efectivamente revisado por el panel** (Sección 1 del instrumento) | 5 min | Google Drive público | ✅ presente en el repo · hospedado y usado en campaña (URL no versionada) |
 | `guion-video.md` | Guion del video corto | — | (no se publica) | — |
-| `video-presentacion.mp4` | Video de 5 minutos grabado del guion | 5 min | Loom o YouTube no listado | [PENDIENTE] |
+| `video-presentacion.mp4` | Video de 5 minutos grabado del guion | 5 min | Loom o YouTube no listado | ✅ grabado y usado en campaña (URL no versionada) |
 | `diagrama-comparativo.md` | Fuente Mermaid de los diagramas | — | (no se publica) | — |
 | `diagrama-comparativo.png` | Render PNG embebido en el PDF | — | (en el PDF) | — |
+
+> ℹ️ **Nota de reconciliación.** El borrador inicial `resumen-proyecto.md`/`.pdf` (planeado en la
+> Fase 7) fue reemplazado en la práctica por `guia-referencia-tecnica.pdf`, el documento que el
+> panel de expertos efectivamente revisó (ver `instrumento-encuesta.md` §Sección 1). Se conserva
+> `resumen-proyecto.md` como fuente del borrador para trazabilidad histórica, pero la referencia
+> canónica y autoritativa del material de apoyo es `guia-referencia-tecnica.pdf` / `.md`.
 
 ---
 
@@ -57,32 +72,25 @@ Convertir el código Mermaid de `diagrama-comparativo.md` usando:
 
 ---
 
-## Checklist de publicación
+## Checklist de publicación — completado ✓
 
-Antes de difundir la encuesta:
+Ejecutado antes de difundir la encuesta (17 de junio de 2026):
 
-- [ ] PDF generado y subido a Google Drive
-- [ ] Permisos del PDF: "Cualquier persona con el enlace puede ver"
-- [ ] URL del PDF copiada y verificada en navegación anónima
-- [ ] Video grabado y subido a Loom/YouTube
-- [ ] Permisos del video: público o no listado con enlace
-- [ ] URL del video copiada y verificada
-- [ ] URLs actualizadas en este README
-- [ ] URLs sustituidas en el instrumento de encuesta (`instrumento-encuesta.md` Sección B encabezado)
-- [ ] URLs sustituidas en las plantillas de difusión (`plan-difusion.md`)
-- [ ] Test de descarga del PDF desde un navegador sin sesión de Google
-- [ ] Test de reproducción del video desde un navegador sin sesión
+- [x] PDF generado y subido a Google Drive
+- [x] Permisos del PDF: "Cualquier persona con el enlace puede ver"
+- [x] URL del PDF copiada y verificada en navegación anónima
+- [x] Video grabado y subido a Loom/YouTube
+- [x] Permisos del video: público o no listado con enlace
+- [x] URL del video copiada y verificada
+- [x] URLs sustituidas en el instrumento de encuesta y en las plantillas de difusión al momento de enviarlas (los archivos versionados en `instrumento-encuesta.md` y `plan-difusion.md` conservan los tokens `[URL_PDF]`/`[URL_VIDEO]`/`[URL_GOOGLE_FORM]` como plantilla reutilizable, no como pendiente)
+- [x] Test de descarga del PDF desde un navegador sin sesión de Google
+- [x] Test de reproducción del video desde un navegador sin sesión
 
 ---
 
-## URLs definitivas (a llenar)
+## URLs definitivas
 
-```
-URL_PDF      = [PENDIENTE — llenar tras subir]
-URL_VIDEO    = [PENDIENTE — llenar tras subir]
-URL_FORM     = [PENDIENTE — llenar tras crear Google Form según instrumento-encuesta.md]
-```
-
-Una vez llenadas, sustituir todos los `[URL_PDF]`, `[URL_VIDEO]`, `[URL_GOOGLE_FORM]` en:
-- `docs/atam/instrumento-encuesta.md` (Sección B encabezado)
-- `docs/atam/plan-difusion.md` (todas las plantillas)
+Las URLs públicas reales (Google Drive, Loom/YouTube, Google Form) se usaron para la campaña
+del 17–24 de junio de 2026 pero **no se versionan en este repositorio**: no son necesarias para
+reproducir el análisis (los datos recolectados y el material fuente ya están versionados) y
+evitan depender de enlaces externos que pueden expirar o cambiar de permisos.

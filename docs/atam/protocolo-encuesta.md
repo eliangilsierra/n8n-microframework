@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](protocolo-encuesta.en.md)
+
 # Protocolo de Encuesta — Validación Externa por Panel de Expertos
 
 **Versión:** 1.0
@@ -50,6 +52,22 @@ Para que una respuesta sea considerada válida, el respondente debe cumplir **to
 | **Nivel 1 — Encuesta amplia** | 15 | 25–30 | Bajo umbral mínimo para estadística descriptiva con desviación estándar interpretable; Cronbach's α requiere N ≥ 10 para ser estable |
 | **Nivel 2 — Mini-ATAM (subset)** | 3 | 5 | Saturación teórica cualitativa (Strauss & Corbin, 1990); inter-rater agreement con 3 evaluadores soporta Krippendorff's α o Fleiss' κ |
 | **Heterogeneidad** | 3 roles distintos | 5 roles distintos | Triangulación entre perspectivas (desarrollo, ops, seguridad, etc.) |
+
+El umbral mínimo de 15 respondientes válidos se sustenta en cuatro argumentos convergentes:
+
+| Criterio | Fundamento del umbral |
+|---|---|
+| Estabilidad de coeficientes de fiabilidad | Los coeficientes de consistencia interna requieren N ≥ 10 para estimaciones estables; n ≥ 15 deja margen ante exclusiones. |
+| Interpretabilidad de la dispersión | Con n < 10 la dispersión de una escala Likert es inestable; desde ~15 casos la estadística descriptiva adquiere lectura interpretable. |
+| Convención de paneles de validación por expertos | El rango usual de jueces en validación por panel se sitúa entre 5 y 15; n = 15 se ubica en su extremo superior. |
+| Heterogeneidad mínima | Una triangulación significativa exige ≥ 3 roles distintos y representación de los tres buckets de experiencia (3–5, 5–10, >10 años). |
+
+La exigencia de más de 3 años de experiencia responde a un criterio de competencia: evaluar
+compromisos arquitectónicos como mantenibilidad frente a latencia, idempotencia ante
+reintentos o gestión de secretos en producción presupone exposición previa a sistemas en
+operación. Un profesional con menos de 3 años rara vez ha enfrentado los antipatrones que
+el as-is representa, por lo que su juicio sobre la severidad del diseño original carecería
+de anclaje empírico.
 
 ### 2.5 Estrategia de muestreo
 
@@ -188,6 +206,12 @@ Correo: [correo del autor]
 
 **Total: ~4 semanas desde lanzamiento hasta integración en informe.**
 
+**Ejecución real.** La recolección de la Fase V se realizó del 17 al 24 de junio de 2026,
+canalizada a través del departamento de TI de una organización del sector (~200
+profesionales con el perfil objetivo identificados). Los resultados de esta ejecución
+(perfil del panel, N recolectado/válido, valoraciones por sección) se documentan en
+`informe-atam-final.md` §8, ya completado.
+
 ---
 
 ## 5. Gestión de datos
@@ -260,6 +284,58 @@ Si alguno de los umbrales no se cumple, el componente se reporta como **evidenci
 5. **Sesgos de redacción.** ¿Alguna pregunta induce respuesta?
 
 Los pilotos no se cuentan en la muestra final. Los hallazgos del pilotaje se documentan en una sección breve "Ajustes post-pilotaje" del informe ATAM.
+
+### Ajustes post-pilotaje
+
+El pilotaje sobre la versión inicial del instrumento (v1.0, ~75 ítems visibles, 25–35 min)
+identificó cuatro categorías de problemas, documentados formalmente y usados para refactorizar
+el instrumento a la versión 2.0 especificada en `instrumento-encuesta.md`:
+
+1. **Extensión excesiva.** El formulario completo, incluida la Sección E (48 ítems individuales
+   — 12 escenarios × 4 preguntas cada uno), representaba un tiempo real de respuesta de
+   25 a 35 minutos, muy por encima del umbral de 15 minutos recomendado para encuestas de
+   validación académica voluntarias.
+2. **Carga cognitiva en la Sección E.** Cada uno de los 12 escenarios del mini-ATAM presentaba
+   título, estímulo, respuesta esperada, resultado medido y cuatro preguntas — un volumen de
+   información propio de un taller ATAM presencial con moderador, no de un formulario
+   autodirigido.
+3. **Subutilización de los tipos de control de Google Forms.** El instrumento original usaba
+   exclusivamente escalas lineales individuales, sin aprovechar el tipo "cuadrícula de varias
+   opciones" que permite agrupar varios ítems de la misma escala en una sola pregunta visual.
+4. **Textos de fila demasiado largos.** Al intentar consolidar en cuadrículas, los textos de
+   fila originales (150–300 caracteres) se apilaban verticalmente y degradaban la lectura,
+   especialmente en móviles.
+
+**Principio rector de los ajustes:** reducir la fricción cognitiva del respondiente sin
+sacrificar la validez de los datos recolectados. Los seis cambios concretos aplicados —
+consolidar A3+A4+A5 en una cuadrícula, consolidar B1–B8 en 4 cuadrículas temáticas, acortar
+todos los textos de fila a ≤ 70 caracteres, refactorizar la Sección E de 48 ítems a 3
+cuadrículas de 12 filas + una tabla de referencia visual (imagen), simplificar los textos
+de ayuda de la Sección C, y consolidar las instrucciones del mini-ATAM en una imagen — se
+detallan en `instrumento-encuesta.md` (sección "Evolución del instrumento" y estructura de
+las Secciones A, B, C y E).
+
+**Impacto en la validez del instrumento** (evaluado por tipo):
+
+| Tipo de validez | Impacto | Justificación |
+|---|---|---|
+| Validez de contenido | Neutro | Los mismos constructos y atributos ISO 25010 están representados; no se eliminó ningún ítem sustantivo. |
+| Validez de constructo | Positivo leve | Eliminar los contextos de ayuda con cifras específicas reduce el sesgo de anclaje. |
+| Validez interna | Positivo | Un instrumento más corto reduce la fatiga del respondiente, mejorando la calidad de las respuestas al final del formulario. |
+| Validez de criterio | Neutro | Los datos recolectados (scores 1–5, clasificación, respuestas abiertas) son idénticos; el análisis estadístico opera sobre los mismos valores. |
+| Validez externa | Positivo | Un instrumento menos intimidante puede incrementar la tasa de participación y reducir la auto-selección de respondentes. |
+
+**Resultado cuantificado:** de ~75 a ~25 ítems visibles (−67 %), de 25–35 a 16–20 minutos de
+duración total (−40 % aprox.), sin pérdida de información recolectada.
+
+**Limitaciones que la refactorización no elimina** (reconocidas explícitamente): el panel
+valida pero no co-construye los hallazgos, lo que introduce un sesgo de anclaje que ninguna
+refactorización del formulario puede eliminar por completo; el muestreo sigue siendo no
+probabilístico por conveniencia; la calidad de las respuestas queda condicionada a que el
+respondiente haya revisado el material de apoyo, condición que el formulario refactorizado
+asume más explícitamente que el original; y respondientes con baja familiaridad con ATAM
+(A5 < 3) pueden tener dificultad para completar la Sección E incluso con las instrucciones
+simplificadas — mitigado por el carácter opcional de esa sección.
 
 ---
 

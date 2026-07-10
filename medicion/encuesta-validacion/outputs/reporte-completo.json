@@ -1,0 +1,577 @@
+{
+  "n_total": 19,
+  "n_valid": 17,
+  "n_excluded": 2,
+  "section_A": {
+    "roles": {
+      "Desarrollador / Ingeniero de software": 10,
+      "Scrum Master / Agile Coach": 1,
+      "Arquitecto de software": 4,
+      "Analista de sistemas / Analista de software": 1,
+      "Tech Lead / Líder técnico": 1
+    },
+    "experience": {
+      "Entre 3 y 5 años": 10,
+      "Entre 5 y 10 años": 4,
+      "Más de 10 años": 3
+    },
+    "familiarity_ge_media_of_17": {
+      "A3": 15,
+      "A4": 15,
+      "A5": 13
+    },
+    "familiarity_mean_sd": {
+      "A3": {
+        "mean": 3.29,
+        "sd": 1.05
+      },
+      "A4": {
+        "mean": 4,
+        "sd": 1.06
+      },
+      "A5": {
+        "mean": 3.29,
+        "sd": 0.99
+      }
+    }
+  },
+  "n_senior_ge5y": 7,
+  "section_B": {
+    "B1": {
+      "mean": 4.71,
+      "median": 5,
+      "sd": 0.47,
+      "pct_ge4": 100
+    },
+    "B2": {
+      "mean": 4.53,
+      "median": 5,
+      "sd": 0.62,
+      "pct_ge4": 94
+    },
+    "B3": {
+      "mean": 4.53,
+      "median": 5,
+      "sd": 0.51,
+      "pct_ge4": 100
+    },
+    "B4": {
+      "mean": 4.35,
+      "median": 4,
+      "sd": 0.49,
+      "pct_ge4": 100
+    },
+    "B5": {
+      "mean": 4.24,
+      "median": 4,
+      "sd": 0.44,
+      "pct_ge4": 100
+    },
+    "B6": {
+      "mean": 4.53,
+      "median": 5,
+      "sd": 0.62,
+      "pct_ge4": 94
+    },
+    "B7": {
+      "mean": 4.18,
+      "median": 4,
+      "sd": 0.53,
+      "pct_ge4": 94
+    },
+    "B8": {
+      "mean": 4.29,
+      "median": 4,
+      "sd": 0.59,
+      "pct_ge4": 94
+    }
+  },
+  "section_B_cronbach_alpha": {
+    "mantenibilidad_B1_B2": 0.505,
+    "fiabilidad_B3_B4": -0.816,
+    "aplicabilidad_B7_B8": 0.365
+  },
+  "open_responses_for_coding": {
+    "R-001": [
+      "El aspecto más crítico es que el mecanismo de dead-letter (REG-003) comparte canal con E4 en el caso IoT, lo que significa que cuando más se necesita la red de seguridad del framework —ante un fallo en la etapa de salida— es precisamente cuando esta también puede fallar. Combinado con el incremento de latencia de hasta +192% por la cadena secuencial de subflujos, el framework debería exigir independencia de infraestructura entre el error handler y las etapas funcionales para que su promesa de resiliencia sea realmente robusta.",
+      "Los 12 escenarios no parecen incluir uno de carga o escalabilidad, lo cual es relevante dado que el trade-off de latencia en IoT (+192% p50) podría agravarse bajo volumen alto. Además, los scores as-is concentrados en 1-2 y los to-be en 4-5 sugieren un rango que maximiza el delta visible; un escenario intermedio (framework parcialmente aplicado) ayudaría a validar que la mejora es gradual y no un artefacto de comparar el peor caso contra el mejor."
+    ],
+    "R-002": [
+      "Ninguna",
+      ""
+    ],
+    "R-003": [
+      "El riesgo principal es que las 10 reglas sean uniformes para todos los flujos, sin distinguir criticidad. Un flujo que mueve datos financieros y uno que genera un reporte interno no merecen el mismo nivel de control. Sin un criterio de clasificación por riesgo, los desarrolladores terminarán aplicando las reglas mecánicamente en flujos simples o saltándoselas en flujos críticos. Añadiría un paso inicial que clasifique el flujo y determine qué reglas son obligatorias según su impacto.",
+      "no"
+    ],
+    "R-004": [
+      "el principal riesgo que logro observar es la dependencia de factores externos no controlados, lo que puede afectar la resiliencia real. Además, el trade off de latencia por la modularizacion puede ser crítico en escenarios IOT de alto volumen. Evaluaría mecanismos complementarios de observabilidad y fallback",
+      "los escenarios no cubren completamente riesgos de dependencia externa (idempotencia/APIs, logs no centralizados) y parecen evaluados en condiciones controladas, faltaría validar comportamiento en producción y bajo carga reallista"
+    ],
+    "R-005": [
+      "La observación técnica más importante es que la orquestación centralizada y la modularización estricta introducen un acoplamiento operacional y un costo de latencia significativo, especialmente en escenarios IoT donde se reportan aumentos del +119 % al +192 % p50.\n\nAunque el trade-off está documentado, cuestionaría la regla implícita de secuencializar siempre E1→E2→E3→E4 y el uso de un único orquestador por proceso. Para cargas de alta frecuencia, convendría permitir patrones más flexibles (event-driven, paralelismo o composición distribuida) para evitar que la mantenibilidad se obtenga a costa de la escalabilidad y del tiempo de respuesta.\n\nEn síntesis: el principal riesgo arquitectónico es que la búsqueda de separación de responsabilidades termine convirtiéndose en una sobrefragmentación de los flujos.",
+      "Se echa en falta un escenario explícito de escalabilidad y recuperación ante fallos del propio mecanismo de observabilidad (logs y dead-letter). También convendría incorporar escenarios de concurrencia y dependencia de terceros, ya identificados como sensitivity points. Metodológicamente, los scores ATAM fueron asignados por el autor; sería deseable validarlos con evaluadores independientes para reducir sesgos y aumentar la trazabilidad."
+    ],
+    "R-006": [
+      "Ningúna",
+      "Ninguna"
+    ],
+    "R-007": [
+      "Ninguna",
+      "Ninguna"
+    ],
+    "R-008": [
+      "La eliminación de credenciales hardcodeadas (−100%) es el impacto de seguridad más crítico del framework. REG-001 resuelve el antipatrón de mayor riesgo operativo en LC/NC. Como observación: sugiero que REG-001 se complemente con un lineamiento de rotación periódica de tokens, ya que R-BOT-01 identifica ese riesgo como abierto. El validador estático fortalece la postura preventiva, pero la rotación automatizada cerraría el ciclo de seguridad completo.",
+      "Los 12 escenarios cubren bien los atributos principales. Como observación: ningún escenario evalúa qué ocurre con la idempotencia bajo concurrencia real (múltiples instancias n8n ejecutando el mismo flujo simultáneamente). El Idempotency-Key en HTTP y el ON CONFLICT en BD son efectivos en instancia única, pero bajo despliegue horizontal el comportamiento no está cubierto por ningún escenario. Sería un sensitivity point adicional relevante para producción."
+    ],
+    "R-010": [
+      "El mayor aporte del framework es hacer que los Change Requests sean predecibles: pasar de 5.3 nodos tocados a 1.0 transforma la estimación de esfuerzo. En equipos LC/NC sin cultura arquitectónica, ese impacto es inmediato. Sugiero que el framework incluya una guía de onboarding mínima para equipos sin experiencia en Clean Architecture, ya que REG-008 puede resultar contraintuitivo para desarrolladores acostumbrados a flujos monolíticos",
+      "El ejercicio de scoring es sólido. Sugiero incluir un escenario que evalúe el impacto del framework cuando un desarrollador sin experiencia arquitectónica realiza el primer CR. La reducción de tiempo de 32.7 a 6.7 minutos es el dato más convincente para justificar adopción, y un escenario centrado en la curva de aprendizaje inicial enriquecería el análisis ATAM con una perspectiva de adopción organizacional real."
+    ],
+    "R-011": [
+      "El metamodelo E1–E4 es la decisión más valiosa del framework porque impone una separación de responsabilidades que en plataformas LC/NC normalmente se omite por la velocidad de desarrollo. La restricción de E2 de no llamar APIs externas directamente es exactamente el tipo de regla contraintuitiva que un arquitecto debe defender ante equipos de negocio. El trade-off de latencia en IoT es real pero asumible cuando el beneficio de mantenibilidad supera el costo operacional en flujos de baja frecuencia.",
+      "E4: IOT-Q4 merece atención especial: el riesgo de que el dead-letter falle cuando E4 está caído implica que el mecanismo de recuperación depende del mismo canal que falló. En patrones de integración empresarial esto se resuelve con un canal de escritura independiente para el dead-letter, desacoplado del canal de notificación principal. Sería valioso incluir un escenario que evalúe la resiliencia del propio mecanismo de recuperación ante fallos en cascada."
+    ],
+    "R-012": [
+      "El tema de seguridad se maneja poco en esta infraestructura, los flujos de n8n tambien estan en riesgo de sufrir ciberataques ya sea por fuera o por dentro de la organizacion",
+      ""
+    ],
+    "R-013": [
+      "La separación en etapas hace que los cambios sean predecibles. Antes tocabas 5 nodos sin saber cuál iba a romper algo; ahora sabes exactamente dónde ir. El retry con backoff debería ser obligatorio también en llamadas internas entre subflujos, no solo en HTTP saliente.",
+      "El scoring del as-is es consistente con lo que uno ve en proyectos reales sin estructura. Agregaría un escenario de pruebas: cómo se testea un flujo con esta separación de etapas, porque la testeabilidad mejora mucho con E1–E4 pero no está evaluada explícitamente."
+    ],
+    "R-014": [
+      "He trabajado con n8n en producción y el problema de los tokens hardcodeados es real. REG-001 resuelve algo que la mayoría ignora hasta que hay un incidente. Lo que más me aporta es el error workflow obligatorio, en todos los proyectos que he visto que eso es lo primero que se omite.",
+      "El caso IoT me parece el más representativo porque los pipelines de sensores son donde más se pierde datos sin que nadie se entere. El dead-letter en PostgreSQL es la decisión correcta aunque depende de que la BD esté disponible, que no siempre está garantizado"
+    ],
+    "R-015": [
+      "El riesgo que veo, es la ausencia de gestión centralizada de secretos con rotación automática (R-BOT-01). Las credenciales nativas de n8n eliminan el hardcoding, pero no resuelven rotación, auditoría de acceso ni revocación ante incidente. En entornos regulados esto es una brecha operacional, no un trade-off menor. Complementar REG-001 con integración a un vault externo (HashiCorp, AWS SSM) convertiría el proyecto en una práctica más robusta. El framework lo reconoce pero no lo aborda.",
+      "El ejercicio no cubre un escenario de falla en el orquestador principal (REG-002). Si ese nodo falla, todos los subflujos quedan inaccesibles simultáneamente: es un punto único de falla no evaluado. Adicionalmente, ningún escenario prueba carga concurrente alta, donde  la cola de mensajes fallidas, enfrentaría su mayor presión real. Ambos vacíos son relevantes para producción."
+    ],
+    "R-016": [
+      "El framework aplica bien los principios de separación de responsabilidades que ya conocemos de microservicios, pero en el contexto LC/NC. REG-008 (dominio aislado en E2) es el equivalente a un servicio de dominio sin dependencias externas. Lo que veo como riesgo es que equipos sin esa cultura arquitectónica van a resistir la restricción de E2 cuando el negocio presiona por velocidad.",
+      "Los escenarios de mantenibilidad son los más convincentes. Faltaría evaluar qué pasa cuando el equipo crece y varios desarrolladores modifican distintas etapas al mismo tiempo; el modelo E1–E4 debería facilitar eso pero no hay un escenario que lo pruebe explícitamente."
+    ],
+    "R-017": [
+      "Lo que más me llama la atención es el impacto en los códigos HTTP. Consumir APIs que siempre devuelven 200 aunque haya errores es un problema real para quien consume el servicio. REG-009 resuelve algo que afecta directamente a los clientes del sistema, no solo a quien mantiene el flujo.",
+      "BOT-Q6 es el escenario que más resuena desde el lado del consumidor del API. Los contratos HTTP mal implementados generan bugs difíciles de rastrear en el cliente. Ninguno de los escenarios evalúa el impacto en quien consume el webhook de respuesta, que es una perspectiva válida."
+    ],
+    "R-018": [
+      "Para pipelines de datos la idempotencia es lo más importante y el framework la resuelve bien en ambos casos. El ON CONFLICT en E3 es la decisión más sólida del caso IoT. Lo que agregaría es algún mecanismo de alerta cuando el dead-letter recibe entradas, no solo guardar el payload sino notificar activamente.",
+      "Desde pipelines de datos el caso IoT es muy representativo. Me hubiera gustado ver un escenario con volumen alto de lecturas simultáneas para evaluar si el ON CONFLICT escala bien bajo presión real."
+    ]
+  },
+  "section_D": {
+    "D1_mean": 8.71,
+    "D1_median": 9,
+    "D1_min": 7,
+    "D1_max": 10,
+    "D2_distribution": {
+      "Sí, con adaptaciones a mi contexto específico — los principios son válidos pero requeriría ajustes": 9,
+      "Sí, sin modificaciones mayores — lo adoptaría tal como está presentado": 6,
+      "Tal vez — requeriría más evidencia empírica, validación en producción, o más contexto": 2
+    }
+  },
+  "section_E": {
+    "convergence_asis": {
+      "BOT-Q1": {
+        "author": 2,
+        "panel_median": 2,
+        "panel_range": [
+          2,
+          5
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "BOT-Q2": {
+        "author": 2,
+        "panel_median": 2,
+        "panel_range": [
+          1,
+          4
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "BOT-Q3": {
+        "author": 1,
+        "panel_median": 1,
+        "panel_range": [
+          1,
+          5
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "BOT-Q4": {
+        "author": 2,
+        "panel_median": 2,
+        "panel_range": [
+          1,
+          5
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "BOT-Q5": {
+        "author": 1,
+        "panel_median": 1,
+        "panel_range": [
+          1,
+          5
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "BOT-Q6": {
+        "author": 2,
+        "panel_median": 2,
+        "panel_range": [
+          1,
+          4
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "IOT-Q1": {
+        "author": 2,
+        "panel_median": 2,
+        "panel_range": [
+          1,
+          4
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "IOT-Q2": {
+        "author": 2,
+        "panel_median": 2,
+        "panel_range": [
+          1,
+          4
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "IOT-Q3": {
+        "author": 1,
+        "panel_median": 1,
+        "panel_range": [
+          1,
+          5
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "IOT-Q4": {
+        "author": 1,
+        "panel_median": 1,
+        "panel_range": [
+          1,
+          5
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "IOT-Q5": {
+        "author": 1,
+        "panel_median": 2,
+        "panel_range": [
+          1,
+          4
+        ],
+        "delta": 1,
+        "converges": true
+      },
+      "IOT-Q6": {
+        "author": 1,
+        "panel_median": 1,
+        "panel_range": [
+          1,
+          4
+        ],
+        "delta": 0,
+        "converges": true
+      }
+    },
+    "convergence_tobe": {
+      "BOT-Q1": {
+        "author": 5,
+        "panel_median": 5,
+        "panel_range": [
+          4,
+          5
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "BOT-Q2": {
+        "author": 5,
+        "panel_median": 5,
+        "panel_range": [
+          4,
+          5
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "BOT-Q3": {
+        "author": 5,
+        "panel_median": 5,
+        "panel_range": [
+          4,
+          5
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "BOT-Q4": {
+        "author": 4,
+        "panel_median": 4,
+        "panel_range": [
+          4,
+          5
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "BOT-Q5": {
+        "author": 5,
+        "panel_median": 5,
+        "panel_range": [
+          3,
+          5
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "BOT-Q6": {
+        "author": 5,
+        "panel_median": 5,
+        "panel_range": [
+          4,
+          5
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "IOT-Q1": {
+        "author": 5,
+        "panel_median": 5,
+        "panel_range": [
+          3,
+          5
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "IOT-Q2": {
+        "author": 5,
+        "panel_median": 5,
+        "panel_range": [
+          4,
+          5
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "IOT-Q3": {
+        "author": 5,
+        "panel_median": 5,
+        "panel_range": [
+          4,
+          5
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "IOT-Q4": {
+        "author": 4,
+        "panel_median": 4,
+        "panel_range": [
+          3,
+          5
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "IOT-Q5": {
+        "author": 4,
+        "panel_median": 4,
+        "panel_range": [
+          4,
+          5
+        ],
+        "delta": 0,
+        "converges": true
+      },
+      "IOT-Q6": {
+        "author": 5,
+        "panel_median": 5,
+        "panel_range": [
+          4,
+          5
+        ],
+        "delta": 0,
+        "converges": true
+      }
+    },
+    "convergence_class": {
+      "BOT-Q1": {
+        "author": "TP",
+        "panel_mode": "TP",
+        "distribution": {
+          "NR": 5,
+          "TP": 12
+        },
+        "matches": true,
+        "mode_is_tie": false,
+        "tied_categories": null
+      },
+      "BOT-Q2": {
+        "author": "TP",
+        "panel_mode": "NR",
+        "distribution": {
+          "NR": 13,
+          "TP": 4
+        },
+        "matches": false,
+        "mode_is_tie": false,
+        "tied_categories": null
+      },
+      "BOT-Q3": {
+        "author": "NR",
+        "panel_mode": "TP",
+        "distribution": {
+          "NR": 5,
+          "TP": 6,
+          "SP": 6
+        },
+        "matches": false,
+        "mode_is_tie": true,
+        "tied_categories": [
+          "TP",
+          "SP"
+        ]
+      },
+      "BOT-Q4": {
+        "author": "SP",
+        "panel_mode": "NR",
+        "distribution": {
+          "NR": 9,
+          "TP": 1,
+          "SP": 7
+        },
+        "matches": false,
+        "mode_is_tie": false,
+        "tied_categories": null
+      },
+      "BOT-Q5": {
+        "author": "SP",
+        "panel_mode": "NR",
+        "distribution": {
+          "NR": 10,
+          "SP": 1,
+          "TP": 6
+        },
+        "matches": false,
+        "mode_is_tie": false,
+        "tied_categories": null
+      },
+      "BOT-Q6": {
+        "author": "NR",
+        "panel_mode": "NR",
+        "distribution": {
+          "NR": 15,
+          "TP": 2
+        },
+        "matches": true,
+        "mode_is_tie": false,
+        "tied_categories": null
+      },
+      "IOT-Q1": {
+        "author": "TP",
+        "panel_mode": "NR",
+        "distribution": {
+          "NR": 12,
+          "TP": 4,
+          "SP": 1
+        },
+        "matches": false,
+        "mode_is_tie": false,
+        "tied_categories": null
+      },
+      "IOT-Q2": {
+        "author": "TP",
+        "panel_mode": "TP",
+        "distribution": {
+          "NR": 8,
+          "TP": 9
+        },
+        "matches": true,
+        "mode_is_tie": false,
+        "tied_categories": null
+      },
+      "IOT-Q3": {
+        "author": "NR",
+        "panel_mode": "NR",
+        "distribution": {
+          "NR": 12,
+          "TP": 5
+        },
+        "matches": true,
+        "mode_is_tie": false,
+        "tied_categories": null
+      },
+      "IOT-Q4": {
+        "author": "SP",
+        "panel_mode": "R",
+        "distribution": {
+          "NR": 5,
+          "TP": 5,
+          "R": 7
+        },
+        "matches": false,
+        "mode_is_tie": false,
+        "tied_categories": null
+      },
+      "IOT-Q5": {
+        "author": "TP",
+        "panel_mode": "TP",
+        "distribution": {
+          "NR": 6,
+          "TP": 11
+        },
+        "matches": true,
+        "mode_is_tie": false,
+        "tied_categories": null
+      },
+      "IOT-Q6": {
+        "author": "NR",
+        "panel_mode": "NR",
+        "distribution": {
+          "NR": 12,
+          "TP": 5
+        },
+        "matches": true,
+        "mode_is_tie": false,
+        "tied_categories": null
+      }
+    },
+    "panel_global_asis_mean": 1.92,
+    "panel_global_tobe_mean": 4.65,
+    "panel_global_delta": 2.73,
+    "pct_perceive_improvement": 95.1,
+    "pct_perceive_improvement_n": "194/204",
+    "tobe_exact_matches": "12/12",
+    "asis_exact_matches": "11/12",
+    "senior_subgroup_tobe_matches": "12/12 (n=7)",
+    "class_mode_matches": "6/12"
+  },
+  "krippendorff": {
+    "alpha_asis": 0.086,
+    "alpha_tobe": 0.145,
+    "alpha_classification_nominal": 0.14
+  }
+}

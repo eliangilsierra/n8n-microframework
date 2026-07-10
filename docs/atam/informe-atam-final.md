@@ -1,10 +1,12 @@
+> 🌐 **Idioma / Language:** Español · [English](informe-atam-final.en.md)
+
 # Informe Consolidado de Evaluación ATAM
 ## Micro-framework Arquitectónico LC/NC para n8n
 
 **Capítulo de tesis correspondiente a R4 — Protocolo e Informe ATAM**
 
-**Versión:** 1.0 (sección 8 en estado preliminar, pendiente datos de encuesta)
-**Fecha:** 2026-05-07
+**Versión:** 1.1 (sección 8 completa con resultados de la encuesta de validación externa)
+**Fecha:** 2026-05-07 (sección 8 actualizada 2026-07-08)
 **Autor:** Elian Hernando Gil Sierra
 **Director:** Sebastian Roa Prada, PhD
 **Programa:** Maestría en Gestión, Aplicación y Desarrollo de Software (MGADS)
@@ -21,7 +23,7 @@
 5. [Análisis de approaches arquitectónicos](#5-análisis-de-approaches-arquitectónicos)
 6. [Matriz de scoring as-is vs to-be](#6-matriz-de-scoring-as-is-vs-to-be)
 7. [Evaluación cuantitativa de evidencia](#7-evaluación-cuantitativa-de-evidencia)
-8. [Validación externa por panel de expertos](#8-validación-externa-por-panel-de-expertos-placeholder)
+8. [Validación externa por panel de expertos](#8-validación-externa-por-panel-de-expertos)
 9. [Síntesis de hallazgos](#9-síntesis-de-hallazgos)
 10. [Conclusiones de la evaluación ATAM](#10-conclusiones-de-la-evaluación-atam)
 11. [Limitaciones del estudio](#11-limitaciones-del-estudio)
@@ -62,7 +64,7 @@ El alcance de la evaluación es:
 
 - **Sistemas evaluados:** las arquitecturas to-be de los casos Bot e IoT, comparadas contra sus respectivos as-is como línea base.
 - **Atributos evaluados:** los cinco atributos ISO/IEC 25010 priorizados en el anteproyecto: Mantenibilidad, Fiabilidad, Seguridad, Operabilidad, Adecuación funcional. Eficiencia se reporta como atributo asociado a trade-offs, no como atributo top-K.
-- **Escenarios:** 12 escenarios top-K (6 por caso) definidos en `docs/context/atam-utility-tree.md`.
+- **Escenarios:** 12 escenarios top-K (6 por caso) definidos en `docs/atam/atam-utility-tree.md`.
 - **Evidencia:** documental, cuantitativa (8 000 corridas + 12 CRs + runtime de IOT-Q4 e IOT-Q5 + análisis MTTD + validador estático), y opinión experta (sección 8).
 
 Fuera del alcance: evaluación de la arquitectura AWS productiva (objeto de R3), evaluación de otras plataformas LC/NC distintas a n8n, despliegue real en producción.
@@ -179,7 +181,7 @@ Doce approaches arquitectónicos están inventariados y caracterizados en `docs/
 
 ## 4. Utility tree y escenarios top-K
 
-El utility tree completo, con priorización por importancia × dificultad (escala H/M/L), está en `docs/context/atam-utility-tree.md`. Resumen de los 12 escenarios top-K evaluados:
+El utility tree completo, con priorización por importancia × dificultad (escala H/M/L), está en `docs/atam/atam-utility-tree.md`. Resumen de los 12 escenarios top-K evaluados:
 
 ### 4.1 Escenarios Bot
 
@@ -375,108 +377,195 @@ El trade-off es asimétrico: marginal en Bot, significativo en IoT. Está acepta
 
 ---
 
-## 8. Validación externa por panel de expertos (placeholder)
+## 8. Validación externa por panel de expertos
 
-> **Estado:** Esta sección está estructurada y se completará al cierre de la recolección de la encuesta de validación externa. La metodología, instrumento, protocolo y plan de análisis están versionados como documentos completos:
->
-> - `docs/atam/protocolo-encuesta.md`
-> - `docs/atam/instrumento-encuesta.md`
-> - `docs/atam/plan-analisis-encuesta.md`
-> - `docs/atam/plan-difusion.md`
-> - `docs/atam/material-apoyo/`
->
-> Tras la ejecución y análisis de la encuesta, esta sección se completa con los siguientes sub-apartados.
+> **Estado:** Recolección cerrada (17–24 de junio de 2026) y análisis completo sobre los datos
+> anonimizados. Fuente de datos: [`medicion/encuesta-validacion/respuestas-anonimizadas-2026-06-24.csv`](../../medicion/encuesta-validacion/respuestas-anonimizadas-2026-06-24.csv).
+> Análisis reproducible en [`medicion/encuesta-validacion/analisis-encuesta.py`](../../medicion/encuesta-validacion/analisis-encuesta.py)
+> y [`analisis-encuesta.ipynb`](../../medicion/encuesta-validacion/analisis-encuesta.ipynb) (ejecutado,
+> con outputs embebidos), siguiendo el plan pre-registrado en `plan-analisis-encuesta.md`.
+> Salidas consolidadas en `medicion/encuesta-validacion/outputs/`.
 
-### 8.1 Perfil de respondentes (a completar)
+### 8.1 Perfil de respondentes
 
-```
-[A completar con:]
-- N total Sección A-D: [N]
-- N Sección E (mini-ATAM): [N]
-- Distribución por rol (A1): tabla con frecuencias y %
-- Distribución por experiencia (A2): histograma
-- Familiaridad media con LC/NC (A3): media y σ
-- Familiaridad media con Clean Architecture (A4): media y σ
-- Familiaridad media con ATAM (A5): media y σ
-- Verificación de heterogeneidad: ≥ 3 roles distintos representados (Sí/No)
-- Tasa de respuesta de la campaña: [%]
-```
+- N total recolectadas (Sección A–D): **19**
+- N excluidas (< 3 años de experiencia, filtro post-hoc pre-registrado): **2**
+- N válido: **17**, por encima del umbral mínimo de 15
+- N Sección E (mini-ATAM): **17** (todos los válidos completaron la sección opcional)
+- Subgrupo de mayor experiencia (≥ 5 años): **n = 7**
 
-### 8.2 Resultados cuantitativos — Sección B Likert (a completar)
+| Rol (A1) | n |
+|---|:---:|
+| Desarrollador / Ingeniero de software | 10 |
+| Arquitecto de software | 4 |
+| Tech Lead / Líder técnico | 1 |
+| Analista de sistemas / Analista de software | 1 |
+| Scrum Master / Agile Coach | 1 |
 
-```
-[A completar con tabla por ítem:]
+**Heterogeneidad de roles:** 5 roles distintos representados — cumple el criterio de ≥ 3.
 
-Ítem | Media | Mediana | σ | % ≥ 4 (acuerdo) | Lectura
-B1   | x.xx  | x       | x | xx %             | [Validación fuerte/moderada/débil]
-B2   | x.xx  | x       | x | xx %             | ...
-...
+| Experiencia (A2) | n |
+|---|:---:|
+| Entre 3 y 5 años | 10 |
+| Entre 5 y 10 años | 4 |
+| Más de 10 años | 3 |
 
-Análisis de consistencia interna (si N ≥ 15):
-- Mantenibilidad (B1+B2): Cronbach's α = [x.xx]
-- Fiabilidad (B3+B4): Cronbach's α = [x.xx]
-- Aplicabilidad (B7+B8): Cronbach's α = [x.xx]
+| Familiaridad | Media | σ |
+|---|:---:|:---:|
+| A3 — Plataformas LC/NC | 3.29 | 1.05 |
+| A4 — Clean Architecture | 4.00 | 1.06 |
+| A5 — Evaluación arquitectónica (ATAM, ISO 25010) | 3.29 | 0.99 |
 
-Análisis correlacional exploratorio:
-- Variación de la valoración B7-B8 según rol (A1): [test y resultado]
-- Correlación entre familiaridad LC/NC (A3) y aplicabilidad (B7-B8): [Spearman ρ]
-```
+### 8.2 Resultados cuantitativos — Sección B Likert
 
-### 8.3 Análisis cualitativo — Sección C (a completar)
+| Ítem | Media | Mediana | σ | % ≥ 4 | Lectura |
+|---|:---:|:---:|:---:|:---:|---|
+| B1 — Las 4 etapas mejoran la modularidad | 4.71 | 5 | 0.47 | 100 % | Validación fuerte |
+| B2 — De ~5 a 1 nodo por cambio es mejora verificable | 4.53 | 5 | 0.62 | 94 % | Validación fuerte |
+| B3 — Retry + idempotencia previenen pérdida/duplicación | 4.53 | 5 | 0.51 | 100 % | Validación fuerte |
+| B4 — Dead-letter correcto para IoT | 4.35 | 4 | 0.49 | 100 % | Validación fuerte |
+| B5 — Secretos vía credenciales nativas es aceptable | 4.24 | 4 | 0.44 | 100 % | Validación fuerte |
+| B6 — Log JSON permite diagnóstico sin abrir n8n | 4.53 | 5 | 0.62 | 94 % | Validación fuerte |
+| B7 — Las 10 reglas son aplicables en proyectos reales | 4.18 | 4 | 0.53 | 94 % | Validación fuerte (la más baja del set) |
+| B8 — Aporta valor sin complejidad excesiva | 4.29 | 4 | 0.59 | 94 % | Validación fuerte |
 
-```
-[A completar con:]
+Todas las medianas ≥ 4 con % ≥ 4 entre 94 % y 100 % — validación fuerte en el criterio interpretativo
+a priori, sin rechazos por debajo del punto medio en ningún ítem.
 
-Tabla de categorías emergentes:
-Categoría                          | # respondentes | % | Convergencia con autor | Cita representativa
-[Categoría 1]                      | x              | x | ✅/❌ [ID hallazgo]    | "[cita anonimizada]"
-...
+**Consistencia interna (Cronbach's α por par temático):**
 
-Hallazgos emergentes no anticipados por el autor:
-- [Hallazgo emergente 1]
-- [Hallazgo emergente 2]
-...
+| Grupo | α |
+|---|:---:|
+| Mantenibilidad (B1+B2) | 0.505 |
+| Fiabilidad (B3+B4) | −0.816 |
+| Aplicabilidad (B7+B8) | 0.365 |
 
-Discrepancias con el análisis del autor:
-- [Discrepancia 1]
-- [Discrepancia 2]
-...
-```
+Los tres coeficientes son bajos o no interpretables (uno negativo), consistente con lo anticipado
+en el plan de análisis: la concentración casi unánime de respuestas en los niveles 4–5 (efecto techo)
+deprime los coeficientes de correlación aunque el acuerdo sustantivo sea alto. Se prioriza, por tanto,
+la lectura descriptiva (medias, medianas, % de acuerdo) por sobre estos coeficientes, tal como estaba
+pre-registrado.
 
-### 8.4 Triangulación con scoring del autor — Sección E (a completar)
+Los ítems de menor media (B7 = 4.18, B5 = 4.24) anticipan los temas que desarrolla el análisis
+cualitativo de la Sección C: aplicabilidad de las reglas en proyectos reales y gestión de secretos
+sin rotación automática.
 
-```
-[A completar con:]
+### 8.3 Análisis cualitativo — Secciones C y E4
 
-Tabla comparativa por escenario:
-Escenario | Score autor as-is | Score panel mediana | Δ | Score autor to-be | Score panel mediana | Δ
-BOT-Q1    | 2                 | x.x                 | x | 5                 | x.x                 | x
-BOT-Q2    | 2                 | x.x                 | x | 5                 | x.x                 | x
-...
+La versión efectivamente publicada del instrumento consolidó las preguntas C1–C3 planeadas en una
+sola pregunta abierta (ver `instrumento-encuesta.md` §Sección C). La codificación temática se aplicó
+sobre esa pregunta consolidada (C1) y sobre el comentario libre de la Sección E (E4), siguiendo
+Strauss & Corbin (1990). Codificación completa en
+[`outputs/categorias-emergentes-seccion-c.md`](../../medicion/encuesta-validacion/outputs/categorias-emergentes-seccion-c.md).
 
-Boxplot de convergencia: [referencia a figura]
+| Categoría | # respondientes | Convergencia con el registro del autor |
+|---|:---:|---|
+| Ausencia de escenario de carga, escalabilidad y concurrencia | 7/17 | Emergente — la más frecuente del panel, no estaba en el registro previo del autor |
+| Latencia acumulada por subflujos secuenciales en IoT | 4/17 | ✅ Converge con TP-GLOBAL-01 |
+| Dead-letter / error handler acoplado al canal de E4 | 2/17 (clara) + 5/17 (relacionada) | ✅ Converge con SP-IOT-01 / R-IOT-01 |
+| Gestión de secretos sin rotación, auditoría ni revocación | 2/17 | ✅ Converge con R-BOT-01 |
+| Testabilidad y curva de aprendizaje no evaluadas | 2/17 | Emergente |
+| Punto único de falla del orquestador (REG-002) no evaluado | 1/17 explícita | Emergente |
+| Reglas uniformes sin clasificación por criticidad del flujo | 1/17 | Emergente |
 
-Inter-rater agreement entre expertos:
-- N expertos: [3-5]
-- Krippendorff's α scoring ordinal: [x.xx]
-- Krippendorff's α clasificación nominal SP/TP/R/NR: [x.xx]
-- Interpretación: [inaceptable/tentativa/aceptable según Krippendorff 2018]
-```
+3/17 respuestas C1 y 5/17 respuestas E4 no tuvieron contenido temático ("Ninguna"/"no").
 
-### 8.5 Síntesis de la validación externa (a completar)
+**Hallazgos emergentes no anticipados por el autor** (más allá de las 7 categorías anteriores):
+- Resistencia organizacional/cultural a la restricción de E2 en equipos sin cultura arquitectónica previa.
+- Perspectiva del consumidor del API ante contratos HTTP incorrectos (enriquece NR-BOT-02 con el ángulo del cliente aguas abajo).
+- Sugerencia de extender retry con backoff a llamadas internas entre subflujos, no solo HTTP saliente.
+- Comentario metodológico sobre la conveniencia de validar el scoring ATAM con evaluadores independientes adicionales.
 
-```
-[A completar con:]
+**Discrepancias con el análisis del autor:** ninguna clasificación del panel contradice directamente
+un non-risk o riesgo cerrado del autor; las divergencias observadas son de énfasis (la ausencia de
+escenarios de carga/concurrencia domina la atención del panel más que en el análisis original) y se
+discuten en la sección 9.
 
-Hallazgos del autor CONFIRMADOS por el panel:
-- ...
+### 8.4 Triangulación con scoring del autor — Sección E
 
-Hallazgos del autor NO confirmados por el panel:
-- ...
+| Escenario | As-is autor | As-is panel (mediana, rango) | Δ | To-be autor | To-be panel (mediana, rango) | Δ | Clase autor | Clase moda panel | Coincide |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| BOT-Q1 | 2 | 2 (2–5) | 0 | 5 | 5 (4–5) | 0 | TP | TP (12) | ✅ |
+| BOT-Q2 | 2 | 2 (1–4) | 0 | 5 | 5 (4–5) | 0 | TP | NR (13) | ❌ |
+| BOT-Q3 | 1 | 1 (1–5) | 0 | 5 | 5 (4–5) | 0 | NR | Empate TP/SP (6/6) | ❌ |
+| BOT-Q4 | 2 | 2 (1–5) | 0 | 4 | 4 (4–5) | 0 | SP | NR (9) | ❌ |
+| BOT-Q5 | 1 | 1 (1–5) | 0 | 5 | 5 (3–5) | 0 | SP | NR (10) | ❌ |
+| BOT-Q6 | 2 | 2 (1–4) | 0 | 5 | 5 (4–5) | 0 | NR | NR (15) | ✅ |
+| IOT-Q1 | 2 | 2 (1–4) | 0 | 5 | 5 (3–5) | 0 | TP | NR (12) | ❌ |
+| IOT-Q2 | 2 | 2 (1–4) | 0 | 5 | 5 (4–5) | 0 | TP | TP (9) | ✅ |
+| IOT-Q3 | 1 | 1 (1–5) | 0 | 5 | 5 (4–5) | 0 | NR | NR (12) | ✅ |
+| IOT-Q4 | 1 | 1 (1–5) | 0 | 4 | 4 (3–5) | 0 | SP (+R-IOT-01) | R (7) | ✅ (vía R-IOT-01) |
+| IOT-Q5 | 1 | 2 (1–4) | 1 | 4 | 4 (4–5) | 0 | TP | TP (11) | ✅ |
+| IOT-Q6 | 1 | 1 (1–4) | 0 | 5 | 5 (4–5) | 0 | NR | NR (12) | ✅ |
 
-Hallazgos emergentes del panel a incorporar:
-- ...
-```
+**Convergencia de scoring:** to-be coincide exactamente en **12/12** escenarios; as-is coincide en
+**11/12**, con la única diferencia en IOT-Q5 (Δ = 1, dentro del criterio de convergencia |Δ| ≤ 1).
+Media global del panel: as-is = **1.92**, to-be = **4.65**, Δ = **+2.73** (frente a 1.50 → 4.75 del
+análisis del autor — el panel es más conservador en el to-be pero confirma la misma dirección y
+magnitud del cambio). El **95.1 %** de los pares respondiente-escenario percibió mejora (to-be >
+as-is; 194/204).
+
+**Clasificación arquitectónica:** la moda del panel coincide con la clasificación primaria del autor
+en **6/12** escenarios — cifra menor que la del scoring (12/12 to-be) pero interpretable, no
+aleatoria: la equivalencia de la Tabla 8 impone una lectura ordinal (R < SP < TP < NR) sobre
+categorías que en ATAM son cualitativas, de modo que una decisión bien soportada puede ser a la vez
+un punto de sensibilidad y percibida como no-riesgo por el panel ("efecto de constructo"). BOT-Q3 no
+tuvo moda clara (empate TP/SP, 6 y 6). El panel reprodujo limpiamente los no-riesgos (BOT-Q1, BOT-Q6,
+IOT-Q2, IOT-Q3, IOT-Q5, IOT-Q6) y, de forma destacada, elevó IOT-Q4 a **Risk** (moda 7/17) — más
+severo que el sensitivity point del autor, pero convergente con el riesgo R-IOT-01 ya documentado y
+el hallazgo más crítico del registro de riesgos.
+
+**Robustez — subgrupo de mayor experiencia (≥ 5 años, n = 7):** conserva la convergencia total,
+**12/12** en el to-be, descartando que la convergencia dependa de los respondentes menos senior.
+
+**Acuerdo inter-evaluador (Krippendorff's α, n = 17):**
+
+| Medida | α |
+|---|:---:|
+| Scoring as-is (ordinal) | 0.086 |
+| Scoring to-be (ordinal) | 0.145 |
+| Clasificación (nominal) | 0.140 |
+
+**Interpretación:** los tres coeficientes son bajos según los umbrales de Krippendorff (2018:
+< 0.667 inaceptable). Esto **no** se interpreta como baja fiabilidad inter-jueces sustantiva, sino
+como una manifestación del efecto techo — análoga a la paradoja de kappa: cuando las respuestas se
+concentran en las categorías altas (o, en clasificación, se dispersan entre pocas etiquetas
+plausibles para escenarios ya consensuados como positivos), el coeficiente corregido por azar se
+deprime aunque la concordancia bruta sea alta. La evidencia de convergencia se sustenta, por tanto,
+en la coincidencia modal y de medianas (12/12 to-be, 11/12 as-is, 6/12 clasificación) y no en α,
+consistente con lo declarado a priori en el plan de análisis. El mismo efecto techo explica los
+valores de Cronbach's α de la Sección B (§8.2).
+
+### 8.5 Síntesis de la validación externa
+
+**Hallazgos del autor CONFIRMADOS por el panel:**
+- La mejora sustancial de mantenibilidad, seguridad y operabilidad (RQ1): aprobación 94–100 % en B1–B8, D1 = 8.71/10.
+- El scoring ATAM to-be del autor: convergencia exacta en 12/12 escenarios.
+- El scoring ATAM as-is del autor: convergencia en 11/12 (Δ = 1 en IOT-Q5).
+- TP-GLOBAL-01 (modularización vs latencia): mencionado espontáneamente por 4/17 respondientes.
+- SP-IOT-01 / R-IOT-01 (canal de error acoplado a E4): mencionado por 2/17 de forma clara y reflejado en la clasificación modal de IOT-Q4 (Risk, 7/17) — el panel elevó este escenario más allá de la severidad asignada por el autor.
+- R-BOT-01 (rotación de secretos): mencionado espontáneamente por 2/17.
+- La intención de adopción es favorable (D2: 15/17 = 88 %, ninguna respuesta de rechazo).
+
+**Hallazgos del autor NO confirmados en la moda de clasificación (aunque el scoring numérico sí converge):**
+- BOT-Q2, BOT-Q4, BOT-Q5, IOT-Q1: el panel los clasificó modalmente como No-riesgo donde el autor
+  identificó un Tradeoff Point o Sensitivity Point. Esto no contradice el *scoring* (que sí converge
+  exactamente en los cuatro), sino la *categorización*: es un efecto de constructo — una decisión
+  bien soportada (BOT-Q4, BOT-Q5) puede seguir siendo, técnicamente, un punto de sensibilidad, pero
+  el panel la percibe como no-riesgo precisamente porque valora que está bien soportada.
+- BOT-Q3: sin moda de clasificación (empate TP/SP), reflejando genuina divergencia de criterio sobre
+  la gestión de secretos.
+
+**Hallazgos emergentes del panel a incorporar en trabajo futuro:**
+- Ausencia de escenarios de carga, escalabilidad y concurrencia (7/17 — el hallazgo emergente más
+  frecuente; no estaba en el registro de riesgos del autor).
+- Punto único de falla del orquestador ante caída del proceso principal (REG-002).
+- Testabilidad y curva de aprendizaje del modelo E1–E4 para equipos sin experiencia previa.
+- Reglas uniformes sin diferenciación por criticidad del flujo.
+- Extender el patrón de retry a llamadas internas entre subflujos.
+
+Estos hallazgos emergentes, en particular la ausencia de escenarios de carga/concurrencia, se
+incorporan como línea de trabajo futuro en la sección 12.
 
 ---
 
@@ -585,11 +674,13 @@ Las limitaciones de la evaluación, reportadas honestamente para el jurado:
 
 4. **Adaptación de ATAM.** La adaptación asincrónica sin componente conversacional pierde la capacidad de ATAM-original de generar trade-offs no anticipados por fricción grupal en tiempo real (limitación inherente a la adaptación declarada en ADR-MF-004).
 
-5. **Tamaño muestral de la validación externa.** Con N esperado entre 15 y 30 respondentes, los análisis estadísticos son descriptivos y exploratorios, no inferenciales con poder amplio.
+5. **Tamaño muestral de la validación externa.** Con N=17 respondentes válidos (dentro del rango 15–30 estimado en el protocolo), los análisis estadísticos son descriptivos y exploratorios, no inferenciales con poder amplio.
 
 6. **Muestreo no probabilístico.** Conveniencia + bola de nieve; los resultados de la encuesta no son generalizables a la población global de profesionales de software.
 
 7. **n8n específico.** El framework se diseñó y evaluó sobre n8n; aplicabilidad directa a Zapier, Make o Power Automate requiere adaptación de los mecanismos (Execute Workflow, credentials, error workflow) a las primitivas de cada plataforma.
+
+8. **Duración de respuesta no verificable.** El plan de análisis pre-registrado incluía un chequeo de calidad basado en el tiempo mediano de respuesta (≥ 7 min, como proxy de reflexividad); Google Forms solo registra la marca temporal de envío, no la de inicio, por lo que ese chequeo no pudo ejecutarse con los datos recolectados. Se documenta como limitación abierta en lugar de omitirse silenciosamente.
 
 ---
 
@@ -610,7 +701,7 @@ Las siguientes líneas extienden el estudio y son candidatas para investigación
 ## 13. Anexos
 
 ### Anexo A — Utility tree completo
-Ver `docs/context/atam-utility-tree.md`.
+Ver `docs/atam/atam-utility-tree.md`.
 
 ### Anexo B — Matriz detallada de scoring
 Ver `docs/atam/matriz-scoring.md`.
@@ -633,11 +724,12 @@ Ver `docs/atam/plan-analisis-encuesta.md`.
 ### Anexo H — Material de apoyo de la encuesta
 Ver `docs/atam/material-apoyo/`.
 
-### Anexo I — Datos crudos anonimizados de la encuesta (a completar)
-Ruta: `medicion/encuesta-validacion/respuestas-anonimizadas-{fecha}.csv`
+### Anexo I — Datos crudos anonimizados de la encuesta
+Ruta: `medicion/encuesta-validacion/respuestas-anonimizadas-2026-06-24.csv`
 
-### Anexo J — Notebook de análisis estadístico (a completar)
-Ruta: `medicion/encuesta-validacion/analisis-encuesta.ipynb`
+### Anexo J — Notebook de análisis estadístico
+Ruta: `medicion/encuesta-validacion/analisis-encuesta.ipynb` (ejecutado, con outputs embebidos).
+Script equivalente de línea de comandos: `medicion/encuesta-validacion/analisis-encuesta.py`.
 
 ---
 
