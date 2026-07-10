@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](atam-utility-tree.en.md)
+
 # Utility Tree ATAM — Escenarios top-K por caso de estudio
 
 **Versión:** 1.0
