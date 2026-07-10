@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](README.en.md)
+
 # Automatización de medición — n8n microframework
 
 Scripts Python para levantar el entorno, ajustar flujos, ejecutar corridas y
