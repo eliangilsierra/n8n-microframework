@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](seguridad-iam.en.md)
+
 # Seguridad e IAM — n8n-microframework en AWS
 
 **Versión:** 1.0

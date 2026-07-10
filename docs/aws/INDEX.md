@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](INDEX.en.md)
+
 # Índice de artefactos — Fase 8 · Diseño de Arquitectura AWS (OE4)
 
 **Versión:** 1.0

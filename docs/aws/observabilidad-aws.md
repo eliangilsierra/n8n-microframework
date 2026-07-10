@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](observabilidad-aws.en.md)
+
 # Observabilidad en AWS — n8n-microframework
 
 **Versión:** 1.0

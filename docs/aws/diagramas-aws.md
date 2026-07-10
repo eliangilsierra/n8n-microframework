@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](diagramas-aws.en.md)
+
 # Diagramas Mermaid — n8n-microframework en AWS
 
 **Versión:** 1.0

@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](estimacion-costos.en.md)
+
 # Estimación de Costos — n8n-microframework en AWS
 
 **Versión:** 1.0

@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](arquitectura-aws.en.md)
+
 # Diseño de Arquitectura AWS — n8n Micro-framework
 
 **Versión:** 1.0

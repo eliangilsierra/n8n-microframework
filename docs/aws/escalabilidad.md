@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](escalabilidad.en.md)
+
 # Escalabilidad — n8n-microframework en AWS
 
 **Versión:** 1.0
