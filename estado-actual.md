@@ -1,10 +1,12 @@
+> 🌐 **Idioma / Language:** Español · [English](estado-actual.en.md)
+
 # Estado Actual del Proyecto
 
 Fuente única de verdad del avance. Actualizar al completar cada ítem: cambiar ✗ → ✓ y
 refrescar "Última actualización".
 
-**Última actualización:** 2026-05-31
-**Fase activa:** FASE 7 — Evaluación ATAM (~90 % — encuesta pendiente de ejecución) · FASE 8 Completada ✓ · FASE 9 R5 Completada ✓ — R6 pendiente · Validador estático v2 (Lite + Pro) Completado ✓ (2026-05-31)
+**Última actualización:** 2026-07-08
+**Fase activa:** FASE 7 — Evaluación ATAM Completada ✓ (encuesta ejecutada, analizada y documentada) · FASE 8 Completada ✓ · FASE 9 R5 Completada ✓ — R6 pendiente · Validador estático v2 (Lite + Pro) Completado ✓ (2026-05-31)
 
 ---
 
@@ -19,7 +21,7 @@ refrescar "Última actualización".
 | 4 | Construcción del estado to-be | Completada ✓ (2026-05-05) |
 | 5 | Prueba piloto de instrumentos | Completada ✓ (2026-05-05) |
 | 6 | Medición comparativa | Completada ✓ (2026-05-05) — JMeter micro-benchmark pendiente (opcional) |
-| 7 | Evaluación ATAM | En ejecución avanzada (~90%) ✓ artefactos completos — pendiente encuesta y análisis |
+| 7 | Evaluación ATAM | Completada ✓ — encuesta ejecutada (17–24 jun 2026), analizada y documentada en §8 |
 | 8 | Diseño de arquitectura AWS | Completada ✓ (2026-05-18) — OE4 cumplido |
 | 9 | Guía de buenas prácticas y cierre | R5 Completada ✓ (2026-05-18) — R6 (documento final tesis) pendiente |
 
@@ -135,7 +137,7 @@ refrescar "Última actualización".
 - ✓ Script de validación estática ejecutable (`microframework/validacion/validar-flujos.mjs`) — Pilar 2 DevSecOps
 - ✓ Documento consolidado entregable R1 (`docs/microframework-v1.0.md`) — **versión 1.1** con soporte académico completo
 - ✓ **Fundamento teórico** (`docs/context/fundamento-teorico.md`) — Clean Architecture (Martin 2017), NIST SSDF, OWASP, literatura LC/NC, posicionamiento
-- ✓ **Utility Tree ATAM** (`docs/context/atam-utility-tree.md`) — 12 escenarios (6 Bot + 6 IoT) con medidas de respuesta
+- ✓ **Utility Tree ATAM** (`docs/atam/atam-utility-tree.md`) — 12 escenarios (6 Bot + 6 IoT) con medidas de respuesta
 - ✓ **Protocolo MTTD** (`docs/protocolo-mttd.md`) — procedimiento reproducible con meta < 60 segundos
 
 ### Decisiones arquitectónicas por caso (ADRs)
@@ -258,7 +260,7 @@ refrescar "Última actualización".
 
 ---
 
-## FASE 7 — Evaluación ATAM (~90 % — iniciada 2026-05-07, artefactos completos 2026-05-18)
+## FASE 7 — Evaluación ATAM — Completada ✓ (iniciada 2026-05-07, encuesta ejecutada y analizada 2026-06-24, §8 documentada 2026-07-08)
 
 ### Artefactos producidos ✓
 - ✓ Evidencia ATAM completada: Bot 5/6 (83%) ✅ · IoT 6/6 (100%) ✅ · Total 11/12 (92%) ✅
@@ -276,8 +278,9 @@ refrescar "Última actualización".
 - ✓ `docs/atam/material-apoyo/resumen-proyecto.md` — PDF 4 páginas (fuente Markdown)
 - ✓ `docs/atam/material-apoyo/guion-video.md` — guion video 5–7 min para panel
 - ✓ `docs/atam/material-apoyo/diagrama-comparativo.md` — diagramas Mermaid as-is vs to-be
-- ✓ `docs/atam/informe-atam-final.md` — informe ATAM capítulo de tesis (§1–§7 + §9–§10 + placeholder §8)
+- ✓ `docs/atam/informe-atam-final.md` — informe ATAM capítulo de tesis (§1–§10 completos, §8 con resultados reales de encuesta)
 - ✓ `docs/atam/INDEX.md` — índice completo de todos los artefactos de Fase 7
+- ✓ `medicion/encuesta-validacion/` — datos anonimizados (N=19, 17 válidos), script y notebook de análisis ejecutados, outputs consolidados
 
 ### Hallazgos ATAM formalizados
 | Tipo | IDs | Descripción resumida |
@@ -287,13 +290,11 @@ refrescar "Última actualización".
 | Risks (4) | R-BOT-01, R-IOT-01, R-GLOBAL-01, R-GLOBAL-02 | Rotación token · Dead-letter bloqueado · Logs efímeros · Contratos externos |
 | Non-risks (5) | NR-BOT-01, NR-BOT-02, NR-IOT-01, NR-IOT-02, NR-GLOBAL-01 | E1 previene side-effects · HTTP 401/400 · E3 independiente · Idempotencia IoT · Validador estático |
 
-### Pendiente para alcanzar 100 % (fuera del control del autor)
-- ⏳ Generar PDF desde `resumen-proyecto.md` y subir con URL pública
-- ⏳ Grabar video (5–7 min) y subir a Loom/YouTube no listado
-- ⏳ Crear Google Form según `instrumento-encuesta.md` y actualizar URLs
-- ⏳ Pilotar encuesta con 2–3 respondentes
-- ⏳ Ejecutar campaña de difusión (≥ 20 invitaciones — objetivo ≥ 15 respuestas)
-- ⏳ Analizar respuestas y completar §8 del `informe-atam-final.md` (~3–5 días post-recolección)
+### Validación externa por panel de expertos — Completada ✓
+- ✓ Recolección ejecutada del 17 al 24 de junio de 2026 (N=19, 17 válidos tras filtro de experiencia)
+- ✓ Convergencia to-be 12/12 escenarios; as-is 11/12 (Δ=1 en IOT-Q5)
+- ✓ 95.1 % de pares respondiente-escenario perciben mejora as-is→to-be
+- ✓ §8 del `informe-atam-final.md` (y `.en.md`) completado con perfil de panel, resultados Sección B, codificación cualitativa Sección C/E4, triangulación Sección E y síntesis
 
 ---
 
@@ -411,16 +412,10 @@ que comparten el modelo canónico `report.schema.json`:
 
 ## Pendiente inmediato (próximos pasos)
 
-> FASE 7 al 90 % — ejecución de encuesta en curso. FASE 8 completada ✓. FASE 9 R5 completada ✓. Falta R6 (documento final de tesis).
+> FASE 7 completada ✓ (encuesta ejecutada, analizada y documentada en §8). FASE 8 completada ✓. FASE 9 R5 completada ✓. Falta R6 (documento final de tesis).
 
-1. **[FASE 7 — REQUERIDO]** Producir y hostear material de encuesta:
-   - Generar PDF desde `docs/atam/material-apoyo/resumen-proyecto.md` → subir Google Drive → URL pública
-   - Grabar video 5–7 min siguiendo `docs/atam/material-apoyo/guion-video.md` → Loom/YouTube
-   - Crear Google Form según `docs/atam/instrumento-encuesta.md` → actualizar URLs en material
-   - Pilotar con 2–3 personas → ajustar si es necesario → difundir según `docs/atam/plan-difusion.md`
-2. **[FASE 7 — POST-ENCUESTA]** Analizar respuestas y completar §8 del informe ATAM
-3. **[FASE 9 — R6]** Consolidación del documento final de tesis (integración de R1–R5 con anexos técnicos)
-4. **[OPCIONAL — menor]** Reemplazar `casos-de-estudio/iot/to-be/iot-to-be-orquestador.json` con export real de n8n (placeholders en `workflowId` — no afecta REGs evaluadas)
+1. **[FASE 9 — R6]** Consolidación del documento final de tesis (integración de R1–R5 con anexos técnicos)
+2. **[OPCIONAL — menor]** Reemplazar `casos-de-estudio/iot/to-be/iot-to-be-orquestador.json` con export real de n8n (placeholders en `workflowId` — no afecta REGs evaluadas)
 
 ---
 
@@ -465,18 +460,20 @@ microframework/validacion/validar-flujos.mjs         Pilar 2 DevSecOps — scrip
 microframework/adr/ADR-MF-*.md                       ADRs a nivel de framework (REG-001, REG-003, REG-006)
 microframework/patrones/                             5 patrones: retry, idempotencia, circuit-breaker, error-boundary, saga
 docs/context/fundamento-teorico.md                   Base conceptual: Clean Architecture, NIST SSDF, literatura LC/NC
-docs/context/atam-utility-tree.md                    Utility Tree ATAM: 12 escenarios top-K con medidas de respuesta
+docs/atam/atam-utility-tree.md                    Utility Tree ATAM: 12 escenarios top-K con medidas de respuesta
 docs/protocolo-mttd.md                               Protocolo de medición MTTD — reproducible, meta < 60 segundos
 docs/context/justificacion-casos-de-estudio.md       Taxonomía LC/NC y representatividad formal de Bot e IoT
 docs/context/justificacion-rediseno-asis.md          Validez metodológica del rediseño intencional del as-is
 docs/atam/INDEX.md                                   Índice de todos los artefactos de Fase 7
-docs/atam/informe-atam-final.md                      Informe ATAM capítulo de tesis (R4) — §1–§7 + §9–§10 completos
+docs/atam/informe-atam-final.md                      Informe ATAM capítulo de tesis (R4) — §1–§10 completos, incl. §8 validación externa
 docs/atam/analisis-approaches.md                     12 approaches + clasificación SP/TP/R/NR × 12 escenarios
 docs/atam/matriz-scoring.md                          Scoring 1–5 as-is vs to-be por escenario
 docs/atam/registro-riesgos-tradeoffs.md              3 SP · 3 TP · 4 R · 5 NR formalizados
 docs/atam/instrumento-encuesta.md                    Encuesta de validación externa — 18 preguntas + mini-ATAM
 docs/atam/material-apoyo/resumen-proyecto.md         Fuente Markdown del PDF de 4 páginas para respondentes
 docs/atam/material-apoyo/guion-video.md              Guion del video de 5–7 minutos
+medicion/encuesta-validacion/respuestas-anonimizadas-2026-06-24.csv  Datos anonimizados de la encuesta (N=19, 17 válidos)
+medicion/encuesta-validacion/analisis-encuesta.py    Script reproducible del análisis de la encuesta (§8)
 microframework/adr/ADR-MF-004-atam-adaptado-individual.md  Adaptación metodológica ATAM individual
 docs/aws/INDEX.md                                   Índice de todos los artefactos de Fase 8
 docs/aws/arquitectura-aws.md                        Documento principal AWS: VPC, ECS, RDS, Redis, S3, riesgos ATAM
