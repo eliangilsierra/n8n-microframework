@@ -161,7 +161,7 @@ experiencia en la UI de n8n.
 
 ## Referencias
 
-- Escenario ATAM BOT-Q5: `docs/context/atam-utility-tree.md`
+- Escenario ATAM BOT-Q5: `docs/atam/atam-utility-tree.md`
 - REG-006 (log estructurado): `microframework/reglas/reglas-obligatorias.md`
 - ADR-MF-003 (decisión de log JSON): `microframework/adr/ADR-MF-003-log-estructurado-reg006.md`
 - Guía de observabilidad: `microframework/guia-observabilidad.md`

@@ -49,7 +49,7 @@ Responde directamente a los objetivos específicos del anteproyecto:
 | Validación estática (Pro) | [`microframework/validacion-pro/`](../microframework/validacion-pro/) | Pilar 2 — módulo con DSL YAML de reglas, codemods `--fix`, SARIF para GitHub Code Scanning, suite vitest |
 | Plantillas ADR y JSON | [`microframework/plantillas/`](../microframework/plantillas/) | 10 plantillas JSON (2 as-is + 8 to-be/subflujos) + plantilla ADR Markdown |
 | Fundamento teórico | [`docs/context/fundamento-teorico.md`](context/fundamento-teorico.md) | Base conceptual: Clean Architecture, NIST SSDF, literatura LC/NC, posicionamiento |
-| Utility Tree ATAM | [`docs/context/atam-utility-tree.md`](context/atam-utility-tree.md) | 12 escenarios top-K (6 Bot + 6 IoT) con medidas de respuesta para FASE 7 |
+| Utility Tree ATAM | [`docs/atam/atam-utility-tree.md`](atam/atam-utility-tree.md) | 12 escenarios top-K (6 Bot + 6 IoT) con medidas de respuesta para FASE 7 |
 | Protocolo MTTD | [`docs/protocolo-mttd.md`](../docs/protocolo-mttd.md) | Procedimiento reproducible de medición de Mean Time To Detect |
 | Taxonomía de casos | [`docs/context/justificacion-casos-de-estudio.md`](context/justificacion-casos-de-estudio.md) | Representatividad formal de Bot e IoT en el espacio LC/NC de n8n |
 

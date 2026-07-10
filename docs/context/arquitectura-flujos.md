@@ -1,3 +1,5 @@
+> 🌐 **Idioma / Language:** Español · [English](arquitectura-flujos.en.md)
+
 # Arquitectura de flujos: as-is y to-be
 
 ## Principio arquitectónico central
