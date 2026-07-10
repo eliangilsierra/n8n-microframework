@@ -115,6 +115,6 @@ docker compose -f infraestructura/docker-compose.yml start mock-iot
 ## Referencias
 
 - Protocolo MTTD: `docs/protocolo-mttd.md`
-- Escenarios ATAM: `docs/context/atam-utility-tree.md` (BOT-Q5, IOT-Q4)
+- Escenarios ATAM: `docs/atam/atam-utility-tree.md` (BOT-Q5, IOT-Q4)
 - REG-006 log estructurado: `microframework/reglas/reglas-obligatorias.md`
 - ADR-MF-003 log estructurado: `microframework/adr/ADR-MF-003-log-estructurado-reg006.md`
