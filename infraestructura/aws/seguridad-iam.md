@@ -622,5 +622,5 @@ Checklist de verificación antes de un despliegue en entorno de Producción:
 - `arquitectura-aws.md` — VPC design, ECS Task Definitions, datos (§3, §4, §5)
 - `observabilidad-aws.md` — CloudWatch Logs, Alarms, SNS (resolución SP-IOT-01)
 - `microframework/reglas/reglas-obligatorias.md` — REG-001 (secretos), REG-006 (logs)
-- `docs/atam/registro-riesgos-tradeoffs.md` — R-BOT-01, SP-IOT-01, R-GLOBAL-01, R-GLOBAL-02
+- `atam/registro-riesgos-tradeoffs.md` — R-BOT-01, SP-IOT-01, R-GLOBAL-01, R-GLOBAL-02
 - ADR-MF-005, ADR-MF-006, ADR-MF-007 — Decisiones de arquitectura AWS

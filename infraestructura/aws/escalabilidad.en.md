@@ -306,4 +306,4 @@ in the AWS infrastructure layer:
 - `observabilidad-aws.md` — CloudWatch Metrics/Alarms, custom n8n/Queue metrics (§5)
 - `seguridad-iam.md` — IAM roles for scaling (§2); Secrets Manager for QUEUE vars (§3)
 - `microframework/adr/ADR-MF-006-n8n-queue-mode.md` — Formal Queue Mode decision
-- `docs/atam/registro-riesgos-tradeoffs.md` — R-GLOBAL-01, TP-IOT-01
+- `atam/registro-riesgos-tradeoffs.md` — R-GLOBAL-01, TP-IOT-01

@@ -26,15 +26,15 @@ before importing flows or running measurements.
 ## Relationship to the methodology
 
 The local environment reproduces, with local mocks, the external integrations that in
-the AWS architecture design (`docs/aws/`) correspond to real services (API Gateway, RDS,
+the AWS architecture design (`infraestructura/aws/`) correspond to real services (API Gateway, RDS,
 etc.). The setup and verification commands are documented in
-[`docs/protocolo-evidencias.md`](../docs/protocolo-evidencias.en.md) §1-2 and in
+[`medicion/protocolo-evidencias.md`](../medicion/protocolo-evidencias.en.md) §1-2 and in
 [`automatizacion/README.md`](../automatizacion/README.en.md) (the `setup_env.py` script
 automates this process). **Never version `.env` with real values** — see
-[`docs/context/convenios-y-reglas.md`](../docs/context/convenios-y-reglas.en.md) §Critical
+[`../microframework/convenciones/convenios-y-reglas.en.md`](../microframework/convenciones/convenios-y-reglas.en.md) §Critical
 security rules.
 
 ## Navigation
 
 - Parent: [Repository (root)](../README.en.md)
-- See also: [`automatizacion/README.md`](../automatizacion/README.en.md) (scripts orchestrating this environment) · [`docs/aws/INDEX.md`](../docs/aws/INDEX.en.md) (cloud deployment design)
+- See also: [`automatizacion/README.md`](../automatizacion/README.en.md) (scripts orchestrating this environment) · [`infraestructura/aws/INDEX.md`](aws/INDEX.en.md) (cloud deployment design)

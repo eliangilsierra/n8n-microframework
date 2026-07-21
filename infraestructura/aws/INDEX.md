@@ -44,17 +44,17 @@ Internet → WAF → ALB (HTTPS/443 · ACM)
 
 ## Artefactos producidos
 
-### Documentos principales (`docs/aws/`)
+### Documentos principales (`infraestructura/aws/`)
 
 | Artefacto | Propósito | Estado |
 |---|---|---|
-| `docs/aws/arquitectura-aws.md` | Documento principal: VPC, ECS, RDS, Redis, S3, mapeo local→AWS, tier options, resolución de riesgos ATAM | ✅ |
-| `docs/aws/seguridad-iam.md` | IAM Task Roles, Secrets Manager, ACM, WAF, Security Groups, cifrado. Diagramas 5 y 6 | ✅ |
-| `docs/aws/observabilidad-aws.md` | CloudWatch Logs, Log Insights queries, Metrics/Alarms, Dashboard. Resolución R-GLOBAL-01 | ✅ |
-| `docs/aws/escalabilidad.md` | Queue Mode, auto-scaling workers, escalado RDS, Rolling/Blue-Green, mapeo REGs. Diagrama 4 | ✅ |
-| `docs/aws/estimacion-costos.md` | Costos por tier (Dev/Staging/Prod), supuestos, optimizaciones. Diagrama 7 | ✅ |
-| `docs/aws/diagramas-aws.md` | Fuente canónica de los 7 diagramas Mermaid con código, justificación y render instructions | ✅ |
-| `docs/aws/INDEX.md` | Este archivo — índice de todos los artefactos de Fase 8 | ✅ |
+| `infraestructura/aws/arquitectura-aws.md` | Documento principal: VPC, ECS, RDS, Redis, S3, mapeo local→AWS, tier options, resolución de riesgos ATAM | ✅ |
+| `infraestructura/aws/seguridad-iam.md` | IAM Task Roles, Secrets Manager, ACM, WAF, Security Groups, cifrado. Diagramas 5 y 6 | ✅ |
+| `infraestructura/aws/observabilidad-aws.md` | CloudWatch Logs, Log Insights queries, Metrics/Alarms, Dashboard. Resolución R-GLOBAL-01 | ✅ |
+| `infraestructura/aws/escalabilidad.md` | Queue Mode, auto-scaling workers, escalado RDS, Rolling/Blue-Green, mapeo REGs. Diagrama 4 | ✅ |
+| `infraestructura/aws/estimacion-costos.md` | Costos por tier (Dev/Staging/Prod), supuestos, optimizaciones. Diagrama 7 | ✅ |
+| `infraestructura/aws/diagramas-aws.md` | Fuente canónica de los 7 diagramas Mermaid con código, justificación y render instructions | ✅ |
+| `infraestructura/aws/INDEX.md` | Este archivo — índice de todos los artefactos de Fase 8 | ✅ |
 
 ### ADRs — Decisiones arquitectónicas (`microframework/adr/`)
 
@@ -79,7 +79,7 @@ Internet → WAF → ALB (HTTPS/443 · ACM)
 | 7 | `xychart-beta` | `estimacion-costos.md §3` | Costos mensuales por componente y tier |
 
 Todos los diagramas están consolidados con código fuente + instrucciones de render en
-`docs/aws/diagramas-aws.md`.
+`infraestructura/aws/diagramas-aws.md`.
 
 ---
 
@@ -120,10 +120,10 @@ Todos los diagramas están consolidados con código fuente + instrucciones de re
 ## Referencias cruzadas con fases anteriores
 
 ```
-docs/context/proyecto-overview.md          → OE4 y R3 definidos
+../../medicion/proyecto-overview.md          → OE4 y R3 definidos
 medicion/consolidado/atam-evidencia.md     → Cobertura ATAM 92% que motiva el diseño
-docs/atam/registro-riesgos-tradeoffs.md    → R-GLOBAL-01, R-BOT-01, R-IOT-01, SP-IOT-01
-docs/atam/informe-atam-final.md            → Informe formal ATAM con hallazgos referenciados en AWS
+atam/registro-riesgos-tradeoffs.md    → R-GLOBAL-01, R-BOT-01, R-IOT-01, SP-IOT-01
+atam/informe-atam-final.md            → Informe formal ATAM con hallazgos referenciados en AWS
 microframework/reglas/reglas-obligatorias.md → REG-001..010 aplicadas en el diseño AWS
 infraestructura/docker-compose.yml          → Ambiente local que se mapea al diseño AWS
 ```

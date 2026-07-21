@@ -442,5 +442,5 @@ the AWS design. The logs are as durable and queryable as a telemetry database.
 - `seguridad-iam.md` — CloudWatchLogsPolicy in IAM roles (§2)
 - `escalabilidad.md` — Auto-scaling based on CloudWatch metrics (§2)
 - `medicion/consolidado/mttd-resultado.md` — MTTD < 15s (JSON log structure that persists in CW)
-- `docs/atam/registro-riesgos-tradeoffs.md` — R-GLOBAL-01, TP-IOT-01 (latency by nivel_alerta)
+- `atam/registro-riesgos-tradeoffs.md` — R-GLOBAL-01, TP-IOT-01 (latency by nivel_alerta)
 - `microframework/reglas/reglas-obligatorias.md` — REG-006 (structured logs)

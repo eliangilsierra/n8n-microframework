@@ -44,17 +44,17 @@ Internet → WAF → ALB (HTTPS/443 · ACM)
 
 ## Artifacts produced
 
-### Main documents (`docs/aws/`)
+### Main documents (`infraestructura/aws/`)
 
 | Artifact | Purpose | Status |
 |---|---|---|
-| `docs/aws/arquitectura-aws.md` | Main document: VPC, ECS, RDS, Redis, S3, local→AWS mapping, tier options, ATAM risk resolution | ✅ |
-| `docs/aws/seguridad-iam.md` | IAM Task Roles, Secrets Manager, ACM, WAF, Security Groups, encryption. Diagrams 5 and 6 | ✅ |
-| `docs/aws/observabilidad-aws.md` | CloudWatch Logs, Log Insights queries, Metrics/Alarms, Dashboard. R-GLOBAL-01 resolution | ✅ |
-| `docs/aws/escalabilidad.md` | Queue Mode, worker auto-scaling, RDS scaling, Rolling/Blue-Green, REG mapping. Diagram 4 | ✅ |
-| `docs/aws/estimacion-costos.md` | Costs per tier (Dev/Staging/Prod), assumptions, optimizations. Diagram 7 | ✅ |
-| `docs/aws/diagramas-aws.md` | Canonical source of the 7 Mermaid diagrams with code, rationale, and render instructions | ✅ |
-| `docs/aws/INDEX.md` | This file — index of all Phase 8 artifacts | ✅ |
+| `infraestructura/aws/arquitectura-aws.md` | Main document: VPC, ECS, RDS, Redis, S3, local→AWS mapping, tier options, ATAM risk resolution | ✅ |
+| `infraestructura/aws/seguridad-iam.md` | IAM Task Roles, Secrets Manager, ACM, WAF, Security Groups, encryption. Diagrams 5 and 6 | ✅ |
+| `infraestructura/aws/observabilidad-aws.md` | CloudWatch Logs, Log Insights queries, Metrics/Alarms, Dashboard. R-GLOBAL-01 resolution | ✅ |
+| `infraestructura/aws/escalabilidad.md` | Queue Mode, worker auto-scaling, RDS scaling, Rolling/Blue-Green, REG mapping. Diagram 4 | ✅ |
+| `infraestructura/aws/estimacion-costos.md` | Costs per tier (Dev/Staging/Prod), assumptions, optimizations. Diagram 7 | ✅ |
+| `infraestructura/aws/diagramas-aws.md` | Canonical source of the 7 Mermaid diagrams with code, rationale, and render instructions | ✅ |
+| `infraestructura/aws/INDEX.md` | This file — index of all Phase 8 artifacts | ✅ |
 
 ### ADRs — Architectural decisions (`microframework/adr/`)
 
@@ -79,7 +79,7 @@ Internet → WAF → ALB (HTTPS/443 · ACM)
 | 7 | `xychart-beta` | `estimacion-costos.md §3` | Monthly costs by component and tier |
 
 All diagrams are consolidated with source code + render instructions in
-`docs/aws/diagramas-aws.md`.
+`infraestructura/aws/diagramas-aws.md`.
 
 ---
 
@@ -120,10 +120,10 @@ All diagrams are consolidated with source code + render instructions in
 ## Cross-references with previous phases
 
 ```
-docs/context/proyecto-overview.md          → SO4 and R3 defined
+../../medicion/proyecto-overview.en.md          → SO4 and R3 defined
 medicion/consolidado/atam-evidencia.md     → 92% ATAM coverage that motivates the design
-docs/atam/registro-riesgos-tradeoffs.md    → R-GLOBAL-01, R-BOT-01, R-IOT-01, SP-IOT-01
-docs/atam/informe-atam-final.md            → Formal ATAM report with findings referenced in AWS
+atam/registro-riesgos-tradeoffs.md    → R-GLOBAL-01, R-BOT-01, R-IOT-01, SP-IOT-01
+atam/informe-atam-final.md            → Formal ATAM report with findings referenced in AWS
 microframework/reglas/reglas-obligatorias.md → REG-001..010 applied in the AWS design
 infraestructura/docker-compose.yml          → Local environment mapped to the AWS design
 ```

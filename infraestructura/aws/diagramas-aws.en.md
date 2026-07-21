@@ -27,11 +27,11 @@ justification, and the instructions for rendering the final PNG image.
 npm install -g @mermaid-js/mermaid-cli
 
 # Render a specific diagram
-mmdc -i docs/aws/diagramas-aws.md -o docs/aws/renders/diag1-contexto.png -w 1600 --cssFile "" --configFile docs/aws/mermaid-config.json
+mmdc -i infraestructura/aws/diagramas-aws.md -o infraestructura/aws/renders/diag1-contexto.png -w 1600 --cssFile "" --configFile infraestructura/aws/mermaid-config.json
 
 # Batch-render all diagrams (requires splitting blocks into individual files)
 for i in 1 2 3 4 5 6 7; do
-  mmdc -i docs/aws/diag${i}.mmd -o docs/aws/renders/diag${i}.png -w 1600
+  mmdc -i infraestructura/aws/diag${i}.mmd -o infraestructura/aws/renders/diag${i}.png -w 1600
 done
 ```
 

@@ -306,4 +306,4 @@ en la capa de infraestructura AWS:
 - `observabilidad-aws.md` — CloudWatch Metrics/Alarms, métricas custom n8n/Queue (§5)
 - `seguridad-iam.md` — IAM roles para escalado (§2); Secrets Manager para QUEUE vars (§3)
 - `microframework/adr/ADR-MF-006-n8n-queue-mode.md` — Decisión formal de Queue Mode
-- `docs/atam/registro-riesgos-tradeoffs.md` — R-GLOBAL-01, TP-IOT-01
+- `atam/registro-riesgos-tradeoffs.md` — R-GLOBAL-01, TP-IOT-01
