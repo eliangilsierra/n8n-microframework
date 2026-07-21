@@ -274,7 +274,7 @@ Los archivos en `medicion/datasets/` son inmutables durante la fase de medición
 
 Si es necesario modificar un dataset:
 1. Crear un nuevo archivo con sufijo de versión: `input-set-A-v2.json`
-2. Documentar el cambio en `docs/protocolo-evidencias.md`
+2. Documentar el cambio en `medicion/protocolo-evidencias.md`
 3. Indicar a partir de qué corrida se usa el nuevo dataset
 
 ---

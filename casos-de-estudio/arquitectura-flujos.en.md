@@ -270,7 +270,7 @@ All subflows emit logs with `console.log(JSON.stringify({...}))`. The minimum re
 }
 ```
 
-Additional fields vary by stage and are documented in `microframework/docs/guia-observabilidad.md`.
+Additional fields vary by stage and are documented in `microframework/guia-observabilidad.md`.
 
 ---
 

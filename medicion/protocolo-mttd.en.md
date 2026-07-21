@@ -164,7 +164,7 @@ n8n UI.
 
 ## References
 
-- ATAM scenario BOT-Q5: `docs/atam/atam-utility-tree.md`
+- ATAM scenario BOT-Q5: `atam/atam-utility-tree.md`
 - REG-006 (structured log): `microframework/reglas/reglas-obligatorias.md`
 - ADR-MF-003 (JSON log decision): `microframework/adr/ADR-MF-003-log-estructurado-reg006.md`
 - Observability guide: `microframework/guia-observabilidad.md`

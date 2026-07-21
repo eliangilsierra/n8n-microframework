@@ -109,7 +109,7 @@ cuantitativa de FASE 6.
   cobertura de antipatrones, no de arquitectura.
 - El rediseño no alteró los datos de medición históricos ya registrados antes del
   rediseño. Los run-logs previos al commit de rediseño se identifican como
-  `commit_hash="unknown"` (ver `docs/protocolo-evidencias.md` §9).
+  `commit_hash="unknown"` (ver `medicion/protocolo-evidencias.md` §9).
 - El rediseño no puede garantizar que represente todos los antipatrones posibles en
   flujos n8n reales. Los flujos rediseñados son representativos de la literatura de
   antipatrones documentada en `microframework/antipatrones.md`, no de todos los
@@ -124,4 +124,4 @@ cuantitativa de FASE 6.
 - `casos-de-estudio/bot/as-is/cambios-y-evidencia.md` — change-log Bot as-is
 - `casos-de-estudio/iot/as-is/cambios-y-evidencia.md` — change-log IoT as-is
 - `microframework/validacion/validar-flujos.mjs` — script de verificación estática
-- `docs/protocolo-evidencias.md` §9 — anomalía commit_hash
+- `medicion/protocolo-evidencias.md` §9 — anomalía commit_hash

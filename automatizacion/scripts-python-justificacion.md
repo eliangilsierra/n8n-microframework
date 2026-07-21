@@ -138,7 +138,7 @@ Esta separación no es una inconsistencia: es una decisión de diseño deliberad
 
 **Por qué existe:** La comparación as-is vs to-be es el resultado cuantitativo central del OE2. Este script automatiza lo que de otra manera sería un proceso manual de cálculo en hoja de cálculo, evitando errores de transcripción y garantizando que los números del informe corresponden exactamente a los datos en el repositorio.
 
-**Salida:** `medicion/consolidado/comparacion-YYYY-MM-DD.md`. Hay dos reportes versionados: [2026-05-03](../../medicion/consolidado/comparacion-2026-05-03.md) y [2026-05-05](../../medicion/consolidado/comparacion-2026-05-05.md).
+**Salida:** `medicion/consolidado/comparacion-YYYY-MM-DD.md`. Hay dos reportes versionados: [2026-05-03](../medicion/consolidado/comparacion-2026-05-03.md) y [2026-05-05](../medicion/consolidado/comparacion-2026-05-05.md).
 
 ---
 
@@ -175,7 +175,7 @@ Esta separación no es una inconsistencia: es una decisión de diseño deliberad
 
 **Por qué existe:** El escenario IOT-Q5 del Utility Tree ATAM pregunta: "¿el to-be diferencia el tiempo de respuesta según la urgencia del evento?". Responder esa pregunta requiere cruzar el nivel de alerta (campo calculado internamente por E2, no observable directamente en el run-log) con los tiempos medidos. Este script hace ese cruce de forma reproducible y documentada.
 
-**Relación con ATAM:** El output de este script es evidencia de tipo (ii) — cuantitativa empírica — en la triangulación metodológica de la evaluación ATAM. Ver `docs/atam/informe-atam-final.md §7` y `medicion/consolidado/atam-evidencia.md`.
+**Relación con ATAM:** El output de este script es evidencia de tipo (ii) — cuantitativa empírica — en la triangulación metodológica de la evaluación ATAM. Ver `atam/informe-atam-final.md §7` y `medicion/consolidado/atam-evidencia.md`.
 
 **Salida:** Reporte en consola con distribución de niveles y estadísticas de latencia por nivel.
 
@@ -232,7 +232,7 @@ Sin estos scripts, la "sistematización" del OE2 sería solo narrativa. Con ello
 
 - Los datos de latencia por input set responden los escenarios BOT-Q1…Q6 e IOT-Q1…Q6 del Utility Tree
 - `analisis_iot_q5.py` responde directamente el escenario IOT-Q5 (urgencia diferenciada)
-- Los 8 000 datos son la base empírica de la Matriz de Scoring 1-5 as-is vs to-be (`docs/atam/matriz-scoring.md`)
+- Los 8 000 datos son la base empírica de la Matriz de Scoring 1-5 as-is vs to-be (`atam/matriz-scoring.md`)
 
 ### OE4 — Proponer un diseño de arquitectura AWS
 
@@ -327,9 +327,9 @@ El reporte HTML se excluye de Git (ver `.gitignore`) porque es un artefacto deri
 
 | Documento | Relación |
 |---|---|
-| [`docs/protocolo-evidencias.md`](../protocolo-evidencias.md) | Protocolo operativo completo para ejecutar el experimento |
-| [`docs/protocolo-mttd.md`](../protocolo-mttd.md) | Procedimiento específico de medición MTTD |
-| [`automatizacion/README.md`](../../automatizacion/README.md) | Referencia de comandos y flujo de uso paso a paso |
-| [`medicion/consolidado/atam-evidencia.md`](../../medicion/consolidado/atam-evidencia.md) | Cómo los datos de medición alimentan la evaluación ATAM |
-| [`microframework/validacion/README.md`](../../microframework/validacion/README.md) | Justificación complementaria: por qué el validador usa Node.js |
-| [`docs/context/proyecto-overview.md`](proyecto-overview.md) | OE1–OE4 y diseño de investigación del anteproyecto |
+| [`medicion/protocolo-evidencias.md`](../medicion/protocolo-evidencias.md) | Protocolo operativo completo para ejecutar el experimento |
+| [`medicion/protocolo-mttd.md`](../medicion/protocolo-mttd.md) | Procedimiento específico de medición MTTD |
+| [`automatizacion/README.md`](README.md) | Referencia de comandos y flujo de uso paso a paso |
+| [`medicion/consolidado/atam-evidencia.md`](../medicion/consolidado/atam-evidencia.md) | Cómo los datos de medición alimentan la evaluación ATAM |
+| [`microframework/validacion/README.md`](../microframework/validacion/README.md) | Justificación complementaria: por qué el validador usa Node.js |
+| [`../medicion/proyecto-overview.md`](../medicion/proyecto-overview.md) | OE1–OE4 y diseño de investigación del anteproyecto |

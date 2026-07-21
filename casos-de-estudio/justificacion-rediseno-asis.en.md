@@ -109,7 +109,7 @@ suitable for evaluating the micro-framework's impact in PHASE 6's quantitative c
   antipattern coverage, not in architecture.
 - The redesign did not alter historical measurement data already recorded before the
   redesign. Run-logs prior to the redesign commit are identified with
-  `commit_hash="unknown"` (see `docs/protocolo-evidencias.md` §9).
+  `commit_hash="unknown"` (see `medicion/protocolo-evidencias.md` §9).
 - The redesign cannot guarantee it represents every possible antipattern in real n8n flows.
   The redesigned flows are representative of the antipattern literature documented in
   `microframework/antipatrones.md`, not of every antipattern existing in the n8n ecosystem.
@@ -123,4 +123,4 @@ suitable for evaluating the micro-framework's impact in PHASE 6's quantitative c
 - `casos-de-estudio/bot/as-is/cambios-y-evidencia.md` — Bot as-is change log
 - `casos-de-estudio/iot/as-is/cambios-y-evidencia.md` — IoT as-is change log
 - `microframework/validacion/validar-flujos.mjs` — static verification script
-- `docs/protocolo-evidencias.md` §9 — commit_hash anomaly
+- `medicion/protocolo-evidencias.md` §9 — commit_hash anomaly

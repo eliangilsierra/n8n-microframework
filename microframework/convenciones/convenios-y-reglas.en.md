@@ -297,7 +297,7 @@ modification invalidates the comparability of the metrics.
 
 If a dataset must be modified:
 1. Create a new file with a version suffix: `input-set-A-v2.json`
-2. Document the change in `docs/protocolo-evidencias.md`
+2. Document the change in `medicion/protocolo-evidencias.md`
 3. Indicate from which run onward the new dataset is used
 
 ---

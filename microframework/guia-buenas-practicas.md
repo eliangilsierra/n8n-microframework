@@ -148,6 +148,7 @@ Para esta guía solo necesitas conocer las carpetas clave:
 ```
 n8n-microframework/
 ├── infraestructura/            # docker-compose.yml + .env.example (entorno local)
+│   └── aws/                    # Diseño de arquitectura AWS Fase 8 (Capítulo 11 lo referencia)
 ├── microframework/             # Reglas, patrones, checklists, plantillas — el corazón
 │   ├── reglas/                 # REG-001…010 + REC-001…006
 │   ├── patrones/               # 5 patrones (retry, idempotencia, ...)
@@ -157,14 +158,12 @@ n8n-microframework/
 │   ├── contratos/              # 9 JSON Schemas E/S
 │   ├── guia-observabilidad.md  # Contrato del log JSON por etapa
 │   ├── validacion/             # validar-flujos.mjs (script de validación)
-│   └── adr/                    # ADRs framework-level (MF-001..007)
-├── casos-de-estudio/           # Bot e IoT (as-is + to-be) — ejemplos completos
-├── medicion/                   # Datasets, run-logs y métricas comparativas
-├── docs/                       # Documentación de contexto y entregables
-│   ├── aws/                    # Diseño de Fase 8 (Capítulo 11 lo referencia)
-│   ├── atam/                   # Evaluación ATAM Fase 7
+│   ├── adr/                    # ADRs framework-level (MF-001..007)
 │   ├── microframework-v1.0.md  # R1 — documento consolidado del micro-framework
 │   └── guia-buenas-practicas.md # ← este documento (R5)
+├── casos-de-estudio/           # Bot e IoT (as-is + to-be) — ejemplos completos
+├── atam/                       # Evaluación ATAM Fase 7
+├── medicion/                   # Datasets, run-logs y métricas comparativas
 └── estado-actual.md            # Fuente de verdad del avance del proyecto
 ```
 
@@ -176,7 +175,7 @@ Tres reglas que aplican siempre:
 2. **El JSON exportado del flujo es la fuente de verdad.** Si modificas en la UI de n8n, re-exporta y versiona en Git.
 3. **Cada decisión arquitectónica relevante se documenta como ADR.** Plantilla en `microframework/plantillas/ADR-plantilla.md`.
 
-La especificación completa de convenciones está en `docs/context/convenios-y-reglas.md`.
+La especificación completa de convenciones está en `convenciones/convenios-y-reglas.md`.
 
 ---
 
@@ -381,7 +380,7 @@ Transversal a todas las etapas: **REG-001** (sin credenciales hardcodeadas), **R
 | E4 | Operabilidad | Monitoreabilidad |
 | Transversal | Seguridad · Mantenibilidad · Fiabilidad · Operabilidad | Confidencialidad, analizabilidad, modificabilidad |
 
-Para profundizar en el metamodelo formal, ver `docs/context/microframework-spec.md`.
+Para profundizar en el metamodelo formal, ver `microframework/microframework-spec.md`.
 
 ### 4.5 Por qué este metamodelo funciona
 
@@ -686,7 +685,7 @@ Las variables de entorno se gestionan en dos niveles:
 ### 7.4 Validación automática (Pilar 2 DevSecOps)
 
 El repositorio incluye el validador estático en **dos ediciones coexistentes** (ver
-[`ADR-MF-008`](../microframework/adr/ADR-MF-008-validador-dos-ediciones.md)):
+[`ADR-MF-008`](adr/ADR-MF-008-validador-dos-ediciones.md)):
 
 - **Lite** — `microframework/validacion/validar-flujos.mjs` (un archivo, cero
   dependencias, HTML offline autocontenido). **Edición recomendada para defensa
@@ -729,7 +728,7 @@ npm test                                                   # vitest
 
 **Cuándo ejecutar:** antes de cada commit que toque flujos, y como gate en CI/CD
 (workflow ejemplo en
-[`microframework/validacion-pro/docs/sarif-github.md`](../microframework/validacion-pro/docs/sarif-github.md)).
+[`microframework/validacion-pro/docs/sarif-github.md`](validacion-pro/docs/sarif-github.md)).
 
 ### 7.5 Riesgo abierto: rotación de tokens (R-BOT-01)
 
@@ -884,7 +883,7 @@ Para validar que tu observabilidad funciona:
 2. Cronometrar desde la respuesta HTTP 422 hasta que aparezca el log `"status":"fail"` en `docker logs`.
 3. Cronometrar desde ese log hasta que un operador pueda identificar el nodo que falló (debe ser < 60 s).
 
-Protocolo completo en `docs/protocolo-mttd.md`.
+Protocolo completo en `medicion/protocolo-mttd.md`.
 
 ### 8.9 Métricas derivables del log JSON
 
@@ -1029,7 +1028,7 @@ Archivos analizados: 22
 
 ## 11. Escalando del laboratorio a producción AWS
 
-> **Documento de referencia:** `docs/aws/INDEX.md` y los 6 documentos completos de Fase 8.
+> **Documento de referencia:** `infraestructura/aws/INDEX.md` y los 6 documentos completos de Fase 8.
 > Este capítulo es un **puente conceptual**: muestra cómo cada elemento del entorno local se traduce a AWS sin duplicar el contenido detallado.
 
 ### 11.1 Cuándo necesitas escalar
@@ -1079,7 +1078,7 @@ Archivos analizados: 22
 - **ElastiCache Redis**: cola BullMQ — único habilitador de escalado horizontal de n8n.
 - **RDS PostgreSQL Multi-AZ**: failover automático < 60 s, SLA 99.95 %.
 
-Ver el diagrama de contenedores C4 en `docs/aws/arquitectura-aws.md §2` y el sequence diagram del flujo Queue Mode en `docs/aws/escalabilidad.md §1`.
+Ver el diagrama de contenedores C4 en `infraestructura/aws/arquitectura-aws.md §2` y el sequence diagram del flujo Queue Mode en `infraestructura/aws/escalabilidad.md §1`.
 
 ### 11.5 Costos referenciales por tier
 
@@ -1089,7 +1088,7 @@ Ver el diagrama de contenedores C4 en `docs/aws/arquitectura-aws.md §2` y el se
 | **Staging** | QA 24/7, sin Multi-AZ | ~$208 |
 | **Producción** | HA Multi-AZ, workers auto-scaling 2–8, WAF | ~$458 (optimizable a ~$346 con Fargate Spot + Reserved RDS) |
 
-Detalle completo en `docs/aws/estimacion-costos.md`.
+Detalle completo en `infraestructura/aws/estimacion-costos.md`.
 
 ### 11.6 Riesgos ATAM resueltos por el diseño AWS
 
@@ -1108,7 +1107,7 @@ Tres ADRs framework-level justifican el diseño AWS:
 - **`ADR-MF-006-n8n-queue-mode.md`** — Por qué Queue Mode con Redis.
 - **`ADR-MF-007-rds-multi-az.md`** — Por qué Multi-AZ en Producción.
 
-Para el diseño completo (VPC, IAM, observabilidad, escalabilidad, costos), ver el índice en `docs/aws/INDEX.md`.
+Para el diseño completo (VPC, IAM, observabilidad, escalabilidad, costos), ver el índice en `infraestructura/aws/INDEX.md`.
 
 ---
 
@@ -1184,7 +1183,7 @@ Si respondiste "sí" a todas, eres Nivel 5.
 | 1 → 2 | Implementar E1 con validación + errorWorkflow | 1 sprint |
 | 2 → 3 | Retry en HTTP + idempotencia en BD + aislar E2 | 2 sprints |
 | 3 → 4 | Documentar 3 ADRs + integrar `validar-flujos.mjs` en CI | 1 sprint |
-| 4 → 5 | Implementar diseño Fase 8 (ver `docs/aws/INDEX.md`) | 4 días |
+| 4 → 5 | Implementar diseño Fase 8 (ver `infraestructura/aws/INDEX.md`) | 4 días |
 
 ---
 
@@ -1261,20 +1260,19 @@ Fuentes: `medicion/consolidado/comparacion-2026-05-05.md`, `metricas-derivadas.m
 
 | Necesitas... | Lee |
 |---|---|
-| Visión general del proyecto | `docs/context/proyecto-overview.md` |
-| Arquitectura de los flujos as-is y to-be | `docs/context/arquitectura-flujos.md` |
-| Especificación formal del metamodelo E1–E4 | `docs/context/microframework-spec.md` |
-| Fundamento teórico (Clean Architecture, NIST, LC/NC) | `docs/context/fundamento-teorico.md` |
-| Documento R1 consolidado del micro-framework | `docs/microframework-v1.0.md` |
+| Visión general del proyecto | `../medicion/proyecto-overview.md` |
+| Arquitectura de los flujos as-is y to-be | `casos-de-estudio/arquitectura-flujos.md` |
+| Especificación formal del metamodelo E1–E4 | `microframework/microframework-spec.md` |
+| Documento R1 consolidado del micro-framework | `microframework/microframework-v1.0.md` |
 | Detalle de cada regla | `microframework/reglas/reglas-obligatorias.md` |
 | Profundidad de cada patrón | `microframework/patrones/patron-*.md` |
 | Contrato del log JSON por etapa | `microframework/guia-observabilidad.md` |
-| Protocolo MTTD reproducible | `docs/protocolo-mttd.md` |
-| Diseño AWS completo (R3) | `docs/aws/INDEX.md` |
-| Informe ATAM final (R4) | `docs/atam/informe-atam-final.md` |
-| Esta guía (R5) | `docs/guia-buenas-practicas.md` |
+| Protocolo MTTD reproducible | `medicion/protocolo-mttd.md` |
+| Diseño AWS completo (R3) | `infraestructura/aws/INDEX.md` |
+| Informe ATAM final (R4) | `atam/informe-atam-final.md` |
+| Esta guía (R5) | `microframework/guia-buenas-practicas.md` |
 | Estado actual del proyecto | `estado-actual.md` |
-| Convenciones de archivos y commits | `docs/context/convenios-y-reglas.md` |
+| Convenciones de archivos y commits | `convenciones/convenios-y-reglas.md` |
 
 ---
 

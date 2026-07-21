@@ -271,7 +271,7 @@ Identificadas durante la implementación del caso IoT (FASE 4, 2026-05-02):
 | Error handlers (`errorWorkflow`) no pueden hacer Respond to Webhook | El cliente ya recibió timeout antes de que el handler termine | Diseñar respuesta 500 en el orquestador antes del fallo si es posible |
 | Nodos Code referencian otros nodos por nombre display (`$('Nombre nodo').item.json`) | Renombrar un nodo rompe referencias en silencio | Pasar todo el contexto necesario en el output de cada nodo; evitar referencias cruzadas entre nodos del mismo subflujo |
 | Contratos de salida (JSON Schema) no se validan en runtime | Un subflujo puede violar su contrato sin que n8n lo detecte | El validador estático (`validar-flujos.mjs`) puede extenderse para verificar estructura de outputs |
-| Execute Workflow asigna IDs dinámicos en cada instalación | Los orquestadores necesitan actualización manual de IDs post-import | Protocolo de import documentado en `docs/protocolo-evidencias.md` §3 |
+| Execute Workflow asigna IDs dinámicos en cada instalación | Los orquestadores necesitan actualización manual de IDs post-import | Protocolo de import documentado en `medicion/protocolo-evidencias.md` §3 |
 
 ---
 

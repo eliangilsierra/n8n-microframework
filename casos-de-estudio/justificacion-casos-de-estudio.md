@@ -85,7 +85,7 @@ razones predecibles). Este estudio adopta la **replicación teórica**:
 
 ### Representatividad en el ecosistema n8n
 
-Las plantillas de referencia seleccionadas (ver `docs/context/sustentacion-plantillas-referencia.md`)
+Las plantillas de referencia seleccionadas (ver `microframework/plantillas/sustentacion-plantillas-referencia.md`)
 confirman que:
 
 1. El patrón **bot/chatbot con webhook** es uno de los más frecuentes en el repositorio oficial
@@ -133,5 +133,5 @@ Tal como declara el anteproyecto (§6 Limitaciones):
 
 - Yin, R.K. (2018). *Case Study Research and Applications: Design and Methods* (6th ed.). SAGE Publications.
 - n8n GmbH (2026). Repositorio oficial de plantillas n8n. https://n8n.io/workflows/
-- `docs/context/sustentacion-plantillas-referencia.md` — análisis detallado de las 10 plantillas de referencia
-- `docs/context/proyecto-overview.md` §Casos de estudio — descripción funcional de Bot e IoT
+- `microframework/plantillas/sustentacion-plantillas-referencia.md` — análisis detallado de las 10 plantillas de referencia
+- `../medicion/proyecto-overview.md` §Casos de estudio — descripción funcional de Bot e IoT

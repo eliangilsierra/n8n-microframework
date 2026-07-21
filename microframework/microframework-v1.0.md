@@ -34,24 +34,23 @@ Responde directamente a los objetivos específicos del anteproyecto:
 
 | Componente | Ubicación | Propósito |
 |---|---|---|
-| Metamodelo E1–E4 | [`docs/context/microframework-spec.md`](context/microframework-spec.md) | Cuatro etapas lógicas: validación, dominio, adaptadores, salida |
-| Reglas obligatorias (REG-001…010) | [`microframework/reglas/reglas-obligatorias.md`](../microframework/reglas/reglas-obligatorias.md) | 10 reglas con criterio binario y mapeo a ISO/IEC 25010 |
-| Reglas recomendadas (REC-001…006) | [`microframework/reglas/reglas-recomendadas.md`](../microframework/reglas/reglas-recomendadas.md) | 6 reglas de refuerzo opcionales |
-| Patrones | [`microframework/patrones/`](../microframework/patrones/) | 5 patrones: retry, idempotencia, log estructurado, circuit breaker, error boundary, saga |
-| Antipatrones | [`microframework/antipatrones.md`](../microframework/antipatrones.md) | Catálogo de 11 antipatrones documentados |
-| ADRs de framework | [`microframework/adr/`](../microframework/adr/) | ADR-MF-001 (REG-001), ADR-MF-002 (REG-003), ADR-MF-003 (REG-006) |
-| Contratos E/S | [`microframework/contratos/`](../microframework/contratos/) | JSON Schemas por etapa para Bot e IoT (9 archivos) |
-| Convenciones | [`microframework/convenciones/naming-conventions.md`](../microframework/convenciones/naming-conventions.md) | Nombres de archivos, subflujos, nodos y variables |
-| Checklist arquitectura | [`microframework/checklists/checklist-arquitectura.md`](../microframework/checklists/checklist-arquitectura.md) | 10 ítems binarios alineados con REG-* |
-| Checklist DevSecOps | [`microframework/checklists/checklist-devsecops.md`](../microframework/checklists/checklist-devsecops.md) | 8 ítems de seguridad (Pilar 1) |
-| Guía de observabilidad | [`microframework/guia-observabilidad.md`](../microframework/guia-observabilidad.md) | Pilar 3: contrato de logs estructurados por etapa |
-| Validación estática (Lite) | [`microframework/validacion/validar-flujos.mjs`](../microframework/validacion/validar-flujos.mjs) | Pilar 2 — un único archivo `.mjs`, cero dependencias, HTML offline. Evalúa 11 REG-* + 6 antipatrones AP-* sobre el grafo del flujo |
-| Validación estática (Pro) | [`microframework/validacion-pro/`](../microframework/validacion-pro/) | Pilar 2 — módulo con DSL YAML de reglas, codemods `--fix`, SARIF para GitHub Code Scanning, suite vitest |
-| Plantillas ADR y JSON | [`microframework/plantillas/`](../microframework/plantillas/) | 10 plantillas JSON (2 as-is + 8 to-be/subflujos) + plantilla ADR Markdown |
-| Fundamento teórico | [`docs/context/fundamento-teorico.md`](context/fundamento-teorico.md) | Base conceptual: Clean Architecture, NIST SSDF, literatura LC/NC, posicionamiento |
-| Utility Tree ATAM | [`docs/atam/atam-utility-tree.md`](atam/atam-utility-tree.md) | 12 escenarios top-K (6 Bot + 6 IoT) con medidas de respuesta para FASE 7 |
-| Protocolo MTTD | [`docs/protocolo-mttd.md`](../docs/protocolo-mttd.md) | Procedimiento reproducible de medición de Mean Time To Detect |
-| Taxonomía de casos | [`docs/context/justificacion-casos-de-estudio.md`](context/justificacion-casos-de-estudio.md) | Representatividad formal de Bot e IoT en el espacio LC/NC de n8n |
+| Metamodelo E1–E4 | [`microframework/microframework-spec.md`](microframework-spec.md) | Cuatro etapas lógicas: validación, dominio, adaptadores, salida |
+| Reglas obligatorias (REG-001…010) | [`microframework/reglas/reglas-obligatorias.md`](reglas/reglas-obligatorias.md) | 10 reglas con criterio binario y mapeo a ISO/IEC 25010 |
+| Reglas recomendadas (REC-001…006) | [`microframework/reglas/reglas-recomendadas.md`](reglas/reglas-recomendadas.md) | 6 reglas de refuerzo opcionales |
+| Patrones | [`microframework/patrones/`](patrones/) | 5 patrones: retry, idempotencia, log estructurado, circuit breaker, error boundary, saga |
+| Antipatrones | [`microframework/antipatrones.md`](antipatrones.md) | Catálogo de 11 antipatrones documentados |
+| ADRs de framework | [`microframework/adr/`](adr/) | ADR-MF-001 (REG-001), ADR-MF-002 (REG-003), ADR-MF-003 (REG-006) |
+| Contratos E/S | [`microframework/contratos/`](contratos/) | JSON Schemas por etapa para Bot e IoT (9 archivos) |
+| Convenciones | [`microframework/convenciones/naming-conventions.md`](convenciones/naming-conventions.md) | Nombres de archivos, subflujos, nodos y variables |
+| Checklist arquitectura | [`microframework/checklists/checklist-arquitectura.md`](checklists/checklist-arquitectura.md) | 10 ítems binarios alineados con REG-* |
+| Checklist DevSecOps | [`microframework/checklists/checklist-devsecops.md`](checklists/checklist-devsecops.md) | 8 ítems de seguridad (Pilar 1) |
+| Guía de observabilidad | [`microframework/guia-observabilidad.md`](guia-observabilidad.md) | Pilar 3: contrato de logs estructurados por etapa |
+| Validación estática (Lite) | [`microframework/validacion/validar-flujos.mjs`](validacion/validar-flujos.mjs) | Pilar 2 — un único archivo `.mjs`, cero dependencias, HTML offline. Evalúa 11 REG-* + 6 antipatrones AP-* sobre el grafo del flujo |
+| Validación estática (Pro) | [`microframework/validacion-pro/`](validacion-pro/) | Pilar 2 — módulo con DSL YAML de reglas, codemods `--fix`, SARIF para GitHub Code Scanning, suite vitest |
+| Plantillas ADR y JSON | [`microframework/plantillas/`](plantillas/) | 10 plantillas JSON (2 as-is + 8 to-be/subflujos) + plantilla ADR Markdown |
+| Utility Tree ATAM | [`atam/atam-utility-tree.md`](../atam/atam-utility-tree.md) | 12 escenarios top-K (6 Bot + 6 IoT) con medidas de respuesta para FASE 7 |
+| Protocolo MTTD | [`medicion/protocolo-mttd.md`](../medicion/protocolo-mttd.md) | Procedimiento reproducible de medición de Mean Time To Detect |
+| Taxonomía de casos | [`casos-de-estudio/justificacion-casos-de-estudio.md`](../casos-de-estudio/justificacion-casos-de-estudio.md) | Representatividad formal de Bot e IoT en el espacio LC/NC de n8n |
 
 ---
 
@@ -68,7 +67,7 @@ Todo flujo que adopte el micro-framework se organiza en cuatro **responsabilidad
 - **E4 — Salida:** produce la respuesta o notificación final con status codes apropiados
   (REG-009).
 
-Especificación completa: [`docs/context/microframework-spec.md`](context/microframework-spec.md).
+Especificación completa: [`microframework/microframework-spec.md`](microframework-spec.md).
 
 ---
 
@@ -79,15 +78,15 @@ Alineados con §4.3 del anteproyecto:
 | Pilar | Instrumentación | Verificación |
 |---|---|---|
 | 1. Gestión de Secretos | Credenciales n8n referenciadas por nombre; `.env` fuera de Git | Ítems 1–5 del checklist DevSecOps + REG-001 |
-| 2. Validaciones Automatizadas | Lite [`validar-flujos.mjs`](../microframework/validacion/validar-flujos.mjs) + Pro [`validacion-pro/`](../microframework/validacion-pro/) | Evalúa 17 reglas (11 REG-* + 6 AP-*) sobre el grafo del flujo. Cada finding lleva severidad, confianza, ISO 25010, ATAM, ADR. Salidas: md, json canónico, html offline, sarif, junit |
-| 3. Resiliencia Operativa | Patrones retry e idempotencia + [`guia-observabilidad.md`](../microframework/guia-observabilidad.md) | REG-004, REG-005, REG-006 |
+| 2. Validaciones Automatizadas | Lite [`validar-flujos.mjs`](validacion/validar-flujos.mjs) + Pro [`validacion-pro/`](validacion-pro/) | Evalúa 17 reglas (11 REG-* + 6 AP-*) sobre el grafo del flujo. Cada finding lleva severidad, confianza, ISO 25010, ATAM, ADR. Salidas: md, json canónico, html offline, sarif, junit |
+| 3. Resiliencia Operativa | Patrones retry e idempotencia + [`guia-observabilidad.md`](guia-observabilidad.md) | REG-004, REG-005, REG-006 |
 
 ---
 
 ## 5. Mapeo a ISO/IEC 25010
 
 El micro-framework contribuye a cinco características del modelo de calidad. Cada regla
-está mapeada explícitamente en [`reglas-obligatorias.md`](../microframework/reglas/reglas-obligatorias.md#mapeo-reg--isoiec-25010).
+está mapeada explícitamente en [`reglas-obligatorias.md`](reglas/reglas-obligatorias.md#mapeo-reg--isoiec-25010).
 
 | Característica | Reglas | Métrica del anteproyecto |
 |---|---|---|
@@ -109,8 +108,8 @@ Aplicar el micro-framework a un caso nuevo sigue esta secuencia:
 2. Importar las 4 plantillas de subflujo desde `microframework/plantillas/`
    (o 3 si aplica la omisión de E4 como subflujo — requiere ADR justificándolo).
 3. Capturar IDs reales y actualizar referencias `Execute Workflow` en el orquestador.
-4. Aplicar el [`checklist-arquitectura.md`](../microframework/checklists/checklist-arquitectura.md)
-   y el [`checklist-devsecops.md`](../microframework/checklists/checklist-devsecops.md).
+4. Aplicar el [`checklist-arquitectura.md`](checklists/checklist-arquitectura.md)
+   y el [`checklist-devsecops.md`](checklists/checklist-devsecops.md).
 5. Ejecutar `node microframework/validacion/validar-flujos.mjs --caso <nombre> --estado to-be`.
 6. Documentar decisiones no obvias como ADR en `casos-de-estudio/<caso>/adr/`.
 7. Versionar el JSON re-exportado en `casos-de-estudio/<caso>/to-be/`.
@@ -196,9 +195,9 @@ Cualquier modificación a REG-*, al metamodelo E1–E4 o a los contratos requier
 
 ## 10. Referencias normativas
 
-- Anteproyecto MGADS: [`docs/context/ANTEPROYECTO_ELIAN_GIL_MGADS.pdf`](context/ANTEPROYECTO_ELIAN_GIL_MGADS.pdf)
-- Proyecto overview: [`docs/context/proyecto-overview.md`](context/proyecto-overview.md)
-- Arquitectura as-is / to-be: [`docs/context/arquitectura-flujos.md`](context/arquitectura-flujos.md)
-- Convenios y reglas del repositorio: [`docs/context/convenios-y-reglas.md`](context/convenios-y-reglas.md)
-- Protocolo de evidencias: [`docs/protocolo-evidencias.md`](protocolo-evidencias.md)
+- Anteproyecto MGADS (documento normativo del autor, no versionado en el repositorio)
+- Proyecto overview: [`../medicion/proyecto-overview.md`](../medicion/proyecto-overview.md)
+- Arquitectura as-is / to-be: [`casos-de-estudio/arquitectura-flujos.md`](../casos-de-estudio/arquitectura-flujos.md)
+- Convenios y reglas del repositorio: [`convenciones/convenios-y-reglas.md`](convenciones/convenios-y-reglas.md)
+- Protocolo de evidencias: [`medicion/protocolo-evidencias.md`](../medicion/protocolo-evidencias.md)
 - Estado actual del proyecto: [`estado-actual.md`](../estado-actual.md)

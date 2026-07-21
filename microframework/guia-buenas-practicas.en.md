@@ -160,6 +160,7 @@ For this guide you only need to know the key folders:
 ```
 n8n-microframework/
 ├── infraestructura/            # docker-compose.yml + .env.example (local environment)
+│   └── aws/                    # Phase 8 AWS architecture design (Chapter 11 references it)
 ├── microframework/             # Rules, patterns, checklists, templates — the core
 │   ├── reglas/                 # REG-001…010 + REC-001…006
 │   ├── patrones/               # 5 patterns (retry, idempotency, ...)
@@ -169,14 +170,12 @@ n8n-microframework/
 │   ├── contratos/              # 9 I/O JSON Schemas
 │   ├── guia-observabilidad.md  # JSON log contract per stage
 │   ├── validacion/             # validar-flujos.mjs (validation script)
-│   └── adr/                    # framework-level ADRs (MF-001..007)
-├── casos-de-estudio/           # Bot and IoT (as-is + to-be) — complete examples
-├── medicion/                   # Datasets, run-logs, and comparative metrics
-├── docs/                       # Context and deliverable documentation
-│   ├── aws/                    # Phase 8 design (Chapter 11 references it)
-│   ├── atam/                   # Phase 7 ATAM evaluation
+│   ├── adr/                    # framework-level ADRs (MF-001..007)
 │   ├── microframework-v1.0.md  # R1 — consolidated micro-framework document
 │   └── guia-buenas-practicas.md # ← this document (R5)
+├── casos-de-estudio/           # Bot and IoT (as-is + to-be) — complete examples
+├── atam/                       # Phase 7 ATAM evaluation
+├── medicion/                   # Datasets, run-logs, and comparative metrics
 └── estado-actual.md            # Project progress source of truth
 ```
 
@@ -191,7 +190,7 @@ Three rules that always apply:
 3. **Every relevant architectural decision is documented as an ADR.** Template at
    `microframework/plantillas/ADR-plantilla.md`.
 
-The full conventions specification is in `docs/context/convenios-y-reglas.md`.
+The full conventions specification is in `convenciones/convenios-y-reglas.en.md`.
 
 ---
 
@@ -412,7 +411,7 @@ documented ADR).
 | E4 | Operability | Monitorability |
 | Transversal | Security · Maintainability · Reliability · Operability | Confidentiality, analyzability, modifiability |
 
-To go deeper into the formal metamodel, see `docs/context/microframework-spec.md`.
+To go deeper into the formal metamodel, see `microframework/microframework-spec.md`.
 
 ### 4.5 Why this metamodel works
 
@@ -759,7 +758,7 @@ Environment variables are managed at two levels:
 ### 7.4 Automatic validation (DevSecOps Pillar 2)
 
 The repository includes the static validator in **two coexisting editions** (see
-[`ADR-MF-008`](../microframework/adr/ADR-MF-008-validador-dos-ediciones.md)):
+[`ADR-MF-008`](adr/ADR-MF-008-validador-dos-ediciones.md)):
 
 - **Lite** — `microframework/validacion/validar-flujos.mjs` (a single file, zero
   dependencies, self-contained offline HTML). **Recommended edition for the academic
@@ -802,7 +801,7 @@ npm test                                                   # vitest
 
 **When to run it:** before every commit touching flows, and as a gate in CI/CD (example
 workflow in
-[`microframework/validacion-pro/docs/sarif-github.md`](../microframework/validacion-pro/docs/sarif-github.md)).
+[`microframework/validacion-pro/docs/sarif-github.md`](validacion-pro/docs/sarif-github.md)).
 
 ### 7.5 Open risk: token rotation (R-BOT-01)
 
@@ -971,7 +970,7 @@ To validate that your observability works:
    `docker logs`.
 3. Time from that log until an operator can identify the failed node (must be < 60 s).
 
-Full protocol in `docs/protocolo-mttd.md`.
+Full protocol in `medicion/protocolo-mttd.md`.
 
 ### 8.9 Metrics derivable from the JSON log
 
@@ -1122,7 +1121,7 @@ are the baseline).
 
 ## 11. Scaling from the lab to AWS production
 
-> **Reference document:** `docs/aws/INDEX.md` and the 6 complete Phase 8 documents.
+> **Reference document:** `infraestructura/aws/INDEX.md` and the 6 complete Phase 8 documents.
 > This chapter is a **conceptual bridge**: it shows how each local-environment element
 > translates to AWS without duplicating the detailed content.
 
@@ -1173,8 +1172,8 @@ are the baseline).
 - **ElastiCache Redis**: BullMQ queue — the sole enabler of n8n's horizontal scaling.
 - **RDS PostgreSQL Multi-AZ**: automatic failover < 60 s, 99.95% SLA.
 
-See the C4 container diagram in `docs/aws/arquitectura-aws.md §2` and the Queue Mode flow
-sequence diagram in `docs/aws/escalabilidad.md §1`.
+See the C4 container diagram in `infraestructura/aws/arquitectura-aws.md §2` and the Queue Mode flow
+sequence diagram in `infraestructura/aws/escalabilidad.md §1`.
 
 ### 11.5 Reference costs per tier
 
@@ -1184,7 +1183,7 @@ sequence diagram in `docs/aws/escalabilidad.md §1`.
 | **Staging** | 24/7 QA, no Multi-AZ | ~$208 |
 | **Production** | Multi-AZ HA, 2–8 auto-scaling workers, WAF | ~$458 (optimizable to ~$346 with Fargate Spot + Reserved RDS) |
 
-Full detail in `docs/aws/estimacion-costos.md`.
+Full detail in `infraestructura/aws/estimacion-costos.md`.
 
 ### 11.6 ATAM risks resolved by the AWS design
 
@@ -1204,7 +1203,7 @@ Three framework-level ADRs justify the AWS design:
 - **`ADR-MF-007-rds-multi-az.md`** — Why Multi-AZ in Production.
 
 For the full design (VPC, IAM, observability, scalability, costs), see the index at
-`docs/aws/INDEX.md`.
+`infraestructura/aws/INDEX.md`.
 
 ---
 
@@ -1296,7 +1295,7 @@ If you answered "yes" to all, you're Level 5.
 | 1 → 2 | Implement E1 with validation + errorWorkflow | 1 sprint |
 | 2 → 3 | Retry on HTTP + DB idempotency + isolate E2 | 2 sprints |
 | 3 → 4 | Document 3 ADRs + integrate `validar-flujos.mjs` in CI | 1 sprint |
-| 4 → 5 | Implement the Phase 8 design (see `docs/aws/INDEX.md`) | 4 days |
+| 4 → 5 | Implement the Phase 8 design (see `infraestructura/aws/INDEX.md`) | 4 days |
 
 ---
 
@@ -1375,20 +1374,19 @@ Sources: `medicion/consolidado/comparacion-2026-05-05.md`, `metricas-derivadas.m
 
 | You need... | Read |
 |---|---|
-| Project overview | `docs/context/proyecto-overview.md` |
-| As-is and to-be flow architecture | `docs/context/arquitectura-flujos.md` |
-| Formal specification of the E1–E4 metamodel | `docs/context/microframework-spec.md` |
-| Theoretical foundation (Clean Architecture, NIST, LC/NC) | `docs/context/fundamento-teorico.md` |
-| Consolidated micro-framework R1 document | `docs/microframework-v1.0.md` |
+| Project overview | `../medicion/proyecto-overview.en.md` |
+| As-is and to-be flow architecture | `casos-de-estudio/arquitectura-flujos.md` |
+| Formal specification of the E1–E4 metamodel | `microframework/microframework-spec.md` |
+| Consolidated micro-framework R1 document | `microframework/microframework-v1.0.md` |
 | Detail of every rule | `microframework/reglas/reglas-obligatorias.md` |
 | Depth on every pattern | `microframework/patrones/patron-*.md` |
 | The per-stage JSON log contract | `microframework/guia-observabilidad.md` |
-| Reproducible MTTD protocol | `docs/protocolo-mttd.md` |
-| Complete AWS design (R3) | `docs/aws/INDEX.md` |
-| Final ATAM report (R4) | `docs/atam/informe-atam-final.md` |
-| This guide (R5) | `docs/guia-buenas-practicas.md` |
+| Reproducible MTTD protocol | `medicion/protocolo-mttd.md` |
+| Complete AWS design (R3) | `infraestructura/aws/INDEX.md` |
+| Final ATAM report (R4) | `atam/informe-atam-final.md` |
+| This guide (R5) | `microframework/guia-buenas-practicas.md` |
 | Current project status | `estado-actual.md` |
-| File and commit conventions | `docs/context/convenios-y-reglas.md` |
+| File and commit conventions | `convenciones/convenios-y-reglas.en.md` |
 
 ---
 

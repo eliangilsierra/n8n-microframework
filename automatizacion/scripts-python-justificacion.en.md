@@ -185,8 +185,8 @@ transcription errors and guaranteeing that the report's numbers correspond exact
 repository's data.
 
 **Output:** `medicion/consolidado/comparacion-YYYY-MM-DD.md`. There are two versioned
-reports: [2026-05-03](../../medicion/consolidado/comparacion-2026-05-03.md) and
-[2026-05-05](../../medicion/consolidado/comparacion-2026-05-05.md).
+reports: [2026-05-03](../medicion/consolidado/comparacion-2026-05-03.md) and
+[2026-05-05](../medicion/consolidado/comparacion-2026-05-05.md).
 
 ---
 
@@ -238,7 +238,7 @@ documentedly.
 
 **Relationship to ATAM:** This script's output is type-(ii) evidence — empirical
 quantitative — in the ATAM evaluation's methodological triangulation. See
-`docs/atam/informe-atam-final.md §7` and `medicion/consolidado/atam-evidencia.md`.
+`atam/informe-atam-final.md §7` and `medicion/consolidado/atam-evidencia.md`.
 
 **Output:** Console report with level distribution and per-level latency statistics.
 
@@ -311,7 +311,7 @@ in ATAM's methodological triangulation. Specifically:
   Tree
 - `analisis_iot_q5.py` directly answers the IOT-Q5 scenario (differentiated urgency)
 - The 8,000 data points are the empirical basis of the 1-5 as-is vs to-be Scoring Matrix
-  (`docs/atam/matriz-scoring.md`)
+  (`atam/matriz-scoring.md`)
 
 ### SO4 — Propose an AWS architecture design
 
@@ -438,9 +438,9 @@ The source CSVs are versioned.
 
 | Document | Relationship |
 |---|---|
-| [`docs/protocolo-evidencias.md`](../protocolo-evidencias.md) | Full operational protocol for running the experiment |
-| [`docs/protocolo-mttd.md`](../protocolo-mttd.md) | Specific MTTD measurement procedure |
-| [`automatizacion/README.md`](../../automatizacion/README.md) | Step-by-step command and usage-flow reference |
-| [`medicion/consolidado/atam-evidencia.md`](../../medicion/consolidado/atam-evidencia.md) | How the measurement data feeds the ATAM evaluation |
-| [`microframework/validacion/README.md`](../../microframework/validacion/README.md) | Complementary justification: why the validator uses Node.js |
-| [`docs/context/proyecto-overview.md`](proyecto-overview.md) | SO1–SO4 and the thesis proposal's research design |
+| [`medicion/protocolo-evidencias.md`](../medicion/protocolo-evidencias.md) | Full operational protocol for running the experiment |
+| [`medicion/protocolo-mttd.md`](../medicion/protocolo-mttd.md) | Specific MTTD measurement procedure |
+| [`automatizacion/README.md`](README.md) | Step-by-step command and usage-flow reference |
+| [`medicion/consolidado/atam-evidencia.md`](../medicion/consolidado/atam-evidencia.md) | How the measurement data feeds the ATAM evaluation |
+| [`microframework/validacion/README.md`](../microframework/validacion/README.md) | Complementary justification: why the validator uses Node.js |
+| [`../medicion/proyecto-overview.en.md`](../medicion/proyecto-overview.en.md) | SO1–SO4 and the thesis proposal's research design |

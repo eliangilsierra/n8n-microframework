@@ -87,7 +87,7 @@ reasons). This study adopts **theoretical replication**:
 
 ### Representativeness in the n8n ecosystem
 
-The selected reference templates (see `docs/context/sustentacion-plantillas-referencia.md`)
+The selected reference templates (see `microframework/plantillas/sustentacion-plantillas-referencia.md`)
 confirm that:
 
 1. The **bot/chatbot with webhook** pattern is one of the most frequent in the official
@@ -136,5 +136,5 @@ As stated in the thesis proposal (§6 Limitations):
 
 - Yin, R.K. (2018). *Case Study Research and Applications: Design and Methods* (6th ed.). SAGE Publications.
 - n8n GmbH (2026). Official n8n template repository. https://n8n.io/workflows/
-- `docs/context/sustentacion-plantillas-referencia.md` — detailed analysis of the 10 reference templates
-- `docs/context/proyecto-overview.md` §Case studies — functional description of Bot and IoT
+- `microframework/plantillas/sustentacion-plantillas-referencia.md` — detailed analysis of the 10 reference templates
+- `../medicion/proyecto-overview.en.md` §Case studies — functional description of Bot and IoT

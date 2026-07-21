@@ -270,7 +270,7 @@ Todos los subflujos emiten logs con `console.log(JSON.stringify({...}))`. Los ca
 }
 ```
 
-Los campos adicionales varían por etapa y se documentan en `microframework/docs/guia-observabilidad.md`.
+Los campos adicionales varían por etapa y se documentan en `microframework/guia-observabilidad.md`.
 
 ---
 
