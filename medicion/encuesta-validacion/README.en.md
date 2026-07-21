@@ -11,11 +11,11 @@
 
 This folder contains the raw (anonymized) data from Phase V — external validation by an
 expert panel — collected via Google Forms between June 17 and June 24, 2026 (see
-[`docs/atam/protocolo-encuesta.en.md`](../../docs/atam/protocolo-encuesta.en.md) §4.4). It is
+[`atam/protocolo-encuesta.en.md`](../../atam/protocolo-encuesta.en.md) §4.4). It is
 the data source that feeds section 8 of
-[`docs/atam/informe-atam-final.md`](../../docs/atam/informe-atam-final.md), now complete,
+[`atam/informe-atam-final.md`](../../atam/informe-atam-final.md), now complete,
 following the pre-registered analysis plan in
-[`docs/atam/plan-analisis-encuesta.md`](../../docs/atam/plan-analisis-encuesta.md).
+[`atam/plan-analisis-encuesta.md`](../../atam/plan-analisis-encuesta.md).
 
 ## Contents of this folder
 
@@ -67,7 +67,7 @@ regression and should be reported.
 | 56 | Section E | E4 — optional free comment |
 
 The complete mapping of each question to its analysis hypothesis is in
-[`docs/atam/instrumento-encuesta.en.md`](../../docs/atam/instrumento-encuesta.en.md) §Appendix.
+[`atam/instrumento-encuesta.en.md`](../../atam/instrumento-encuesta.en.md) §Appendix.
 
 ## Relationship to the methodology
 
@@ -81,7 +81,7 @@ and interpretation criteria apply — the actual analysis over this CSV has alre
 ## Navigation
 
 - **Parent:** [medicion/](../README.en.md)
-- **See also:** [`docs/atam/protocolo-encuesta.en.md`](../../docs/atam/protocolo-encuesta.en.md) · [`docs/atam/instrumento-encuesta.en.md`](../../docs/atam/instrumento-encuesta.en.md) · [`docs/atam/plan-analisis-encuesta.md`](../../docs/atam/plan-analisis-encuesta.md)
+- **See also:** [`atam/protocolo-encuesta.en.md`](../../atam/protocolo-encuesta.en.md) · [`atam/instrumento-encuesta.en.md`](../../atam/instrumento-encuesta.en.md) · [`atam/plan-analisis-encuesta.md`](../../atam/plan-analisis-encuesta.md)
 
 ---
 *Last updated: 2026-07-08 · Source of truth for progress: [estado-actual.md](../../estado-actual.en.md)*

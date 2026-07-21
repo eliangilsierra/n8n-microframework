@@ -49,7 +49,7 @@ checklist and automatically verified by the static validator (`validacion/`,
 ## Navigation
 
 - Parent: [Repository (root)](../README.en.md)
-- See also: [`casos-de-estudio/`](../casos-de-estudio/README.en.md) (concrete application of the micro-framework) · [`docs/context/microframework-spec.en.md`](../docs/context/microframework-spec.en.md) (formal v1.0 specification)
+- See also: [`casos-de-estudio/`](../casos-de-estudio/README.en.md) (concrete application of the micro-framework) · [`microframework/microframework-spec.en.md`](microframework-spec.en.md) (formal v1.0 specification)
 
 ---
 

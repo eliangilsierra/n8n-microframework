@@ -30,7 +30,7 @@ inline in the orchestrator (decision documented in
 [`ADR-002`](../adr/ADR-002-omision-e4.en.md)), while E2 (domain) and E3 (adapter) are
 separate subflows invoked with `Execute Workflow`. Before importing into n8n, follow the
 import order documented in
-[`docs/context/convenios-y-reglas.md`](../../../docs/context/convenios-y-reglas.en.md):
+[`../../../microframework/convenciones/convenios-y-reglas.en.md`](../../../microframework/convenciones/convenios-y-reglas.en.md):
 E2 → E3 → orchestrator.
 
 ## Navigation

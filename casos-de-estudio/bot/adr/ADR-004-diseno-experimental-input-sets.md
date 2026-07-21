@@ -9,7 +9,7 @@
 
 ## Contexto
 
-El anteproyecto (`docs/context/proyecto-overview.md` §Input Sets) definió tres Input Sets
+El anteproyecto (`../../../medicion/proyecto-overview.md` §Input Sets) definió tres Input Sets
 por caso:
 
 - **A:** flujo normal (caso feliz)
@@ -140,4 +140,4 @@ y se referencia desde la matriz de trazabilidad del iot.
 - Referencias cruzadas:
   - `medicion/datasets/generar_datasets.py` (generador determinístico)
   - `medicion/datasets/seeds.yaml` (semillas versionadas, master_seed=20260421)
-  - `docs/context/proyecto-overview.md` §Input Sets (debe actualizarse con esta adenda)
+  - `../../../medicion/proyecto-overview.md` §Input Sets (debe actualizarse con esta adenda)

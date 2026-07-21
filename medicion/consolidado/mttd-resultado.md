@@ -1,7 +1,7 @@
 # Resultado de medición MTTD (Mean Time To Detect)
 
 **Fecha:** 2026-05-05
-**Protocolo:** `docs/protocolo-mttd.md` v1.0
+**Protocolo:** `medicion/protocolo-mttd.md` v1.0
 **Escenarios:** BOT-Q5 (token inválido) + IOT-Q4 (fallo de red en E4)
 
 ---
@@ -114,7 +114,7 @@ docker compose -f infraestructura/docker-compose.yml start mock-iot
 
 ## Referencias
 
-- Protocolo MTTD: `docs/protocolo-mttd.md`
-- Escenarios ATAM: `docs/atam/atam-utility-tree.md` (BOT-Q5, IOT-Q4)
+- Protocolo MTTD: `medicion/protocolo-mttd.md`
+- Escenarios ATAM: `atam/atam-utility-tree.md` (BOT-Q5, IOT-Q4)
 - REG-006 log estructurado: `microframework/reglas/reglas-obligatorias.md`
 - ADR-MF-003 log estructurado: `microframework/adr/ADR-MF-003-log-estructurado-reg006.md`

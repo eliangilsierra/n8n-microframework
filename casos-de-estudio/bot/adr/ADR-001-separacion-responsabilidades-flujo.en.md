@@ -80,7 +80,7 @@ This separation establishes that:
   invocation in the local environment). Acceptable given the goal is maintainability
   evaluation, not latency optimization.
 - After importing the subflows into n8n, the orchestrators must be manually updated with
-  the real IDs assigned by n8n. Procedure documented in `docs/protocolo-evidencias.md`.
+  the real IDs assigned by n8n. Procedure documented in `medicion/protocolo-evidencias.md`.
 
 ---
 

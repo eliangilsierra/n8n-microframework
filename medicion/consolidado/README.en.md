@@ -29,11 +29,11 @@ Security, Traceability), the ATAM evidence matrix, and the MTTD measurement resu
 **Note:** unlike the raw run-logs/cr-logs (immutable once recorded), the reports in this
 folder are regenerated when new evidence becomes available (hence the date suffix on the
 comparison files). They are direct input to the final ATAM report
-([`docs/atam/informe-atam-final.md`](../../docs/atam/informe-atam-final.md)) and to the
+([`atam/informe-atam-final.md`](../../atam/informe-atam-final.md)) and to the
 best practices guide
-([`docs/guia-buenas-practicas.md`](../../docs/guia-buenas-practicas.en.md), Appendix C).
+([`microframework/guia-buenas-practicas.md`](../../microframework/guia-buenas-practicas.en.md), Appendix C).
 
 ## Navigation
 
 - Parent: [`medicion/`](../README.en.md)
-- See also: [`medicion/run-logs/`](../run-logs/README.en.md) · [`medicion/cr-logs/`](../cr-logs/README.en.md) (raw sources) · [`docs/atam/informe-atam-final.md`](../../docs/atam/informe-atam-final.md)
+- See also: [`medicion/run-logs/`](../run-logs/README.en.md) · [`medicion/cr-logs/`](../cr-logs/README.en.md) (raw sources) · [`atam/informe-atam-final.md`](../../atam/informe-atam-final.md)

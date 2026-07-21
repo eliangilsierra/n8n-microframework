@@ -24,7 +24,7 @@ demonstrates the −81% (Bot) and −84% (IoT) reduction achieved by the micro-f
 ## Relationship to the methodology
 
 Column format: `cr_id,cr_type,case,version,start_ts,end_ts,nodes_touched,deps_touched,attempts,commit_hash,notes`
-(see [`docs/context/convenios-y-reglas.md`](../../docs/context/convenios-y-reglas.en.md)
+(see [`../../microframework/convenciones/convenios-y-reglas.en.md`](../../microframework/convenciones/convenios-y-reglas.en.md)
 §CR Logs). Each CR's design is in each case's `cr-design.md`
 ([`bot/cr-design.md`](../../casos-de-estudio/bot/cr-design.en.md),
 [`iot/cr-design.md`](../../casos-de-estudio/iot/cr-design.en.md)). Same immutability

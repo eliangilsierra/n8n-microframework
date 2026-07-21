@@ -4,7 +4,7 @@
 
 **Date:** 2026-05-05
 **Sources:** run-logs, cr-logs, flow JSONs, validar-flujos.mjs
-**Reference:** `docs/context/proyecto-overview.md` §Evaluation metrics
+**Reference:** `../proyecto-overview.en.md` §Evaluation metrics
 
 ---
 

@@ -99,7 +99,7 @@ HTTP 500 Internal Server Error
 
 **Negative:**
 - Requires creating the `lecturas_sensor_dead_letters` table in PostgreSQL (additional
-  setup step — documented in `docs/protocolo-evidencias.md` §2).
+  setup step — documented in `medicion/protocolo-evidencias.md` §2).
 - Node 3 (dead-letter) fails if the DB is unavailable, which is precisely the most likely
   case when E3 failed due to DB issues. Mitigation: Node 1 (stdout log) preserves the
   payload independently.

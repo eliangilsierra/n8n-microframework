@@ -159,4 +159,4 @@ regla REG-005 con evidencia empírica.
 - `casos-de-estudio/iot/adr/` — ADRs 001..004
 - `casos-de-estudio/iot/trazabilidad/matriz-trazabilidad.md`
 - `medicion/run-logs/iot/run-log-iot-as-is.csv` — 2000 corridas as-is
-- `docs/protocolo-evidencias.md` §5
+- `medicion/protocolo-evidencias.md` §5

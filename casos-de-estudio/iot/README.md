@@ -14,7 +14,7 @@ ingesta de sensores IoT que recibe lecturas de temperatura, humedad y CO₂ por 
 valida rangos físicos, detecta anomalías por umbrales, persiste con control de
 idempotencia y notifica por canal diferenciado según severidad. Es el segundo de los dos
 casos que validan el micro-framework (ver
-[`docs/context/justificacion-casos-de-estudio.md`](../../docs/context/justificacion-casos-de-estudio.md)
+[`casos-de-estudio/justificacion-casos-de-estudio.md`](../justificacion-casos-de-estudio.md)
 para la justificación de representatividad).
 
 ## Contenido de esta carpeta

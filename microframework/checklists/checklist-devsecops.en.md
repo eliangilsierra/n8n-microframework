@@ -52,7 +52,7 @@ credential/secret security and attack surface.
 
 ---
 
-*See security rules in `docs/context/convenios-y-reglas.md` — Section "Critical security rules"*
+*See security rules in `../convenciones/convenios-y-reglas.en.md` — Section "Critical security rules"*
 
 ---
 

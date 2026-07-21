@@ -80,7 +80,7 @@ Esta separación establece que:
   mantenibilidad, no optimización de latencia.
 - Después de importar los subflujos en n8n, los orquestadores deben actualizarse
   manualmente con los IDs reales asignados por n8n. Procedimiento documentado en
-  `docs/protocolo-evidencias.md`.
+  `medicion/protocolo-evidencias.md`.
 
 ---
 

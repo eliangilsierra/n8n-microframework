@@ -27,7 +27,7 @@ mantenibilidad/analizabilidad de ISO/IEC 25010. Conecta explícitamente cada req
 funcional con su ADR, su regla REG-* verificable, el subflujo donde se implementa, el
 Input Set que lo ejerce y el archivo de evidencia que lo respalda — la misma cadena
 descrita en
-[`docs/context/microframework-spec.md`](../../../docs/context/microframework-spec.md)
+[`microframework/microframework-spec.md`](../../../microframework/microframework-spec.md)
 aplicada de punta a punta al caso IoT.
 
 ## Navegación

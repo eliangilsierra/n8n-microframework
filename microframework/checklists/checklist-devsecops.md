@@ -50,7 +50,7 @@ Enfocado en seguridad de credenciales, secretos y superficie de ataque.
 
 ---
 
-*Ver reglas de seguridad en `docs/context/convenios-y-reglas.md` — Sección "Reglas críticas de seguridad"*
+*Ver reglas de seguridad en `../convenciones/convenios-y-reglas.md` — Sección "Reglas críticas de seguridad"*
 
 ---
 

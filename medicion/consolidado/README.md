@@ -31,11 +31,11 @@ medición MTTD.
 los reportes de esta carpeta sí se regeneran cuando hay nueva evidencia disponible (de
 ahí el sufijo de fecha en los archivos de comparación). Son el insumo
 directo del informe ATAM final
-([`docs/atam/informe-atam-final.md`](../../docs/atam/informe-atam-final.md)) y de la
+([`atam/informe-atam-final.md`](../../atam/informe-atam-final.md)) y de la
 guía de buenas prácticas
-([`docs/guia-buenas-practicas.md`](../../docs/guia-buenas-practicas.md), Apéndice C).
+([`microframework/guia-buenas-practicas.md`](../../microframework/guia-buenas-practicas.md), Apéndice C).
 
 ## Navegación
 
 - Padre: [`medicion/`](../README.md)
-- Ver también: [`medicion/run-logs/`](../run-logs/README.md) · [`medicion/cr-logs/`](../cr-logs/README.md) (fuentes crudas) · [`docs/atam/informe-atam-final.md`](../../docs/atam/informe-atam-final.md)
+- Ver también: [`medicion/run-logs/`](../run-logs/README.md) · [`medicion/cr-logs/`](../cr-logs/README.md) (fuentes crudas) · [`atam/informe-atam-final.md`](../../atam/informe-atam-final.md)

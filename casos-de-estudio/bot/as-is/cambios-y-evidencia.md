@@ -187,4 +187,4 @@ y se verifican por inspección estática).
 - `casos-de-estudio/bot/adr/` — ADRs 001..004
 - `casos-de-estudio/bot/trazabilidad/matriz-trazabilidad.md`
 - `medicion/run-logs/bot/run-log-bot-as-is.csv` — 2000 corridas as-is
-- `docs/protocolo-evidencias.md` §5 — schema de run-logs
+- `medicion/protocolo-evidencias.md` §5 — schema de run-logs

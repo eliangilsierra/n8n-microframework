@@ -132,7 +132,7 @@ A partir de los campos anteriores se calculan las métricas del protocolo de evi
 | Eficiencia retry | sum(`reintentos`) / count(E3) |
 | Cobertura `run_id` | count(eventos con `run_id`) / count(total) — debe ser 100% (REG-002) |
 
-Ver `docs/context/proyecto-overview.md` sección "Dimensiones de medición" para los
+Ver `../medicion/proyecto-overview.md` sección "Dimensiones de medición" para los
 umbrales y metas del anteproyecto.
 
 ---

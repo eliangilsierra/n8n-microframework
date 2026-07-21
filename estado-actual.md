@@ -30,11 +30,11 @@ refrescar "Última actualización".
 ## FASE 0 — Alistamiento del entorno
 
 ### Artefactos de repositorio ✓
-- ✓ Estructura de carpetas, documentación de contexto en `docs/context/`
+- ✓ Estructura de carpetas, documentación de contexto del proyecto
 - ✓ `infraestructura/docker-compose.yml` (n8n + PostgreSQL + mock-bot + mock-iot) y `.env.example`
 - ✓ Reglas obligatorias y recomendadas, checklists (arquitectura + DevSecOps), patrones, antipatrones, convenciones, plantilla ADR
 - ✓ CSVs de run-logs y cr-logs con headers (8 archivos)
-- ✓ Protocolo de evidencias v1.0 en `docs/protocolo-evidencias.md`
+- ✓ Protocolo de evidencias v1.0 en `medicion/protocolo-evidencias.md`
 - ✓ Datasets sintéticos A/B/C/D/E para Bot e IoT (5 sets × 2 casos = 10 archivos)
 - ✓ Scripts de automatización: `setup_env.py`, `run_corridas.py`, `extract_metrics.py`, `compare_results.py`
 - ✓ Script de análisis visual: `medicion/analizar_runlogs.py` (genera `medicion/consolidado/reporte-runlogs.html`)
@@ -54,8 +54,8 @@ refrescar "Última actualización".
 - ✓ Fichas técnicas Bot e IoT con contratos, reglas, CRs y parámetros de reproducibilidad
 - ✓ 6 datasets sintéticos (input-set-A/B/C para bot e iot) con metadatos de expectativas
 - ✓ Matrices de trazabilidad (RF → ADR → evidencia) para ambos casos — **v1.3** con columna ISO 25010 y escenarios ATAM
-- ✓ Sustentación académica de plantillas de referencia (`docs/context/sustentacion-plantillas-referencia.md`)
-- ✓ Taxonomía formal de representatividad de casos (`docs/context/justificacion-casos-de-estudio.md`) — Yin (2018), 4 categorías LC/NC, cobertura ortogonal Bot/IoT
+- ✓ Sustentación académica de plantillas de referencia (`microframework/plantillas/sustentacion-plantillas-referencia.md`)
+- ✓ Taxonomía formal de representatividad de casos (`casos-de-estudio/justificacion-casos-de-estudio.md`) — Yin (2018), 4 categorías LC/NC, cobertura ortogonal Bot/IoT
 
 ---
 
@@ -89,7 +89,7 @@ refrescar "Última actualización".
 
 ### Análisis de run-logs (2026-04-20) ✓
 - ✓ Script `medicion/analizar_runlogs.py` creado — genera reporte HTML interactivo con Plotly
-- ✓ Documentado en `docs/protocolo-evidencias.md §8`
+- ✓ Documentado en `medicion/protocolo-evidencias.md §8`
 - Anomalías detectadas en los datos actuales:
   - ⚠️ Bot as-is: patrón 10 success / 20 fail por set inconsistente con expectativas
     (requiere re-ejecución con flujos rediseñados importados en n8n)
@@ -115,15 +115,15 @@ refrescar "Última actualización".
 - Observación documentada: rate limiter en memoria contamina sets consecutivos dentro de la misma sesión
   cuando la ventana de tiempo (60s) no expira entre sets — evidencia del antipatrón REG-002
 - ✓ Diagramas arquitectónicos as-is en Mermaid con antipatrones anotados por nodo (`casos-de-estudio/{bot,iot}/as-is/diagrama-as-is.md`)
-- ✓ Justificación formal del rediseño as-is (`docs/context/justificacion-rediseno-asis.md`) — validez interna según Wohlin et al. (2012)
-- ✓ Anomalía `commit_hash="unknown"` documentada metodológicamente en `docs/protocolo-evidencias.md §9`
+- ✓ Justificación formal del rediseño as-is (`casos-de-estudio/justificacion-rediseno-asis.md`) — validez interna según Wohlin et al. (2012)
+- ✓ Anomalía `commit_hash="unknown"` documentada metodológicamente en `medicion/protocolo-evidencias.md §9`
 
 ---
 
 ## FASE 3 — Completada ✓ (robustez académica verificada 2026-05-01)
 
 ### Entregables núcleo del micro-framework
-- ✓ Metamodelo por etapas E1–E4 (`docs/context/microframework-spec.md`)
+- ✓ Metamodelo por etapas E1–E4 (`microframework/microframework-spec.md`)
 - ✓ 10 reglas obligatorias (REG-001…REG-010) y 6 recomendadas (`microframework/reglas/`)
 - ✓ Mapeo REG-* → ISO/IEC 25010 en `microframework/reglas/reglas-obligatorias.md`
 - ✓ **5 patrones** documentados: retry, idempotencia, circuit breaker, error boundary, saga/compensación (`microframework/patrones/`)
@@ -135,10 +135,10 @@ refrescar "Última actualización".
 - ✓ Guía de observabilidad mínima (`microframework/guia-observabilidad.md`) — Pilar 3 DevSecOps
 - ✓ Contratos E/S como JSON Schema (`microframework/contratos/`) — 9 schemas alineados con datasets reales
 - ✓ Script de validación estática ejecutable (`microframework/validacion/validar-flujos.mjs`) — Pilar 2 DevSecOps
-- ✓ Documento consolidado entregable R1 (`docs/microframework-v1.0.md`) — **versión 1.1** con soporte académico completo
-- ✓ **Fundamento teórico** (`docs/context/fundamento-teorico.md`) — Clean Architecture (Martin 2017), NIST SSDF, OWASP, literatura LC/NC, posicionamiento
-- ✓ **Utility Tree ATAM** (`docs/atam/atam-utility-tree.md`) — 12 escenarios (6 Bot + 6 IoT) con medidas de respuesta
-- ✓ **Protocolo MTTD** (`docs/protocolo-mttd.md`) — procedimiento reproducible con meta < 60 segundos
+- ✓ Documento consolidado entregable R1 (`microframework/microframework-v1.0.md`) — **versión 1.1** con soporte académico completo
+- ✓ **Fundamento teórico** — Clean Architecture (Martin 2017), NIST SSDF, OWASP, literatura LC/NC, posicionamiento
+- ✓ **Utility Tree ATAM** (`atam/atam-utility-tree.md`) — 12 escenarios (6 Bot + 6 IoT) con medidas de respuesta
+- ✓ **Protocolo MTTD** (`medicion/protocolo-mttd.md`) — procedimiento reproducible con meta < 60 segundos
 
 ### Decisiones arquitectónicas por caso (ADRs)
 - ✓ **19 ADRs totales** conforme a plantilla de 7 secciones:
@@ -266,20 +266,20 @@ refrescar "Última actualización".
 - ✓ Evidencia ATAM completada: Bot 5/6 (83%) ✅ · IoT 6/6 (100%) ✅ · Total 11/12 (92%) ✅
 - ✓ IOT-Q4 runtime ejecutado → SP-IOT-01, R-IOT-01, NR-IOT-01 documentados
 - ✓ IOT-Q5 análisis ejecutado (`medicion/analisis_iot_q5.py`) → TP-IOT-01 documentado
-- ✓ `docs/atam/analisis-approaches.md` — 12 approaches + clasificación SP/TP/R/NR × 12 escenarios
-- ✓ `docs/atam/matriz-scoring.md` — Scoring 1–5 as-is vs to-be para los 12 escenarios
-- ✓ `docs/atam/registro-riesgos-tradeoffs.md` — 3 SP · 3 TP · 4 R · 5 NR formalizados
+- ✓ `atam/analisis-approaches.md` — 12 approaches + clasificación SP/TP/R/NR × 12 escenarios
+- ✓ `atam/matriz-scoring.md` — Scoring 1–5 as-is vs to-be para los 12 escenarios
+- ✓ `atam/registro-riesgos-tradeoffs.md` — 3 SP · 3 TP · 4 R · 5 NR formalizados
 - ✓ `microframework/adr/ADR-MF-004-atam-adaptado-individual.md` — adaptación metodológica formal
-- ✓ `docs/atam/metodologia-atam-adaptada.md` — marco ATAM adaptado con sustento académico
-- ✓ `docs/atam/protocolo-encuesta.md` — protocolo completo de validación externa
-- ✓ `docs/atam/instrumento-encuesta.md` — 18 preguntas + mini-ATAM opcional (10–12 min)
-- ✓ `docs/atam/plan-analisis-encuesta.md` — plan estadístico (α Cronbach, κ Krippendorff)
-- ✓ `docs/atam/plan-difusion.md` — canales, plantillas y lista de candidatos
-- ✓ `docs/atam/material-apoyo/resumen-proyecto.md` — PDF 4 páginas (fuente Markdown)
-- ✓ `docs/atam/material-apoyo/guion-video.md` — guion video 5–7 min para panel
-- ✓ `docs/atam/material-apoyo/diagrama-comparativo.md` — diagramas Mermaid as-is vs to-be
-- ✓ `docs/atam/informe-atam-final.md` — informe ATAM capítulo de tesis (§1–§10 completos, §8 con resultados reales de encuesta)
-- ✓ `docs/atam/INDEX.md` — índice completo de todos los artefactos de Fase 7
+- ✓ `atam/metodologia-atam-adaptada.md` — marco ATAM adaptado con sustento académico
+- ✓ `atam/protocolo-encuesta.md` — protocolo completo de validación externa
+- ✓ `atam/instrumento-encuesta.md` — 18 preguntas + mini-ATAM opcional (10–12 min)
+- ✓ `atam/plan-analisis-encuesta.md` — plan estadístico (α Cronbach, κ Krippendorff)
+- ✓ `atam/plan-difusion.md` — canales, plantillas y lista de candidatos
+- ✓ `atam/material-apoyo/resumen-proyecto.md` — PDF 4 páginas (fuente Markdown)
+- ✓ `atam/material-apoyo/guion-video.md` — guion video 5–7 min para panel
+- ✓ `atam/material-apoyo/diagrama-comparativo.md` — diagramas Mermaid as-is vs to-be
+- ✓ `atam/informe-atam-final.md` — informe ATAM capítulo de tesis (§1–§10 completos, §8 con resultados reales de encuesta)
+- ✓ `atam/INDEX.md` — índice completo de todos los artefactos de Fase 7
 - ✓ `medicion/encuesta-validacion/` — datos anonimizados (N=19, 17 válidos), script y notebook de análisis ejecutados, outputs consolidados
 
 ### Hallazgos ATAM formalizados
@@ -301,13 +301,13 @@ refrescar "Última actualización".
 ## FASE 8 — Diseño de Arquitectura AWS — Completada ✓ (2026-05-18)
 
 ### Artefactos producidos ✓
-- ✓ `docs/aws/arquitectura-aws.md` — Documento principal: VPC multi-AZ, ECS Fargate, RDS Multi-AZ, ElastiCache Redis, S3, mapeo local→AWS, resolución de riesgos ATAM
-- ✓ `docs/aws/seguridad-iam.md` — IAM Task Roles (4 roles), Secrets Manager, ACM, WAF, Security Groups, KMS CMK. Diagramas 5 y 6
-- ✓ `docs/aws/observabilidad-aws.md` — CloudWatch Log Groups, 6 Log Insights queries, 7 alarmas, Dashboard. Resolución R-GLOBAL-01
-- ✓ `docs/aws/escalabilidad.md` — Queue Mode, auto-scaling workers (2–8), rolling/blue-green deploy, mapeo REGs. Diagrama 4
-- ✓ `docs/aws/estimacion-costos.md` — Costos 3 tiers (Dev ~$33, Staging ~$208, Prod ~$458), optimizaciones Fargate Spot. Diagrama 7
-- ✓ `docs/aws/diagramas-aws.md` — Fuente canónica de 7 diagramas Mermaid con código, justificación académica e instrucciones de render
-- ✓ `docs/aws/INDEX.md` — Índice de todos los artefactos de Fase 8
+- ✓ `infraestructura/aws/arquitectura-aws.md` — Documento principal: VPC multi-AZ, ECS Fargate, RDS Multi-AZ, ElastiCache Redis, S3, mapeo local→AWS, resolución de riesgos ATAM
+- ✓ `infraestructura/aws/seguridad-iam.md` — IAM Task Roles (4 roles), Secrets Manager, ACM, WAF, Security Groups, KMS CMK. Diagramas 5 y 6
+- ✓ `infraestructura/aws/observabilidad-aws.md` — CloudWatch Log Groups, 6 Log Insights queries, 7 alarmas, Dashboard. Resolución R-GLOBAL-01
+- ✓ `infraestructura/aws/escalabilidad.md` — Queue Mode, auto-scaling workers (2–8), rolling/blue-green deploy, mapeo REGs. Diagrama 4
+- ✓ `infraestructura/aws/estimacion-costos.md` — Costos 3 tiers (Dev ~$33, Staging ~$208, Prod ~$458), optimizaciones Fargate Spot. Diagrama 7
+- ✓ `infraestructura/aws/diagramas-aws.md` — Fuente canónica de 7 diagramas Mermaid con código, justificación académica e instrucciones de render
+- ✓ `infraestructura/aws/INDEX.md` — Índice de todos los artefactos de Fase 8
 - ✓ `microframework/adr/ADR-MF-005-ecs-fargate-vs-ec2.md` — ECS Fargate vs EC2 vs EKS
 - ✓ `microframework/adr/ADR-MF-006-n8n-queue-mode.md` — Queue Mode con Redis BullMQ
 - ✓ `microframework/adr/ADR-MF-007-rds-multi-az.md` — RDS PostgreSQL Multi-AZ en Producción
@@ -339,7 +339,7 @@ refrescar "Última actualización".
 ## FASE 9 — Guía de Buenas Prácticas (R5) — Completada ✓ (2026-05-18)
 
 ### Artefacto producido ✓
-- ✓ `docs/guia-buenas-practicas.md` — Guía monolítica v1.0, ~12 capítulos + 5 apéndices
+- ✓ `microframework/guia-buenas-practicas.md` — Guía monolítica v1.0, ~12 capítulos + 5 apéndices
   - Cap 1 introducción + glosario de 25 términos
   - Cap 2 pre-requisitos y estructura del repo
   - Cap 3 Quick Start 30 minutos ejecutable (Docker → n8n → import → curl → logs → validador)
@@ -350,7 +350,7 @@ refrescar "Última actualización".
   - Cap 8 Observabilidad (REG-006 + contrato log JSON + plantilla Code node + ADR-MF-003) — sección anteproyecto ✅
   - Cap 9 Catálogo 11 antipatrones + señales de detección
   - Cap 10 Checklist final aplicable (arquitectura + DevSecOps + quick check + comando único) — sección anteproyecto ✅
-  - Cap 11 Escalando local→AWS (mapeo + preservación REGs + costos + referencia docs/aws/)
+  - Cap 11 Escalando local→AWS (mapeo + preservación REGs + costos + referencia infraestructura/aws/)
   - Cap 12 Trazabilidad RF→ADR→REG→ISO→ATAM + modelo madurez 5 niveles + auto-evaluación
   - Apéndices A-E (referencia REGs/ADRs/evidencia/recursos externos/mapa archivos)
 
@@ -360,7 +360,7 @@ refrescar "Última actualización".
 - ✓ Los 11 antipatrones catalogados
 - ✓ Los 5 patrones explicados
 - ✓ Glosario con 25 términos críticos
-- ✓ Cap 11 referencia docs/aws/ sin duplicar contenido
+- ✓ Cap 11 referencia infraestructura/aws/ sin duplicar contenido
 - ✓ TOC navegable con anclas Markdown
 
 ---
@@ -438,13 +438,11 @@ que comparten el modelo canónico `report.schema.json`:
 
 ```
 estado-actual.md                                     este archivo (única fuente de verdad del avance)
-CLAUDE.md                                            configuración y convenciones del repositorio
-docs/context/ANTEPROYECTO_ELIAN_GIL_MGADS.pdf        anteproyecto (fuente normativa del alcance)
-docs/context/proyecto-overview.md                    objetivos, metodología, métricas, metas, mapeo ISO 25010
-docs/context/arquitectura-flujos.md                  arquitectura as-is y to-be, detalle técnico
-docs/context/microframework-spec.md                  micro-framework v1.0 (E1–E4, reglas, patrones)
-docs/context/convenios-y-reglas.md                   convenciones y estructura del repositorio
-docs/protocolo-evidencias.md                         protocolo para levantar entorno y registrar mediciones
+medicion/proyecto-overview.md                    objetivos, metodología, métricas, metas, mapeo ISO 25010
+casos-de-estudio/arquitectura-flujos.md                  arquitectura as-is y to-be, detalle técnico
+microframework/microframework-spec.md                  micro-framework v1.0 (E1–E4, reglas, patrones)
+microframework/convenciones/convenios-y-reglas.md                   convenciones y estructura del repositorio
+medicion/protocolo-evidencias.md                         protocolo para levantar entorno y registrar mediciones
 casos-de-estudio/{bot,iot}/ficha-tecnica.md          especificación de cada caso
 casos-de-estudio/{bot,iot}/as-is/notas-tecnicas.md   análisis as-is + ajustes pre-import
 casos-de-estudio/{bot,iot}/adr/ADR-*.md              decisiones arquitectónicas por caso
@@ -452,38 +450,37 @@ medicion/datasets/{caso}/input-set-*.json            datasets sintéticos inmuta
 medicion/run-logs/{caso}/*.csv                       registro de corridas
 medicion/analizar_runlogs.py                         análisis visual de run-logs → reporte HTML interactivo
 medicion/cr-logs/{caso}/*.csv                        registro de Change Requests
-docs/microframework-v1.0.md                          entregable R1 — documento consolidado del micro-framework
+microframework/microframework-v1.0.md                          entregable R1 — documento consolidado del micro-framework
 microframework/                                      reglas, patrones, antipatrones, checklists, plantillas, convenciones
 microframework/guia-observabilidad.md                Pilar 3 DevSecOps — contrato de logs estructurados por etapa
 microframework/contratos/                            JSON Schemas de contratos E/S por etapa (Bot e IoT)
 microframework/validacion/validar-flujos.mjs         Pilar 2 DevSecOps — script de validación estática REG-001…010
 microframework/adr/ADR-MF-*.md                       ADRs a nivel de framework (REG-001, REG-003, REG-006)
 microframework/patrones/                             5 patrones: retry, idempotencia, circuit-breaker, error-boundary, saga
-docs/context/fundamento-teorico.md                   Base conceptual: Clean Architecture, NIST SSDF, literatura LC/NC
-docs/atam/atam-utility-tree.md                    Utility Tree ATAM: 12 escenarios top-K con medidas de respuesta
-docs/protocolo-mttd.md                               Protocolo de medición MTTD — reproducible, meta < 60 segundos
-docs/context/justificacion-casos-de-estudio.md       Taxonomía LC/NC y representatividad formal de Bot e IoT
-docs/context/justificacion-rediseno-asis.md          Validez metodológica del rediseño intencional del as-is
-docs/atam/INDEX.md                                   Índice de todos los artefactos de Fase 7
-docs/atam/informe-atam-final.md                      Informe ATAM capítulo de tesis (R4) — §1–§10 completos, incl. §8 validación externa
-docs/atam/analisis-approaches.md                     12 approaches + clasificación SP/TP/R/NR × 12 escenarios
-docs/atam/matriz-scoring.md                          Scoring 1–5 as-is vs to-be por escenario
-docs/atam/registro-riesgos-tradeoffs.md              3 SP · 3 TP · 4 R · 5 NR formalizados
-docs/atam/instrumento-encuesta.md                    Encuesta de validación externa — 18 preguntas + mini-ATAM
-docs/atam/material-apoyo/resumen-proyecto.md         Fuente Markdown del PDF de 4 páginas para respondentes
-docs/atam/material-apoyo/guion-video.md              Guion del video de 5–7 minutos
+atam/atam-utility-tree.md                    Utility Tree ATAM: 12 escenarios top-K con medidas de respuesta
+medicion/protocolo-mttd.md                               Protocolo de medición MTTD — reproducible, meta < 60 segundos
+casos-de-estudio/justificacion-casos-de-estudio.md       Taxonomía LC/NC y representatividad formal de Bot e IoT
+casos-de-estudio/justificacion-rediseno-asis.md          Validez metodológica del rediseño intencional del as-is
+atam/INDEX.md                                   Índice de todos los artefactos de Fase 7
+atam/informe-atam-final.md                      Informe ATAM capítulo de tesis (R4) — §1–§10 completos, incl. §8 validación externa
+atam/analisis-approaches.md                     12 approaches + clasificación SP/TP/R/NR × 12 escenarios
+atam/matriz-scoring.md                          Scoring 1–5 as-is vs to-be por escenario
+atam/registro-riesgos-tradeoffs.md              3 SP · 3 TP · 4 R · 5 NR formalizados
+atam/instrumento-encuesta.md                    Encuesta de validación externa — 18 preguntas + mini-ATAM
+atam/material-apoyo/resumen-proyecto.md         Fuente Markdown del PDF de 4 páginas para respondentes
+atam/material-apoyo/guion-video.md              Guion del video de 5–7 minutos
 medicion/encuesta-validacion/respuestas-anonimizadas-2026-06-24.csv  Datos anonimizados de la encuesta (N=19, 17 válidos)
 medicion/encuesta-validacion/analisis-encuesta.py    Script reproducible del análisis de la encuesta (§8)
 microframework/adr/ADR-MF-004-atam-adaptado-individual.md  Adaptación metodológica ATAM individual
-docs/aws/INDEX.md                                   Índice de todos los artefactos de Fase 8
-docs/aws/arquitectura-aws.md                        Documento principal AWS: VPC, ECS, RDS, Redis, S3, riesgos ATAM
-docs/aws/seguridad-iam.md                           IAM, Secrets Manager, ACM, WAF, Security Groups (Diagramas 5 y 6)
-docs/aws/observabilidad-aws.md                      CloudWatch Logs, Alarms, Dashboard, Log Insights queries
-docs/aws/escalabilidad.md                           Queue Mode, auto-scaling workers, deploy strategies (Diagrama 4)
-docs/aws/estimacion-costos.md                       Costos 3 tiers, optimizaciones, comparativa (Diagrama 7)
-docs/aws/diagramas-aws.md                           Fuente canónica de los 7 diagramas Mermaid de Fase 8
+infraestructura/aws/INDEX.md                                   Índice de todos los artefactos de Fase 8
+infraestructura/aws/arquitectura-aws.md                        Documento principal AWS: VPC, ECS, RDS, Redis, S3, riesgos ATAM
+infraestructura/aws/seguridad-iam.md                           IAM, Secrets Manager, ACM, WAF, Security Groups (Diagramas 5 y 6)
+infraestructura/aws/observabilidad-aws.md                      CloudWatch Logs, Alarms, Dashboard, Log Insights queries
+infraestructura/aws/escalabilidad.md                           Queue Mode, auto-scaling workers, deploy strategies (Diagrama 4)
+infraestructura/aws/estimacion-costos.md                       Costos 3 tiers, optimizaciones, comparativa (Diagrama 7)
+infraestructura/aws/diagramas-aws.md                           Fuente canónica de los 7 diagramas Mermaid de Fase 8
 microframework/adr/ADR-MF-005-ecs-fargate-vs-ec2.md  Decisión ECS Fargate vs EC2/EKS
 microframework/adr/ADR-MF-006-n8n-queue-mode.md    Decisión Queue Mode con Redis BullMQ
 microframework/adr/ADR-MF-007-rds-multi-az.md      Decisión RDS PostgreSQL Multi-AZ en Producción
-docs/guia-buenas-practicas.md                       Entregable R5 — guía monolítica de 12 capítulos + 5 apéndices
+microframework/guia-buenas-practicas.md                       Entregable R5 — guía monolítica de 12 capítulos + 5 apéndices
 ```

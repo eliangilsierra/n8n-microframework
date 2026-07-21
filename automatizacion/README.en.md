@@ -46,7 +46,7 @@ manual step.
 ### 2. MANUAL STEP — Importing flows in the n8n UI (~15-20 min)
 
 This is the only step that cannot be automated. See the full instructions printed by
-`setup_env.py` or in `docs/protocolo-evidencias.md`.
+`setup_env.py` or in `medicion/protocolo-evidencias.md`.
 
 Import order:
 1. Bot to-be subflows: E2 → E3 → orchestrator

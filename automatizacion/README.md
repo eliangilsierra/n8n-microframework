@@ -46,7 +46,7 @@ Al terminar imprime las instrucciones para el único paso manual.
 ### 2. PASO MANUAL — Import de flujos en n8n UI (~15-20 min)
 
 Este es el único paso que no se puede automatizar. Ver instrucciones
-completas impresas por `setup_env.py` o en `docs/protocolo-evidencias.md`.
+completas impresas por `setup_env.py` o en `medicion/protocolo-evidencias.md`.
 
 Orden de import:
 1. Subflujos to-be Bot: E2 → E3 → orquestador

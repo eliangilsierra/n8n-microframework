@@ -34,4 +34,4 @@ execution instructions in
 ## Navigation
 
 - Parent: [`medicion/datasets/`](../README.en.md)
-- See also: [`docs/context/convenios-y-reglas.md`](../../../docs/context/convenios-y-reglas.en.md) §Input set taxonomy
+- See also: [`../../../microframework/convenciones/convenios-y-reglas.en.md`](../../../microframework/convenciones/convenios-y-reglas.en.md) §Input set taxonomy

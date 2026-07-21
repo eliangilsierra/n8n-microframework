@@ -125,7 +125,7 @@ docker compose logs n8n --tail=200 | grep '"etapa":"E3_adaptador"' | \
 
 **Positive:**
 - Per-segment latencies computable with `grep` + `jq` or the `analizar_runlogs.py` script.
-- MTTD (Mean Time To Detect) computable: the protocol in `docs/protocolo-mttd.md` uses only
+- MTTD (Mean Time To Detect) computable: the protocol in `medicion/protocolo-mttd.md` uses only
   `docker compose logs n8n` to diagnose failures.
 - The `run_id` field in every log allows correlating all stages of an execution without
   opening n8n's history.

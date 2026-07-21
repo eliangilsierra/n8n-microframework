@@ -11,11 +11,11 @@
 
 Esta carpeta contiene los datos crudos (anonimizados) de la Fase V — validación externa por
 panel de expertos — recolectados vía Google Forms entre el 17 y el 24 de junio de 2026 (ver
-[`docs/atam/protocolo-encuesta.md`](../../docs/atam/protocolo-encuesta.md) §4.4). Es la fuente
+[`atam/protocolo-encuesta.md`](../../atam/protocolo-encuesta.md) §4.4). Es la fuente
 de datos que alimenta la sección 8 de
-[`docs/atam/informe-atam-final.md`](../../docs/atam/informe-atam-final.md), ya completada
+[`atam/informe-atam-final.md`](../../atam/informe-atam-final.md), ya completada
 siguiendo el plan de análisis pre-registrado en
-[`docs/atam/plan-analisis-encuesta.md`](../../docs/atam/plan-analisis-encuesta.md).
+[`atam/plan-analisis-encuesta.md`](../../atam/plan-analisis-encuesta.md).
 
 ## Contenido de esta carpeta
 
@@ -68,7 +68,7 @@ hay una regresión y debe reportarse.
 | 56 | Sección E | E4 — comentario libre opcional |
 
 El mapeo completo de cada pregunta a su hipótesis de análisis está en
-[`docs/atam/instrumento-encuesta.md`](../../docs/atam/instrumento-encuesta.md) §Apéndice.
+[`atam/instrumento-encuesta.md`](../../atam/instrumento-encuesta.md) §Apéndice.
 
 ## Relación con la metodología
 
@@ -82,7 +82,7 @@ ya se ejecutó (`analisis-encuesta.py` / `.ipynb`) y está documentado en `infor
 ## Navegación
 
 - **Padre:** [medicion/](../README.md)
-- **Ver también:** [`docs/atam/protocolo-encuesta.md`](../../docs/atam/protocolo-encuesta.md) · [`docs/atam/instrumento-encuesta.md`](../../docs/atam/instrumento-encuesta.md) · [`docs/atam/plan-analisis-encuesta.md`](../../docs/atam/plan-analisis-encuesta.md)
+- **Ver también:** [`atam/protocolo-encuesta.md`](../../atam/protocolo-encuesta.md) · [`atam/instrumento-encuesta.md`](../../atam/instrumento-encuesta.md) · [`atam/plan-analisis-encuesta.md`](../../atam/plan-analisis-encuesta.md)
 
 ---
 *Última actualización: 2026-07-08 · Fuente de verdad de avance: [estado-actual.md](../../estado-actual.md)*

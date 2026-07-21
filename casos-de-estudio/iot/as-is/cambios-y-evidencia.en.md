@@ -164,4 +164,4 @@ REG-005 with empirical evidence.
 - `casos-de-estudio/iot/adr/` — ADRs 001..004
 - `casos-de-estudio/iot/trazabilidad/matriz-trazabilidad.md`
 - `medicion/run-logs/iot/run-log-iot-as-is.csv` — 2000 as-is runs
-- `docs/protocolo-evidencias.md` §5
+- `medicion/protocolo-evidencias.md` §5

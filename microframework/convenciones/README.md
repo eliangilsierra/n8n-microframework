@@ -13,7 +13,7 @@ Esta carpeta contiene una **referencia rápida** de todos los patrones de nombre
 el proyecto: archivos de flujos JSON, nodos dentro de los flujos, IDs de subflujos, ADRs,
 logs CSV, datasets sintéticos, mensajes de commit y formato de `run_id`. Es un resumen de
 consulta ágil; la fuente de verdad completa (con ejemplos extendidos y justificación) está
-en [`docs/context/convenios-y-reglas.md`](../../docs/context/convenios-y-reglas.md).
+en [`convenios-y-reglas.md`](convenios-y-reglas.md).
 
 ## Contenido de esta carpeta
 
@@ -32,4 +32,4 @@ que hace posible que el estudio sea replicable.
 ## Navegación
 
 - Padre: [`microframework/`](../README.md)
-- Ver también: [`docs/context/convenios-y-reglas.md`](../../docs/context/convenios-y-reglas.md) (fuente de verdad completa)
+- Ver también: [`convenios-y-reglas.md`](convenios-y-reglas.md) (fuente de verdad completa)

@@ -35,4 +35,4 @@ predicate over the flow's directed graph.
 ## Navigation
 
 - Parent: [`microframework/`](../README.en.md)
-- See also: [`microframework/checklists/`](../checklists/README.en.md) (manual verification) · [`microframework/validacion/`](../validacion/README.en.md) (automated verification) · [`docs/context/microframework-spec.en.md`](../../docs/context/microframework-spec.en.md) (formal specification)
+- See also: [`microframework/checklists/`](../checklists/README.en.md) (manual verification) · [`microframework/validacion/`](../validacion/README.en.md) (automated verification) · [`microframework/microframework-spec.en.md`](../microframework-spec.en.md) (formal specification)

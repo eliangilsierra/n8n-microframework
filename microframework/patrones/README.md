@@ -31,7 +31,7 @@ Solo `patron-retry.md` y `patron-idempotencia.md` respaldan reglas **obligatoria
 sistemas con requisitos más estrictos de no pérdida de datos o consistencia eventual, y no
 son parte del criterio binario del checklist de arquitectura. Todos aplican a las etapas
 E3/E4 del metamodelo (ver
-[`docs/context/microframework-spec.md`](../../docs/context/microframework-spec.md)).
+[`microframework/microframework-spec.md`](../microframework-spec.md)).
 
 ## Navegación
 

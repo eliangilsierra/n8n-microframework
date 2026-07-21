@@ -30,11 +30,11 @@ cuantitativa.
 Los dos casos fueron seleccionados para cubrir de forma **ortogonal** el espacio de
 problemas LC/NC en n8n (fuente de datos humana vs máquina, persistencia externa vs local,
 notificación inline vs por canal diferenciado) — ver
-[`docs/context/justificacion-casos-de-estudio.md`](../docs/context/justificacion-casos-de-estudio.md)
+[`casos-de-estudio/justificacion-casos-de-estudio.md`](justificacion-casos-de-estudio.md)
 para la taxonomía completa y la justificación de representatividad (Yin, 2018,
 replicación teórica). Ambos siguen la misma convención de nombres de archivo
 `{caso}-{estado}-{etapa}.json` documentada en
-[`docs/context/convenios-y-reglas.md`](../docs/context/convenios-y-reglas.md).
+[`../microframework/convenciones/convenios-y-reglas.md`](../microframework/convenciones/convenios-y-reglas.md).
 
 ## Navegación
 

@@ -33,7 +33,7 @@ of the quasi-experimental as-is vs to-be study. It violates 9 of the micro-frame
 mandatory rules (REG-001 through REG-009), documented node by node in `notas-tecnicas.md`
 and verified by the [static validator](../../../microframework/validacion/README.en.md). The
 import order in n8n and the modification rules are in
-[`docs/context/convenios-y-reglas.md`](../../../docs/context/convenios-y-reglas.en.md).
+[`../../../microframework/convenciones/convenios-y-reglas.en.md`](../../../microframework/convenciones/convenios-y-reglas.en.md).
 
 ## Navigation
 

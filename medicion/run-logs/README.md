@@ -23,12 +23,12 @@ latencia y tasa de fallos de la dimensión Operación del anteproyecto.
 ## Relación con la metodología
 
 Formato exacto de columnas: `run_id,case,version,input_set,start_ts,end_ts,status,error_type,notes,commit_hash`
-(ver [`docs/context/convenios-y-reglas.md`](../../docs/context/convenios-y-reglas.md)
+(ver [`../../microframework/convenciones/convenios-y-reglas.md`](../../microframework/convenciones/convenios-y-reglas.md)
 §Run Logs). **Regla de integridad crítica:** una vez que una corrida es registrada,
 **nunca se borra ni modifica** — si hay un error, se agrega una nueva fila correcta y se
 marca la incorrecta con `status: invalid`. Estos CSV son generados por
 `automatizacion/run_corridas.py` siguiendo
-[`docs/protocolo-evidencias.md`](../../docs/protocolo-evidencias.md) §4-5.
+[`medicion/protocolo-evidencias.md`](../protocolo-evidencias.md) §4-5.
 
 ## Navegación
 

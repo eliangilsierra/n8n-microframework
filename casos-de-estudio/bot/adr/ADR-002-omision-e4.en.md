@@ -11,7 +11,7 @@
 
 ## Context
 
-The micro-framework's metamodel (see `docs/context/microframework-spec.md`) defines four
+The micro-framework's metamodel (see `microframework/microframework-spec.md`) defines four
 logical stages: E1 validation, E2 domain, E3 adapters, E4 controlled output. The IoT case
 implements all of them as subflows invoked with `Execute Workflow`.
 

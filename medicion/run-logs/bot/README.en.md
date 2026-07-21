@@ -23,7 +23,7 @@ Contains the result CSVs for the Bot case's 4000 runs (2000 as-is + 2000 to-be, 
 
 Columns: `run_id,case,version,input_set,start_ts,end_ts,status,error_type,notes,commit_hash`.
 **Immutable once recorded** — see
-[`docs/context/convenios-y-reglas.md`](../../../docs/context/convenios-y-reglas.en.md).
+[`../../../microframework/convenciones/convenios-y-reglas.en.md`](../../../microframework/convenciones/convenios-y-reglas.en.md).
 Consolidated results in
 [`medicion/consolidado/comparacion-2026-05-05.md`](../../consolidado/comparacion-2026-05-05.en.md).
 

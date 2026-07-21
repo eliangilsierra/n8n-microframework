@@ -152,5 +152,5 @@ Donde:
 
 - `medicion/cr-logs/bot/cr-log-bot-as-is.csv` — log con las 3 filas pre-medidas.
 - `medicion/cr-logs/bot/cr-log-bot-to-be.csv` — reservado para FASE 6.
-- `docs/protocolo-evidencias.md` §6 — protocolo general de CR-logs.
+- `medicion/protocolo-evidencias.md` §6 — protocolo general de CR-logs.
 - ADR-001 Bot, ADR-002 Bot — decisiones arquitectónicas que condicionan los CRs.

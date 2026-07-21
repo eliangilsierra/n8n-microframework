@@ -133,4 +133,4 @@ See `bot/cr-design.md` §Schema — same format for both cases.
 - `medicion/cr-logs/iot/cr-log-iot-as-is.csv` — log with the 3 pre-measured rows.
 - `medicion/cr-logs/iot/cr-log-iot-to-be.csv` — reserved for PHASE 6.
 - IoT ADR-001, IoT ADR-002, IoT ADR-003, IoT ADR-004.
-- `docs/protocolo-evidencias.md` §6.
+- `medicion/protocolo-evidencias.md` §6.

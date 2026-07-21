@@ -33,7 +33,7 @@ del estudio cuasi-experimental as-is vs to-be. Viola 9 de las 10 reglas obligato
 micro-framework (REG-001 a REG-009), documentadas nodo por nodo en `notas-tecnicas.md` y
 verificadas por el [validador estático](../../../microframework/validacion/README.md). El
 orden de importación en n8n y las reglas de modificación están en
-[`docs/context/convenios-y-reglas.md`](../../../docs/context/convenios-y-reglas.md).
+[`../../../microframework/convenciones/convenios-y-reglas.md`](../../../microframework/convenciones/convenios-y-reglas.md).
 
 ## Navegación
 

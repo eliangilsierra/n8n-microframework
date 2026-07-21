@@ -3,7 +3,7 @@
 # MTTD (Mean Time To Detect) measurement result
 
 **Date:** 2026-05-05
-**Protocol:** `docs/protocolo-mttd.md` v1.0
+**Protocol:** `medicion/protocolo-mttd.md` v1.0
 **Scenarios:** BOT-Q5 (invalid token) + IOT-Q4 (network failure in E4)
 
 ---
@@ -131,7 +131,7 @@ outcome. The micro-framework guarantees data integrity even if the notification 
 
 ## References
 
-- MTTD protocol: `docs/protocolo-mttd.md`
-- ATAM scenarios: `docs/atam/atam-utility-tree.md` (BOT-Q5, IOT-Q4)
+- MTTD protocol: `medicion/protocolo-mttd.md`
+- ATAM scenarios: `atam/atam-utility-tree.md` (BOT-Q5, IOT-Q4)
 - REG-006 structured log: `microframework/reglas/reglas-obligatorias.md`
 - ADR-MF-003 structured log: `microframework/adr/ADR-MF-003-log-estructurado-reg006.md`

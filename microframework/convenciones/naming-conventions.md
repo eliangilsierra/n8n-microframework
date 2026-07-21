@@ -1,7 +1,7 @@
 # Convenciones de nombres
 
 Referencia rápida de los patrones de nombres usados en el proyecto.
-Fuente de verdad completa: `docs/context/convenios-y-reglas.md`.
+Fuente de verdad completa: `convenios-y-reglas.md`.
 
 ---
 

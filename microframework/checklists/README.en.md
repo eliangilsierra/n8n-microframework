@@ -27,7 +27,7 @@ over the exported JSON.
 Both checklists are the **manual** instance of the same criteria the static validator
 verifies automatically — the result of applying a checklist to a to-be flow is evidence
 that feeds each case study's traceability matrix ("Checklist coverage" column in
-[`docs/context/proyecto-overview.en.md`](../../docs/context/proyecto-overview.en.md)).
+[`../../medicion/proyecto-overview.en.md`](../../medicion/proyecto-overview.en.md)).
 Results applied to Bot and IoT are archived under
 `casos-de-estudio/{bot,iot}/{as-is,to-be}/checklist-*-resultado.md`.
 

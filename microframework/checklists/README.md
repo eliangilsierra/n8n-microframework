@@ -27,7 +27,7 @@ la misma verificación sobre el JSON exportado.
 Ambos checklists son la instancia **manual** del mismo criterio que verifica el validador
 estático de forma automática — el resultado de aplicar un checklist a un flujo to-be es
 evidencia que alimenta la matriz de trazabilidad de cada caso de estudio (columna
-"Cobertura checklist" en [`docs/context/proyecto-overview.md`](../../docs/context/proyecto-overview.md)).
+"Cobertura checklist" en [`../../medicion/proyecto-overview.md`](../../medicion/proyecto-overview.md)).
 Los resultados aplicados a Bot e IoT se archivan en
 `casos-de-estudio/{bot,iot}/{as-is,to-be}/checklist-*-resultado.md`.
 

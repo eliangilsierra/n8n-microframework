@@ -33,7 +33,7 @@ inconsistentes entre nodos (documentado en `notas-tecnicas.md`) y validación in
 del campo `co2`. Verificado por el
 [validador estático](../../../microframework/validacion/README.md). Las reglas de
 modificación de flujos están en
-[`docs/context/convenios-y-reglas.md`](../../../docs/context/convenios-y-reglas.md).
+[`../../../microframework/convenciones/convenios-y-reglas.md`](../../../microframework/convenciones/convenios-y-reglas.md).
 
 ## Navegación
 

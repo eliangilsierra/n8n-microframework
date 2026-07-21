@@ -192,4 +192,4 @@ inspection).
 - `casos-de-estudio/bot/adr/` — ADRs 001..004
 - `casos-de-estudio/bot/trazabilidad/matriz-trazabilidad.md`
 - `medicion/run-logs/bot/run-log-bot-as-is.csv` — 2000 as-is runs
-- `docs/protocolo-evidencias.md` §5 — run-log schema
+- `medicion/protocolo-evidencias.md` §5 — run-log schema

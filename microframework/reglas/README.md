@@ -35,4 +35,4 @@ predicado evaluable sobre el grafo dirigido del flujo.
 ## Navegación
 
 - Padre: [`microframework/`](../README.md)
-- Ver también: [`microframework/checklists/`](../checklists/README.md) (verificación manual) · [`microframework/validacion/`](../validacion/README.md) (verificación automática) · [`docs/context/microframework-spec.md`](../../docs/context/microframework-spec.md) (especificación formal)
+- Ver también: [`microframework/checklists/`](../checklists/README.md) (verificación manual) · [`microframework/validacion/`](../validacion/README.md) (verificación automática) · [`microframework/microframework-spec.md`](../microframework-spec.md) (especificación formal)

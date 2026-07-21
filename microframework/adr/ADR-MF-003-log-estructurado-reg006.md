@@ -123,7 +123,7 @@ docker compose logs n8n --tail=200 | grep '"etapa":"E3_adaptador"' | \
 
 **Positivas:**
 - Latencias por tramo calculables con `grep` + `jq` o con el script `analizar_runlogs.py`.
-- MTTD (Mean Time To Detect) calculable: el protocolo en `docs/protocolo-mttd.md`
+- MTTD (Mean Time To Detect) calculable: el protocolo en `medicion/protocolo-mttd.md`
   usa únicamente `docker compose logs n8n` para diagnosticar fallos.
 - El campo `run_id` en cada log permite correlacionar todas las etapas de una ejecución
   sin abrir el historial de n8n.

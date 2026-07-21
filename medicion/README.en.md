@@ -30,13 +30,13 @@ evaluation (Phase 7) and for each case's traceability matrix.
 
 This folder is the source of the quantitative evidence the thesis proposal requires to
 compare as-is vs to-be (Delivery, Operation, Security, and Traceability metrics — see
-[`docs/context/proyecto-overview.md`](../docs/context/proyecto-overview.en.md)). The data
+[`proyecto-overview.en.md`](proyecto-overview.en.md)). The data
 here is **immutable once recorded** (see integrity rules in
-[`docs/context/convenios-y-reglas.md`](../docs/context/convenios-y-reglas.en.md)) and is
+[`../microframework/convenciones/convenios-y-reglas.en.md`](../microframework/convenciones/convenios-y-reglas.en.md)) and is
 generated/queried following the operational protocol in
-[`docs/protocolo-evidencias.md`](../docs/protocolo-evidencias.en.md).
+[`medicion/protocolo-evidencias.md`](protocolo-evidencias.en.md).
 
 ## Navigation
 
 - Parent: [Repository (root)](../README.en.md)
-- See also: [`automatizacion/README.md`](../automatizacion/README.en.md) (scripts that generate this data) · [`docs/atam/informe-atam-final.md`](../docs/atam/informe-atam-final.md) (how this evidence is used in ATAM)
+- See also: [`automatizacion/README.md`](../automatizacion/README.en.md) (scripts that generate this data) · [`atam/informe-atam-final.md`](../atam/informe-atam-final.md) (how this evidence is used in ATAM)

@@ -53,7 +53,7 @@ para cada hallazgo.
 ### Rol en la evidencia académica
 
 Los reportes generados constituyen **evidencia documental** del tipo (i) en la
-triangulación metodológica del ATAM (`docs/atam/metodologia-atam-adaptada.md`). Cada
+triangulación metodológica del ATAM (`atam/metodologia-atam-adaptada.md`). Cada
 reporte JSON canónico (`reportes/validacion-YYYY-MM-DD.json`) es un artefacto auditable y
 diffeable que demuestra el nivel de cumplimiento de los flujos to-be en un momento dado.
 
@@ -490,10 +490,10 @@ manualmente.
 | Mapeo regla → ISO/ATAM/ADR | [`mapeo-calidad.json`](mapeo-calidad.json) |
 | Esquema canónico del reporte | [`report.schema.json`](report.schema.json) |
 | Decisión Lite + Pro | [`ADR-MF-008-validador-dos-ediciones.md`](../adr/ADR-MF-008-validador-dos-ediciones.md) |
-| Pilar 2 DevSecOps | [`docs/context/microframework-spec.md §DevSecOps`](../../docs/context/microframework-spec.md) |
-| Rol en evidencia ATAM | [`docs/atam/metodologia-atam-adaptada.md`](../../docs/atam/metodologia-atam-adaptada.md) |
-| Entregable R1 del anteproyecto | [`docs/microframework-v1.0.md`](../../docs/microframework-v1.0.md) |
-| Guía de buenas prácticas (Cap. 7.4) | [`docs/guia-buenas-practicas.md`](../../docs/guia-buenas-practicas.md) |
+| Pilar 2 DevSecOps | [`microframework/microframework-spec.md §DevSecOps`](../microframework-spec.md) |
+| Rol en evidencia ATAM | [`atam/metodologia-atam-adaptada.md`](../../atam/metodologia-atam-adaptada.md) |
+| Entregable R1 del anteproyecto | [`microframework/microframework-v1.0.md`](../microframework-v1.0.md) |
+| Guía de buenas prácticas (Cap. 7.4) | [`microframework/guia-buenas-practicas.md`](../guia-buenas-practicas.md) |
 | Spec independiente del análisis estático | [`microframework/validacion-estatica-flujos.md`](../validacion-estatica-flujos.md) |
 
 ### Por qué Node.js sigue siendo la implementación elegida (heredado de v1)
@@ -605,4 +605,4 @@ para imprimir. El reporte está versionado en
 | Ver el catálogo de reglas | [`microframework/reglas/reglas-obligatorias.md`](../reglas/reglas-obligatorias.md) + [`microframework/antipatrones.md`](../antipatrones.md) |
 | Ver el mapeo regla → calidad | [`mapeo-calidad.json`](mapeo-calidad.json) |
 | Ver el esquema canónico del reporte | [`report.schema.json`](report.schema.json) |
-| Ver la guía de adopción | [`docs/guia-buenas-practicas.md §7.4`](../../docs/guia-buenas-practicas.md) |
+| Ver la guía de adopción | [`microframework/guia-buenas-practicas.md §7.4`](../guia-buenas-practicas.md) |

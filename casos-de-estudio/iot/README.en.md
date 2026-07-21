@@ -14,7 +14,7 @@ pipeline that receives temperature, humidity, and CO₂ readings via webhook, va
 physical ranges, detects threshold-based anomalies, persists with idempotency control, and
 notifies through a channel differentiated by severity. It is the second of the two cases
 that validate the micro-framework (see
-[`docs/context/justificacion-casos-de-estudio.md`](../../docs/context/justificacion-casos-de-estudio.en.md)
+[`casos-de-estudio/justificacion-casos-de-estudio.md`](../justificacion-casos-de-estudio.en.md)
 for the representativeness justification).
 
 ## Contents of this folder

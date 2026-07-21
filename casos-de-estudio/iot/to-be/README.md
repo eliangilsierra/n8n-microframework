@@ -32,7 +32,7 @@ de replay de lecturas perdidas.
 Este to-be implementa el metamodelo E1–E4 completo como subflujos separados (a diferencia
 del Bot, que omite E4 — ver [`ADR-001 IoT`](../adr/ADR-001-separacion-responsabilidades-pipeline.md)).
 Antes de importar en n8n, seguir el orden documentado en
-[`docs/context/convenios-y-reglas.md`](../../../docs/context/convenios-y-reglas.md):
+[`../../../microframework/convenciones/convenios-y-reglas.md`](../../../microframework/convenciones/convenios-y-reglas.md):
 E1 → E2 → E3 → E4 → error-handler → orquestador.
 
 ## Navegación

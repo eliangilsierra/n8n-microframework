@@ -31,4 +31,4 @@ by primogeniture convention).
 ## Navigation
 
 - Parent: [`casos-de-estudio/`](../../README.en.md)
-- See also: [`casos-de-estudio/bot/adr/`](../../bot/adr/README.en.md) · [`casos-de-estudio/iot/adr/`](../../iot/adr/README.en.md) · [`docs/protocolo-evidencias.md`](../../../docs/protocolo-evidencias.en.md)
+- See also: [`casos-de-estudio/bot/adr/`](../../bot/adr/README.en.md) · [`casos-de-estudio/iot/adr/`](../../iot/adr/README.en.md) · [`medicion/protocolo-evidencias.md`](../../../medicion/protocolo-evidencias.en.md)

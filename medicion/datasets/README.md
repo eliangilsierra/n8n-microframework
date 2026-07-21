@@ -30,12 +30,12 @@ estadístico principal).
 Los sets A–E son estáticos (payload único repetido N veces); F, G, I, J, K son dinámicos
 (200 payloads únicos por seed). Cada set estresa reglas REG-* específicas del
 micro-framework — ver el detalle completo en
-[`docs/context/proyecto-overview.md`](../../docs/context/proyecto-overview.md) §Input
+[`../proyecto-overview.md`](../proyecto-overview.md) §Input
 Sets sintéticos y en
 [`casos-de-estudio/bot/adr/ADR-004`](../../casos-de-estudio/bot/adr/ADR-004-diseno-experimental-input-sets.md)
 (diseño experimental, aplica a ambos casos). **Estos archivos son inmutables durante la
 fase de medición** — cualquier cambio requiere un ADR (ver
-[`docs/context/convenios-y-reglas.md`](../../docs/context/convenios-y-reglas.md)).
+[`../../microframework/convenciones/convenios-y-reglas.md`](../../microframework/convenciones/convenios-y-reglas.md)).
 
 ## Navegación
 

@@ -11,7 +11,7 @@
 
 ## Context
 
-The thesis proposal (`docs/context/proyecto-overview.md` §Input Sets) defined three Input
+The thesis proposal (`../../../medicion/proyecto-overview.en.md` §Input Sets) defined three Input
 Sets per case:
 
 - **A:** normal flow (happy path)
@@ -142,4 +142,4 @@ expansion) and is referenced from the iot traceability matrix.
 - Cross-references:
   - `medicion/datasets/generar_datasets.py` (deterministic generator)
   - `medicion/datasets/seeds.yaml` (versioned seeds, master_seed=20260421)
-  - `docs/context/proyecto-overview.md` §Input Sets (must be updated with this addendum)
+  - `../../../medicion/proyecto-overview.en.md` §Input Sets (must be updated with this addendum)

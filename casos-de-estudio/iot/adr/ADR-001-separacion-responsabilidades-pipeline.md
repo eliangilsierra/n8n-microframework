@@ -82,7 +82,7 @@ Esta separación establece que:
   ~5–15ms cada una. Latencia total estimada en 20–60ms adicionales respecto al as-is.
   Este trade-off es aceptable para el objetivo de mantenibilidad del estudio.
 - Los orquestadores deben actualizarse con los IDs reales de los subflujos post-import.
-  Ver procedimiento en `docs/protocolo-evidencias.md`.
+  Ver procedimiento en `medicion/protocolo-evidencias.md`.
 - Cambiar la base de datos de destino requiere modificar E3 y potencialmente E1 si el
   esquema de idempotencia cambia. Esto es intencional: el cambio de proveedor es una
   decisión arquitectónica que merece su propio ADR.

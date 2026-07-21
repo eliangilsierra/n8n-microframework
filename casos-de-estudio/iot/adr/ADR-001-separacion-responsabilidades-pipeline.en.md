@@ -88,7 +88,7 @@ This separation establishes that:
   Estimated total latency of 20–60ms additional compared to the as-is. This trade-off is
   acceptable for the study's maintainability goal.
 - Orchestrators must be updated with the subflows' real IDs post-import. See the procedure
-  in `docs/protocolo-evidencias.md`.
+  in `medicion/protocolo-evidencias.md`.
 - Changing the destination database requires modifying E3 and potentially E1 if the
   idempotency schema changes. This is intentional: the provider change is an architectural
   decision deserving its own ADR.

@@ -139,7 +139,7 @@ The following evidence-protocol metrics are computed from the fields above:
 | Retry efficiency | sum(`reintentos`) / count(E3) |
 | `run_id` coverage | count(events with `run_id`) / count(total) — must be 100% (REG-002) |
 
-See `docs/context/proyecto-overview.md`, section "Measurement dimensions", for the
+See `../medicion/proyecto-overview.en.md`, section "Measurement dimensions", for the
 thresholds and goals from the thesis proposal.
 
 ---

@@ -33,7 +33,7 @@ inconsistent across nodes (documented in `notas-tecnicas.md`) and incomplete val
 the `co2` field. Verified by the
 [static validator](../../../microframework/validacion/README.en.md). The flow
 modification rules are in
-[`docs/context/convenios-y-reglas.md`](../../../docs/context/convenios-y-reglas.en.md).
+[`../../../microframework/convenciones/convenios-y-reglas.en.md`](../../../microframework/convenciones/convenios-y-reglas.en.md).
 
 ## Navigation
 

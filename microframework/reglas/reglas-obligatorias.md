@@ -50,7 +50,7 @@ presente con el mismo valor en todos.
 **Nota sobre as-is:** Este formato aplica al to-be. Los run-logs del as-is usan un
 formato simplificado `{caso}-{version}-{set}-{index}-{hash}` generado por el harness
 de medición (`automatizacion/run_corridas.py`) porque los flujos as-is violan REG-002
-por diseño (no propagan `run_id` internamente). Ver `docs/protocolo-evidencias.md` §5.
+por diseño (no propagan `run_id` internamente). Ver `medicion/protocolo-evidencias.md` §5.
 
 ---
 
@@ -172,5 +172,5 @@ mapeo alimenta la evaluación ATAM (FASE 7) y la matriz de trazabilidad de cada 
 | REG-009 | Adecuación funcional | Corrección | Status codes correctos cumplen el contrato HTTP con el cliente |
 | REG-010 | Mantenibilidad | Analizabilidad | ADR documenta decisiones para auditoría y ATAM |
 
-Referencia cruzada: ver `docs/context/proyecto-overview.md` sección "Mapeo a ISO/IEC 25010"
+Referencia cruzada: ver `../../medicion/proyecto-overview.md` sección "Mapeo a ISO/IEC 25010"
 para la vinculación con las métricas del anteproyecto.

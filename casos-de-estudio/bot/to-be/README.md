@@ -31,7 +31,7 @@ en el orquestador (decisión documentada en
 [`ADR-002`](../adr/ADR-002-omision-e4.md)), mientras E2 (dominio) y E3 (adaptador) son
 subflujos separados invocados con `Execute Workflow`. Antes de importar en n8n, seguir el
 orden de importación documentado en
-[`docs/context/convenios-y-reglas.md`](../../../docs/context/convenios-y-reglas.md):
+[`../../../microframework/convenciones/convenios-y-reglas.md`](../../../microframework/convenciones/convenios-y-reglas.md):
 E2 → E3 → orquestador.
 
 ## Navegación

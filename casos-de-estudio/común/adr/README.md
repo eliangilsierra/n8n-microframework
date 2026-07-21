@@ -31,4 +31,4 @@ en `bot/adr/` por convención de primogenitura).
 ## Navegación
 
 - Padre: [`casos-de-estudio/`](../../README.md)
-- Ver también: [`casos-de-estudio/bot/adr/`](../../bot/adr/README.md) · [`casos-de-estudio/iot/adr/`](../../iot/adr/README.md) · [`docs/protocolo-evidencias.md`](../../../docs/protocolo-evidencias.md)
+- Ver también: [`casos-de-estudio/bot/adr/`](../../bot/adr/README.md) · [`casos-de-estudio/iot/adr/`](../../iot/adr/README.md) · [`medicion/protocolo-evidencias.md`](../../../medicion/protocolo-evidencias.md)

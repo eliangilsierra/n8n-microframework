@@ -2,7 +2,7 @@
 
 Codificación abierta (Strauss & Corbin, 1990) de las 17 respuestas C1 y las 15 respuestas E4
 no vacías/no triviales ("Ninguna"/"no" se excluyen del conteo temático pero cuentan para N).
-Contrastada con `docs/atam/registro-riesgos-tradeoffs.md`.
+Contrastada con `atam/registro-riesgos-tradeoffs.md`.
 
 ## Categorías alineadas con hallazgos del autor
 

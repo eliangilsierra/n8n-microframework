@@ -23,7 +23,7 @@ Contains the result CSVs for the IoT case's 4000 runs (2000 as-is + 2000 to-be, 
 
 Columns: `run_id,case,version,input_set,start_ts,end_ts,status,error_type,notes,commit_hash`.
 **Immutable once recorded** — see
-[`docs/context/convenios-y-reglas.md`](../../../docs/context/convenios-y-reglas.en.md).
+[`../../../microframework/convenciones/convenios-y-reglas.en.md`](../../../microframework/convenciones/convenios-y-reglas.en.md).
 The increase in to-be failures (0.2% → 0.55%) is expected: the as-is didn't validate
 (antipattern), the to-be correctly rejects invalid inputs — see
 [`medicion/consolidado/metricas-derivadas.md`](../../consolidado/metricas-derivadas.en.md).

@@ -13,7 +13,7 @@ Este caso de estudio representa el patrón **webhook-reactivo**: un chatbot de s
 recibe mensajes de usuarios por HTTP, valida autenticación, clasifica el mensaje por
 categoría y prioridad, persiste un ticket en un servicio externo y responde al cliente.
 Es uno de los dos casos que validan el micro-framework mediante comparación as-is vs to-be
-(ver [`docs/context/justificacion-casos-de-estudio.md`](../../docs/context/justificacion-casos-de-estudio.md)
+(ver [`casos-de-estudio/justificacion-casos-de-estudio.md`](../justificacion-casos-de-estudio.md)
 para la justificación de por qué este patrón es representativo).
 
 ## Contenido de esta carpeta

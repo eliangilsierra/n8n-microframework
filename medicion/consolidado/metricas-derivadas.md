@@ -2,7 +2,7 @@
 
 **Fecha:** 2026-05-05
 **Fuentes:** run-logs, cr-logs, JSON de flujos, validar-flujos.mjs
-**Referencia:** `docs/context/proyecto-overview.md` §Métricas de evaluación
+**Referencia:** `../proyecto-overview.md` §Métricas de evaluación
 
 ---
 

@@ -25,7 +25,7 @@ micro-framework.
 ## Relación con la metodología
 
 Formato de columnas: `cr_id,cr_type,case,version,start_ts,end_ts,nodes_touched,deps_touched,attempts,commit_hash,notes`
-(ver [`docs/context/convenios-y-reglas.md`](../../docs/context/convenios-y-reglas.md)
+(ver [`../../microframework/convenciones/convenios-y-reglas.md`](../../microframework/convenciones/convenios-y-reglas.md)
 §CR Logs). El diseño de cada CR está en `cr-design.md` de cada caso
 ([`bot/cr-design.md`](../../casos-de-estudio/bot/cr-design.md),
 [`iot/cr-design.md`](../../casos-de-estudio/iot/cr-design.md)). Mismas reglas de

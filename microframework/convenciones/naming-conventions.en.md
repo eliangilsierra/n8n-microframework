@@ -3,7 +3,7 @@
 # Naming conventions
 
 Quick reference for the naming patterns used in the project.
-Full source of truth: `docs/context/convenios-y-reglas.md`.
+Full source of truth: `convenios-y-reglas.en.md`.
 
 ---
 

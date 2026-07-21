@@ -23,7 +23,7 @@ to-be, 10 sets × 200 repeticiones cada uno).
 
 Columnas: `run_id,case,version,input_set,start_ts,end_ts,status,error_type,notes,commit_hash`.
 **Inmutable una vez registrado** — ver
-[`docs/context/convenios-y-reglas.md`](../../../docs/context/convenios-y-reglas.md).
+[`../../../microframework/convenciones/convenios-y-reglas.md`](../../../microframework/convenciones/convenios-y-reglas.md).
 Resultados consolidados en
 [`medicion/consolidado/comparacion-2026-05-05.md`](../../consolidado/comparacion-2026-05-05.md).
 

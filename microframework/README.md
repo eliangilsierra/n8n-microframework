@@ -50,7 +50,7 @@ automáticamente. Cada decisión de diseño relevante queda registrada como ADR 
 ## Navegación
 
 - Padre: [Repositorio (raíz)](../README.md)
-- Ver también: [`casos-de-estudio/`](../casos-de-estudio/README.md) (aplicación concreta del micro-framework) · [`docs/context/microframework-spec.md`](../docs/context/microframework-spec.md) (especificación formal v1.0)
+- Ver también: [`casos-de-estudio/`](../casos-de-estudio/README.md) (aplicación concreta del micro-framework) · [`microframework/microframework-spec.md`](microframework-spec.md) (especificación formal v1.0)
 
 ---
 

@@ -31,7 +31,7 @@ separate subflows, plus an error-handling flow with lost-reading replay capabili
 This to-be implements the complete E1–E4 metamodel as separate subflows (unlike the Bot,
 which omits E4 — see [`IoT ADR-001`](../adr/ADR-001-separacion-responsabilidades-pipeline.en.md)).
 Before importing into n8n, follow the order documented in
-[`docs/context/convenios-y-reglas.md`](../../../docs/context/convenios-y-reglas.en.md):
+[`../../../microframework/convenciones/convenios-y-reglas.en.md`](../../../microframework/convenciones/convenios-y-reglas.en.md):
 E1 → E2 → E3 → E4 → error-handler → orchestrator.
 
 ## Navigation

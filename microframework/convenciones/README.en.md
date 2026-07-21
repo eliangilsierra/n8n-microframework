@@ -13,7 +13,7 @@ This folder contains a **quick reference** for every naming pattern used in the 
 JSON flow files, nodes inside flows, subflow IDs, ADRs, CSV logs, synthetic datasets, commit
 messages, and the `run_id` format. It is a fast-lookup summary; the complete source of
 truth (with extended examples and rationale) is in
-[`docs/context/convenios-y-reglas.en.md`](../../docs/context/convenios-y-reglas.en.md).
+[`convenios-y-reglas.en.md`](convenios-y-reglas.en.md).
 
 ## Contents of this folder
 
@@ -31,4 +31,4 @@ artifact lives without exploring the entire repository. Naming consistency acros
 ## Navigation
 
 - Parent: [`microframework/`](../README.en.md)
-- See also: [`docs/context/convenios-y-reglas.en.md`](../../docs/context/convenios-y-reglas.en.md) (complete source of truth)
+- See also: [`convenios-y-reglas.en.md`](convenios-y-reglas.en.md) (complete source of truth)

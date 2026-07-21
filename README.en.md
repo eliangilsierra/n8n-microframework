@@ -36,11 +36,11 @@ documented here.
   at the top of every document links to its language counterpart.
 - The **folder structure mirrors the methodology**: `casos-de-estudio/` separates as-is
   from to-be, `microframework/` holds the rules/patterns/ADRs/validator,
-  `docs/atam/` documents the ATAM evaluation, `docs/aws/` the architecture design.
+  `atam/` documents the ATAM evaluation, `infraestructura/aws/` the architecture design.
 - Every folder and subfolder has its own `README.md` explaining what it is, why it exists,
   and how it relates to the methodology, with navigation links (parent folder, next
   section, "see also").
-- For a detailed map of the documentation under `docs/`, see [`docs/INDEX.en.md`](docs/INDEX.en.md).
+- For the ATAM evaluation detail see [`atam/INDEX.en.md`](atam/INDEX.en.md); for the AWS architecture design see [`infraestructura/aws/INDEX.en.md`](infraestructura/aws/INDEX.en.md).
 
 ---
 
@@ -50,11 +50,10 @@ documented here.
 |---|---|---|
 | [`microframework/`](microframework/README.en.md) | The micro-framework itself: mandatory/recommended rules, patterns, ADRs, checklists, templates, and the static validator (Lite + Pro) | [→](microframework/README.en.md) |
 | [`casos-de-estudio/`](casos-de-estudio/README.en.md) | The two validation cases (`bot`, `iot`): as-is/to-be flows, per-case ADRs, traceability matrix | [→](casos-de-estudio/README.en.md) |
-| [`docs/`](docs/README.en.md) | Methodological documentation: theoretical context, ATAM evaluation, AWS design, operational protocols | [→](docs/README.en.md) |
-| [`medicion/`](medicion/README.en.md) | Synthetic datasets, run-logs, cr-logs, and consolidated as-is vs to-be reports | [→](medicion/README.en.md) |
+| [`atam/`](atam/INDEX.en.md) | ATAM evaluation: utility tree, approaches, scoring matrix, risk/tradeoff register, survey instrument, support material, and final report | [→](atam/INDEX.en.md) |
+| [`medicion/`](medicion/README.en.md) | Synthetic datasets, run-logs, cr-logs, consolidated as-is vs to-be reports, and operational protocols (evidence, MTTD) | [→](medicion/README.en.md) |
 | [`automatizacion/`](automatizacion/README.en.md) | Python scripts that orchestrate the environment, measurement runs, and comparison reports | [→](automatizacion/README.en.md) |
 | [`infraestructura/`](infraestructura/README.en.md) | Docker Compose (n8n + PostgreSQL + mocks) and environment variable template | [→](infraestructura/README.en.md) |
-| [`final/`](final/README.en.md) | Archival snapshot of deliverables already submitted per phase (PHASE0–PHASE9) | [→](final/README.en.md) |
 
 ---
 
@@ -62,15 +61,15 @@ documented here.
 
 - **As-is vs to-be:** each case study has an as-is version (baseline, with intentional
   antipatterns) and a to-be version (micro-framework applied), compared under the same
-  execution conditions. See [`docs/context/arquitectura-flujos.en.md`](docs/context/arquitectura-flujos.en.md).
+  execution conditions. See [`casos-de-estudio/arquitectura-flujos.en.md`](casos-de-estudio/arquitectura-flujos.en.md).
 - **E1–E4 stages:** every to-be flow is organized into four logical stages — **E1 Input
   validation**, **E2 Domain logic**, **E3 Integration adapters**, **E4 Controlled output** —
   each one a subflow invoked via `Execute Workflow`. See
-  [`docs/context/microframework-spec.en.md`](docs/context/microframework-spec.en.md).
+  [`microframework/microframework-spec.en.md`](microframework/microframework-spec.en.md).
 - **ADRs (Architecture Decision Records):** every relevant design decision is documented
   using the template at [`microframework/plantillas/ADR-plantilla.en.md`](microframework/plantillas/ADR-plantilla.en.md).
 - **ATAM:** the evaluation of quality attributes (maintainability, security, reliability,
-  traceability) follows an adapted ATAM methodology. See [`docs/atam/INDEX.en.md`](docs/atam/INDEX.en.md).
+  traceability) follows an adapted ATAM methodology. See [`atam/INDEX.en.md`](atam/INDEX.en.md).
 - **Mandatory (REG-001..010) and recommended (REC-001..006) rules:** the full
   micro-framework rule catalog is in [`microframework/reglas/`](microframework/reglas/README.en.md).
 
@@ -110,7 +109,7 @@ schema. See [`microframework/validacion/README.en.md`](microframework/validacion
 1. Bring up the local environment (Docker: n8n + PostgreSQL + mocks) — see
    [`infraestructura/README.en.md`](infraestructura/README.en.md) and
    [`automatizacion/README.en.md`](automatizacion/README.en.md).
-2. Follow the full operational protocol in [`docs/protocolo-evidencias.en.md`](docs/protocolo-evidencias.en.md)
+2. Follow the full operational protocol in [`medicion/protocolo-evidencias.en.md`](medicion/protocolo-evidencias.en.md)
    (bootstrap, flow import, measurement runs, metric extraction).
 3. Run the static validator against the to-be flows — see
    [`microframework/validacion/README.en.md`](microframework/validacion/README.en.md).
@@ -133,5 +132,4 @@ snapshot is available at [`estado-actual.en.md`](estado-actual.en.md).
 **Institution:** Universidad Autónoma de Bucaramanga (UNAB) — Master's in Software
 Management, Application and Development (MGADS), 2026.
 
-The full thesis proposal (normative source of scope) is at
-[`docs/context/ANTEPROYECTO_ELIAN_GIL_MGADS.pdf`](docs/context/ANTEPROYECTO_ELIAN_GIL_MGADS.pdf).
+The full thesis proposal is the normative source of the project's scope (author's document, not versioned in the public repository).

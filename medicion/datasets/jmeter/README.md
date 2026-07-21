@@ -34,4 +34,4 @@ instrucciones de ejecución en
 ## Navegación
 
 - Padre: [`medicion/datasets/`](../README.md)
-- Ver también: [`docs/context/convenios-y-reglas.md`](../../../docs/context/convenios-y-reglas.md) §Taxonomía de input sets
+- Ver también: [`../../../microframework/convenciones/convenios-y-reglas.md`](../../../microframework/convenciones/convenios-y-reglas.md) §Taxonomía de input sets

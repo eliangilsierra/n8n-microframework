@@ -71,8 +71,8 @@ Esta decisión es **metodológica del proyecto**, no normativa para los flujos n
 - Establece el procedimiento que produce R4 (entregable "Protocolo e informe ATAM" del anteproyecto).
 - Documenta para el jurado por qué la evaluación no sigue la coreografía presencial de ATAM-original.
 - Referencia cruzada operativa:
-  - `docs/atam/metodologia-atam-adaptada.md` — desarrollo completo de la adaptación
-  - `docs/atam/informe-atam-final.md` — aplicación de la metodología
-  - `docs/atam/protocolo-encuesta.md` — procedimiento del componente de validación externa
-  - `docs/atam/atam-utility-tree.md` — utility tree preservado del ATAM-original
+  - `atam/metodologia-atam-adaptada.md` — desarrollo completo de la adaptación
+  - `atam/informe-atam-final.md` — aplicación de la metodología
+  - `atam/protocolo-encuesta.md` — procedimiento del componente de validación externa
+  - `atam/atam-utility-tree.md` — utility tree preservado del ATAM-original
   - `medicion/consolidado/atam-evidencia.md` — matriz de evidencia cuantitativa

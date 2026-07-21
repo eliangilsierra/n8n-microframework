@@ -44,7 +44,7 @@ El anteproyecto define tres pilares DevSecOps:
 
 ### Rol en la evidencia académica
 
-Los reportes generados por el validador constituyen **evidencia documental** del tipo (i) en la triangulación metodológica del ATAM (ver `docs/atam/metodologia-atam-adaptada.md`). Cada reporte con timestamp en `microframework/validacion/reportes/` es un artefacto auditable que demuestra el nivel de cumplimiento de los flujos to-be en un momento dado.
+Los reportes generados por el validador constituyen **evidencia documental** del tipo (i) en la triangulación metodológica del ATAM (ver `atam/metodologia-atam-adaptada.md`). Cada reporte con timestamp en `microframework/validacion/reportes/` es un artefacto auditable que demuestra el nivel de cumplimiento de los flujos to-be en un momento dado.
 
 ---
 
@@ -473,8 +473,8 @@ El reporte de 2026-05-06 representa el estado final del caso IoT: 6 flujos, 100%
 |---|---|
 | Especificación de las 10 reglas | [`microframework/reglas/reglas-obligatorias.md`](../reglas/reglas-obligatorias.md) |
 | Mapeo REG → ISO/IEC 25010 | [`microframework/reglas/reglas-obligatorias.md §Mapeo`](../reglas/reglas-obligatorias.md) |
-| Pilar 2 DevSecOps | [`docs/context/microframework-spec.md §DevSecOps`](../../docs/context/microframework-spec.md) |
-| Rol en evidencia ATAM | [`docs/atam/metodologia-atam-adaptada.md`](../../docs/atam/metodologia-atam-adaptada.md) |
-| Entregable R1 del anteproyecto | [`docs/microframework-v1.0.md`](../../docs/microframework-v1.0.md) |
+| Pilar 2 DevSecOps | [`microframework/microframework-spec.md §DevSecOps`](../../docs/context/microframework-spec.md) |
+| Rol en evidencia ATAM | [`atam/metodologia-atam-adaptada.md`](../../docs/atam/metodologia-atam-adaptada.md) |
+| Entregable R1 del anteproyecto | [`microframework/microframework-v1.0.md`](../../docs/microframework-v1.0.md) |
 | Convenciones de naming | [`microframework/convenciones/naming-conventions.md`](../convenciones/naming-conventions.md) |
 | Checklist de arquitectura | [`microframework/checklists/checklist-arquitectura.md`](../checklists/checklist-arquitectura.md) |

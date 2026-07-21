@@ -27,7 +27,7 @@ This matrix is the central traceability artifact required by REG-010 and by ISO/
 requirement to its ADR, its verifiable REG-* rule, the subflow where it's implemented,
 the Input Set that exercises it, and the evidence file backing it — the same chain
 described in
-[`docs/context/microframework-spec.md`](../../../docs/context/microframework-spec.en.md)
+[`microframework/microframework-spec.md`](../../../microframework/microframework-spec.en.md)
 applied end to end to the IoT case.
 
 ## Navigation

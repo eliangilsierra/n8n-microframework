@@ -30,7 +30,7 @@ Only `patron-retry.md` and `patron-idempotencia.md` back **mandatory** rules (RE
 REG-005 respectively); the other three are **recommended** patterns for systems with
 stricter no-data-loss or eventual-consistency requirements, and are not part of the
 architecture checklist's binary criteria. All apply to the E3/E4 stages of the metamodel
-(see [`docs/context/microframework-spec.en.md`](../../docs/context/microframework-spec.en.md)).
+(see [`microframework/microframework-spec.en.md`](../microframework-spec.en.md)).
 
 ## Navigation
 

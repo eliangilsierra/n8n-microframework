@@ -89,7 +89,7 @@ If IOT-Q4 is completed: IoT coverage → 5/6 = 83% ✅
 
 ## References
 
-- ATAM Utility Tree: `docs/atam/atam-utility-tree.md`
+- ATAM Utility Tree: `atam/atam-utility-tree.md`
 - To-be run-logs: `medicion/run-logs/{bot,iot}/run-log-*-to-be.csv`
 - To-be CR-logs: `medicion/cr-logs/{bot,iot}/cr-log-*-to-be.csv`
 - MTTD: `medicion/consolidado/mttd-resultado.md`

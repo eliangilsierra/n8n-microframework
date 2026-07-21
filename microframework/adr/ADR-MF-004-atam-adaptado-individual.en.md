@@ -145,8 +145,8 @@ the rest of the project is:
 - Documents for the jury why the evaluation does not follow ATAM-original's in-person
   choreography.
 - Operational cross-references:
-  - `docs/atam/metodologia-atam-adaptada.md` — full development of the adaptation
-  - `docs/atam/informe-atam-final.md` — application of the methodology
-  - `docs/atam/protocolo-encuesta.md` — procedure for the external validation component
-  - `docs/atam/atam-utility-tree.md` — utility tree preserved from ATAM-original
+  - `atam/metodologia-atam-adaptada.md` — full development of the adaptation
+  - `atam/informe-atam-final.md` — application of the methodology
+  - `atam/protocolo-encuesta.md` — procedure for the external validation component
+  - `atam/atam-utility-tree.md` — utility tree preserved from ATAM-original
   - `medicion/consolidado/atam-evidencia.md` — quantitative evidence matrix

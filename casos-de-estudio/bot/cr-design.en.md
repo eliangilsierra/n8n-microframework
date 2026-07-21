@@ -155,5 +155,5 @@ Where:
 
 - `medicion/cr-logs/bot/cr-log-bot-as-is.csv` — log with the 3 pre-measured rows.
 - `medicion/cr-logs/bot/cr-log-bot-to-be.csv` — reserved for PHASE 6.
-- `docs/protocolo-evidencias.md` §6 — general CR-log protocol.
+- `medicion/protocolo-evidencias.md` §6 — general CR-log protocol.
 - Bot ADR-001, Bot ADR-002 — architectural decisions that condition the CRs.

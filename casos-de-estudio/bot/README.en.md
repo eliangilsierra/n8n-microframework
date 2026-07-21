@@ -14,7 +14,7 @@ receives user messages over HTTP, validates authentication, classifies the messa
 category and priority, persists a ticket in an external service, and responds to the
 client. It is one of the two cases that validate the micro-framework through an as-is vs
 to-be comparison (see
-[`docs/context/justificacion-casos-de-estudio.md`](../../docs/context/justificacion-casos-de-estudio.en.md)
+[`casos-de-estudio/justificacion-casos-de-estudio.md`](../justificacion-casos-de-estudio.en.md)
 for the justification of why this pattern is representative).
 
 ## Contents of this folder

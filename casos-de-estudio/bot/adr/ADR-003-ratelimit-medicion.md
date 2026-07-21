@@ -106,4 +106,4 @@ serie estadística.
 - **Referencias cruzadas:**
   - `casos-de-estudio/bot/as-is/notas-tecnicas.md` §REG-002
   - `casos-de-estudio/bot/as-is/cambios-y-evidencia.md` (change-log CR-ASIS-03)
-  - `docs/protocolo-evidencias.md` §5 (run-logs)
+  - `medicion/protocolo-evidencias.md` §5 (run-logs)

@@ -52,7 +52,7 @@ confidence, ISO/IEC 25010 mapping, and ATAM scenarios for every finding.
 ### Role in the academic evidence
 
 The generated reports constitute type-(i) **documentary evidence** in ATAM's
-methodological triangulation (`docs/atam/metodologia-atam-adaptada.md`). Every canonical
+methodological triangulation (`atam/metodologia-atam-adaptada.md`). Every canonical
 JSON report (`reportes/validacion-YYYY-MM-DD.json`) is an auditable, diffable artifact
 demonstrating the to-be flows' compliance level at a given moment.
 
@@ -487,10 +487,10 @@ other. For history, previous reports are versioned in Git or renamed manually.
 | Rule → ISO/ATAM/ADR mapping | [`mapeo-calidad.json`](mapeo-calidad.json) |
 | Canonical report schema | [`report.schema.json`](report.schema.json) |
 | Lite + Pro decision | [`ADR-MF-008-validador-dos-ediciones.md`](../adr/ADR-MF-008-validador-dos-ediciones.en.md) |
-| DevSecOps Pillar 2 | [`docs/context/microframework-spec.md §DevSecOps`](../../docs/context/microframework-spec.en.md) |
-| Role in ATAM evidence | [`docs/atam/metodologia-atam-adaptada.md`](../../docs/atam/metodologia-atam-adaptada.md) |
-| Thesis proposal R1 deliverable | [`docs/microframework-v1.0.md`](../../docs/microframework-v1.0.en.md) |
-| Best practices guide (Ch. 7.4) | [`docs/guia-buenas-practicas.md`](../../docs/guia-buenas-practicas.en.md) |
+| DevSecOps Pillar 2 | [`microframework/microframework-spec.md §DevSecOps`](../microframework-spec.en.md) |
+| Role in ATAM evidence | [`atam/metodologia-atam-adaptada.md`](../../atam/metodologia-atam-adaptada.md) |
+| Thesis proposal R1 deliverable | [`microframework/microframework-v1.0.md`](../microframework-v1.0.en.md) |
+| Best practices guide (Ch. 7.4) | [`microframework/guia-buenas-practicas.md`](../guia-buenas-practicas.en.md) |
 | Static-analysis-independent spec | [`microframework/validacion-estatica-flujos.md`](../validacion-estatica-flujos.en.md) |
 
 ### Why Node.js remains the chosen implementation (inherited from v1)
@@ -602,4 +602,4 @@ print. The report is versioned at
 | See the rule catalog | [`microframework/reglas/reglas-obligatorias.md`](../reglas/reglas-obligatorias.en.md) + [`microframework/antipatrones.md`](../antipatrones.en.md) |
 | See the rule → quality mapping | [`mapeo-calidad.json`](mapeo-calidad.json) |
 | See the report's canonical schema | [`report.schema.json`](report.schema.json) |
-| See the adoption guide | [`docs/guia-buenas-practicas.md §7.4`](../../docs/guia-buenas-practicas.en.md) |
+| See the adoption guide | [`microframework/guia-buenas-practicas.md §7.4`](../guia-buenas-practicas.en.md) |

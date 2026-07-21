@@ -29,12 +29,12 @@ comparability between as-is and to-be. It also contains the JMeter load-test fil
 Sets A–E are static (a single payload repeated N times); F, G, I, J, K are dynamic (200
 unique payloads per seed). Every set stresses specific micro-framework REG-* rules — see
 the complete detail in
-[`docs/context/proyecto-overview.md`](../../docs/context/proyecto-overview.en.md) §Synthetic
+[`../proyecto-overview.en.md`](../proyecto-overview.en.md) §Synthetic
 Input Sets and in
 [`casos-de-estudio/bot/adr/ADR-004`](../../casos-de-estudio/bot/adr/ADR-004-diseno-experimental-input-sets.en.md)
 (experimental design, applies to both cases). **These files are immutable during the
 measurement phase** — any change requires an ADR (see
-[`docs/context/convenios-y-reglas.md`](../../docs/context/convenios-y-reglas.en.md)).
+[`../../microframework/convenciones/convenios-y-reglas.en.md`](../../microframework/convenciones/convenios-y-reglas.en.md)).
 
 ## Navigation
 

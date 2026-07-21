@@ -31,13 +31,13 @@ caso.
 
 Esta carpeta es la fuente de la evidencia cuantitativa que el anteproyecto exige para
 comparar as-is vs to-be (métricas de Entrega, Operación, Seguridad y Trazabilidad — ver
-[`docs/context/proyecto-overview.md`](../docs/context/proyecto-overview.md)). Los datos
+[`proyecto-overview.md`](proyecto-overview.md)). Los datos
 aquí contenidos son **inmutables una vez registrados** (ver reglas de integridad en
-[`docs/context/convenios-y-reglas.md`](../docs/context/convenios-y-reglas.md)) y se
+[`../microframework/convenciones/convenios-y-reglas.md`](../microframework/convenciones/convenios-y-reglas.md)) y se
 generan/consultan siguiendo el protocolo operativo en
-[`docs/protocolo-evidencias.md`](../docs/protocolo-evidencias.md).
+[`medicion/protocolo-evidencias.md`](protocolo-evidencias.md).
 
 ## Navegación
 
 - Padre: [Repositorio (raíz)](../README.md)
-- Ver también: [`automatizacion/README.md`](../automatizacion/README.md) (scripts que generan estos datos) · [`docs/atam/informe-atam-final.md`](../docs/atam/informe-atam-final.md) (uso de esta evidencia en ATAM)
+- Ver también: [`automatizacion/README.md`](../automatizacion/README.md) (scripts que generan estos datos) · [`atam/informe-atam-final.md`](../atam/informe-atam-final.md) (uso de esta evidencia en ATAM)

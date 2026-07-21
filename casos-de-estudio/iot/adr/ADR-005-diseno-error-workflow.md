@@ -98,7 +98,7 @@ HTTP 500 Internal Server Error
 
 **Negativas:**
 - Requiere crear la tabla `lecturas_sensor_dead_letters` en PostgreSQL (paso adicional
-  en el protocolo de setup — documentado en `docs/protocolo-evidencias.md` §2).
+  en el protocolo de setup — documentado en `medicion/protocolo-evidencias.md` §2).
 - El Nodo 3 (dead-letter) falla si la BD no está disponible, que es precisamente el
   caso más probable cuando E3 falló por problemas de BD. Mitigación: el Nodo 1 (log
   en stdout) preserva el payload de forma independiente.
