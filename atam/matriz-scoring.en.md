@@ -5,7 +5,7 @@
 **Version:** 1.0
 **Date:** 2026-05-07
 **Author:** Elian Hernando Gil Sierra (author's analytical scoring; external panel validation pending)
-**Inputs:** `docs/atam/analisis-approaches.md`, `medicion/consolidado/atam-evidencia.md`, `medicion/consolidado/metricas-derivadas.md`, run-logs, cr-logs, static validator
+**Inputs:** `atam/analisis-approaches.md`, `medicion/consolidado/atam-evidencia.md`, `medicion/consolidado/metricas-derivadas.md`, run-logs, cr-logs, static validator
 **Purpose:** Produce the numerical comparison matrix that original ATAM generates in Step 8 as a basis for identifying the magnitude of the to-be's improvement over the as-is, per scenario.
 
 ---

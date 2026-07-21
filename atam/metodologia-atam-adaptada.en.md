@@ -5,7 +5,7 @@
 **Version:** 1.0
 **Date:** 2026-05-07
 **Author:** Elian Hernando Gil Sierra
-**Reference ADR:** [`ADR-MF-004`](../../microframework/adr/ADR-MF-004-atam-adaptado-individual.md)
+**Reference ADR:** [`ADR-MF-004`](../microframework/adr/ADR-MF-004-atam-adaptado-individual.md)
 **Purpose:** Document the architectural-evaluation methodology applied in this thesis project, explaining in detail how the canonical ATAM method is adapted to the context of a single researcher, and how the absence of the multi-stakeholder component is compensated through triangulation with external validation.
 
 ---
@@ -116,14 +116,14 @@ Phase IV — Report synthesis                Step 9 (partial)
 | Original ATAM step | Adaptation in this project | Justification of the equivalence |
 |---|---|---|
 | **1. Present the ATAM method** | Report's introductory chapter + this methodology document | Documentation replaces the oral presentation; the report's reader is the one who receives the "presentation" |
-| **2. Present the business drivers** | Drivers section in the report based on `docs/context/proyecto-overview.md` (objectives, prioritized ISO 25010 attributes) | The drivers are already explicit in the pre-project and operationalized as metrics |
-| **3. Present the architecture** | Architecture section of the report based on `docs/context/arquitectura-flujos.md`, as-is/to-be Mermaid diagrams, JSON Schema contracts | Complete architectural documentation substitutes for the in-person session |
-| **4. Identify the approaches** | `docs/atam/analisis-approaches.md` §1 — 12 architectural approaches inventoried with their ADRs and affected attributes | Systematic inventory by the author covers what a workshop would do collectively |
-| **5. Generate the utility tree** | `docs/atam/atam-utility-tree.md` already produced — 12 top-K scenarios, 6 per case, with stimulus/response/measure and priority (I × D) | Utility tree produced by the author, supported by the literature (Bass et al. 2012) and validated against the pre-project's attributes |
-| **6. Analyze the approaches (1st pass)** | `docs/atam/analisis-approaches.md` §2 — SP/TP/R/NR classification per scenario derived from documentary evidence | Systematic individual analysis replaces group brainstorming; compensated by the external-validation component |
+| **2. Present the business drivers** | Drivers section in the report based on `../medicion/proyecto-overview.en.md` (objectives, prioritized ISO 25010 attributes) | The drivers are already explicit in the pre-project and operationalized as metrics |
+| **3. Present the architecture** | Architecture section of the report based on `casos-de-estudio/arquitectura-flujos.md`, as-is/to-be Mermaid diagrams, JSON Schema contracts | Complete architectural documentation substitutes for the in-person session |
+| **4. Identify the approaches** | `atam/analisis-approaches.md` §1 — 12 architectural approaches inventoried with their ADRs and affected attributes | Systematic inventory by the author covers what a workshop would do collectively |
+| **5. Generate the utility tree** | `atam/atam-utility-tree.md` already produced — 12 top-K scenarios, 6 per case, with stimulus/response/measure and priority (I × D) | Utility tree produced by the author, supported by the literature (Bass et al. 2012) and validated against the pre-project's attributes |
+| **6. Analyze the approaches (1st pass)** | `atam/analisis-approaches.md` §2 — SP/TP/R/NR classification per scenario derived from documentary evidence | Systematic individual analysis replaces group brainstorming; compensated by the external-validation component |
 | **7. Brainstorm and prioritize** | Prioritization already included in the utility tree (H/M/L scale of importance × difficulty). There is no open brainstorming; the scenarios come from the pre-project and the declared quality objectives | The project's scope defines the scenarios; open brainstorming would not add value with a single author |
 | **8. Re-analyze the approaches (2nd pass)** | Refinement of the SP/TP/R/NR classification using **empirical quantitative evidence**: 8,000 runs, 12 measured CRs, IOT-Q4/Q5 runtime, MTTD, static validator. Each finding is contrasted with real metrics | Massive empirical evidence substitutes for the group discussion: what is debated in a workshop is measured here |
-| **9. Present the results** | Split into two components: (a) `docs/atam/informe-atam-final.md` produces the report for the advisor and committee; (b) **external validation by an expert panel** via a short survey + optional mini-ATAM verifies the conclusions with external voices | Presentation of results is transformed into external validation, compensating for the absence of the conversational component |
+| **9. Present the results** | Split into two components: (a) `atam/informe-atam-final.md` produces the report for the advisor and committee; (b) **external validation by an expert panel** via a short survey + optional mini-ATAM verifies the conclusions with external voices | Presentation of results is transformed into external validation, compensating for the absence of the conversational component |
 
 ### 2.4 External-validation component: methodological detail
 
@@ -143,7 +143,7 @@ The external-validation component operates as a **non-specialized peer-review** 
 
 Each finding in the report (SP, TP, R, NR) is produced following the protocol:
 
-1. **Initial analytical generation.** The author identifies the finding through inspection of the ADRs, diagrams, and code of the n8n flows. It is written up in `docs/atam/analisis-approaches.md` with the architectural justification.
+1. **Initial analytical generation.** The author identifies the finding through inspection of the ADRs, diagrams, and code of the n8n flows. It is written up in `atam/analisis-approaches.md` with the architectural justification.
 
 2. **Quantitative support.** Evidence is sought in the measurement artifacts:
    - Run-logs (`medicion/run-logs/*.csv`) for latency, failure rate
@@ -175,9 +175,9 @@ Each finding in the report (SP, TP, R, NR) is produced following the protocol:
 
 For an external evaluator to be able to reproduce or audit the study:
 
-- All instruments are versioned in the repository (`docs/atam/instrumento-encuesta.md`, `docs/atam/protocolo-encuesta.md`)
+- All instruments are versioned in the repository (`atam/instrumento-encuesta.md`, `atam/protocolo-encuesta.md`)
 - The anonymized raw survey data is published as an appendix to the report (CSV)
-- The statistical analysis plan is defined **before** receiving responses (`docs/atam/plan-analisis-encuesta.md`) to prevent HARKing (Hypothesizing After Results are Known)
+- The statistical analysis plan is defined **before** receiving responses (`atam/plan-analisis-encuesta.md`) to prevent HARKing (Hypothesizing After Results are Known)
 - Informed consent and inclusion criteria are auditable
 - The statistical-analysis code is a versioned Python notebook
 

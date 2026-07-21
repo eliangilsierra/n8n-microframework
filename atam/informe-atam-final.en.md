@@ -39,13 +39,13 @@ This chapter presents the results of the architectural evaluation of the micro-f
 
 ### 1.1 Context
 
-The micro-framework proposed in this thesis (documented in `docs/microframework-v1.0.md` and `docs/context/microframework-spec.md`) structures any n8n flow into four functional stages (E1 Validation, E2 Domain, E3 Adapters, E4 Output) and prescribes 10 mandatory rules with a verifiable binary criterion, 6 recommended rules, 5 design patterns, and an automated static validation process. The framework is grounded in Clean Architecture principles (Martin, 2017) and DevSecOps practices (Feio et al., 2024).
+The micro-framework proposed in this thesis (documented in `microframework/microframework-v1.0.md` and `microframework/microframework-spec.md`) structures any n8n flow into four functional stages (E1 Validation, E2 Domain, E3 Adapters, E4 Output) and prescribes 10 mandatory rules with a verifiable binary criterion, 6 recommended rules, 5 design patterns, and an automated static validation process. The framework is grounded in Clean Architecture principles (Martin, 2017) and DevSecOps practices (Feio et al., 2024).
 
 The architectural evaluation is an essential component of the thesis because it allows answering questions such as: does the framework actually improve the quality attributes it aims to improve? What trade-offs does it introduce? What architectural risks remain open in the proposal?
 
 ### 1.2 Methodological adaptation
 
-ATAM in its canonical form (Kazman et al., 2000) is an in-person collaborative process that requires heterogeneous stakeholders. This individual thesis project does not have a multi-stakeholder team, so a **documented adaptation** was adopted, named "Asynchronous Modified ATAM with External Validation by Expert Panel," formally justified in ADR-MF-004 (`microframework/adr/ADR-MF-004-atam-adaptado-individual.md`) and developed in detail in `docs/atam/metodologia-atam-adaptada.md`.
+ATAM in its canonical form (Kazman et al., 2000) is an in-person collaborative process that requires heterogeneous stakeholders. This individual thesis project does not have a multi-stakeholder team, so a **documented adaptation** was adopted, named "Asynchronous Modified ATAM with External Validation by Expert Panel," formally justified in ADR-MF-004 (`microframework/adr/ADR-MF-004-atam-adaptado-individual.md`) and developed in detail in `atam/metodologia-atam-adaptada.md`.
 
 The adaptation preserves all of ATAM's core analytical products (utility tree, top-K scenarios, sensitivity/tradeoff points, risks/non-risks, scoring) and compensates for the absence of the multi-stakeholder component through **methodological triangulation** (Denzin, 1978) among three sources of evidence: (i) documentary, (ii) empirical quantitative over 8,000 real runs, and (iii) external validation by an expert panel (see section 8).
 
@@ -64,7 +64,7 @@ The scope of the evaluation is:
 
 - **Systems evaluated:** the to-be architectures of the Bot and IoT cases, compared against their respective as-is baselines.
 - **Attributes evaluated:** the five ISO/IEC 25010 attributes prioritized in the thesis proposal: Maintainability, Reliability, Security, Operability, Functional suitability. Efficiency is reported as an attribute associated with trade-offs, not as a top-K attribute.
-- **Scenarios:** 12 top-K scenarios (6 per case) defined in `docs/atam/atam-utility-tree.md`.
+- **Scenarios:** 12 top-K scenarios (6 per case) defined in `atam/atam-utility-tree.md`.
 - **Evidence:** documentary, quantitative (8,000 runs + 12 CRs + IOT-Q4 and IOT-Q5 runtime + MTTD analysis + static validator), and expert opinion (section 8).
 
 Out of scope: evaluation of the production AWS architecture (subject of R3), evaluation of LC/NC platforms other than n8n, actual production deployment.
@@ -75,7 +75,7 @@ Out of scope: evaluation of the production AWS architecture (subject of R3), eva
 
 ### 2.1 Main drivers
 
-The business drivers motivating the micro-framework, extracted from the thesis proposal and consolidated in `docs/context/proyecto-overview.md`, are:
+The business drivers motivating the micro-framework, extracted from the thesis proposal and consolidated in `../medicion/proyecto-overview.en.md`, are:
 
 | ID | Driver | Architectural implication |
 |---|---|---|
@@ -136,11 +136,11 @@ The metamodel establishes that **any n8n flow is decomposed into four functional
 └────────────────────────────────────────────────────────────────┘
 ```
 
-Full technical detail in `docs/context/arquitectura-flujos.md`.
+Full technical detail in `casos-de-estudio/arquitectura-flujos.md`.
 
 ### 3.2 As-is architecture (baseline)
 
-The as-is architectures were **intentionally redesigned as representative antipatterns** of the typical state of LC/NC flows adopted without structure. This methodological decision is justified in `docs/context/justificacion-rediseno-asis.md`, drawing on internal validity in quasi-experimental studies (Wohlin et al., 2012).
+The as-is architectures were **intentionally redesigned as representative antipatterns** of the typical state of LC/NC flows adopted without structure. This methodological decision is justified in `casos-de-estudio/justificacion-rediseno-asis.md`, drawing on internal validity in quasi-experimental studies (Wohlin et al., 2012).
 
 | Case | # as-is nodes | REGs violated | Visible antipatterns |
 |---|:---:|:---:|---|
@@ -156,11 +156,11 @@ Detailed diagrams with per-node annotations in `casos-de-estudio/{bot,iot}/as-is
 | Bot | Orchestrator + 2 subflows (E2 domain, E3 adapter) + error workflow | 10/10 |
 | IoT | Orchestrator + 4 subflows (E1 validation, E2 domain, E3 persistence, E4 notification) + error handler with dead-letter | 10/10 |
 
-The to-be flows are imported into n8n in a specific order (subflows before orchestrator) documented in `docs/context/convenios-y-reglas.md`. The JSON files are in `casos-de-estudio/{bot,iot}/to-be/`.
+The to-be flows are imported into n8n in a specific order (subflows before orchestrator) documented in `../microframework/convenciones/convenios-y-reglas.en.md`. The JSON files are in `casos-de-estudio/{bot,iot}/to-be/`.
 
 ### 3.4 Applied architectural approaches
 
-Twelve architectural approaches are inventoried and characterized in `docs/atam/analisis-approaches.md` §1. Summary:
+Twelve architectural approaches are inventoried and characterized in `atam/analisis-approaches.md` §1. Summary:
 
 | # | Approach | Main attribute affected |
 |---|---|---|
@@ -181,7 +181,7 @@ Twelve architectural approaches are inventoried and characterized in `docs/atam/
 
 ## 4. Utility tree and top-K scenarios
 
-The full utility tree, prioritized by importance × difficulty (H/M/L scale), is in `docs/atam/atam-utility-tree.md`. Summary of the 12 top-K scenarios evaluated:
+The full utility tree, prioritized by importance × difficulty (H/M/L scale), is in `atam/atam-utility-tree.md`. Summary of the 12 top-K scenarios evaluated:
 
 ### 4.1 Bot scenarios
 
@@ -219,7 +219,7 @@ The 12 scenarios cover the 5 ISO 25010 sub-characteristics the framework promise
 
 ## 5. Analysis of architectural approaches
 
-The full formal analysis is in `docs/atam/analisis-approaches.md` §2. Consolidated summary of the 15 architectural findings identified:
+The full formal analysis is in `atam/analisis-approaches.md` §2. Consolidated summary of the 15 architectural findings identified:
 
 ### 5.1 Sensitivity Points (3)
 
@@ -270,7 +270,7 @@ Full details in `medicion/consolidado/mttd-resultado.md` §IOT-Q4-runtime and `m
 
 ## 6. As-is vs. to-be scoring matrix
 
-The full matrix with cell-by-cell justification is in `docs/atam/matriz-scoring.md`. Executive summary:
+The full matrix with cell-by-cell justification is in `atam/matriz-scoring.md`. Executive summary:
 
 ### 6.1 Bot scoring
 
@@ -380,9 +380,9 @@ The trade-off is asymmetric: marginal in Bot, significant in IoT. It is accepted
 ## 8. External validation by expert panel
 
 > **Status:** Data collection closed (June 17–24, 2026) and analysis completed over the
-> anonymized dataset. Data source: [`medicion/encuesta-validacion/respuestas-anonimizadas-2026-06-24.csv`](../../medicion/encuesta-validacion/respuestas-anonimizadas-2026-06-24.csv).
-> Reproducible analysis in [`medicion/encuesta-validacion/analisis-encuesta.py`](../../medicion/encuesta-validacion/analisis-encuesta.py)
-> and [`analisis-encuesta.ipynb`](../../medicion/encuesta-validacion/analisis-encuesta.ipynb) (executed,
+> anonymized dataset. Data source: [`medicion/encuesta-validacion/respuestas-anonimizadas-2026-06-24.csv`](../medicion/encuesta-validacion/respuestas-anonimizadas-2026-06-24.csv).
+> Reproducible analysis in [`medicion/encuesta-validacion/analisis-encuesta.py`](../medicion/encuesta-validacion/analisis-encuesta.py)
+> and [`analisis-encuesta.ipynb`](../medicion/encuesta-validacion/analisis-encuesta.ipynb) (executed,
 > with outputs embedded), following the plan pre-registered in `plan-analisis-encuesta.md`.
 > Consolidated outputs in `medicion/encuesta-validacion/outputs/`.
 
@@ -456,7 +456,7 @@ The version of the instrument actually published consolidated the planned C1–C
 single open question (see `instrumento-encuesta.md` §Section C). Thematic coding was applied to
 that consolidated question (C1) and to the free-text mini-ATAM comment in Section E (E4),
 following Strauss & Corbin (1990). Full coding available in
-[`outputs/categorias-emergentes-seccion-c.md`](../../medicion/encuesta-validacion/outputs/categorias-emergentes-seccion-c.md).
+[`outputs/categorias-emergentes-seccion-c.md`](../medicion/encuesta-validacion/outputs/categorias-emergentes-seccion-c.md).
 
 | Category | # respondents | Convergence with the author's record |
 |---|:---:|---|
@@ -693,28 +693,28 @@ The following lines extend the study and are candidates for further research or 
 ## 13. Appendices
 
 ### Appendix A — Complete utility tree
-See `docs/atam/atam-utility-tree.md`.
+See `atam/atam-utility-tree.md`.
 
 ### Appendix B — Detailed scoring matrix
-See `docs/atam/matriz-scoring.md`.
+See `atam/matriz-scoring.md`.
 
 ### Appendix C — Risk and trade-off registry
-See `docs/atam/registro-riesgos-tradeoffs.md`.
+See `atam/registro-riesgos-tradeoffs.md`.
 
 ### Appendix D — Analysis of architectural approaches
-See `docs/atam/analisis-approaches.md`.
+See `atam/analisis-approaches.md`.
 
 ### Appendix E — Adapted ATAM methodology
-See `docs/atam/metodologia-atam-adaptada.md` and `microframework/adr/ADR-MF-004-atam-adaptado-individual.md`.
+See `atam/metodologia-atam-adaptada.md` and `microframework/adr/ADR-MF-004-atam-adaptado-individual.md`.
 
 ### Appendix F — Survey instrument and protocol
-See `docs/atam/instrumento-encuesta.md`, `docs/atam/protocolo-encuesta.md`.
+See `atam/instrumento-encuesta.md`, `atam/protocolo-encuesta.md`.
 
 ### Appendix G — Statistical analysis plan
-See `docs/atam/plan-analisis-encuesta.md`.
+See `atam/plan-analisis-encuesta.md`.
 
 ### Appendix H — Survey supporting material
-See `docs/atam/material-apoyo/`.
+See `material-apoyo/`.
 
 ### Appendix I — Anonymized raw survey data
 Path: `medicion/encuesta-validacion/respuestas-anonimizadas-2026-06-24.csv`

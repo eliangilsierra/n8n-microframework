@@ -4,7 +4,7 @@
 
 **Versión:** 1.0
 **Fecha:** 2026-05-07
-**Insumos:** `docs/atam/analisis-approaches.md` §2, ADRs, evidencia cuantitativa
+**Insumos:** `atam/analisis-approaches.md` §2, ADRs, evidencia cuantitativa
 **Propósito:** Consolidar en un único registro auditable todos los Sensitivity Points, Tradeoff Points y Risks identificados en la evaluación ATAM del to-be, con sus mitigaciones recomendadas y owners potenciales para adopción productiva. Los Non-Risks se omiten aquí por ser positivos (se discuten en el informe principal).
 
 ---
@@ -54,7 +54,7 @@ Cada entrada del registro incluye los siguientes campos normalizados:
 - **Descripción.** El MTTD de ~14 segundos depende de que el log JSON emitido por E1 incluya los campos `etapa`, `errores[]` y `unauthorized: true`. Una refactorización descuidada que cambie la estructura del log impacta directamente el MTTD y devuelve BOT-Q5 al comportamiento as-is.
 - **Severidad:** Baja.
 - **Probabilidad:** Baja (protegida por validador estático + REG-006).
-- **Evidencia:** `docs/protocolo-mttd.md`, `medicion/consolidado/mttd-resultado.md`.
+- **Evidencia:** `medicion/protocolo-mttd.md`, `medicion/consolidado/mttd-resultado.md`.
 - **Mitigación recomendada (corto plazo):** test contractual del schema del log estructurado, ejecutable en pipeline CI antes del merge.
 - **Mitigación recomendada (mediano plazo):** definir el schema del log como JSON Schema versionado en `microframework/contratos/log-estructurado-e1.schema.json` y validarlo en runtime en cada deploy.
 - **Owner sugerido:** Mantenedor del micro-framework + equipo de observabilidad.
@@ -188,7 +188,7 @@ Cada entrada del registro incluye los siguientes campos normalizados:
 - **Descripción.** Los logs estructurados emitidos por las etapas vía `console.log` se escriben a stdout del contenedor. Si el contenedor se reinicia sin un volumen persistente ni un colector externo (CloudWatch, ELK, Loki), los logs se pierden. El protocolo MTTD asume disponibilidad de `docker compose logs n8n --since 5m`.
 - **Severidad:** Media.
 - **Probabilidad:** Alta en entornos sin disciplina operacional; Baja con volumen persistente o agregador.
-- **Evidencia:** `docs/protocolo-mttd.md` §requisitos del entorno.
+- **Evidencia:** `medicion/protocolo-mttd.md` §requisitos del entorno.
 - **Mitigación recomendada (corto plazo):** documentar como requisito de despliegue productivo en la guía de buenas prácticas (R5).
 - **Mitigación recomendada (mediano plazo):** integrar agregador de logs (CloudWatch en AWS — diseñado en R3, AWS Architecture).
 - **Owner sugerido:** Equipo de operaciones + Mantenedor del micro-framework.

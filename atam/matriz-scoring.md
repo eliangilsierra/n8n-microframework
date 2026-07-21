@@ -5,7 +5,7 @@
 **Versión:** 1.0
 **Fecha:** 2026-05-07
 **Autor:** Elian Hernando Gil Sierra (scoring analítico del autor; validación externa con panel pendiente)
-**Insumos:** `docs/atam/analisis-approaches.md`, `medicion/consolidado/atam-evidencia.md`, `medicion/consolidado/metricas-derivadas.md`, run-logs, cr-logs, validador estático
+**Insumos:** `atam/analisis-approaches.md`, `medicion/consolidado/atam-evidencia.md`, `medicion/consolidado/metricas-derivadas.md`, run-logs, cr-logs, validador estático
 **Propósito:** Producir la matriz numérica comparativa que ATAM-original genera en el Paso 8 como base para identificar la magnitud de la mejora del to-be sobre el as-is por escenario.
 
 ---

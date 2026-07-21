@@ -12,7 +12,7 @@
 > checklists y referencias a "placeholder §8" que aparecen abajo describen el estado *planeado*,
 > no el actual. La Fase 7 ya se ejecutó por completo: la encuesta se recolectó (17–24 de junio de
 > 2026), se analizó y el capítulo §8 de `informe-atam-final.md` está redactado con resultados
-> reales. Ver `docs/atam/INDEX.md` y `estado-actual.md` para el estado vigente.
+> reales. Ver `atam/INDEX.md` y `estado-actual.md` para el estado vigente.
 
 ---
 
@@ -35,7 +35,7 @@
 ## 1. Estado de partida y objetivo
 
 ### Estado actual de OE3 (cierre 2026-05-07)
-- ✅ Utility Tree con 12 escenarios top-K (`docs/atam/atam-utility-tree.md`)
+- ✅ Utility Tree con 12 escenarios top-K (`atam/atam-utility-tree.md`)
 - ✅ Matriz escenario × evidencia (11/12 = 92 % cobertura) (`medicion/consolidado/atam-evidencia.md`)
 - ✅ IOT-Q4 runtime ejecutado → SP-IOT-01, R-IOT-01, NR-IOT-01 documentados
 - ✅ IOT-Q5 análisis ejecutado → TP-IOT-01 documentado
@@ -116,7 +116,7 @@ docker compose -f infraestructura/docker-compose.yml exec postgres `
 **Esfuerzo:** 16 h ≈ 2 días
 
 ### B.1 — Identificación de approaches arquitectónicos (4 h)
-**Archivo:** `docs/atam/analisis-approaches.md`
+**Archivo:** `atam/analisis-approaches.md`
 
 **Approaches a documentar** (decisiones arquitectónicas con impacto en atributos de calidad):
 
@@ -138,7 +138,7 @@ docker compose -f infraestructura/docker-compose.yml exec postgres `
 Para cada approach documentar: **Decisión · Atributos afectados · Reglas asociadas · ADRs · Escenarios ATAM cubiertos · Trade-offs conocidos**.
 
 ### B.2 — Clasificación SP / TP / R / NR por escenario (8 h)
-**Archivo:** `docs/atam/analisis-approaches.md` §2
+**Archivo:** `atam/analisis-approaches.md` §2
 
 Para cada uno de los 12 escenarios, completar:
 
@@ -162,7 +162,7 @@ Para cada uno de los 12 escenarios, completar:
 - SP-BOT-01: Idempotency-Key en E3 → única dependencia para garantizar BOT-Q4
 
 ### B.3 — Matriz de scoring 1–5 as-is vs to-be (3 h)
-**Archivo:** `docs/atam/matriz-scoring.md`
+**Archivo:** `atam/matriz-scoring.md`
 
 **Plantilla:**
 
@@ -179,7 +179,7 @@ Para cada uno de los 12 escenarios, completar:
 - 5 = Excelente, con evidencia cuantitativa y patrón explícito
 
 ### B.4 — Registro consolidado de riesgos y trade-offs (1 h)
-**Archivo:** `docs/atam/registro-riesgos-tradeoffs.md`
+**Archivo:** `atam/registro-riesgos-tradeoffs.md`
 
 **Plantilla por hallazgo:**
 ```
@@ -210,7 +210,7 @@ Documenta y justifica:
 - Consecuencias positivas y trade-offs metodológicos
 
 ### C.2 — Documento metodológico (2.5 h)
-**Archivo:** `docs/atam/metodologia-atam-adaptada.md`
+**Archivo:** `atam/metodologia-atam-adaptada.md`
 
 Contenido:
 1. Marco de referencia ATAM (Bass et al. 2012, Kazman 2000)
@@ -241,7 +241,7 @@ Contenido:
 > Al finalizar este bloque, el instrumento está **listo para distribuir** — solo queda enviar las invitaciones.
 
 ### D.1 — Protocolo de la encuesta (2 h)
-**Archivo:** `docs/atam/protocolo-encuesta.md`
+**Archivo:** `atam/protocolo-encuesta.md`
 
 Contenido:
 
@@ -290,7 +290,7 @@ Contacto: [email del autor].
 Google Forms (gratuito, exportable a CSV, integrable con Sheets)
 
 ### D.2 — Instrumento principal de encuesta (5 h)
-**Archivo:** `docs/atam/instrumento-encuesta.md`
+**Archivo:** `atam/instrumento-encuesta.md`
 
 **Estructura final: 18 preguntas, tiempo estimado 10–12 min**
 
@@ -393,7 +393,7 @@ Google Forms (gratuito, exportable a CSV, integrable con Sheets)
 ---
 
 ### D.3 — Material de apoyo (3.5 h)
-**Carpeta:** `docs/atam/material-apoyo/`
+**Carpeta:** `atam/material-apoyo/`
 
 **a) PDF resumen ejecutivo (4 páginas)** — `resumen-proyecto.pdf`
 
@@ -420,7 +420,7 @@ Grabar con Loom o OBS Studio. Subir a YouTube (no listado) o Loom.
 Mermaid + Excalidraw para mostrar lado a lado as-is vs to-be con anotaciones por etapa.
 
 ### D.4 — Plan de análisis estadístico (1 h)
-**Archivo:** `docs/atam/plan-analisis-encuesta.md`
+**Archivo:** `atam/plan-analisis-encuesta.md`
 
 Contenido:
 
@@ -452,7 +452,7 @@ Contenido:
 - Visualizaciones con matplotlib/seaborn
 
 ### D.5 — Plan de difusión y lista de candidatos (30 min)
-**Archivo:** `docs/atam/plan-difusion.md`
+**Archivo:** `atam/plan-difusion.md`
 
 Canales de difusión:
 - Email personal a colegas seleccionados
@@ -494,7 +494,7 @@ Elian Hernando Gil Sierra
 
 ## 7. Bloque E — Informe ATAM consolidado {#7-bloque-e}
 **Esfuerzo:** 16 h ≈ 2 días
-**Archivo:** `docs/atam/informe-atam-final.md`
+**Archivo:** `atam/informe-atam-final.md`
 
 Este es el **capítulo de tesis** correspondiente a R4 (Protocolo e informe ATAM).
 
@@ -580,7 +580,7 @@ D. Datos crudos anonimizados (CSV)
 - Actualizar lista de pendientes inmediatos
 
 ### F.2 — Índice consolidado de artefactos ATAM (30 min)
-**Archivo:** `docs/atam/INDEX.md`
+**Archivo:** `atam/INDEX.md`
 Lista todos los archivos producidos en Fase 7 con su propósito.
 
 ### F.3 — Checklist final de "Listo para encuesta" (15 min)
@@ -618,7 +618,7 @@ Asumiendo dedicación de ~8 h/día:
 ## 10. Estructura final de artefactos {#10-estructura-final-de-artefactos}
 
 ```
-docs/atam/
+atam/
 ├── INDEX.md                                 # Índice de todos los artefactos
 ├── plan-trabajo-fase7.md                    # Este documento
 ├── metodologia-atam-adaptada.md             # Bloque C.2

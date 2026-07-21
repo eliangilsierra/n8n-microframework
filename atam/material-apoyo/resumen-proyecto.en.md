@@ -199,4 +199,4 @@ Thank you very much for your time and expertise.
 ---
 
 *4-page document — version 1.0 — 2026-05-07*
-*Survey support material documented in* `docs/atam/protocolo-encuesta.md`
+*Survey support material documented in* `atam/protocolo-encuesta.md`

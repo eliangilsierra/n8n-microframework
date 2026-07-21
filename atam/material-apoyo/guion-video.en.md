@@ -218,7 +218,7 @@ ATAM Analysis — 15 architectural findings
 4. **Access permissions:**
    - **Loom:** "Anyone with link can view"
    - **YouTube:** "Unlisted" (not public, not private)
-5. **Final URL** is copied to `docs/atam/material-apoyo/README.md` and substituted into the dissemination templates.
+5. **Final URL** is copied to `atam/material-apoyo/README.md` and substituted into the dissemination templates.
 
 ### Final video quality checklist
 

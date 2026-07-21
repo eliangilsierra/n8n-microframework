@@ -302,7 +302,7 @@ This section classifies the architectural findings derived from analyzing the 12
 **Related approaches.** AP-07 (structured log), AP-08 (E1 validation).
 **Scenario.** BOT-Q5.
 **Attribute mainly affected.** Operability / Monitorability.
-**Evidence.** `docs/protocolo-mttd.md`, `medicion/consolidado/mttd-resultado.md`.
+**Evidence.** `medicion/protocolo-mttd.md`, `medicion/consolidado/mttd-resultado.md`.
 **Severity.** Low — protected by REG-006 and by the static validator that checks the log structure.
 **Recommended mitigation.** Contract test for the structured log schema, executable in CI.
 
@@ -396,7 +396,7 @@ This section classifies the architectural findings derived from analyzing the 12
 **Attributes at risk.** Operability / Monitorability — diagnosis impossible if logs were lost.
 **Severity.** Medium.
 **Probability.** High in environments without operational discipline; low with a persistent volume.
-**Evidence.** `docs/protocolo-mttd.md` §environment requirements.
+**Evidence.** `medicion/protocolo-mttd.md` §environment requirements.
 **Recommended mitigation.** Integrate a log aggregator (CloudWatch on AWS — designed in R3). Document as a production deployment requirement.
 
 ---

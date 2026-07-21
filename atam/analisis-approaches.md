@@ -302,7 +302,7 @@ Esta sección clasifica los hallazgos arquitectónicos derivados del análisis d
 **Approaches relacionados.** AP-07 (log estructurado), AP-08 (validación E1).
 **Escenario.** BOT-Q5.
 **Atributo afectado principalmente.** Operabilidad / Monitoreabilidad.
-**Evidencia.** `docs/protocolo-mttd.md`, `medicion/consolidado/mttd-resultado.md`.
+**Evidencia.** `medicion/protocolo-mttd.md`, `medicion/consolidado/mttd-resultado.md`.
 **Severidad.** Baja — protegido por REG-006 y por el validador estático que verifica la estructura del log.
 **Mitigación recomendada.** Test contractual del schema del log estructurado, ejecutable en CI.
 
@@ -396,7 +396,7 @@ Esta sección clasifica los hallazgos arquitectónicos derivados del análisis d
 **Atributos en riesgo.** Operabilidad / Monitoreabilidad — diagnóstico imposible si los logs se perdieron.
 **Severidad.** Media.
 **Probabilidad.** Alta en entornos sin discipline operacional; baja con volumen persistente.
-**Evidencia.** `docs/protocolo-mttd.md` §requisitos del entorno.
+**Evidencia.** `medicion/protocolo-mttd.md` §requisitos del entorno.
 **Mitigación recomendada.** Integrar agregador de logs (CloudWatch en AWS — diseñado en R3). Documentar como requisito de despliegue productivo.
 
 ---

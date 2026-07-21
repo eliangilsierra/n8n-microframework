@@ -58,18 +58,18 @@ de implementación): H=alta, M=media, L=baja.
 
 | Escenario | ADR principal | Input Set de verificación | Artefacto de medición |
 |-----------|---------------|--------------------------|----------------------|
-| BOT-Q1 | [ADR-007 Bot](../../casos-de-estudio/bot/adr/ADR-007-clasificacion-mensajes-e2.md) | CR1 | `cr-log-bot-to-be.csv` |
-| BOT-Q2 | [ADR-001 Bot](../../casos-de-estudio/bot/adr/ADR-001-separacion-responsabilidades-flujo.md) | CR2 | `cr-log-bot-to-be.csv` |
-| BOT-Q3 | [ADR-005 Bot](../../casos-de-estudio/bot/adr/ADR-005-estrategia-autenticacion.md) + [ADR-MF-001](../../microframework/adr/ADR-MF-001-gestion-secretos-reg001.md) | — | `validar-flujos.mjs` (REG-001) |
-| BOT-Q4 | [ADR-001 Bot](../../casos-de-estudio/bot/adr/ADR-001-separacion-responsabilidades-flujo.md) | Set K | `run-log-bot-to-be.csv` + mock-bot DB |
-| BOT-Q5 | [ADR-MF-003](../../microframework/adr/ADR-MF-003-log-estructurado-reg006.md) + [ADR-006 Bot](../../casos-de-estudio/bot/adr/ADR-006-diseno-error-workflow.md) | Set C | `docs/protocolo-mttd.md` |
-| BOT-Q6 | [ADR-005 Bot](../../casos-de-estudio/bot/adr/ADR-005-estrategia-autenticacion.md) | Set C, Set D | `run-log-bot-to-be.csv` |
-| IOT-Q1 | [ADR-002 IoT](../../casos-de-estudio/iot/adr/ADR-002-umbrales-y-vocabulario.md) + [ADR-008 IoT](../../casos-de-estudio/iot/adr/ADR-008-normalizacion-e1.md) | CR1 | `cr-log-iot-to-be.csv` |
-| IOT-Q2 | [ADR-004 IoT](../../casos-de-estudio/iot/adr/ADR-004-routing-e4-por-severidad.md) | CR2 | `cr-log-iot-to-be.csv` |
-| IOT-Q3 | [ADR-003 IoT](../../casos-de-estudio/iot/adr/ADR-003-idempotencia-sensor-timestamp.md) + [ADR-007 IoT](../../casos-de-estudio/iot/adr/ADR-007-timestamp-authority.md) | Set K | `SELECT COUNT(*)` en PostgreSQL |
-| IOT-Q4 | [ADR-004 IoT](../../casos-de-estudio/iot/adr/ADR-004-routing-e4-por-severidad.md) (retry E4) | Set I | `run-log-iot-to-be.csv` |
-| IOT-Q5 | [ADR-004 IoT](../../casos-de-estudio/iot/adr/ADR-004-routing-e4-por-severidad.md) | Set I | `run-log-iot-to-be.csv` (duracion_ms) |
-| IOT-Q6 | [ADR-MF-001](../../microframework/adr/ADR-MF-001-gestion-secretos-reg001.md) + [ADR-001 IoT](../../casos-de-estudio/iot/adr/ADR-001-separacion-responsabilidades-pipeline.md) | — | `validar-flujos.mjs` (REG-001) |
+| BOT-Q1 | [ADR-007 Bot](../casos-de-estudio/bot/adr/ADR-007-clasificacion-mensajes-e2.md) | CR1 | `cr-log-bot-to-be.csv` |
+| BOT-Q2 | [ADR-001 Bot](../casos-de-estudio/bot/adr/ADR-001-separacion-responsabilidades-flujo.md) | CR2 | `cr-log-bot-to-be.csv` |
+| BOT-Q3 | [ADR-005 Bot](../casos-de-estudio/bot/adr/ADR-005-estrategia-autenticacion.md) + [ADR-MF-001](../microframework/adr/ADR-MF-001-gestion-secretos-reg001.md) | — | `validar-flujos.mjs` (REG-001) |
+| BOT-Q4 | [ADR-001 Bot](../casos-de-estudio/bot/adr/ADR-001-separacion-responsabilidades-flujo.md) | Set K | `run-log-bot-to-be.csv` + mock-bot DB |
+| BOT-Q5 | [ADR-MF-003](../microframework/adr/ADR-MF-003-log-estructurado-reg006.md) + [ADR-006 Bot](../casos-de-estudio/bot/adr/ADR-006-diseno-error-workflow.md) | Set C | `medicion/protocolo-mttd.md` |
+| BOT-Q6 | [ADR-005 Bot](../casos-de-estudio/bot/adr/ADR-005-estrategia-autenticacion.md) | Set C, Set D | `run-log-bot-to-be.csv` |
+| IOT-Q1 | [ADR-002 IoT](../casos-de-estudio/iot/adr/ADR-002-umbrales-y-vocabulario.md) + [ADR-008 IoT](../casos-de-estudio/iot/adr/ADR-008-normalizacion-e1.md) | CR1 | `cr-log-iot-to-be.csv` |
+| IOT-Q2 | [ADR-004 IoT](../casos-de-estudio/iot/adr/ADR-004-routing-e4-por-severidad.md) | CR2 | `cr-log-iot-to-be.csv` |
+| IOT-Q3 | [ADR-003 IoT](../casos-de-estudio/iot/adr/ADR-003-idempotencia-sensor-timestamp.md) + [ADR-007 IoT](../casos-de-estudio/iot/adr/ADR-007-timestamp-authority.md) | Set K | `SELECT COUNT(*)` en PostgreSQL |
+| IOT-Q4 | [ADR-004 IoT](../casos-de-estudio/iot/adr/ADR-004-routing-e4-por-severidad.md) (retry E4) | Set I | `run-log-iot-to-be.csv` |
+| IOT-Q5 | [ADR-004 IoT](../casos-de-estudio/iot/adr/ADR-004-routing-e4-por-severidad.md) | Set I | `run-log-iot-to-be.csv` (duracion_ms) |
+| IOT-Q6 | [ADR-MF-001](../microframework/adr/ADR-MF-001-gestion-secretos-reg001.md) + [ADR-001 IoT](../casos-de-estudio/iot/adr/ADR-001-separacion-responsabilidades-pipeline.md) | — | `validar-flujos.mjs` (REG-001) |
 
 ---
 
@@ -95,5 +95,5 @@ Adecuación funcional), confirmando la cobertura del utility tree.
 - Bass, L., Clements, P. & Kazman, R. (2012). *Software Architecture in Practice* (3rd ed.). Addison-Wesley.
 - Kazman, R. et al. (2000). ATAM: Method for Architecture Evaluation. CMU/SEI-2000-TR-004.
 - ISO/IEC 25010:2011. Systems and software quality models.
-- `docs/protocolo-mttd.md` — protocolo de medición MTTD (escenario BOT-Q5)
+- `medicion/protocolo-mttd.md` — protocolo de medición MTTD (escenario BOT-Q5)
 - `microframework/reglas/reglas-obligatorias.md` — mapeo REG-* → ISO 25010

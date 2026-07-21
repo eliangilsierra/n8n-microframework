@@ -4,7 +4,7 @@
 
 **Version:** 1.0
 **Date:** 2026-05-07
-**Inputs:** `docs/atam/analisis-approaches.md` §2, ADRs, quantitative evidence
+**Inputs:** `atam/analisis-approaches.md` §2, ADRs, quantitative evidence
 **Purpose:** Consolidate into a single auditable register all the Sensitivity Points, Tradeoff Points, and Risks identified in the to-be ATAM evaluation, with their recommended mitigations and potential owners for production adoption. Non-Risks are omitted here since they are positive (they are discussed in the main report).
 
 ---
@@ -54,7 +54,7 @@ Each register entry includes the following normalized fields:
 - **Description.** The ~14-second MTTD depends on the JSON log emitted by E1 including the `etapa`, `errores[]`, and `unauthorized: true` fields. A careless refactor that changes the log structure directly impacts the MTTD and returns BOT-Q5 to as-is behavior.
 - **Severity:** Low.
 - **Probability:** Low (protected by the static validator + REG-006).
-- **Evidence:** `docs/protocolo-mttd.md`, `medicion/consolidado/mttd-resultado.md`.
+- **Evidence:** `medicion/protocolo-mttd.md`, `medicion/consolidado/mttd-resultado.md`.
 - **Recommended mitigation (short term):** contract test of the structured log schema, executable in the CI pipeline before merge.
 - **Recommended mitigation (medium term):** define the log schema as versioned JSON Schema in `microframework/contratos/log-estructurado-e1.schema.json` and validate it at runtime on every deploy.
 - **Suggested owner:** Micro-framework maintainer + observability team.
@@ -188,7 +188,7 @@ Each register entry includes the following normalized fields:
 - **Description.** The structured logs emitted by the stages via `console.log` are written to the container's stdout. If the container restarts without a persistent volume or an external collector (CloudWatch, ELK, Loki), the logs are lost. The MTTD protocol assumes availability of `docker compose logs n8n --since 5m`.
 - **Severity:** Medium.
 - **Probability:** High in environments without operational discipline; Low with a persistent volume or aggregator.
-- **Evidence:** `docs/protocolo-mttd.md` §environment requirements.
+- **Evidence:** `medicion/protocolo-mttd.md` §environment requirements.
 - **Recommended mitigation (short term):** document as a production deployment requirement in the best-practices guide (R5).
 - **Recommended mitigation (medium term):** integrate a log aggregator (CloudWatch on AWS — designed in R3, AWS Architecture).
 - **Suggested owner:** Operations team + micro-framework maintainer.

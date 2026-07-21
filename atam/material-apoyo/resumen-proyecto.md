@@ -199,4 +199,4 @@ Muchas gracias por su tiempo y experticia.
 ---
 
 *Documento de 4 páginas — versión 1.0 — 2026-05-07*
-*Material de apoyo de la encuesta de validación externa documentada en* `docs/atam/protocolo-encuesta.md`
+*Material de apoyo de la encuesta de validación externa documentada en* `atam/protocolo-encuesta.md`

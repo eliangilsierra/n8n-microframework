@@ -27,9 +27,9 @@
 
 | Artifact | Purpose | Status |
 |---|---|---|
-| `docs/atam/analisis-approaches.md` | 12 architectural approaches + SP/TP/R/NR classification × 12 scenarios | ✅ |
-| `docs/atam/matriz-scoring.md` | 1–5 scoring as-is vs to-be per scenario with justification and evidence | ✅ |
-| `docs/atam/registro-riesgos-tradeoffs.md` | Consolidated register: 3 SP · 3 TP · 4 R · 5 NR | ✅ |
+| `atam/analisis-approaches.md` | 12 architectural approaches + SP/TP/R/NR classification × 12 scenarios | ✅ |
+| `atam/matriz-scoring.md` | 1–5 scoring as-is vs to-be per scenario with justification and evidence | ✅ |
+| `atam/registro-riesgos-tradeoffs.md` | Consolidated register: 3 SP · 3 TP · 4 R · 5 NR | ✅ |
 
 **Formalized findings:**
 - **3 Sensitivity Points:** SP-BOT-01, SP-BOT-02, SP-IOT-01
@@ -44,7 +44,7 @@
 | Artifact | Purpose | Status |
 |---|---|---|
 | `microframework/adr/ADR-MF-004-atam-adaptado-individual.md` | Formal decision: asynchronous adapted ATAM for an individual researcher | ✅ |
-| `docs/atam/metodologia-atam-adaptada.md` | Adapted ATAM framework — justification, step-by-step mapping, bias mitigation | ✅ |
+| `atam/metodologia-atam-adaptada.md` | Adapted ATAM framework — justification, step-by-step mapping, bias mitigation | ✅ |
 
 ---
 
@@ -52,15 +52,15 @@
 
 | Artifact | Purpose | Status |
 |---|---|---|
-| `docs/atam/protocolo-encuesta.md` | Protocol: criteria, consent, sample size, platform | ✅ |
-| `docs/atam/instrumento-encuesta.md` | Complete survey: 18 questions (Section A–E) + optional mini-ATAM | ✅ |
-| `docs/atam/plan-analisis-encuesta.md` | Statistical plan: descriptive, Cronbach's α, open coding, κ | ✅ |
-| `docs/atam/plan-difusion.md` | Dissemination channels, invitation templates, candidate list | ✅ |
-| `docs/atam/material-apoyo/resumen-proyecto.md` | Markdown source of the 4-page PDF for respondents | ✅ |
-| `docs/atam/material-apoyo/guion-video.md` | Script for the 5-minute video for respondents | ✅ |
-| `docs/atam/material-apoyo/diagrama-comparativo.md` | As-is vs to-be Mermaid diagrams for the PDF and slides | ✅ |
-| `docs/atam/material-apoyo/README.md` | Index of public URLs — PDF, video, form | ✅ |
-| `docs/atam/material-apoyo/guia-referencia-tecnica.md` | Transcription of the technical reference guide provided to the panel | ✅ |
+| `atam/protocolo-encuesta.md` | Protocol: criteria, consent, sample size, platform | ✅ |
+| `atam/instrumento-encuesta.md` | Complete survey: 18 questions (Section A–E) + optional mini-ATAM | ✅ |
+| `atam/plan-analisis-encuesta.md` | Statistical plan: descriptive, Cronbach's α, open coding, κ | ✅ |
+| `atam/plan-difusion.md` | Dissemination channels, invitation templates, candidate list | ✅ |
+| `atam/material-apoyo/resumen-proyecto.md` | Markdown source of the 4-page PDF for respondents | ✅ |
+| `atam/material-apoyo/guion-video.md` | Script for the 5-minute video for respondents | ✅ |
+| `atam/material-apoyo/diagrama-comparativo.md` | As-is vs to-be Mermaid diagrams for the PDF and slides | ✅ |
+| `atam/material-apoyo/README.md` | Index of public URLs — PDF, video, form | ✅ |
+| `atam/material-apoyo/guia-referencia-tecnica.md` | Transcription of the technical reference guide provided to the panel | ✅ |
 | `medicion/encuesta-validacion/respuestas-anonimizadas-2026-06-24.csv` | Anonymized survey data (N=19, 17 valid) | ✅ |
 | `medicion/encuesta-validacion/analisis-encuesta.py` / `.ipynb` | Executed analysis script and notebook (descriptive statistics, Cronbach's α, Krippendorff's κ, thematic coding) | ✅ |
 | `medicion/encuesta-validacion/outputs/` | Consolidated results (JSON, CSV, qualitative coding) | ✅ |
@@ -77,7 +77,7 @@
 
 | Artifact | Purpose | Status |
 |---|---|---|
-| `docs/atam/informe-atam-final.md` | Thesis chapter R4 — 10 complete sections, §8 with real survey results | ✅ |
+| `atam/informe-atam-final.md` | Thesis chapter R4 — 10 complete sections, §8 with real survey results | ✅ |
 
 **§8 completed:** "External validation by expert panel" documents the panel profile (8.1),
 Section B results (8.2), Sections C/E4 qualitative coding (8.3), Section E triangulation with
@@ -89,7 +89,7 @@ Krippendorff's α (8.4), and the final synthesis (8.5).
 
 | Artifact | Purpose | Status |
 |---|---|---|
-| `docs/atam/INDEX.md` | This file — index of all Phase 7 artifacts | ✅ |
+| `atam/INDEX.md` | This file — index of all Phase 7 artifacts | ✅ |
 | `estado-actual.md` | Source of truth for progress — Phase 7 completed ✓ | ✅ |
 
 ---
@@ -116,7 +116,7 @@ Krippendorff's α (8.4), and the final synthesis (8.5).
 ## Pre-existing artifacts (Phases 1–6) referenced in Phase 7
 
 > `atam-utility-tree.md` (this same directory) was produced in PHASE 5 but is filed
-> alongside the other Phase 7 artifacts since it is its direct input — not in `docs/context/`.
+> alongside the other Phase 7 artifacts since it is its direct input — not in a separate context folder.
 
 ```
 medicion/consolidado/comparacion-2026-05-05.md → Main comparative metrics

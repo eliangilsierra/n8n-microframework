@@ -225,7 +225,7 @@ flowchart TB
 2. Pegar en https://mermaid.live
 3. Ajustar tema (recomendado: "default" o "neutral" para PDF impreso)
 4. Exportar como PNG en alta resolución (ancho ≥ 1600 px)
-5. Guardar como `docs/atam/material-apoyo/diagrama-{N}-{nombre}.png`
+5. Guardar como `atam/material-apoyo/diagrama-{N}-{nombre}.png`
 
 ### Render con CLI mmdc (mermaid-cli)
 

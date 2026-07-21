@@ -46,7 +46,7 @@ Flujo de ejecución:
 
 Criterio binario verificable automáticamente sobre el JSON exportado mediante el validador estático `validar-flujos.mjs`.
 
-> ⚠️ **Nota de transcripción:** la tabla del PDF original usa un diseño de dos columnas que no se pudo reconstruir con certeza absoluta al extraer el texto (la asociación exacta entre cada ID `REG-00X` y su fila de contenido se perdió en la conversión). Los nombres y criterios siguientes están completos y son fieles al PDF; para la correspondencia exacta ID↔regla, consulte [`microframework/reglas/reglas-obligatorias.md`](../../../microframework/reglas/reglas-obligatorias.md), que es la fuente canónica del mapeo.
+> ⚠️ **Nota de transcripción:** la tabla del PDF original usa un diseño de dos columnas que no se pudo reconstruir con certeza absoluta al extraer el texto (la asociación exacta entre cada ID `REG-00X` y su fila de contenido se perdió en la conversión). Los nombres y criterios siguientes están completos y son fieles al PDF; para la correspondencia exacta ID↔regla, consulte [`microframework/reglas/reglas-obligatorias.md`](../../microframework/reglas/reglas-obligatorias.md), que es la fuente canónica del mapeo.
 
 | Nombre de la regla | Criterio verificable |
 |---|---|

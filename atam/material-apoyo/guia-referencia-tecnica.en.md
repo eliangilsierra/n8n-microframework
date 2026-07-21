@@ -46,7 +46,7 @@ Execution flow:
 
 Binary criterion, automatically verifiable on the exported JSON via the static validator `validar-flujos.mjs`.
 
-> ⚠️ **Transcription note:** the original PDF table uses a two-column layout that could not be reconstructed with absolute certainty when extracting the text (the exact association between each `REG-00X` ID and its content row was lost in the conversion). The following names and criteria are complete and faithful to the PDF; for the exact ID↔rule correspondence, see [`microframework/reglas/reglas-obligatorias.md`](../../../microframework/reglas/reglas-obligatorias.en.md), which is the canonical source for the mapping.
+> ⚠️ **Transcription note:** the original PDF table uses a two-column layout that could not be reconstructed with absolute certainty when extracting the text (the exact association between each `REG-00X` ID and its content row was lost in the conversion). The following names and criteria are complete and faithful to the PDF; for the exact ID↔rule correspondence, see [`microframework/reglas/reglas-obligatorias.md`](../../microframework/reglas/reglas-obligatorias.en.md), which is the canonical source for the mapping.
 
 | Rule name | Verifiable criterion |
 |---|---|

@@ -218,7 +218,7 @@ Análisis ATAM — 15 hallazgos arquitectónicos
 4. **Permisos de acceso:**
    - **Loom:** "Anyone with link can view"
    - **YouTube:** "Unlisted" (no público, no privado)
-5. **URL final** se copia a `docs/atam/material-apoyo/README.md` y se sustituye en plantillas de difusión.
+5. **URL final** se copia a `atam/material-apoyo/README.md` y se sustituye en plantillas de difusión.
 
 ### Checklist de calidad del video final
 
